@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class test {
 	
-	@RequestMapping("/")
+	@RequestMapping("/main")
 	public String bookDetail() {
 		System.out.println("main");
 		
