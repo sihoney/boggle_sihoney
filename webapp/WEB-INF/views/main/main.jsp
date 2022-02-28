@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="../../asset/js/app3.js" defer></script>
-    <link rel="stylesheet" href="../../asset/css/style3.css">
+    <script src="/bookproject/asset/js/app3.js" defer></script>
+    <link rel="stylesheet" href="/bookproject/asset/css/style3.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
@@ -24,7 +24,7 @@
                     <li><a href="">기록하기</a></li>
                     <li class="login">
                         <div class="userImg">
-                            <img src="../../asset/img/profile.png" alt="">
+                            <img src="/bookproject/asset/img/profile.png" alt="">
                         </div>
                         <a href="">로그인</a>
                     </li>
