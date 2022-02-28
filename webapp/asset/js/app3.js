@@ -116,7 +116,7 @@ const downBtn = document.querySelector(".downBtn");
 const autoModeBtn = document.querySelector(".autoModeBtn");
 const closeBtn = document.querySelector(".close-btn");
 const sideBar = document.querySelector(".sidebar");
-const sidebarToggle = document.querySelector(".fa-bars"); // 중복된다..
+const sidebarToggle = document.querySelector(".fa-bars");
 let navLinks = document.querySelector(".links")
 let sidebarBtn = document.querySelector(".sidebarBtn")
 let bgmPrevBtn = document.querySelector(".prevArrow")
@@ -132,16 +132,29 @@ const playlistAddModal = document.querySelector(".playlistAddModal")
 const modalCloseBtn = document.querySelector(".modal-closeBtn")
 const addReviewModal = document.querySelector(".addReviewModal")
 const reviewModalCloseBtn = addReviewModal.querySelector(".modal-closeBtn")
+const reviewAddBtns = addReviewModal.querySelectorAll(".reviewAddBtn")
 
 let counter = 0;
 let slides;
-let id; // 페이드 전환이 시작되는 슬라이드의 rn
 let seconds = 4000;
 let interval
 let autoToggle = true;
 let bgmCounter = 0;
 let modeToggle = false;
 let heartToggle = false;
+
+// 서평 플레이리스트에 추가 : 아이콘 토글 
+for(let addBtn of reviewAddBtns) {
+    addBtn.onclick = function(e){
+        let classlist = e.path[0].classList
+
+        if(classlist[1] == 'fa-plus') {
+            addBtn.innerHTML = '<i class="fa-solid fa-check"></i>'
+        } else {
+            addBtn.innerHTML = '<i class="fa-solid fa-plus"></i>'
+        }
+    }
+}
 
 reviewModalCloseBtn.onclick = function() {
     addReviewModal.classList.remove("show-modal")
@@ -227,7 +240,7 @@ window.addEventListener("DOMContentLoaded", function(){
 })
 
 
-window.addEventListener("keydown", function(e){ // enter --> toggle
+window.addEventListener("keydown", function(e){ 
     if(e.key == 'Enter') {
         changeMode()
     }
@@ -302,6 +315,10 @@ function autoCarousel(){
 function carousel() {
     console.log("counter: " + counter)
 
+    if(counter == slides.length) {
+        renderNewArray(array);
+    }
+
     if(modeToggle === true) {
         if(counter > 0) {
             upBtn.style.display = "block";
@@ -310,7 +327,6 @@ function carousel() {
         }
         downBtn.style.display = "block"        
     }
-
 
     slides.forEach(slide => {
         slide.style.transform = `translateY(-${counter * 100}%)`;
@@ -404,17 +420,21 @@ function renderBgmPaging(count) {
     bgmPagination.append(ul)
 }
 
-function init() {
-    /*** 서평 슬라이드 화면 출력 및 나열 ***/
+function renderNewArray(array) {
     for(let item of array) {
-        render(item);
+        render(item)
     }
 
-    slides = document.querySelectorAll(".slide");
+    slides = document.querySelectorAll(".slide")
 
     slides.forEach((slide, index) => {
         slide.style.top = `${index * 100}%`;
     })
+}
+
+function init() {
+    /*** 서평 슬라이드 화면 출력 및 나열 ***/
+    renderNewArray(array)
 
     upBtn.style.display = "none";
 
