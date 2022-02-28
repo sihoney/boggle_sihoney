@@ -306,89 +306,36 @@ a:hover{
     color: #ABAAAC;
     margin-left: 35px;
 }
-#content4 #a{    
-    padding: 0px 30px;
-}
 
-
-/*body*/
-.columns{
-    margin-bottom: 20px;
-    
-}
-
-#name{
-    font-size: large;
-    font-weight: 500;
-}
-
-.text-name{
-    height: 40px;
-}
 /*gallery*/
-#container-1{
-    width: 400px;
-}
-
-#container-2{
-    width: 400px;
-}
-
-
-.sub{
-    clear:both;
-    color:#B4B4B4;
-}
-
-
-.newplaylist{
-    float:right;
-    color:#ffffff;
-    background-color: #2699FB;
-    width: 160px; height: 40px;
+#content4 #playlist{
+    padding: 0px 30px;
     text-align: center;
-    padding:12px;
+}
+
+.nail{
+    display: inline-block;
+    width: 180px;
+    height: 180px;
     border-radius: 12px;
+    color:#ffffff;
+    text-align: left;
+    margin: 10px;
+}
+.nail>div{
+    display: table;
+    width: 180px;
+    height: 100px;
 }
 
-.nail-first{
-    float:left;
-    background : #7656FD;
-    height: 160px; width:160px;
-    border-radius:12px;
-    color:#ffffff;
-    text-align :left;
-    margin: 16px;
+.purple{
+    background-color : #7656FD;
 }
-
-.nail-sec{
-    float:left;
-    background : #63307E;
-    height: 160px; width:160px;
-    border-radius:12px;
-    color:#ffffff;
-    text-align :left;
-    margin: 16px;
+.deeppurple{
+    background-color : #63307E;
 }
-
-.nail-thrd{
-    float:left;
-    background : #31A848;
-    height: 160px; width:160px;
-    border-radius:12px;
-    color:#ffffff;
-    text-align :left;
-    margin: 16px;
-}
-
-.nail-four{
-    float:left;
-    background : #31A848;
-    height: 160px; width:160px;
-    border-radius:12px;
-    color:#ffffff;
-    text-align :left;
-    margin: 16px;
+.green{
+    background-color:  #31A848;
 }
 
 .nail-desc{
@@ -397,8 +344,10 @@ a:hover{
 }
 
 #opac{
+    display: table-cell;
+    vertical-align: bottom;
     background : #ffffff7c;
-    height: 70px; width:160px;
+    height: 80px; width:180px;
     border-bottom-right-radius:12px;
     border-bottom-left-radius:12px;
 
