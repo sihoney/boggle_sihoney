@@ -145,7 +145,7 @@ a:hover{
     margin-bottom: 20px;
 }
 #content>div>div{
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 .minicontent{
     width: 1080px;
@@ -156,27 +156,27 @@ a:hover{
     font-weight: bold;
     font-size: 20px;
     color : #707070;
-    margin-left: 30px;
+    
 }
 .minicontent>#more>p{
     font-size: 15px;
     color: #ABAAAC;
     margin-top: 5px;
-    margin-right: 30px;
+    
 }
 
 
 /*************컨텐츠1 : 서평****************/
 #reviews{
-    width: 1000px;
-    margin : 15px 40px;
+    width: 1050px;
+    margin : 15px 10px;
     background-color: #e7e7e7;
     padding : 15px 30px;
     border-radius: 15px;
 }
 #reviews-header{
     /*********리뷰박스크기따라조정할것*********/
-    width: 940px;
+    width: 990px;
     height : 25px;
     margin-bottom : 3px;
 }
@@ -216,7 +216,7 @@ a:hover{
 }
 #reviews-footer{
     /*********리뷰박스크기따라조정할것*********/
-    width: 940px;
+    width: 990px;
     height : 15px;
     color: #ABAAAC;
     margin-top : 10px;
@@ -250,9 +250,9 @@ a:hover{
 }
 #content2>div>.likewriter{
     display: inline-block;
-    width: 300px;
+    width: 250px;
     height: 400px;
-    margin: 5px 10px;
+    margin: 5px 5px;
     background-color: #e7e7e7;
     border-radius: 15px;
     text-align: center;
@@ -277,7 +277,7 @@ a:hover{
 }
 .likewriter>p{
     margin: 20px 0px;
-    width: 300px;
+    width: 250px;
     height: 100px;
     padding: 10px 50px;
     text-align: center;
@@ -288,16 +288,16 @@ a:hover{
 
 /***********컨텐츠3************/
 #content3>#background>div{
-    margin-bottom: 120px;
+    margin-bottom: 20px;
     background:linear-gradient(#FFFFFF00, #EAEAEA);
     padding: 0px 10px;
     text-align: center;
 }
 #content3>div img{
     display:inline-block;
-    width: 200px;
-    height: 286px;
-    margin: 10px 15px 0px 15px;
+    width: 190px;
+    height: 276px;
+    margin: 10px 5px 0px 5px;
 }
 
 /**************컨텐츠4****************/
