@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class test {
 	
-	@RequestMapping("/book_detail")
+	@RequestMapping("/")
 	public String bookDetail() {
-		System.out.println("book_detail");
+		System.out.println("main");
 		
-		return "book_detail/book_detail";
+		return "main/main";
 	}
 
 }
