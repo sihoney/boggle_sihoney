@@ -160,7 +160,7 @@
     margin-bottom: 20px;
 }
 
-#review_first>a {
+.review_modify {
     float: right;
     font-size: 16px;
     margin-right: 10px;
@@ -179,7 +179,15 @@
     padding: 3px 3px 0px 0px;
 }
 
-#review_first #tag_btn {
+.review_nick {
+    display: block;
+    font-size: 20px;
+    color: #B4B4B4;
+
+    margin-top: 10px;
+}
+
+#tag_btn {
     background-color: #2699FB;
     border-radius: 4px;
     color: #FFFFFF;
@@ -190,6 +198,7 @@
 .review_like {
     margin: 5px;
     color: #ABAAAC;
+    font-size: 15px;
 }
 
 .pagination {
@@ -203,6 +212,7 @@
 #btn_like {
     cursor: pointer;
     color: #2699FB;
+    font-size: 15px;
 }
 
 /* 더보기 */

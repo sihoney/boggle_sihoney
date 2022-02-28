@@ -8,12 +8,13 @@
 
         <title>randombook header</title>
 
-        <script src="../../asset/js/jquery-1.12.4.js"></script>
-        <script src="../../asset/bootstrap/js/bootstrap.js"></script>
-        <link rel="stylesheet" href="../../asset/bootstrap/css/bootstrap.css">
-        
-        <link rel="stylesheet" href="../../asset/css/source.css">
-        <link rel="stylesheet" href="../../asset/css/book_detail.css">
+        <script src="../../bootstrap/js/jquery-1.12.4.js"></script>
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
+        <script src="../../bootstrap/js/bootstrap.js"></script>
+
+        <link rel="stylesheet" href="../css/source.css">
+        <link rel="stylesheet" href="../css/book_detail.css">
+        <link rel="stylesheet" href="../css/book_detail_modal.css">
 
         <!-- kakao sdk 호출 -->
         <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -25,7 +26,7 @@
             <!-- ------헤더------ -->
             <div id="header" class="clearfix">
                 <a href="">
-                    <img src="../../asset/img/logo/1_logo.png">
+                    <img src="../img/logo/1_logo.png">
                 </a>
                 <!-- 로그인전 -->
                 <ul class="list-unstyled">
@@ -46,7 +47,7 @@
 
             <div id="contents" class="clearfix">
                 <div id="bookVo">
-                    <img id="book_img" src="../../asset/img/book/book.jpg" alt="..." class="img-thumbnail">
+                    <img id="book_img" src="../img/book/book.jpg" alt="..." class="img-thumbnail">
                     <div id="book_detail">
                         <h1>작은 별이지만 빛나고 있어</h1>
                         <h3>저자 소윤</h3>
@@ -72,111 +73,17 @@
                     </ul>
                 </div>
 
-                <!-- 서평 리스트 vo-->
-                <div class="jumbotron">
-                    <div id="review_first">
-                        <span class="txt_ms margin-t5">
-                            <a href="">
-                                <img src="../../asset/img/login/user.jpg" class="img-circle img-icon">금붕어두마리
-                                <span class="glyphicon glyphicon-menu-right icon-success" aria-hidden="true"></span>
-                            </a>
-                            </span>
-                        <!-- 자기글에만 수정 삭제 노출 -->
-                        <a href="">삭제</a><a href="">수정</a>
-                        <div class="multiline-ellipsis">나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
-                            나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
-                            나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
-                            나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
-                            - P104 나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
-                            나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
-                            - P104
-                        </div>
-                        <span id="tag_btn">#교훈 있는</span>
-                    </div>
-
-                    <div id="review_second">
-                        <!-- 좋아요 활성화 -->
-                        <span id="btn_like" class="glyphicon glyphicon-heart icon-success" aria-hidden="true"></span>
-                        <!-- 좋아요 활성화 -->
-
-                        <!-- 좋아요 비활성화
-                        <span id="btn_like" class="glyphicon glyphicon-heart-empty icon-success" aria-hidden="true"></span> -->
-
-                        <span class="review_like">16.2k</span><span class="review_like">2022/02/21</span>
-                        <!-- 더보기 클릭시 모달창 오픈 -->
-                        <!-- <button type="button" class="btn btn-default btn-sm">+더보기</button> -->
-                        
-                        <div class="dropup">
-                            <a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                + 더보기
-                                <!-- <span class="caret"></span> -->
-                            </a>
-                            <ul class="dropdown-menu radius-15" role="menu" aria-labelledby="dropdownMenu2">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">플레이리스트에 추가<span id="plus">+</span></a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- 서평 리스트 vo-->
-                
-                <!-- 서평 리스트 vo-->
-                <div class="jumbotron">
-                    <div id="review_first">
-                        <span class="txt_ms margin-t5">
-                            <!-- <img src="../img/login/3_user3.jpeg" class="img-circle img-icon"> -->
-                            <a href="">하이마크<span class="glyphicon glyphicon-menu-right icon-success" aria-hidden="true"></span></a>
-                        </span>
-                        <!-- 자기글에만 수정 삭제 노출 -->
-                        <a href="">삭제</a><a href="">수정</a>
-                        <div class="multiline-ellipsis">나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
-                            나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
-                            나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
-                            나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
-                            - P104 나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
-                            나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
-                            - P104
-                        </div>
-                        <span id="tag_btn">#교훈 있는</span>
-                    </div>
-
-                    <div id="review_second">
-                        <!-- 좋아요 비활성화 -->
-                        <span id="btn_like" class="glyphicon glyphicon-heart-empty icon-success" aria-hidden="true"></span>
-                        <!-- 좋아요 비활성화 -->
-
-                        <span class="review_like">16.2k</span><span class="review_like">2022/02/21</span>
-                        <!-- 더보기 클릭시 모달창 오픈 -->
-                        <!-- <button type="button" class="btn btn-default btn-sm">+더보기</button> -->
-                        
-                        <div class="dropup">
-                            <a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                + 더보기
-                                <!-- <span class="caret"></span> -->
-                            </a>
-                            <ul class="dropdown-menu radius-15" role="menu" aria-labelledby="dropdownMenu2">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">플레이리스트에 추가<span id="plus">+</span></a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- 서평 리스트 vo-->
 
                 <!-- 서평 리스트 vo-->
                 <div class="jumbotron">
                     <div id="review_first">
                         <h3>작은 별이지만 빛나고 있어</h3>
+
                         <!-- 자기글에만 수정 삭제 노출 -->
-                        <a href="">삭제</a><a href="">수정</a>
+                        <a href="" class="review_modify">삭제</a><a href="" class="review_modify">수정</a>
+
+                        <a href="" class="review_nick">금붕어두마리<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+
                         <div class="multiline-ellipsis">나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
                             나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
                             나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
@@ -185,7 +92,6 @@
                             나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
                             - P104
                         </div>
-                        <span id="tag_btn">#교훈 있는</span>
                     </div>
 
                     <div id="review_second">
@@ -197,61 +103,11 @@
                         <span id="btn_like" class="glyphicon glyphicon-heart-empty icon-success" aria-hidden="true"></span> -->
 
                         <span class="review_like">16.2k</span><span class="review_like">2022/02/21</span>
-                        <!-- 더보기 클릭시 모달창 오픈 -->
-                        <!-- <button type="button" class="btn btn-default btn-sm">+더보기</button> -->
-                        
-                        <div class="dropup">
-                            <a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                + 더보기
-                                <!-- <span class="caret"></span> -->
-                            </a>
-                            <ul class="dropdown-menu radius-15" role="menu" aria-labelledby="dropdownMenu2">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">플레이리스트에 추가<span id="plus">+</span></a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
-                            </ul>
-                        </div>
-
-                        <h4 class="txt_ms margin-t5 float-r">
-                            <img src="../../asset/img/login/3_user3.jpeg" class="img-circle img-icon">
-                            <a href="">헬로우마크<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
-                        </h4>
-                    </div>
-                </div>
-                <!-- 서평 리스트 vo-->
-
-                <!-- 서평 리스트 vo-->
-                <div class="jumbotron">
-                    <div id="review_first">
-                        <h3>작은 별이지만 빛나고 있어</h3>
-                        <!-- 자기글에만 수정 삭제 노출 -->
-                        <a href="">삭제</a><a href="">수정</a>
-                        <div class="multiline-ellipsis">나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
-                            나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
-                            나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
-                            나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
-                            - P104 나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
-                            나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
-                            - P104
-                        </div>
                         <span id="tag_btn">#교훈 있는</span>
-                    </div>
-
-                    <div id="review_second">
-                        <!-- 좋아요 활성화 -->
-                        <span id="btn_like" class="glyphicon glyphicon-heart icon-success" aria-hidden="true"></span>
-                        <!-- 좋아요 활성화 -->
-
-                        <!-- 좋아요 비활성화
-                        <span id="btn_like" class="glyphicon glyphicon-heart-empty icon-success" aria-hidden="true"></span> -->
-
-                        <span class="review_like">16.2k</span><span class="review_like">2022/02/21</span>
                         <!-- 더보기 클릭시 모달창 오픈 -->
                         <!-- <button type="button" class="btn btn-default btn-sm">+더보기</button> -->
                         
-                        <div class="dropup">
+                        <div class="dropup float-r">
                             <a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 + 더보기
                                 <!-- <span class="caret"></span> -->
@@ -265,10 +121,108 @@
                             </ul>
                         </div>
 
-                        <h4 class="txt_ms margin-t5 float-r">
-                            <img src="../../asset/img/login/2_user2.jpeg" class="img-circle img-icon">
-                            <a href="">멋짐<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
-                        </h4>
+                    </div>
+                </div>
+                <!-- 서평 리스트 vo-->
+
+                <!-- 서평 리스트 vo-->
+                <div class="jumbotron">
+                    <div id="review_first">
+                        <h3>작은 별이지만 빛나고 있어</h3>
+
+                        <!-- 자기글에만 수정 삭제 노출 -->
+                        <a href="" class="review_modify">삭제</a><a href="" class="review_modify">수정</a>
+
+                        <a href="" class="review_nick">금붕어두마리<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+
+                        <div class="multiline-ellipsis">나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
+                            나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
+                            나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
+                            나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
+                            - P104 나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
+                            나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
+                            - P104
+                        </div>
+                    </div>
+
+                    <div id="review_second">
+                        <!-- 좋아요 활성화 -->
+                        <span id="btn_like" class="glyphicon glyphicon-heart icon-success" aria-hidden="true"></span>
+                        <!-- 좋아요 활성화 -->
+
+                        <!-- 좋아요 비활성화
+                        <span id="btn_like" class="glyphicon glyphicon-heart-empty icon-success" aria-hidden="true"></span> -->
+
+                        <span class="review_like">16.2k</span><span class="review_like">2022/02/21</span>
+                        <span id="tag_btn">#교훈 있는</span>
+                        <!-- 더보기 클릭시 모달창 오픈 -->
+                        <!-- <button type="button" class="btn btn-default btn-sm">+더보기</button> -->
+                        
+                        <div class="dropup float-r">
+                            <a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                + 더보기
+                                <!-- <span class="caret"></span> -->
+                            </a>
+                            <ul class="dropdown-menu radius-15" role="menu" aria-labelledby="dropdownMenu2">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">플레이리스트에 추가<span id="plus">+</span></a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation" ><a id="shr_review" role="menuitem" tabindex="-1" href="#">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- 서평 리스트 vo-->
+
+                <!-- 서평 리스트 vo-->
+                <div class="jumbotron">
+                    <div id="review_first">
+                        <h3>작은 별이지만 빛나고 있어</h3>
+
+                        <!-- 자기글에만 수정 삭제 노출 -->
+                        <a href="" class="review_modify">삭제</a><a href="" class="review_modify">수정</a>
+
+                        <a href="" class="review_nick">금붕어두마리<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+
+                        <div class="multiline-ellipsis">나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
+                            나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
+                            나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
+                            나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
+                            - P104 나의 노력으로 얻어진 것이 아니라면 내 것이 아니니까 부러워하지 말기
+                            나의 잘못으로 만들어진 결과가 아니라면 내 탓이 아니니까 낙담하지 말기
+                            - P104
+                        </div>
+                    </div>
+
+                    <div id="review_second">
+                        <!-- 좋아요 활성화 -->
+                        <span id="btn_like" class="glyphicon glyphicon-heart icon-success" aria-hidden="true"></span>
+                        <!-- 좋아요 활성화 -->
+
+                        <!-- 좋아요 비활성화
+                        <span id="btn_like" class="glyphicon glyphicon-heart-empty icon-success" aria-hidden="true"></span> -->
+
+                        <span class="review_like">16.2k</span><span class="review_like">2022/02/21</span>
+                        <span id="tag_btn">#교훈 있는</span>
+                        <!-- 더보기 클릭시 모달창 오픈 -->
+                        <!-- <button type="button" class="btn btn-default btn-sm">+더보기</button> -->
+                        
+                        <div class="dropup float-r">
+                            <a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                + 더보기
+                                <!-- <span class="caret"></span> -->
+                            </a>
+                            <ul class="dropdown-menu radius-15" role="menu" aria-labelledby="dropdownMenu2">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">플레이리스트에 추가<span id="plus">+</span></a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation" ><a id="shr_review" role="menuitem" tabindex="-1" href="#">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
                 <!-- 서평 리스트 vo-->
