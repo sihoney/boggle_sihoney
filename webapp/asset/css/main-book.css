@@ -101,7 +101,9 @@ body {
     color: #2699FB;
     font-weight: bold;
 }
-
+#nav3>li.active>a{
+    background-color: #2699FB;
+}
 
 
 .thumb-text{
