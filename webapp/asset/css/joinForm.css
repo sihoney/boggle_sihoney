@@ -4,7 +4,7 @@
 body, div, ul, li, dl, dt, ol, h1, h2, h3, h4, h5, 
 h6, input, fieldset, legend, p, select, table, th, 
 td, tr, textarea, button, form {
-    margin: 0; padding: 0;
+    margin: 0; padding: 0; box-sizing: border-box;
 }
 /* clearfix */
 .clearfix{*zoom:1;}
@@ -39,6 +39,12 @@ body {
 .container{
     width:1000px !important;
 }
+
+/*************공통 action**************/
+a:hover{
+    cursor: pointer;
+}
+
 
 
 /* ---------------레이아웃-------------- */
@@ -100,7 +106,7 @@ body {
     color: #707070;
     font-size: 30px;
 }
-#join-header>.col-xs-2>div{
+#join-header>.col-xs-1>div{
     margin: 0 auto;
     text-align:center;
     padding: 145px 0px 0px 0px;
@@ -116,9 +122,15 @@ body {
     text-align: center;
     font-weight: bold;
     color: #707070;
+    font-size: 15px;
+}
+#join-api>div>div:hover{
+    cursor: pointer;
 }
 #join-api img {
     width: 15px;
+    vertical-align: top;
+    margin-top: 2px;
 }
 
 
@@ -142,7 +154,7 @@ body {
 }
 #join-content form input {
     margin-bottom: 20px;
-    width: 850px;
+    width: 800px;
     height: 40px;
     border-radius: 5px;
     border: 1px solid #d4d4d4;
@@ -153,13 +165,66 @@ body {
 }
 #join-content form .except input{
     margin-bottom: 0px;
-    width: 850px;
+    width: 800px;
     height: 40px;
     border-radius: 5px;
     border: 1px solid #d4d4d4;
 }
+
+/* 장르박스 */
+#genrebox span{
+    display: block;
+    margin-top: 20px;
+}
+#genrebox .box{
+    display: inline-block;
+    height: 180px; width:180px;
+    border-radius:12px;
+    margin: 15px 10px;
+    color:#ffffff !important;
+    text-align :left;
+    padding: 15px;
+    font-size: 20px !important;
+}
+#genrebox .box:hover{
+    cursor: pointer;
+}
+#genrebox #love{
+    background-color : #ED3EE6;    
+}
+#genrebox #spectacle{
+    background-color : #FF7F00;    
+}
+#genrebox #impressive{
+    background-color : #4FB0F7;    
+}
+#genrebox #horor{
+    background-color : #AC0808;    
+}
+#genrebox #calm{
+    background-color : #4DB3C6;    
+}
+#genrebox #encouraging{
+    background-color : #E50F0F;    
+}
+#genrebox #touching{
+    background-color : #007BF5;    
+}
+#genrebox #fantastic{
+    background-color : #FF6CD2;    
+}
+#genrebox .clicked {
+    background-color : gold !important;
+    color: red !important;
+    font-weight: bold;
+    border : 3px solid red;
+    margin: 12px 10px !important;
+    cursor:pointer;
+}
+
 #join-content button{
-    width: 850px;
+    margin-top: 40px;
+    width: 800px;
     height: 50px;
     background-color: #2699FB;
     border: none;
@@ -167,35 +232,6 @@ body {
     font-size: 15px;
     color: #FFFFFF;
 }
-
-/* 장르박스 */
-/* #opac{
-    background : #ffffff7c;
-    height: 120px; width:160px;
-    border-bottom-right-radius:12px;
-    border-bottom-left-radius:12px;
-
-} */
-#genrebox span{
-    display: block;
-    margin-top: 20px;
-}
-
-#genrebox .box{
-    display: inline-block;
-    background : #ED3EE6;
-    height: 160px; width:160px;
-    border-radius:12px;
-    margin: 15px 10px 15px 5px;
-    color:#ffffff !important;
-    text-align :left;
-    padding: 15px;
-    font-size: 20px !important;
-}
-.clicked {
-    background-color: gold !important;
-}
-
 
 
 /* --------------footer------------- */

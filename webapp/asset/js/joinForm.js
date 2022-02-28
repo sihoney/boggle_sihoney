@@ -11,7 +11,7 @@ function handleClick(event) {
     event.target.classList.remove("clicked");
   } else {
     for (var i = 0; i < box.length; i++) {
-      div2[i].classList.remove("clicked");
+      box[i].classList.remove("clicked");
     }
 
     event.target.classList.add("clicked");
@@ -20,7 +20,7 @@ function handleClick(event) {
 
 function init() {
   for (var i = 0; i < box.length; i++) {
-    div2[i].addEventListener("click", handleClick);
+    box[i].addEventListener("click", handleClick);
   }
 }
 

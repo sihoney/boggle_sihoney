@@ -1,62 +1,5 @@
 @charset "UTF-8";
 
-/* 책 제목 */
-@font-face {
-    font-family: 'KOHIBaeumOTF';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/KOHIBaeumOTF.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-/* 책 설명 */
-@font-face {
-    font-family: 'MinSans-Medium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/MinSans-Medium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-/* -------사이트 전체 적용------- */
-body, div, ul, li, dl, dt, ol, h1, h2, h3, h4, h5, 
-h6, input, fieldset, legend, p, select, table, th, 
-td, tr, textarea, button, form {
-    margin: 0; padding: 0;
-}
-/* clearfix */
-.clearfix{*zoom:1;}
-.clearfix:before, .clearfix:after {display: block; content: ""; line-height: 0;}
-.clearfix:after {clear: both;}
-
-body {
-    font-family: 'MinSans-Medium';
-    font-size: 12px;
-}
-
-#wrap {
-    width: 1130px;
-    margin: 0px auto;
-}
-
-/* 파란색 #2699fb */
-
-
-/* ---------------레이아웃-------------- */
-#header {
-    /* background-color: aqua; */
-    /* border: 2px solid #000000; */
-    padding: 30px 0px 30px 0px;
-    /* border-bottom: 2px solid #dddddd; */
-}
-
-#contents {
-    padding: 10px 0px 40px 0px;
-    margin-bottom: 40px;
-
-    border-bottom-style: solid;
-    border-bottom-width: 2px;
-    border-bottom-color: #e4e4e4;
-}
-
 /* ---------헤더---------- */
 #header {
     background-color: #FFFFFF;
@@ -71,8 +14,8 @@ body {
 }
 
 #header>ul>span>.img-circle {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     cursor:pointer;
 }
 
@@ -111,7 +54,7 @@ body {
 #book_detail>h1 {
     font-family: 'KOHIBaeumOTF';
     font-size: 25px;
-    color: #666666;
+    color: #707070;
     margin: 10px 0px 20px 0px;
 }
 
@@ -119,7 +62,7 @@ body {
 #book_detail>h3 {
     font-family: 'MinSans-Medium';
     font-size: 20px;
-    color: #adaaaa;
+    color: #B4B4B4;
     margin: 0px 0px 20px 0px;
 }
 
@@ -144,14 +87,38 @@ body {
 }
 
 #btn_review>button {
-    padding: 15px 40px 15px 40px;
+    padding: 10px 40px 10px 40px;
     margin: 5px;
+    border-radius: 10px;
 }
 
 #btn_write {
     float:right;
     padding: 10px 60px 10px 60px;
     background-color: #2699fb;
+    border-style: none;
+    border-radius: 10px;
+}
+
+#list>ul {
+    margin-left: 25px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#list>ul>li{
+    margin: 0px 15px 0px 5px;
+    float: left;
+    color: #309BF8;
+}
+#list>ul>li span{
+    position:relative;
+    left:-0.5em;
+    color: #707070;
+}
+#list>span{
+    text-align: right;
+    margin: 0px 5px 0px 430px;
 }
 
 /* ------------컨텐츠 (책서평)---------------- */
@@ -168,19 +135,23 @@ body {
 .jumbotron {
     border-radius: 15px;
     margin: 15px 0px 0px 0px;
-    padding: 35px 45px 35px 45px;
+    padding: 45px 80px 45px 80px;
+    background-color: #F7F7F7;
 }
 
 .jumbotron>div>h3 {
-    font-size: 25px;
+    font-size: 20px;
     font-weight: bold;
     color: #666666;
 
     margin-bottom: 25px;
+    display: inline;
 }
 
 .jumbotron>div>p {
     color: #adaaaa;
+    margin-top: 10px;
+    font-size: 16px;
 }
 
 #review_first{
@@ -189,21 +160,124 @@ body {
     margin-bottom: 20px;
 }
 
+#review_first>a {
+    float: right;
+    font-size: 16px;
+    margin-right: 10px;
+    text-decoration: none;    
+}
+
+#review_first span a {
+    color: #707070;
+    font-weight: bold;
+    font-size: 20px;
+}
+
 #review_first>span {
-    background-color: #2699fb;
-    color: white;
-    border-radius: 5px;
-    padding: 5px 20px 5px 20px;
+    /* background-color: #2699fb; */
+    color: rgb(189, 189, 189);
+    padding: 3px 3px 0px 0px;
+}
+
+#review_first #tag_btn {
+    background-color: #2699FB;
+    border-radius: 4px;
+    color: #FFFFFF;
+    padding: 5px 10px 5px 10px;
+    margin-bottom: 10px;
 }
 
 .review_like {
     margin: 5px;
+    color: #ABAAAC;
 }
 
 .pagination {
     margin: 35px 430px 40px 430px;
 }
 
+.icon-success {
+    font-size: 13px;
+}
+
+#btn_like {
+    cursor: pointer;
+    color: #2699FB;
+}
+
+/* 더보기 */
+
+.dropup>a{
+    color: #B4B4B4;
+}
+
+#review_second .dropup{
+    display: inline-block;
+    margin-left: 10px; 
+}
+
+#review_second .dropup :hover{
+    cursor: pointer;
+}
+#review_second .dropup li a{
+    color:#707070 !important;
+    padding: 3px 10px !important;
+    width: 180px;
+}
+
+.dropup li a span{
+    float:right;
+    padding-right: 10px;
+}
+
+#review_second #plus{
+    font-size: 20px;
+}
+
+.radius-15 {
+    border-radius: 15px;
+}
+
+
+
+/* 말줄임 */
+.multiline-ellipsis {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    word-wrap : break-word; 
+    text-align : left; 
+    line-height: 1.2;
+
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+
+    /* 폰트 */
+    color: #707070;
+    margin-top: 15px;
+    font-size: 16px;
+    margin-bottom: 15px;
+
+    width: 660px;
+    height: 60px;
+}
+
+/* --------------footer------------- */
+#footer {
+    margin: 50px 0px 60px 0px;
+    border-top : 2px solid #e4e4e4;
+    padding: 15px 0px 0px 0px;
+    color: #666666;
+}
+#footer>div{
+    float: left;
+}
+#footer>a {
+    float: right;
+    margin: 18px 10px 0px 0px;
+}
 
 /* --------------연습 */
 

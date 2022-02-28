@@ -40,6 +40,11 @@ body {
     width:1130px !important;
 }
 
+/*************공통 action**************/
+a:hover{
+    cursor: pointer;
+}
+
 
 
 /* ---------------레이아웃-------------- */
@@ -48,15 +53,6 @@ body {
     /* border: 2px solid #000000; */
     padding: 30px 0px 30px 0px;
     /* border-bottom: 2px solid #dddddd; */
-}
-
-#contents {
-    padding: 10px 0px 40px 0px;
-    margin-bottom: 40px;
-
-    border-bottom-style: solid;
-    border-bottom-width: 2px;
-    border-bottom-color: #e4e4e4;
 }
 
 /* ---------헤더---------- */
@@ -98,12 +94,14 @@ body {
 #nav li{
     font-size: 18px;
     font-weight: bold;
+   
 }
 
 /*서평페이지 한정*/
 /* ------------content---------------- */
 #content {
-    padding : 20px 25px 20px 25px;
+    padding : 20px 25px;
+    width: 753px;
 }
 #list>ul{
     display: inline-block;
@@ -138,25 +136,29 @@ body {
     text-align: right;
     padding: 2px 6px;
     font-size: 12px;
+    color: #707070 !important;
 }
-.jumbotron {
+#category li a{
+    color: #B4B4B4 !important;
+}
+#writebox {
     border-radius: 15px  !important ;
     margin: 15px 0px 10px 0px !important;
-    padding: 20px 10px 10px 30px !important;
+    padding: 30px 10px 0px 30px !important;
     background-color: rgba(48, 155, 248, 0.2) !important;
     height : 180px;
 }
-.jumbotron h1 {
+#writebox h1 {
     font-size: 25px  !important ;
     font-weight: bold;
     color: rgba(38, 153, 251, 1)  !important ;
     margin-bottom: 15px !important;
 }
-.jumbotron>p>a{
+#writebox>p>a{
     background-color : rgba(38, 153, 251, 1);
     border: rgba(38, 153, 251, 1);
 }
-.jumbotron p {
+#writebox p {
     font-size: 15px !important ;
     padding : 0px !important;
     color: #888888;
@@ -165,33 +167,42 @@ body {
     padding : 0px 10px 0px 10px;
 }
 
-/* -------------서평------------- */
+
+/*************서평****************/
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
 #reviews{
+    width: 700px;
     margin : 10px 0px;
     background-color: #e7e7e7;
     padding : 15px 30px;
     border-radius: 15px;
 }
-#reviews>a{
-    margin : 10px 0px;
+#reviews-header{
+    /*********리뷰박스크기따라조정할것*********/
+    width: 640px;
+    height : 25px;
+    margin-bottom : 3px;
+}
+#reviews-header>div>p{
     font-size: 17px;
     font-weight: bold;
     color: #707070;
 }
-#reviews-modi{
-    display: inline-block;
-    width: 580px;
-    margin: 0;
-    padding : 0px 0px 5px 0px;
-    text-align: right;
+#reviews-header .right{
+    padding:5px 3px 0px 0px;
 }
-#reviews-modi>a{
-    margin: 0px 0px 0px 5px;
+#reviews-header>div>a{
+    margin-left: 5px;
     color: #888888;
     font-size: 12px;
 }
 #reviewer{
-    margin: 0px 0px 10px 0px;
+    margin: 0px 0px 5px 0px;
 }
 #reviewer>a{
     font-size: 12px;
@@ -203,32 +214,47 @@ body {
     padding: 0px 0px 10px 0px;
     margin: 0px 0px 10px 0px;
 }
+#reviews-content>p{
+    margin-bottom: 5px;
+}
 #reviews-content>span{
+    margin-top: 3px;
     background-color: #309BF8; 
 }
 #reviews-footer{
+    /*********리뷰박스크기따라조정할것*********/
+    width: 640px;
+    height : 15px;
     color: #ABAAAC;
-    margin : 10px 0px 0px 0px;
+    margin-top : 10px;
 }
-#reviews-footer>span{
-    margin : 0px 5px 0px 0px;
+#reviews-footer span{
+    margin-right : 5px;
 }
-#reviews-footer>#heart{
+#reviews-footer #heart{
     color: #309BF8;
-    margin: 0px 0px 0px 5px;
+    padding: 2px 0px 0px 5px;
 }
-#reviews-footer>#more{
-    margin: 0px 0px 0px 450px;
-}
-#reviews-footer>#more>a{
+#reviews-footer .dropup a{
     color: #707070;
 }
-
-
+#reviews-footer .dropup li a{
+    color:#B4B4B4 !important;
+    padding: 3px 10px !important;
+    width: 180px;
+}
+#reviews-footer .dropup li a span{
+    float:right;
+    padding-right: 10px;
+}
+#reviews-footer #plus{
+    font-size: 20px;
+}
 
 
 /* ------------aside---------------- */
 #profile-box {
+    width: 373px;
     margin : 35px 5px 20px 5px;
 }
 #profile {
