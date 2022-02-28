@@ -426,7 +426,7 @@ i.fa-solid에 position: absolute 을 줘서
   background-color: #fff;
   color: #707070;
   width: 400px;
-  height: 200px;
+  height: 150px;
   border-radius: 10px;
   top: 50%;
   left: 50%;
@@ -441,7 +441,10 @@ i.fa-solid에 position: absolute 을 줘서
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-bottom: 0.5rem;
   margin-bottom: 1rem;
+  font-weight: bold;
+  border-bottom: 2px solid #707070;
 }
 .playlistAddModal .modal-header .modal-closeBtn {
   border: none;
@@ -450,6 +453,25 @@ i.fa-solid에 position: absolute 을 줘서
 }
 .playlistAddModal .modal-header .modal-closeBtn i {
   font-size: 2rem;
+}
+.playlistAddModal form input {
+  font-size: 1.3rem;
+  padding: 0.3rem;
+  width: 17rem;
+  margin-right: 1rem;
+}
+.playlistAddModal form button {
+  font-size: 1rem;
+  padding: 0.4rem 1rem;
+  background: #2699fb;
+  color: white;
+  border: 1px solid #2699fb;
+  border-radius: 0.5rem;
+}
+.playlistAddModal form button:hover {
+  color: #2699fb;
+  background: #707070;
+  border: 1px solid #707070;
 }
 /***************** 모달 > 서평 플레이리스트에 추가 ****************/
 .addReviewModal {
@@ -471,8 +493,8 @@ i.fa-solid에 position: absolute 을 줘서
 }
 .addReviewModal .input-box input {
   padding: 0.5rem;
-  background: #d4d4d4;
-  border: none;
+  /* background: #d4d4d4; */
+  border: 1px solid #707070;
   border-radius: 0.5rem;
   width: 20rem;
 }
@@ -498,6 +520,7 @@ i.fa-solid에 position: absolute 을 줘서
   justify-content: space-between;
   border-bottom: 1px solid #cfcfcf;
   padding: 1rem 0.5rem;
+  font-weight: bold;
 }
 .addReviewModal .playlist-box ul .playlist-li button {
   border: none;
@@ -515,7 +538,7 @@ i.fa-solid에 position: absolute 을 줘서
 /* 스크롤바 막대 설정*/
 .playlist-box::-webkit-scrollbar-thumb {
   height: 17%;
-  background-color: rgb(248, 7, 7);
+  background-color: #2699fb;
   /* 스크롤바 둥글게 설정    */
   border-radius: 10px;
 }
