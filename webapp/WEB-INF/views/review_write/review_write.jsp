@@ -290,7 +290,7 @@
 			</div>
 
 			<!-- 플레이리스트 모달창 -->
-            <div class="modal" id="modal_playlist" tabindex="-1">
+            <div class="modal fade" id="modal_playlist" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-container">

@@ -119,7 +119,7 @@
                                 <li role="presentation" class="divider"></li>
                                 <li role="presentation" ><a id="shr_review" role="menuitem" tabindex="-1" href="#">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
                                 <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
+                                <li role="presentation"><li role="presentation"><a id="save_img" role="menuitem" target="_blank" tabindex="-1" href="/bookproject/imgpreview">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
 
@@ -170,7 +170,7 @@
                                 <li role="presentation" class="divider"></li>
                                 <li role="presentation" ><a id="shr_review" role="menuitem" tabindex="-1" href="#">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
                                 <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
+                                <li role="presentation"><li role="presentation"><a id="save_img" role="menuitem" target="_blank" tabindex="-1" href="/bookproject/imgpreview">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
 
@@ -221,7 +221,7 @@
                                 <li role="presentation" class="divider"></li>
                                 <li role="presentation" ><a id="shr_review" role="menuitem" tabindex="-1" href="#">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
                                 <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
+                                <li role="presentation"><li role="presentation"><a id="save_img" role="menuitem" target="_blank" tabindex="-1" href="/bookproject/imgpreview">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
 
@@ -250,7 +250,7 @@
                                 <img src="/bookproject/asset/img/share/twitter.png" />
                             </a>
                             <a id="kakaostory-link-btn" href="">
-                                <img src="/bookproject/front/img/share/kakaostory.png" />
+                                <img src="/bookproject/asset/img/share/kakaostory.png" />
                             </a>
                         </div>
                         <div class="modal-footer">
@@ -295,48 +295,6 @@
          
     </body>
 
-    <script type="text/javascript">
-        $('[role="menuitem"]').on('click',function(){
-            console.log('클릭');
-
-            $('#myModal').modal('show');
-
-        });
-
-
-        // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-        Kakao.init('JAVASCRIPT_KEY');
-
-        // SDK 초기화 여부를 판단합니다.
-        console.log(Kakao.isInitialized());
-
-        function kakaoShare() {
-            Kakao.Link.sendDefault({
-                objectType: 'feed',
-                content: {
-                    title: '카카오공유하기 시 타이틀',
-                    description: '카카오공유하기 시 설명',
-                    imageUrl: '카카오공유하기 시 썸네일 이미지 경로',
-                    link: {
-                    mobileWebUrl: '카카오공유하기 시 클릭 후 이동 경로',
-                    webUrl: '카카오공유하기 시 클릭 후 이동 경로',
-                    },
-                },
-                buttons: [
-                    {
-                        title: '웹으로 보기',
-                        link: {
-                        mobileWebUrl: '카카오공유하기 시 클릭 후 이동 경로',
-                        webUrl: '카카오공유하기 시 클릭 후 이동 경로',
-                        },
-                    },
-                ],
-                // 카카오톡 미설치 시 카카오톡 설치 경로이동
-                installTalk: true,
-            })
-        }
-
-
-    </script>
+    <script src="/bookproject/asset/js/more.js"></script>
 
 </html>
