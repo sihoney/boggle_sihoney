@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -291,7 +290,7 @@
 			</div>
 
 			<!-- 플레이리스트 모달창 -->
-            <div class="modal fade" id="modal_playlist" tabindex="-1">
+            <div class="modal" id="modal_playlist" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-container">
