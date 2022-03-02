@@ -129,14 +129,36 @@ font-family: 'Nanum Myeongjo';
   }
 
 
+  /**/
 
+#ex_input{
+    
+    width:1000px;
+    height:60px;
+    padding:20px;
+    background-color:#F7F7F7;
+    border-radius: 12px;
+    border-color: #E4E4E4;
+    font-size: large;
+}
+
+#add-1{
+    display: inline-block;
+border-radius: 10px;
+margin: 20px;
+padding: 10px 16px;
+background-color:#F7F7F7;
+color: #666666;
+border-color: #B4B4B4;
+display:block;
+}
 
 /* 책 선택하기 */
 #contents #book_select h1 {
 	padding: 30px 0px 10px 0px;
     margin: 50px 30px 10px 0px;
 	float:left;
-    font-family: 'KOHIBaeumOTF';
+    font-family: 'MinSans-Medium';
     font-size: 25px;
     color: #666666;
 }
@@ -161,7 +183,7 @@ font-family: 'Nanum Myeongjo';
 
 /* 책 제목 */
 #book_detail>h1 {
-    font-family: 'KOHIBaeumOTF';
+    font-family: 'MinSans-Medium';
     font-size: 25px;
     color: #666666;
     margin: 10px 0px 20px 0px;
@@ -213,7 +235,7 @@ font-family: 'Nanum Myeongjo';
 	padding: 30px 0px 10px 0px;
     margin: 50px 30px 10px 0px;
 	float:left;
-    font-family: 'KOHIBaeumOTF';
+    font-family: 'MinSans-Medium';
     font-size: 25px;
     color: #666666;
 }
@@ -229,9 +251,9 @@ font-family: 'Nanum Myeongjo';
 /* 스타일 */
 #contents #style h1{
 	padding: 30px 0px 10px 0px;
-    margin: 150px 30px 10px 0px;
+    margin: 20px 30px 10px 0px;
 	float:center; 
-    font-family: 'KOHIBaeumOTF';
+    font-family: 'MinSans-Medium';
     font-size: 25px;
     color: #666666;	
 }
@@ -285,11 +307,13 @@ font-family: 'Nanum Myeongjo';
 } */
 
 
+
+
 /* 플레이리스트에 추가 */
 #contents #add_playlist h1 {
 	padding: 30px 0px 10px 0px;
     margin: 50px 30px 10px 0px;
-    font-family: 'KOHIBaeumOTF';
+    font-family: 'MinSans-Medium';
     font-size: 25px;
     color: #666666;
 }
@@ -398,7 +422,7 @@ font-family: 'Nanum Myeongjo';
 #contents #download_img h1 {
 	padding: 30px 0px 10px 0px;
     margin: 50px 30px 10px 0px;
-    font-family: 'KOHIBaeumOTF';
+    font-family: 'MinSans-Medium';
     font-size: 25px;
     color: #666666;
 }
@@ -528,3 +552,134 @@ font-family: 'Nanum Myeongjo';
 
 
 
+
+
+/* ------------컨텐츠 (책서평)---------------- */
+#contents_review>ul>li {
+    float:left;
+    margin: 0px 30px 0px 0px;
+}
+
+.review_list {
+    margin: 0px 0px 0px 40px;
+    font-size: 15px;
+}
+
+.jumbotron {
+    border-radius: 15px;
+    margin: 25px 0px 0px 0px;
+    padding: 25px 60px 25px 60px;
+    background-color: #F7F7F7;
+}
+
+.jumbotron>div>h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #666666;
+
+    margin-bottom: 25px;
+    display: inline;
+}
+
+.jumbotron>div>p {
+    color: #adaaaa;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.review_modify {
+    float: right;
+    font-size: 16px;
+    margin-right: 10px;
+    text-decoration: none;    
+}
+
+#review_first span a {
+    color: #707070;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#review_first>span {
+    /* background-color: #2699fb; */
+    color: rgb(189, 189, 189);
+    padding: 3px 3px 0px 0px;
+}
+
+.review_nick {
+    display: block;
+    font-size: 20px;
+    color: #B4B4B4;
+
+    margin-top: 10px;
+}
+
+#tag_btn {
+    background-color: #2699FB;
+    border-radius: 4px;
+    color: #FFFFFF;
+    padding: 5px 10px 5px 10px;
+    margin-bottom: 10px;
+}
+
+.review_like {
+    margin: 5px;
+    color: #ABAAAC;
+    font-size: 15px;
+}
+
+.pagination {
+    margin: 35px 430px 40px 430px;
+}
+
+.icon-success {
+    font-size: 13px;
+}
+
+#btn_like {
+    cursor: pointer;
+    color: #2699FB;
+    font-size: 15px;
+}
+
+
+/* 말줄임 */
+.multiline-ellipsis {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    word-wrap : break-word; 
+    text-align : left; 
+    line-height: 1.2;
+
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+
+    /* 폰트 */
+    color: #707070;
+    margin-top: 15px;
+    font-size: 16px;
+    margin-bottom: 15px;
+
+    width: 660px;
+    height: 60px;
+}
+
+.review_add {
+    font-size: 20px;
+    margin: 50px;
+    text-align: center;
+}
+
+.review_add>a {
+    color: #707070;
+    cursor: pointer;
+}
+
+
+#btn_add {
+    border-radius: 10px;
+    border-style: none;
+}

@@ -246,3 +246,9 @@ body {
 .right{
     float: right;
 }
+
+.edit{
+    float:right;
+    font-size: 16px;
+    color:#F7F7F7;
+}
