@@ -145,7 +145,7 @@ a:hover{
     margin-bottom: 20px;
 }
 #content>div>div{
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 .minicontent{
     width: 1080px;
@@ -156,27 +156,27 @@ a:hover{
     font-weight: bold;
     font-size: 20px;
     color : #707070;
-    margin-left: 30px;
+    
 }
 .minicontent>#more>p{
     font-size: 15px;
     color: #ABAAAC;
     margin-top: 5px;
-    margin-right: 30px;
+    
 }
 
 
 /*************컨텐츠1 : 서평****************/
 #reviews{
-    width: 1000px;
-    margin : 15px 40px;
+    width: 1050px;
+    margin : 15px 10px;
     background-color: #e7e7e7;
     padding : 15px 30px;
     border-radius: 15px;
 }
 #reviews-header{
     /*********리뷰박스크기따라조정할것*********/
-    width: 940px;
+    width: 990px;
     height : 25px;
     margin-bottom : 3px;
 }
@@ -216,7 +216,7 @@ a:hover{
 }
 #reviews-footer{
     /*********리뷰박스크기따라조정할것*********/
-    width: 940px;
+    width: 990px;
     height : 15px;
     color: #ABAAAC;
     margin-top : 10px;
@@ -250,9 +250,9 @@ a:hover{
 }
 #content2>div>.likewriter{
     display: inline-block;
-    width: 300px;
+    width: 250px;
     height: 400px;
-    margin: 5px 10px;
+    margin: 5px 5px;
     background-color: #e7e7e7;
     border-radius: 15px;
     text-align: center;
@@ -277,7 +277,7 @@ a:hover{
 }
 .likewriter>p{
     margin: 20px 0px;
-    width: 300px;
+    width: 250px;
     height: 100px;
     padding: 10px 50px;
     text-align: center;
@@ -288,16 +288,16 @@ a:hover{
 
 /***********컨텐츠3************/
 #content3>#background>div{
-    margin-bottom: 120px;
+    margin-bottom: 20px;
     background:linear-gradient(#FFFFFF00, #EAEAEA);
     padding: 0px 10px;
     text-align: center;
 }
 #content3>div img{
     display:inline-block;
-    width: 200px;
-    height: 286px;
-    margin: 10px 15px 0px 15px;
+    width: 190px;
+    height: 276px;
+    margin: 10px 5px 0px 5px;
 }
 
 /**************컨텐츠4****************/
@@ -306,89 +306,36 @@ a:hover{
     color: #ABAAAC;
     margin-left: 35px;
 }
-#content4 #a{    
-    padding: 0px 30px;
-}
 
-
-/*body*/
-.columns{
-    margin-bottom: 20px;
-    
-}
-
-#name{
-    font-size: large;
-    font-weight: 500;
-}
-
-.text-name{
-    height: 40px;
-}
 /*gallery*/
-#container-1{
-    width: 400px;
-}
-
-#container-2{
-    width: 400px;
-}
-
-
-.sub{
-    clear:both;
-    color:#B4B4B4;
-}
-
-
-.newplaylist{
-    float:right;
-    color:#ffffff;
-    background-color: #2699FB;
-    width: 160px; height: 40px;
+#content4 #playlist{
+    padding: 0px 30px;
     text-align: center;
-    padding:12px;
+}
+
+.nail{
+    display: inline-block;
+    width: 180px;
+    height: 180px;
     border-radius: 12px;
+    color:#ffffff;
+    text-align: left;
+    margin: 10px;
+}
+.nail>div{
+    display: table;
+    width: 180px;
+    height: 100px;
 }
 
-.nail-first{
-    float:left;
-    background : #7656FD;
-    height: 160px; width:160px;
-    border-radius:12px;
-    color:#ffffff;
-    text-align :left;
-    margin: 16px;
+.purple{
+    background-color : #7656FD;
 }
-
-.nail-sec{
-    float:left;
-    background : #63307E;
-    height: 160px; width:160px;
-    border-radius:12px;
-    color:#ffffff;
-    text-align :left;
-    margin: 16px;
+.deeppurple{
+    background-color : #63307E;
 }
-
-.nail-thrd{
-    float:left;
-    background : #31A848;
-    height: 160px; width:160px;
-    border-radius:12px;
-    color:#ffffff;
-    text-align :left;
-    margin: 16px;
-}
-
-.nail-four{
-    float:left;
-    background : #31A848;
-    height: 160px; width:160px;
-    border-radius:12px;
-    color:#ffffff;
-    text-align :left;
-    margin: 16px;
+.green{
+    background-color:  #31A848;
 }
 
 .nail-desc{
@@ -397,8 +344,10 @@ a:hover{
 }
 
 #opac{
+    display: table-cell;
+    vertical-align: bottom;
     background : #ffffff7c;
-    height: 70px; width:160px;
+    height: 80px; width:180px;
     border-bottom-right-radius:12px;
     border-bottom-left-radius:12px;
 
