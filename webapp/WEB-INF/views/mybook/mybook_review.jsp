@@ -9,7 +9,7 @@
         <title></title>
         <link rel="stylesheet" href="/bookproject/asset/bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="/bookproject/asset/css/mybook_review.css">
-        <link rel="stylesheet" href="/bookproject/asset/css/book_detail_modal.css">
+        <link rel="stylesheet" href="/bookproject/asset/css/modal.css">
 
         <script src="/bookproject/asset/js/jquery-1.12.4.js"></script>
         <script src="/bookproject/asset/bootstrap/js/bootstrap.js"></script>
@@ -24,15 +24,15 @@
             <!-- ------nav------ -->
             <div id="nav" class="clearfix">
 		       <ul class="nav nav-tabs">
-		           <li role="presentation" class="active"><a href="#">내 서평</a></li>
-		           <li role="presentation"><a href="#">취향저격</a></li>
+		           <li role="presentation" class="active"><a href="">내 서평</a></li>
+		           <li role="presentation"><a href="">취향저격</a></li>
 		           <!--세션 아이디와 사이트아이디 같을때-->
-		           <li role="presentation"><a href="#">통계</a></li>
+		           <li role="presentation"><a href="">통계</a></li>
 		       </ul>
 		       <!-- 세션아이디랑 다를때는
 		       <ul class="nav nav-tabs">
-		           <li role="presentation"><a href="#">'유저이름'님의 서평</a></li>
-		           <li role="presentation" class="active"><a href="#">취향저격</a></li>
+		           <li role="presentation"><a href="">'유저이름'님의 서평</a></li>
+		           <li role="presentation" class="active"><a href="">취향저격</a></li>
 		       </ul>	       
 		        -->
 	   		</div>
@@ -48,7 +48,7 @@
                         <div id="writebox" class="jumbotron">
                             <h1>서평 기록하기</h1>
                             <p>'유저이름'님 오늘은 어떤 책을 읽으셨나요?</p>
-                            <p><a class="btn btn-primary btn-md" href="#" role="button">기록하기</a></p>
+                            <p><a class="btn btn-primary btn-md" href="" role="button">기록하기</a></p>
                         </div>
                         <!-- list -->
                         <div id="list">
@@ -63,10 +63,10 @@
                                   <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">즐거운</a></li>
-                                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">우울한</a></li>
-                                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">화난</a></li>
-                                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">감성적인</a></li>
+                                  <li role="presentation"><a role="menuitem" tabindex="-1" href="">즐거운</a></li>
+                                  <li role="presentation"><a role="menuitem" tabindex="-1" href="">우울한</a></li>
+                                  <li role="presentation"><a role="menuitem" tabindex="-1" href="">화난</a></li>
+                                  <li role="presentation"><a role="menuitem" tabindex="-1" href="">감성적인</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -102,7 +102,7 @@
                                             <span class="caret"></span>
                                         </a>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-                                            <li role="presentation"><a id="" role="menuitem" tabindex="-1" href="#">플레이리스트에 추가<span id="plus">+</span></a></li>
+                                            <li role="presentation"><a id="" role="menuitem" tabindex="-1" href="">플레이리스트에 추가<span id="plus">+</span></a></li>
                                             <li role="presentation" class="divider"></li>
                                             <li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
                                             <li role="presentation" class="divider"></li>
@@ -143,11 +143,11 @@
                                             <span class="caret"></span>
                                         </a>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">플레이리스트에 추가<span id="plus">+</span></a></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="">플레이리스트에 추가<span id="plus">+</span></a></li>
                                             <li role="presentation" class="divider"></li>
                                             <li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
                                             <li role="presentation" class="divider"></li>
-                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -184,11 +184,11 @@
                                             <span class="caret"></span>
                                         </a>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">플레이리스트에 추가<span id="plus">+</span></a></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="">플레이리스트에 추가<span id="plus">+</span></a></li>
                                             <li role="presentation" class="divider"></li>
                                             <li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
                                             <li role="presentation" class="divider"></li>
-                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -226,36 +226,7 @@
             <!--content-->
 
             
-            <!-- 모달창 -->
-            <div id="myModal" class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">공유하기</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>playbook의 서평을 SNS에 공유해 보세요 :)</p>
-                            <a id="kakao-link-btn" href="javascript:kakaoShare()">
-                                <img src="/bookproject/asset/img/share/kakao.jpg" />
-                            </a>
-                            <a id="facebook-link-btn" href="">
-                                <img src="/bookproject/asset/img/share/facebook.jpg" />
-                            </a>
-                            <a id="twitter-link-btn" href="">
-                                <img src="/bookproject/asset/img/share/twitter.png" />
-                            </a>
-                            <a id="kakaostory-link-btn" href="">
-                                <img src="/bookproject/asset/img/share/kakaostory.png" />
-                            </a>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-            <!-- Modal -->
+            
             
             <!-- footer -->
             <c:import url="/WEB-INF/views/include/footer.jsp"></c:import>

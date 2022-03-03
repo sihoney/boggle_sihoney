@@ -17,6 +17,7 @@
 
         <link rel="stylesheet" href="/bookproject/asset/css/source.css">
         <link rel="stylesheet" href="/bookproject/asset/css/user_analyze.css">
+        <link rel="stylesheet" href="/bookproject/asset/css/modal.css">        
     </head>
 
     <body>
@@ -25,20 +26,22 @@
             <!-- 헤더 -->
             <c:import url="/WEB-INF/views/include/header.jsp"></c:import>
             
-        <div id="nav" class="clearfix">
-	       <ul class="nav nav-tabs">
-	           <li role="presentation"><a href="#">내 서평</a></li>
-	           <li role="presentation"><a href="#">취향저격</a></li>
-	           <!--세션 아이디와 사이트아이디 같을때-->
-	           <li role="presentation" class="active"><a href="#">통계</a></li>
-	       </ul>
-	       <!-- 세션아이디랑 다를때는
-	       <ul class="nav nav-tabs">
-	           <li role="presentation"><a href="#">'유저이름'님의 서평</a></li>
-	           <li role="presentation" class="active"><a href="#">취향저격</a></li>
-	       </ul>	       
-	        -->
-   		</div>
+        	<!-- ------nav------ -->
+            <div id="nav" class="clearfix">
+		       <ul class="nav nav-tabs">
+		           <li role="presentation"><a href="">내 서평</a></li>
+		           <li role="presentation"><a href="">취향저격</a></li>
+		           <!--세션 아이디와 사이트아이디 같을때-->
+		           <li role="presentation" class="active"><a href="">통계</a></li>
+		       </ul>
+		       <!-- 세션아이디랑 다를때는
+		       <ul class="nav nav-tabs">
+		           <li role="presentation"><a href="">'유저이름'님의 서평</a></li>
+		           <li role="presentation" class="active"><a href="">취향저격</a></li>
+		       </ul>	       
+		        -->
+	   		</div>
+            <!-- ------nav------ -->
 
             <!-- ------통계 컨텐츠------ -->                  
             <div>
@@ -220,7 +223,7 @@
                                     <!-- <span class="caret"></span> -->
                                 </a>
                                 <ul class="dropdown-menu radius-15" role="menu" aria-labelledby="dropdownMenu2">
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">플레이리스트에 추가<span id="plus">+</span></a></li>
+                                    <li role="presentation"><a id="add_pli" role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
                                     <li role="presentation" class="divider"></li>
                                     <li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
                                     <li role="presentation" class="divider"></li>
@@ -233,6 +236,10 @@
                 <!-- -----베스트 서평 박스------ -->
                 </div>
                 <!-- ------------------------------- -->
+                
+                <c:import url="/WEB-INF/views/include/modal.jsp"></c:import>
+            
+                
             </div>
             <!-- ------------------------------- -->
             <!-- footer -->
@@ -242,9 +249,6 @@
 
     </body>
 
-    <script>
-
-        
-    </script>
+    <script src="/bookproject/asset/js/more.js"></script>
 
 </html>

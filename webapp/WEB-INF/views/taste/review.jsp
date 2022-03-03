@@ -17,28 +17,28 @@
 		<!-- ------nav------ -->
 		<div id="nav" class="clearfix">
 			<ul class="nav nav-tabs">
-				<li role="presentation"><a href="#">내 서평</a></li>
-				<li role="presentation" class="active"><a href="#">취향저격</a></li>
+				<li role="presentation"><a href="">내 서평</a></li>
+				<li role="presentation" class="active"><a href="">취향저격</a></li>
 				<!--세션 아이디와 사이트아이디 같을때-->
-				<li role="presentation"><a href="#">통계</a></li>
+				<li role="presentation"><a href="">통계</a></li>
 			</ul>
 			<!-- 세션아이디랑 다를때는
 		      <ul class="nav nav-tabs">
-		          <li role="presentation"><a href="#">'유저이름'님의 서평</a></li>
-		          <li role="presentation" class="active"><a href="#">취향저격</a></li>
+		          <li role="presentation"><a href="">'유저이름'님의 서평</a></li>
+		          <li role="presentation" class="active"><a href="">취향저격</a></li>
 		      </ul>	       
 		       -->
 		</div>
 		<!-- ------nav2------ -->
 		<ul id="nav2" class="nav nav-pills">
 			<!-- 세션아이디와 비교, 다를경우 '이름님의 취향' -->
-			<!-- <li role="presentation" class="active"><a href="#">'유저이름'님의 취향</a></li> -->
-			<li role="presentation"><a href="#">my 취향</a></li>
-			<li role="presentation" class="active"><a href="#">좋아요한 서평</a></li>
-			<li role="presentation"><a href="#">관심가는 책</a></li>
-			<li role="presentation"><a href="#">플레이리스트</a></li>
+			<!-- <li role="presentation" class="active"><a href="">'유저이름'님의 취향</a></li> -->
+			<li role="presentation"><a href="">my 취향</a></li>
+			<li role="presentation" class="active"><a href="">좋아요한 서평</a></li>
+			<li role="presentation"><a href="">관심가는 책</a></li>
+			<li role="presentation"><a href="">플레이리스트</a></li>
 			<!-- 세션아이디와 비교, 같은 사람일경우에만 보이게 -->
-			<li role="presentation"><a href="#">통계</a></li>
+			<li role="presentation"><a href="">통계</a></li>
 		</ul>
 		
 		<div>
@@ -46,14 +46,14 @@
 		</div>
 		<!--tag nav-->
 		<ul class="nav nav-pills">
-			<li role="presentation" class="active"><a href="#">두근두근하는</a></li>
-			<li role="presentation"><a href="#">스팩타클한</a></li>
-			<li role="presentation"><a href="#">감동적인</a></li>
-			<li role="presentation"><a href="#">섬뜩한</a></li>
-			<li role="presentation"><a href="#">잔잔한</a></li>
-			<li role="presentation"><a href="#">용기를 북돋는</a></li>
-			<li role="presentation"><a href="#">눈물나는</a></li>
-			<li role="presentation"><a href="#">환상적인</a></li>
+			<li role="presentation" class="active"><a href="">두근두근하는</a></li>
+			<li role="presentation"><a href="">스팩타클한</a></li>
+			<li role="presentation"><a href="">감동적인</a></li>
+			<li role="presentation"><a href="">섬뜩한</a></li>
+			<li role="presentation"><a href="">잔잔한</a></li>
+			<li role="presentation"><a href="">용기를 북돋는</a></li>
+			<li role="presentation"><a href="">눈물나는</a></li>
+			<li role="presentation"><a href="">환상적인</a></li>
 		</ul>
 		<!-- 서평 리스트 -->
 		<div id="reviews">
@@ -85,7 +85,7 @@
 						<a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 더보기 <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">플레이리스트에 추가<span id="plus">+</span></a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="">플레이리스트에 추가<span id="plus">+</span></a></li>
 							<li role="presentation" class="divider"></li>
 							<li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
 							<li role="presentation" class="divider"></li>

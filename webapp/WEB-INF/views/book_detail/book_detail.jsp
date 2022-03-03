@@ -17,7 +17,7 @@
 
         <link rel="stylesheet" href="/bookproject/asset/css/source.css">
         <link rel="stylesheet" href="/bookproject/asset/css/book_detail.css">
-        <link rel="stylesheet" href="/bookproject/asset/css/book_detail_modal.css">
+        <link rel="stylesheet" href="/bookproject/asset/css/modal.css">
 
         <!-- kakao sdk 호출 -->
         <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -98,7 +98,7 @@
                                 <!-- <span class="caret"></span> -->
                             </a>
                             <ul class="dropdown-menu radius-15" role="menu" aria-labelledby="dropdownMenu2">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">플레이리스트에 추가<span id="plus">+</span></a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="">플레이리스트에 추가<span id="plus">+</span></a></li>
                                 <li role="presentation" class="divider"></li>
                                 <li role="presentation" ><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
                                 <li role="presentation" class="divider"></li>
@@ -149,7 +149,7 @@
                                 <!-- <span class="caret"></span> -->
                             </a>
                             <ul class="dropdown-menu radius-15" role="menu" aria-labelledby="dropdownMenu2">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">플레이리스트에 추가<span id="plus">+</span></a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="">플레이리스트에 추가<span id="plus">+</span></a></li>
                                 <li role="presentation" class="divider"></li>
                                 <li role="presentation" ><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
                                 <li role="presentation" class="divider"></li>
@@ -200,7 +200,7 @@
                                 <!-- <span class="caret"></span> -->
                             </a>
                             <ul class="dropdown-menu radius-15" role="menu" aria-labelledby="dropdownMenu2">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">플레이리스트에 추가<span id="plus">+</span></a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="">플레이리스트에 추가<span id="plus">+</span></a></li>
                                 <li role="presentation" class="divider"></li>
                                 <li role="presentation" ><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
                                 <li role="presentation" class="divider"></li>
@@ -248,17 +248,17 @@
             <nav>
                 <ul class="pagination">
                   <li>
-                    <a href="#" aria-label="Previous">
+                    <a href="" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
-                  <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">4</a></li>
-                  <li><a href="#">5</a></li>
+                  <li class="active"><a href="">1 <span class="sr-only">(current)</span></a></li>
+                  <li><a href="">2</a></li>
+                  <li><a href="">3</a></li>
+                  <li><a href="">4</a></li>
+                  <li><a href="">5</a></li>
                   <li>
-                    <a href="#" aria-label="Next">
+                    <a href="" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
                     </a>
                   </li>

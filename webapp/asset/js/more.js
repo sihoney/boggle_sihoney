@@ -1,3 +1,4 @@
+// 더보기, 서평 공유하기
 $('#shr_review').on('click',function(){
     console.log('클릭');
 
@@ -5,6 +6,20 @@ $('#shr_review').on('click',function(){
 
 });
 
+//더보기, 플리 추가
+$('#add_pli').on('click',function(){
+    console.log('클릭');
+
+    $('#modal_playlist').modal('show');
+
+});
+
+
+//플레이리스트 삭제
+$('#playlist-delete').on('click', function () {
+    console.log('클릭');
+    $('#myModal').modal('show');
+});
 
 // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
 Kakao.init('JAVASCRIPT_KEY');
@@ -39,7 +54,3 @@ function kakaoShare() {
 }
 
 
-$('#playlist-delete').on('click', function () {
-    console.log('클릭');
-    $('#myModal').modal('show');
-});

@@ -27,7 +27,7 @@
                         <div class="userImg">
                             <img src="/bookproject/asset/img/profile.png" alt="">
                         </div>
-                        <a href="">로그인</a>
+                        <a href="/bookproject/loginForm">로그인</a>
                     </li>
                 </ul>
             </div>
