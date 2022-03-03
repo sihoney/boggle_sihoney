@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -18,27 +19,9 @@
 
 <body>
     <div id="wrap">
-        <!-- ------헤더------ -->
-        <div id="header" class="clearfix">
-            <a href="">
-                <img src="/bookproject/asset/img/logo/1_logo.png">
-            </a>
-            <!-- 로그인전 -->
-            <ul class="list-unstyled">
-                <a class="btn btn-link" role="button" href="#">기록하기</a>
-                <a class="btn btn-link" role="button" href="#">로그인</a>
-            </ul> 
-
-            <!-- 로그인후 -->
-            <!-- <ul class="list-unstyled">
-                <a class="btn btn-link" role="button" href="#">기록하기</a>
-                <span onclick="location.href='http://'">
-                    <img src="../img/login/user.jpg" class="img-circle">
-                    <a class="btn btn-link" role="button" href="#">황태형</a>
-                </span>
-            </ul> -->
-        </div>
-        <!-- ------헤더------ -->
+        <!-- 헤더 -->
+		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
+		
 
         <!-- 상단 프로필 영역 -->
         <div id="user_pro" >
@@ -120,14 +103,7 @@
         <!-- 회원가입 수정 컨텐츠 -->
 
         <!-- footer -->
-        <div id="footer">
-            <div>
-                copyright ⓒ 2022 Randombook Player. All right reserved<br>
-
-                4조 Randombook ｜ 황희원 이영림 황인경 김지연 장서윤
-            </div>
-            <a href="">FAQ</a><a href="">서비스소개</a>
-        </div>
+		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 
     </div>  
 </body>
@@ -143,8 +119,6 @@
     function changeValue(obj){
         alert(obj.value);
     }
-
-
 </script>
 
 </html>

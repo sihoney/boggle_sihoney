@@ -37,3 +37,9 @@ function kakaoShare() {
         installTalk: true,
     })
 }
+
+
+$('#playlist-delete').on('click', function () {
+    console.log('클릭');
+    $('#myModal').modal('show');
+});

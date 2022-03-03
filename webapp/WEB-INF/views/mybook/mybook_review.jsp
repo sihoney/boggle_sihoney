@@ -17,38 +17,25 @@
 
     <body>
         <div id="wrap">
-            <!-- ------헤더------ -->
-            <div id="header" class="clearfix">
-                <a href=""> <img src="/bookproject/asset/img/1_logo.png">
-                </a>
-                <!-- 로그인전 -->
-                <ul class="list-unstyled">
-                    <a class="btn btn-link" role="button" href="#">기록하기</a>
-                    <a class="btn btn-link" role="button" href="#">로그인</a>
-                </ul>
-                <!-- 로그인후 -->
-                <!-- <ul class="list-unstyled">
-                        <a class="btn btn-link" role="button" href="#">기록하기</a>
-                        <span onclick="location.href='http://'">
-                            <img src="../img/login/user.jpg" class="img-circle">
-                            <a class="btn btn-link" role="button" href="#">황태형</a>
-                        </span>
-                    </ul> -->
-            </div>
-            <!-- ------헤더------ -->
+        
+        	<!-- 헤더 -->
+            <c:import url="/WEB-INF/views/include/header.jsp"></c:import>
             
             <!-- ------nav------ -->
-            <div id="nav" class="clearfix" >
-                <ul class="nav nav-tabs">
-                    <!-- 작성자아이디와 세션아이디가 동일할 시 -->  
-                    <li role="presentation" class="active"><a href="#">내 서평</a></li>
-                    <!-- 작성자아이디와 세션아이디가 다를경우 -->  
-                    <!-- <li role="presentation" class="active"><a href="#">'유저이름'님의 서평</a></li> -->
-                    <li role="presentation"><a href="#">취향저격</a></li>
-                    <!--세션 아이디와 사이트아이디 같을때-->
-                    <li role="presentation"><a href="#">통계</a></li>
-                </ul>
-            </div>
+            <div id="nav" class="clearfix">
+		       <ul class="nav nav-tabs">
+		           <li role="presentation" class="active"><a href="#">내 서평</a></li>
+		           <li role="presentation"><a href="#">취향저격</a></li>
+		           <!--세션 아이디와 사이트아이디 같을때-->
+		           <li role="presentation"><a href="#">통계</a></li>
+		       </ul>
+		       <!-- 세션아이디랑 다를때는
+		       <ul class="nav nav-tabs">
+		           <li role="presentation"><a href="#">'유저이름'님의 서평</a></li>
+		           <li role="presentation" class="active"><a href="#">취향저격</a></li>
+		       </ul>	       
+		        -->
+	   		</div>
             <!-- ------nav------ -->
             
             <!--content-->
@@ -271,14 +258,8 @@
             <!-- Modal -->
             
             <!-- footer -->
-            <div id="footer">
-                <div>
-                    copyright ⓒ 2022 Randombook Player. All right reserved<br>
-
-                    4조 Randombook ｜ 황희원 이영림 황인경 김지연 장서윤
-                </div>
-                <a href="">FAQ</a><a href="">서비스소개</a>
-            </div>            
+            <c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
+                       
         </div> 
     </body>
     

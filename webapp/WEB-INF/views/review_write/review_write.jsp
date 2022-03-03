@@ -24,12 +24,9 @@
 
     <div id="wrap">
 		<div id="container">
-			<!-- header -->
-			<div id="header" class="clearfix">
-				<a href=""> <img src="/bookproject/asset/img/logo/1_logo.png"></a>
-			</div>
-			<!-- /header -->
-
+			
+			<!-- 헤더 -->
+            <c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 
 			<!-- progress bar -->
 			<div id="" class="clearfix">
@@ -391,12 +388,8 @@
 
 
 		<!-- footer -->
-		<div id="footer">
-			<div>
-				copyright ⓒ 2022 Randombook Player. All right reserved<br> 4조 Randombook ｜ 황희원 이영림 황인경 김지연 장서윤
-			</div>
-			<a href="">FAQ</a><a href="">서비스소개</a>
-		</div>
+            <c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
+            
         <!-- /footer -->
 
 

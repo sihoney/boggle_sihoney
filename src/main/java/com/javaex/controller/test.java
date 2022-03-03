@@ -97,4 +97,23 @@ public class test {
 		
 		return "taste/review";
 	}
+	
+	@RequestMapping("/loginForm")
+	public String loginForm() {
+		System.out.println("loginForm");
+		
+		return "user/loginForm";
+	}
+	@RequestMapping("/joinForm")
+	public String joinForm() {
+		System.out.println("joinForm");
+		
+		return "user/joinForm";
+	}
+	@RequestMapping("/user_modify")
+	public String user_modify() {
+		System.out.println("user_modify");
+		
+		return "user/user_modify";
+	}
 }

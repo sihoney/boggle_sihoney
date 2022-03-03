@@ -9,7 +9,7 @@
     <title>Insert title here</title>
 
     <script src="/bookproject/asset/js/jquery-1.12.4.js"></script>
-    <link rel="stylesheet" href="/bookproject/../bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/bookproject/asset/bootstrap/css/bootstrap.css">
     <script src="/bookproject/asset/bootstrap/js/bootstrap.js"></script>
 
     <link rel="stylesheet" href="/bookproject/asset/bootstrap/css/bootstrap.css">
@@ -292,29 +292,14 @@
 
 
         <!-- footer -->
-        <div id="footer">
-            <div>
-                copyright ⓒ 2022 Randombook Player. All right reserved<br> 4조 Randombook ｜ 황희원 이영림 황인경 김지연 장서윤
-            </div>
-            <a href="">FAQ</a><a href="">서비스소개</a>
-        </div>
-
-
-
-
+		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 
     </div>
 
 
 </body>
 
-<script>
-    $('#playlist-delete').on('click', function () {
-        console.log('클릭');
-        $('#myModal').modal('show');
-    });
-
-</script>
+<script src="/bookproject/asset/js/more.js"></script>
 
 
 </html>
