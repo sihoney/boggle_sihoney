@@ -258,7 +258,7 @@
 
     word-wrap : break-word; 
     text-align : left; 
-    line-height: 1.2;
+    /*line-height: 1.2;*/
 
     -webkit-line-clamp: 3;
     display: -webkit-box;

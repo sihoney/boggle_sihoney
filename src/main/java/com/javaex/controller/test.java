@@ -48,5 +48,53 @@ public class test {
 		
 		return "review_write/review_write";
 	}
-
+	
+	@RequestMapping("/taste_main")
+	public String taste_main() {
+		System.out.println("taste_main");
+		
+		return "taste/taste-main";
+	}
+	
+	@RequestMapping("/click_playlist")
+	public String click_playlist() {
+		System.out.println("click_playlist");
+		
+		return "taste/click-playlist";
+	}
+	
+	@RequestMapping("/like_playlist")
+	public String like_playlist() {
+		System.out.println("like_playlist");
+		
+		return "taste/like-playlist";
+	}
+	
+	@RequestMapping("/main_book")
+	public String main_book() {
+		System.out.println("main_book");
+		
+		return "taste/main-book";
+	}
+	
+	@RequestMapping("/playlist_edit")
+	public String playlist_edit() {
+		System.out.println("playlist_edit");
+		
+		return "taste/playlist_edit";
+	}
+	
+	@RequestMapping("/playlist")
+	public String playlist() {
+		System.out.println("playlist");
+		
+		return "taste/playlist";
+	}
+	
+	@RequestMapping("/review")
+	public String review() {
+		System.out.println("review");
+		
+		return "taste/review";
+	}
 }

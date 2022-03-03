@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Insert title here</title>
 
-    <script src="/bookproject/../asset/js/jquery-1.12.4.js"></script>
+    <script src="/bookproject/asset/js/jquery-1.12.4.js"></script>
     <link rel="stylesheet" href="/bookproject/../bootstrap/css/bootstrap.css">
-    <script src="/bookproject/../asset/bootstrap/js/bootstrap.js"></script>
+    <script src="/bookproject/asset/bootstrap/js/bootstrap.js"></script>
 
-    <link rel="stylesheet" href="/bookproject/../asset/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="/bookproject/../asset/css/playlist_edit.css">
-    <link rel="stylesheet" href="/bookproject/../asset/css/style.css">
+    <link rel="stylesheet" href="/bookproject/asset/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/bookproject/asset/css/playlist_edit.css">
+    <link rel="stylesheet" href="/bookproject/asset/css/style.css">
     <!-- font awesome icon 파일 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
@@ -26,7 +26,7 @@
         <div id="container">
             <!---- header ----->
             <div id="header" class="clearfix">
-                <a href=""> <img src="/bookproject/../asset/img/1_logo.png"></a>
+                <a href=""> <img src="/bookproject/asset/img/1_logo.png"></a>
             </div>
             <!---- //header ----->
 
