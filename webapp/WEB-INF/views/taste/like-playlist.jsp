@@ -48,184 +48,57 @@
 			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/like_playlist">플레이리스트</a></li>
 		</ul>
 
-        <div class="a">
-            <div class="b">
-                <h3 class="index">내가 좋아요한 플레이리스트</h3>
-                <h3 class="more"><a href="${pageContext.request.contextPath}/playlist">더보기</a><span class="glyphicon glyphicon-right" aria-hidden="true"></span></h3>
+        <!-- content -->
+       
+        <div id="content4">
+                <div class="minicontent">
+                    <div class="left"><p>내가 좋아요한 플레이리스트</p></div>
+                    <div class="right" id="more"><p><a href="${pageContext.request.contextPath}/playlist">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></p></div>
+                </div>                
+                
+                <div id="playlist">
+                
+                    <div class="nail purple">
+                        <div class="nail-desc">
+                            <p>출근할 때 즐기는<br>에너제틱 플레이리스트</p>
+                        </div>
+                        <div>
+                            <div id="opac"></div>
+                        </div>
+                    </div>                    
+    
+                    <div class="nail deeppurple">
+                        <div class="nail-desc">
+                            <p>그래 가보자고<br>의욕 뿜뿜 플레이리스트</p>
+                        </div>
+                        <div>
+                            <div id="opac"></div>
+                        </div>
+                    </div>
+    
+                    <div class="nail green">
+                        <div class="nail-desc">
+                            <p>나만 이런 게 아니었어<br>공감 꾹꾹 플레이리스트</p>
+                        </div>
+                        <div id="opac"></div>
+                    </div>
+    
+                    <div class="nail green">
+                        <div class="nail-desc">
+                            <p>나만 이런 게 아니었어<br>공감 꾹꾹 플레이리스트</p>
+                        </div>
+                        <div id="opac"></div>
+                    </div>
+    
+                    <div class="nail green">
+                        <div class="nail-desc">
+                            <p>나만 이런 게 아니었어<br>공감 꾹꾹 플레이리스트</p>
+                        </div>
+                        <div id="opac"></div>
+                    </div>
+                </div>
+                
             </div>
-
-            <div class="container">
-                <div class="nail-first">
-                    <div class="nail-desc">
-                        <p>출근할 때 즐기는<br>에너지 충전 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-sec">
-                    <div class="nail-desc">
-                        <p>그래 가보자고<br>의욕 뿜뿜 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-thrd">
-                    <div class="nail-desc">
-                        <p>나만 이런 게 아니었어<br>공감 꾹꾹 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-four">
-                    <div class="nail-desc">
-                        <p>짜증난다 짜증나<br>분노 활활 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-fifth">
-                    <div class="nail-desc">
-                        <p>말 못할 고민이 쌓일 때<br>날 위로해주는 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-            </div><!--gallery container-->
-        </div><!--a-->
-
-        
-        <div class="a">
-            <div class="b">
-                <h3 class="index">오늘 이 플레이리스트 어때요?</h3>
-                <h3 class="more"><a>더보기</a><span class="glyphicon glyphicon-right" aria-hidden="true"></span></h3>
-            </div>
-
-            <div class="container">
-                <div class="nail-first">
-                    <div class="nail-desc">
-                        <p>출근할 때 즐기는<br>에너지 충전 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-sec">
-                    <div class="nail-desc">
-                        <p>그래 가보자고<br>의욕 뿜뿜 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-thrd">
-                    <div class="nail-desc">
-                        <p>나만 이런 게 아니었어<br>공감 꾹꾹 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-four">
-                    <div class="nail-desc">
-                        <p>짜증난다 짜증나<br>분노 활활 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-fifth">
-                    <div class="nail-desc">
-                        <p>말 못할 고민이 쌓일 때<br>날 위로해주는 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-            </div><!--gallery container-->
-        </div><!--a-->
-
-        
-        <div class="a">
-            <div class="b">
-                <h3 class="index">인기순 플레이리스트</h3>
-                <h3 class="more"><a>더보기</a><span class="glyphicon glyphicon-right" aria-hidden="true"></span></h3>
-            </div>
-
-            <div class="container">
-                <div class="nail-first">
-                    <div class="nail-desc">
-                        <p>출근할 때 즐기는<br>에너지 충전 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-sec">
-                    <div class="nail-desc">
-                        <p>그래 가보자고<br>의욕 뿜뿜 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-thrd">
-                    <div class="nail-desc">
-                        <p>나만 이런 게 아니었어<br>공감 꾹꾹 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-four">
-                    <div class="nail-desc">
-                        <p>짜증난다 짜증나<br>분노 활활 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-fifth">
-                    <div class="nail-desc">
-                        <p>말 못할 고민이 쌓일 때<br>날 위로해주는 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-            </div><!--gallery container-->
-        </div><!--a-->
-
-        
-        <div class="a">
-            <div class="b">
-                <h3 class="index">내가 작성한 플레이리스트</h3>
-                <h3 class="more"><a>더보기</a><span class="glyphicon glyphicon-right" aria-hidden="true"></span></h3>
-            </div>
-
-            <div class="container">
-                <div class="nail-first">
-                    <div class="nail-desc">
-                        <p>출근할 때 즐기는<br>에너지 충전 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-sec">
-                    <div class="nail-desc">
-                        <p>그래 가보자고<br>의욕 뿜뿜 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-thrd">
-                    <div class="nail-desc">
-                        <p>나만 이런 게 아니었어<br>공감 꾹꾹 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-four">
-                    <div class="nail-desc">
-                        <p>짜증난다 짜증나<br>분노 활활 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-
-                <div class="nail-fifth">
-                    <div class="nail-desc">
-                        <p>말 못할 고민이 쌓일 때<br>날 위로해주는 플레이리스트</p>
-                    </div>
-                    <div id="opac"></div>
-                </div>
-            </div><!--gallery container-->
-        </div><!--a-->
         
         <!-- footer -->
         <c:import url="/WEB-INF/views/include/footer.jsp"></c:import>  
