@@ -17,7 +17,8 @@
 
         <link rel="stylesheet" href="/bookproject/asset/css/source.css">
         <link rel="stylesheet" href="/bookproject/asset/css/user_analyze.css">
-        <link rel="stylesheet" href="/bookproject/asset/css/modal.css">        
+        <link rel="stylesheet" href="/bookproject/asset/css/modal.css">   
+            
     </head>
 
     <body>
@@ -236,14 +237,15 @@
                 <!-- -----베스트 서평 박스------ -->
                 </div>
                 <!-- ------------------------------- -->
-                
-                <c:import url="/WEB-INF/views/include/modal.jsp"></c:import>
-            
+                       
                 
             </div>
             <!-- ------------------------------- -->
             <!-- footer -->
             <c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
+            
+            <!-- modal창 -->
+            <c:import url="/WEB-INF/views/include/modal.jsp"></c:import>
             
         </div>
 
