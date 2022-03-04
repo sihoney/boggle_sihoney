@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 	<!-- ------헤더------ -->
     <div id="header" class="clearfix">
-        <a href="">
+        <a href="/bookproject/">
             <img src="/bookproject/asset/img/logo/1_logo.png">
         </a>
         <!-- 로그인전 -->

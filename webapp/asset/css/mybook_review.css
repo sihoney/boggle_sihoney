@@ -76,6 +76,7 @@ a:hover{
 
 #header>ul>span {
     cursor:pointer;
+    text-decoration-line: none;
 }
 
 #header ul {

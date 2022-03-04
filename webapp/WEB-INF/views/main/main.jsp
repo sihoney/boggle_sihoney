@@ -22,6 +22,7 @@
             </div>
             <div class="links-container">
                 <ul class="links">
+                	<!-- 로그인이 안되어 있을때 화면 -->
                     <li><a href="">기록하기</a></li>
                     <li class="login">
                         <div class="userImg">
@@ -29,6 +30,15 @@
                         </div>
                         <a href="/bookproject/loginForm">로그인</a>
                     </li>
+                    <!-- 로그인 됐을때 화면
+                    <li><a href="">기록하기</a></li>
+                    <li class="login">
+                        <div class="userImg">
+                            <img src="/bookproject/asset/img/profile.png" alt="">
+                        </div>
+                        <a href="/bookproject/loginForm">황태형</a>
+                    </li>
+                     -->
                 </ul>
             </div>
         </nav>
