@@ -14,10 +14,10 @@
 			</div>
 			<div class="modal-body">
 				<p>playbook의 서평을 SNS에 공유해 보세요 :)</p>
-				<a id="kakao-link-btn" href="javascript:kakaoShare()"> <img src="/bookproject/asset/img/share/kakao.jpg" />
-				</a> <a id="facebook-link-btn" href=""> <img src="/bookproject/asset/img/share/facebook.jpg" />
-				</a> <a id="twitter-link-btn" href=""> <img src="/bookproject/asset/img/share/twitter.png" />
-				</a> <a id="kakaostory-link-btn" href=""> <img src="/bookproject/asset/img/share/kakaostory.png" />
+				<a id="kakao-link-btn" href="javascript:kakaoShare()"> <img src="${pageContext.request.contextPath}/asset/img/share/kakao.jpg" />
+				</a> <a id="facebook-link-btn" href=""> <img src="${pageContext.request.contextPath}/asset/img/share/facebook.jpg" />
+				</a> <a id="twitter-link-btn" href=""> <img src="${pageContext.request.contextPath}/asset/img/share/twitter.png" />
+				</a> <a id="kakaostory-link-btn" href=""> <img src="${pageContext.request.contextPath}/asset/img/share/kakaostory.png" />
 				</a>
 			</div>
 			<div class="modal-footer">
@@ -154,7 +154,7 @@
 					<ul>
 						<li class="list">
 							<div class="book-img-container">
-								<img src="/bookproject/asset/img/book/book2.jpeg" alt="" class="img-thumbnail">
+								<img src="${pageContext.request.contextPath}/asset/img/book/book2.jpeg" alt="" class="img-thumbnail">
 							</div>
 							<div class="info-container">
 								<button class="book-title">자유로부터의 도피</button>
@@ -164,7 +164,7 @@
 						</li>
 						<li class="list">
 							<div class="book-img-container">
-								<img src="/bookproject/asset/img/book/book2-2.jpeg" alt="" class="img-thumbnail">
+								<img src="${pageContext.request.contextPath}/asset/img/book/book2-2.jpeg" alt="" class="img-thumbnail">
 							</div>
 							<div class="info-container">
 								<button class="book-title">다섯 번째 감각</button>
@@ -174,7 +174,7 @@
 						</li>
 						<li class="list">
 							<div class="book-img-container">
-								<img src="/bookproject/asset/img/book/book3-3.jpeg" alt="" class="img-thumbnail">
+								<img src="${pageContext.request.contextPath}/asset/img/book/book3-3.jpeg" alt="" class="img-thumbnail">
 							</div>
 							<div class="info-container">
 								<button class="book-title">물고기는 존재하지 않는다</button>
@@ -184,7 +184,7 @@
 						</li>
 						<li class="list">
 							<div class="book-img-container">
-								<img src="/bookproject/asset/img/book/book4.jpeg" alt="" class="img-thumbnail">
+								<img src="${pageContext.request.contextPath}/asset/img/book/book4.jpeg" alt="" class="img-thumbnail">
 							</div>
 							<div class="info-container">
 								<button class="book-title">백의 그림자</button>

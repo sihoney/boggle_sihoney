@@ -2,13 +2,13 @@
     pageEncoding="UTF-8"%>
 	<!-- ------헤더------ -->
     <div id="header" class="clearfix">
-        <a href="/bookproject/">
-            <img src="/bookproject/asset/img/logo/1_logo.png">
+        <a href="${pageContext.request.contextPath}/">
+            <img src="${pageContext.request.contextPath}/asset/img/logo/1_logo.png">
         </a>
         <!-- 로그인전 -->
         <ul class="list-unstyled">
-            <a class="btn btn-link" role="button" href="">기록하기</a>
-            <a class="btn btn-link" role="button" href="">로그인</a>
+            <a class="btn btn-link" role="button" href="${pageContext.request.contextPath}/review_write">기록하기</a>
+            <a class="btn btn-link" role="button" href="${pageContext.request.contextPath}/loginForm">로그인</a>
         </ul> 
 
         <!-- 로그인후 -->

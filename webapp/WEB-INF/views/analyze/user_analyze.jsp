@@ -11,13 +11,13 @@
 
         <title>user_analyze</title>
 
-        <script src="/bookproject/asset/js/jquery-1.12.4.js"></script>
-        <script src="/bookproject/asset/bootstrap/js/bootstrap.js"></script>
-        <link rel="stylesheet" href="/bookproject/asset/bootstrap/css/bootstrap.css">
+        <script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
+        <script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
 
-        <link rel="stylesheet" href="/bookproject/asset/css/source.css">
-        <link rel="stylesheet" href="/bookproject/asset/css/user_analyze.css">
-        <link rel="stylesheet" href="/bookproject/asset/css/modal.css">   
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/source.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/user_analyze.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/modal.css">   
             
     </head>
 
@@ -30,15 +30,15 @@
         	<!-- ------nav------ -->
             <div id="nav" class="clearfix">
 		       <ul class="nav nav-tabs">
-		           <li role="presentation"><a href="">내 서평</a></li>
-		           <li role="presentation"><a href="">취향저격</a></li>
+		           <li role="presentation"><a href="${pageContext.request.contextPath}/mybook">내 서평</a></li>
+		           <li role="presentation"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
 		           <!--세션 아이디와 사이트아이디 같을때-->
-		           <li role="presentation" class="active"><a href="">통계</a></li>
+		           <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/analyze">통계</a></li>
 		       </ul>
 		       <!-- 세션아이디랑 다를때는
 		       <ul class="nav nav-tabs">
 		           <li role="presentation"><a href="">'유저이름'님의 서평</a></li>
-		           <li role="presentation" class="active"><a href="">취향저격</a></li>
+		           <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
 		       </ul>	       
 		        -->
 	   		</div>
@@ -78,7 +78,7 @@
                     
                     <h1>감정 태그</h1>
                     <div id="tag_content" class="clearfix">
-                        <img id="tag_img" src="/bookproject/asset/img/tag_img/1_감정태그.png" class="clearfix">
+                        <img id="tag_img" src="${pageContext.request.contextPath}/asset/img/tag_img/1_감정태그.png" class="clearfix">
                         <div id="tag_txt" >
                             <h2>'태형'님은<br>
                                 로맨티스트셨네요!
@@ -189,7 +189,7 @@
 
                         <div id="review_first">
                             <span class="txt_ms margin-t5">
-                                <a href="">
+                                <a href="${pageContext.request.contextPath}/bookdetail">
                                     데미안
                                     <span class="glyphicon glyphicon-menu-right icon-success" aria-hidden="true"></span>
                                 </a>
@@ -228,7 +228,7 @@
                                     <li role="presentation" class="divider"></li>
                                     <li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
                                     <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><li role="presentation"><a id="save_img" role="menuitem" target="_blank" tabindex="-1" href="/bookproject/imgpreview">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
+                                    <li role="presentation"><li role="presentation"><a id="save_img" role="menuitem" target="_blank" tabindex="-1" href="${pageContext.request.contextPath}/imgpreview">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -251,6 +251,6 @@
 
     </body>
 
-    <script src="/bookproject/asset/js/more.js"></script>
+    <script src="${pageContext.request.contextPath}/asset/js/more.js"></script>
 
 </html>

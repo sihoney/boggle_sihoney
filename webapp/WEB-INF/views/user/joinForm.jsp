@@ -7,12 +7,12 @@
     <head>
         <meta charset="UTF-8">
         <title></title>
-        <link rel="stylesheet" href="/bookproject/asset/bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="/bookproject/asset/css/joinForm.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/joinForm.css">
 
-        <script src="/bookproject/asset/js/jquery-1.12.4.js"></script>
-        <script src="/bookproject/asset/bootstrap/js/bootstrap.js"></script>
-        <script src="/bookproject/asset/js/joinForm.js" defer></script>           
+        <script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
+        <script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
+        <script src="${pageContext.request.contextPath}/asset/js/joinForm.js" defer></script>           
     </head>
 
     <body>
@@ -35,12 +35,12 @@
                     <div id="join-api" class="col-xs-5">
                         <div>
                             <div>
-                                <img src="/bookproject/asset/img/facebooklogo.png"> 페이스북으로 회원가입
+                                <img src="${pageContext.request.contextPath}/asset/img/facebooklogo.png"> 페이스북으로 회원가입
                             </div>
                         </div>
                         <div>
                             <div>
-                                <img src="/bookproject/asset/img/naverlogo.png"> 네이버로 회원가입
+                                <img src="${pageContext.request.contextPath}/asset/img/naverlogo.png"> 네이버로 회원가입
                             </div>
                         </div>
                     </div>
