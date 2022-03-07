@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
-<!-- 쿼리문 작성 -->
+
+	<!-- 로그인시 authUser 데이터 -->
+	<select id="selectUser" parameterType="UserVo" resultType="com.javaex.vo.UserVo">
+	 	<![CDATA[
+			SELECT  user_no,
+        			user_name
+			FROM users
+			WHERE email = #{email}
+			AND password = #{password}
+		]]>
+	</select>
 
 </mapper>

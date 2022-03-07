@@ -115,6 +115,7 @@
                     <button class="bgmBtn arrow prevArrow">
                         <i class="fa-solid fa-chevron-left"></i>
                     </button>
+                    <!-- <audio src="${pageContext.request.contextPath}/asset/img/whale.mp3" autoplay loop controls id="myAudio">오디오 지원되지 않는 브라우저</audio> -->
                     <button class="bgmBtn playBtn">
                         <i class="fa-solid fa-play"></i>
                     </button>
