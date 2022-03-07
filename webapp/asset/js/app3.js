@@ -83,29 +83,19 @@ let array = [
 
 let songs = [
     {
-        title: "늑대와 미녀",
-        singer: "엑소"
-    },{
-        title: "호랑이",
-        singer: "수퍼엠"
-    },{
-        title: "슈가프리",
-        singer: "티아라"
-    },{
-        title: "intention",
-        singer: "찰리 푸스"
-    },{
-        title: "알콜프리",
-        singer: "트와이스"
-    },{
-        title: "롤리폴리",
-        singer: "티아라"
-    },{
-        title: "DNA",
-        singer: "방탄소년단"
-    },{
-        title: "롤리팝",
-        singer: "2NE1"
+        title: "closer",
+        singer: "chainsmocker",
+        file: "../../../music/closer.mp3"
+    },
+    {
+        title: "paris",
+        singer: "chainsmocker",
+        file: "../../../music/paris.mp3"
+    },
+    {
+        title: "island",
+        singer: "winner",
+        file: "../../../music/island.mp3"
     }
 ]
 
@@ -119,33 +109,122 @@ const sideBar = document.querySelector(".sidebar");
 const sidebarToggle = document.querySelector(".fa-bars");
 let navLinks = document.querySelector(".links")
 let sidebarBtn = document.querySelector(".sidebarBtn")
+
 let bgmPrevBtn = document.querySelector(".prevArrow")
 let bgmNextBtn = document.querySelector(".nextArrow")
 let singer = document.querySelector(".singer")
 let songTitle = document.querySelector(".song-title")
+const playBtn = document.querySelector(".playBtn")
+const audioEle = document.querySelector(".audioEle")
+
 let bgmPagination = document.querySelector(".bgm-pagination")
 let emoTags = document.querySelectorAll(".emoTag")
 let randomCheckBtn = document.querySelector(".randomCheckBtn")
 let dim = document.querySelector(".dim")
 const playlistStatic = document.querySelector(".static")
-const playlistAddModal = document.querySelector(".playlistAddModal")
+// const playlistAddModal = document.querySelector(".playlistAddModal")
+const modalBackground = document.querySelector(".modal-background")
+const reviewModalBackground = document.querySelector(".review-modal-background");
 const modalCloseBtn = document.querySelector(".modal-closeBtn")
 const addReviewModal = document.querySelector(".addReviewModal")
 const reviewModalCloseBtn = addReviewModal.querySelector(".modal-closeBtn")
 const reviewAddBtns = addReviewModal.querySelectorAll(".reviewAddBtn")
+const modal = document.querySelector(".messageModal")
 
 let counter = 0;
 let slides;
-let seconds = 4000;
 let interval
-let autoToggle = true;
+let timeout;
+
 let bgmCounter = 0;
-let modeToggle = false;
+let play = false;
+let clickCnt = 0;
+
+let modeToggle = true;
 let heartToggle = false;
 
-// 서평 플레이리스트에 추가 : 아이콘 토글 
+// 노래 끝났을 때 자동으로 다음 노래로 넘어감
+audioEle.addEventListener("ended", function(){
+    console.log("ended")
+
+    moveNextBgm()
+})
+
+// audio play & pause
+playBtn.onclick = function(){
+
+    if(play === false) { // 음악 재생
+
+        audioEle.play()
+
+        playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>'
+
+        play = !play;
+    } else {
+        //bgmCurrentTime = audioEle.currentTime
+
+        audioEle.pause()
+
+        playBtn.innerHTML = '<i class="fa-solid fa-play"></i>'
+
+        play = !play;
+    }
+    
+}
+
+/* bgm carousel 기능 */
+bgmPrevBtn.addEventListener("click", function(){
+    
+    if(play === true) {
+        clickCnt++
+
+        if(clickCnt === 1 ) { // 처음부터 재생
+            audioEle.currentTime = 0
+    
+        } else if(clickCnt === 2) { // 전으로 넘어가기
+            clickCnt = 0
+    
+            if(bgmCounter > 0) {
+                bgmCounter--
+        
+                updatePaging()
+            } else {
+                bgmCounter = songs.length - 1
+        
+                updatePaging()
+            }
+        }
+    } else {
+        if(bgmCounter > 0) {
+            bgmCounter--
+    
+            updatePaging()
+        } else {
+            bgmCounter = songs.length - 1
+    
+            updatePaging()
+        }
+    }
+})
+
+function moveNextBgm(){
+    if(bgmCounter < songs.length - 1) {
+        bgmCounter++
+
+        updatePaging()        
+    } else {
+        bgmCounter = 0
+
+        updatePaging() 
+    }
+}
+
+bgmNextBtn.addEventListener("click", moveNextBgm)
+
+/* 서평 추가 모달의 아이콘 plus --> check */
 for(let addBtn of reviewAddBtns) {
     addBtn.onclick = function(e){
+
         let classlist = e.path[0].classList
 
         if(classlist[1] == 'fa-plus') {
@@ -156,55 +235,51 @@ for(let addBtn of reviewAddBtns) {
     }
 }
 
+/* 모달 > 새 플레이리스트 추가 */
+playlistStatic.onclick = function(e){
+    modalBackground.classList.toggle("show-modal")
+}
+
+/* 모달 닫기 버튼 */
 reviewModalCloseBtn.onclick = function() {
-    addReviewModal.classList.remove("show-modal")
+    reviewModalBackground.classList.remove("show-modal")
 }
 
 modalCloseBtn.onclick = function(){
-    playlistAddModal.classList.remove("show-modal")
+    modalBackground.classList.remove("show-modal")
 }
 
-playlistStatic.onclick = function(){
-    playlistAddModal.classList.toggle('show-modal')
-}
-
-bgmPrevBtn.addEventListener("click", function(){
-    
-    if(bgmCounter > 0) {
-        bgmCounter--
-
-        updatePaging()
-    } else {
-        bgmCounter = songs.length - 1
-
-        updatePaging()
-    }
-})
-
-bgmNextBtn.addEventListener("click", function(){
-
-    if(bgmCounter < songs.length - 1) {
-        bgmCounter++
-
-        updatePaging()        
-    } else {
-        bgmCounter = 0
-
-        updatePaging() 
-    }
-
-})
-
+/* 사이드 바 열기, 닫기 */
 sidebarToggle.addEventListener("click", function() {
     sideBar.classList.toggle("show-sidebar");
-    dim.classList.add("show-dim")
+
+    dim.classList.toggle("unstaged")
+    dim.classList.toggle("show-dim")
 })
 
 closeBtn.addEventListener("click", function() {
     sideBar.classList.remove("show-sidebar");
-    dim.classList.remove("show-dim")
+
+    dim.classList.toggle("show-dim")
+
+    dim.addEventListener("transitionend", function(){
+        this.classList.toggle("unstaged")
+        this.removeEventListener("transitionend", arguments.callee)
+    })
 })
 
+dim.onclick = function(){
+    sideBar.classList.remove("show-sidebar");
+
+    dim.classList.remove("show-dim")
+
+    dim.addEventListener("transitionend", function(){
+        this.classList.toggle("unstaged")
+        this.removeEventListener("transitionend", arguments.callee)
+    })
+}
+
+/* 슬라이드 위아래 버튼 */
 upBtn.addEventListener("click", function(){
     counter--;
     carousel();
@@ -215,10 +290,7 @@ downBtn.addEventListener("click", function(){
     carousel();
 })
 
-autoModeBtn.onclick = function(){
-    changeMode()
-}
-
+/* 슬라이드 keyup, keydown */
 window.addEventListener("keydown", function(e) {
     if(e.key == 'ArrowUp') {
         counter--;
@@ -233,12 +305,10 @@ window.addEventListener("keydown", function(e) {
     }
 })
 
-window.addEventListener("DOMContentLoaded", function(){
-    console.log("loaded...")
-
-    autoCarousel()
-})
-
+/* 슬라이드 전환 방식 변경 */
+autoModeBtn.onclick = function(){
+    changeMode()
+}
 
 window.addEventListener("keydown", function(e){ 
     if(e.key == 'Enter') {
@@ -246,14 +316,14 @@ window.addEventListener("keydown", function(e){
     }
 })
 
-/*** 감정 태그에 toggle 기능 주기 ***/
+/* 감정 태그에 toggle 기능 주기 */
 for(let emoTag of emoTags) {
     emoTag.onclick = function(e) {
         emoTag.classList.toggle("checked")
     }
 }
 
-/*** 랜덤 체크 버튼에 toggle 기능 주기 ***/
+/* 랜덤 체크 버튼에 toggle 기능 주기 */
 randomCheckBtn.onclick = function(e) {
     let classList = e.path[0].classList
     
@@ -264,7 +334,27 @@ randomCheckBtn.onclick = function(e) {
     }
 }
 
+function renderMsg(){
+    clearTimeout(timeout)
+
+    modal.classList.toggle("opaque")
+    modal.classList.toggle("unstaged")
+
+    timeout = setTimeout(function(){
+        modal.classList.toggle("opaque")
+
+        modal.addEventListener("transitionend", function(){
+            this.classList.toggle("unstaged")
+    
+            this.removeEventListener("transitionend", arguments.callee)
+        })
+    }, 2000)
+}
+
 function changeMode(){
+
+    renderMsg()
+
     if(modeToggle == true) { // 자동 전환 모드
         console.log("auto toggle true")
 
@@ -344,11 +434,11 @@ function render(item) {
 
     slide.classList.add("slide");
     btnContainer.classList.add("btn-container");
-
+    /*
     slide.onclick = function(){
         clearInterval(interval)
     }
-
+    */
     review.textContent = item.review;
     username.textContent = item.userName;
     slide.style.backgroundColor = `${item.image}`
@@ -368,7 +458,7 @@ function render(item) {
     }
 
     addBtn.onclick = function(){
-        addReviewModal.classList.toggle("show-modal")
+        reviewModalBackground.classList.toggle("show-modal")
     }
 
     review.classList.add("review");
@@ -387,8 +477,23 @@ function render(item) {
 }
 
 function updatePaging() {
+
+    // 바로 재생되게 하기
+    if(play === true) { // 재생되고 있는 음악 멈춤
+        audioEle.pause() 
+    }
+
+    // audio 객체 업데이트, 음악 시작, 아이콘 업데이트
     singer.textContent = songs[bgmCounter].singer
     songTitle.textContent = songs[bgmCounter].title
+    audioEle.src = songs[bgmCounter].file
+
+    // play 상태에서 next btn 누르면 play
+    // pause 상태에서 next btn 누르면 pause 상태로 넘어감
+    if(play === true) {
+        audioEle.play()
+        playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>'
+    }
 
     // 해당 페이지 위치를 페이징에 반영하기
     let dots = document.querySelectorAll(".dot");
@@ -441,6 +546,7 @@ function init() {
     /*** sidebar bgm 정보 넣기 ***/
     singer.textContent = songs[bgmCounter].singer
     songTitle.textContent = songs[bgmCounter].title
+    audioEle.src = songs[bgmCounter].file
 
     /*** sidebar bgm pagination 화면 출력하기 ***/
     let songsCnt = songs.length;

@@ -13,7 +13,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- header -->
+<!-- Header -->
     <header>
         <!-- nav -->
         <nav>
@@ -22,15 +22,14 @@
             </div>
             <div class="links-container">
                 <ul class="links">
-                	<!-- 로그인이 안되어 있을때 화면 -->
                     <li><a href="">기록하기</a></li>
                     <li class="login">
                         <div class="userImg">
                             <img src="${pageContext.request.contextPath}/asset/img/profile.png" alt="">
                         </div>
-                        <a href="${pageContext.request.contextPath}/loginForm">로그인</a>
+                        <a href="">로그인</a>
                     </li>
-                    <!-- 로그인 됐을때 화면
+										<!-- 로그인 됐을때 화면
                     <li><a href="">기록하기</a></li>
                     <li class="login">
                         <div class="userImg">
@@ -47,81 +46,8 @@
         </button>
     </header>   
 
-    <!-- 화면 컨테이너 -->
+    <!-- Container -->
     <div class="container">
-        <div class="slide-container"></div>
-
-        <!-- 사이드 바 뒷 배경 -->
-        <div class="dim"></div>
-
-        <!-- 새 플레이리스트 추가 모달 -->
-        <div class="playlistAddModal">
-            <div class="modal-header">
-                <p>새 플레이리스트 추가</p>
-                <button class="modal-closeBtn">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <form>
-                <input type="text">
-                <button type="submit">추가</button>
-            </form>
-        </div>
-
-        <!-- 서평 플레이리스트에 추가 모달 -->
-        <div class="addReviewModal">
-            <div class="input-box">
-            	<input type="text">
-                <button class="modal-closeBtn">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div class="playlist-box">
-                <ul>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
 
         <div class="upDown-container">
             <button class="downBtn">
@@ -134,9 +60,19 @@
                 <i class="fa-solid fa-expand"></i>
             </button>
         </div>
+
+        <div class="messageModal unstaged">
+            <p>슬라이드 전환 방식을 변경하고 싶으면 엔터를 눌러주세요</p>
+        </div>
+
+        <div class="slide-container"></div>
+        
     </div>
 
-    <!-- 사이드 바 -->
+    <!-- side-bar dim -->
+    <div class="dim unstaged"></div>
+
+    <!-- Side bar -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <div class="nav-header">
@@ -179,7 +115,7 @@
                     <button class="bgmBtn arrow prevArrow">
                         <i class="fa-solid fa-chevron-left"></i>
                     </button>
-                    <button class="bgmBtn">
+                    <button class="bgmBtn playBtn">
                         <i class="fa-solid fa-play"></i>
                     </button>
                     <button class="bgmBtn arrow nextArrow">
@@ -187,6 +123,7 @@
                     </button>
                 </div>
                 <div class="bgm-pagination"></div>
+                <audio preload="auto" src="" class="audioEle"></audio>
             </div>
             
         </div>
@@ -213,5 +150,78 @@
             </div>
         </div>
     </aside>
+
+    <!--  모달 (새 플레이리스트 추가) -->
+    <div class="modal-background">
+        <div class="playlistAddModal">
+            <div class="modal-header">
+                <p>새 플레이리스트 추가</p>
+                <button class="modal-closeBtn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form>
+                <input type="text">
+                <button type="submit">추가</button>
+            </form>
+        </div>
+    </div>
+
+    <!--  모달 (서평 플레이리스트에 추가) -->
+    <div class="review-modal-background modal-background">
+        <div class="addReviewModal">
+            <div class="input-box">
+                <input type="text">
+                <button class="modal-closeBtn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="playlist-box">
+                <ul>
+                    <li class="playlist-li">
+                        <p>플레이리스트 1</p>
+                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
+                    </li>
+                    <li class="playlist-li">
+                        <p>플레이리스트 1</p>
+                        <button  class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
+                    </li>
+                    <li class="playlist-li">
+                        <p>플레이리스트 1</p>
+                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
+                    </li>
+                    <li class="playlist-li">
+                        <p>플레이리스트 1</p>
+                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
+                    </li>
+                    <li class="playlist-li">
+                        <p>플레이리스트 1</p>
+                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
+                    </li>
+                    <li class="playlist-li">
+                        <p>플레이리스트 1</p>
+                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
+                    </li>
+                    <li class="playlist-li">
+                        <p>플레이리스트 1</p>
+                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
+                    </li>
+                    <li class="playlist-li">
+                        <p>플레이리스트 1</p>
+                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
+                    </li>
+                    <li class="playlist-li">
+                        <p>플레이리스트 1</p>
+                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
+                    </li>
+                    <li class="playlist-li">
+                        <p>플레이리스트 1</p>
+                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
 </body>
 </html>
