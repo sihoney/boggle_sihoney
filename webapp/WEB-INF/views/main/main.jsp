@@ -71,7 +71,7 @@
         <!-- 서평 플레이리스트에 추가 모달 -->
         <div class="addReviewModal">
             <div class="input-box">
-                <input type="text">
+            	<input type="text">
                 <button class="modal-closeBtn">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
