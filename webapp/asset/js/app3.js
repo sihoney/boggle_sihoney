@@ -81,21 +81,28 @@ let array = [
     }
 ];
 
+let projectName = "/bookproject"
+
 let songs = [
     {
-        title: "closer",
-        singer: "chainsmocker",
-        file: "../../../music/closer.mp3"
+        title: "chilled-acoustic-indie-folk-instrumental-background-music-for-videos-5720",
+        singer: "Lesfm",
+        file: projectName + "/asset/music/chilled-acoustic-indie-folk-instrumental-background-music-for-videos-5720.mp3"
     },
     {
-        title: "paris",
-        singer: "chainsmocker",
-        file: "../../../music/paris.mp3"
+        title: "moment-14023",
+        singer: "SergeQuadrado",
+        file: projectName + "/asset/music/moment-14023.mp3"
     },
     {
-        title: "island",
-        singer: "winner",
-        file: "../../../music/island.mp3"
+        title: "both-of-us-14037",
+        singer: "madirfan",
+        file: projectName + "/asset/music/both-of-us-14037.mp3"
+    },
+    {
+        title: "morning-garden-acoustic-chill-15013",
+        singer: "Olexy",
+        file: projectName + "/asset/music/morning-garden-acoustic-chill-15013.mp3"
     }
 ]
 
