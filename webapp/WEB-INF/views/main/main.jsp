@@ -29,7 +29,7 @@
                         </div>
                         <a href="">로그인</a>
                     </li>
-										<!-- 로그인 됐을때 화면
+					<!-- 로그인 됐을때 화면
                     <li><a href="">기록하기</a></li>
                     <li class="login">
                         <div class="userImg">

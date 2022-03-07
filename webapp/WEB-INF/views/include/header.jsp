@@ -11,19 +11,20 @@
         	<c:when test="${sessionScope.authUser eq null}">
         		<!-- 로그인전 -->
         		<ul class="list-unstyled">
-            	<a class="btn btn-link" role="button" href="${pageContext.request.contextPath}/review_write">기록하기</a>
-            	<a class="btn btn-link" role="button" href="${pageContext.request.contextPath}/user/loginForm">로그인</a>
+	            	<a class="btn btn-link" role="button" href="${pageContext.request.contextPath}/review_write">기록하기</a>
+	            	<a class="btn btn-link" role="button" href="${pageContext.request.contextPath}/user/loginForm">로그인</a>
         		</ul> 
         	</c:when>
         	<c:otherwise>
         		<!-- 로그인후 -->
         		<ul class="list-unstyled">
-            	<a class="btn btn-link" role="button" href="">기록하기</a>
-            	<span onclick="location.href='http://'">
-                <img src="../img/login/user.jpg" class="img-circle">
-                <a class="btn btn-link" role="button" href="">${sessionScope.authUser.userName}</a>
+	            	<a class="btn btn-link" role="button" href="">기록하기</a>
+	            	<span onclick="location.href='http://'">
+	                <img src="../img/login/user.jpg" class="img-circle">
+	                <a class="btn btn-link" role="button" href="">${sessionScope.authUser.userName}</a>
+                </ul>
             </span>
-        </ul> -->
+     
         	</c:otherwise>
         </c:choose>
         
