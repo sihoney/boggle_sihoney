@@ -45,7 +45,7 @@
                 <div id="login_find">
                     <span>아이디찾기</span>
                     <span class="line-l-r">비밀번호 찾기</span>
-                    <span><a href="/bookproject/joinForm">회원가입</a></span>
+                    <span><a href="${pageContext.request.contextPath}/joinForm">회원가입</a></span>
                 </div>
                 <button type="button" class="btn btn-primary btn-lg btn-block btn-naverlogin">네이버로 로그인</button>
             </div>

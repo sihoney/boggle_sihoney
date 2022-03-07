@@ -8,10 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <script src="/bookproject/asset/js/jquery-1.12.4.js"></script>
-    <script src="/bookproject/asset/bootstrap/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="/bookproject/asset/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="/bookproject/asset/css/write.css">
+    <script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
+    <script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/write.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/modal.css">
 
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -190,6 +191,9 @@
             <c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
             
         <!-- /footer -->
+        
+        <!-- modal창 -->
+        <c:import url="/WEB-INF/views/include/modal.jsp"></c:import>
 
 
 	</div>

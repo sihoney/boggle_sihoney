@@ -5,10 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>playlist-like</title>
-<link rel="stylesheet" href="/bookproject/asset/bootstrap/css/bootstrap.css">
-<link rel="stylesheet" href="/bookproject/asset/css/main-book.css">
-<script type="text/javascript" src="/bookproject/asset/js/jquery-1.12.4.js"></script>
-<script src="/bookproject/asset/bootstrap/js/bootstrap.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/main-book.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
+<script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
 <body>
 	<div id="wrap">
 		<!-- 헤더 -->
@@ -16,27 +16,25 @@
 		<!-- ------nav------ -->
 		<div id="nav" class="clearfix">
 			<ul class="nav nav-tabs">
-				<li role="presentation"><a href="">내 서평</a></li>
-				<li role="presentation" class="active"><a href="">취향저격</a></li>
+				<li role="presentation"><a href="${pageContext.request.contextPath}/mybook">내 서평</a></li>
+				<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
 				<!--세션 아이디와 사이트아이디 같을때-->
-				<li role="presentation"><a href="">통계</a></li>
+				<li role="presentation"><a href="${pageContext.request.contextPath}/analyze">통계</a></li>
 			</ul>
 			<!-- 세션아이디랑 다를때는
 			      <ul class="nav nav-tabs">
 			          <li role="presentation"><a href="">'유저이름'님의 서평</a></li>
-			          <li role="presentation" class="active"><a href="">취향저격</a></li>
+			          <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
 			      </ul>-->
 		</div>
 		<!-- ------nav2------ -->
 		<ul id="nav2" class="nav nav-pills">
 			<!-- 세션아이디와 비교, 다를경우 '이름님의 취향' -->
 			<!-- <li role="presentation" class="active"><a href="">'유저이름'님의 취향</a></li> -->
-			<li role="presentation"><a href="">my 취향</a></li>
-			<li role="presentation"><a href="">좋아요한 서평</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/taste_main">my 취향</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/review">좋아요한 서평</a></li>
 			<li role="presentation" class="active"><a href="">관심가는 책</a></li>
-			<li role="presentation"><a href="">플레이리스트</a></li>
-			<!-- 세션아이디와 비교, 같은 사람일경우에만 보이게 -->
-			<li role="presentation"><a href="">통계</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/like_playlist">플레이리스트</a></li>
 		</ul>
 		<!--tag nav-->
 		<ul id="nav3" class="nav nav-pills">

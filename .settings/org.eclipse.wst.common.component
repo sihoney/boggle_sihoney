@@ -13,7 +13,7 @@
                 
         <property name="context-root" value="bookproject"/>
                 
-        <property name="java-output-path" value="/bookproject/build/classes"/>
+        <property name="java-output-path" value="${pageContext.request.contextPath}/build/classes"/>
             
     </wb-module>
     

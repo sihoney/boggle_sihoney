@@ -7,12 +7,12 @@
 <head>
     <meta charset="UTF-8">
 
-    <script src="/bookproject/asset/js/jquery-1.12.4.js"></script>
-        <script src="/bookproject/asset/bootstrap/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="/bookproject/asset/bootstrap/css/bootstrap.css">
+    <script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
+        <script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
 
-    <link rel="stylesheet" href="/bookproject/asset/css/source.css">
-    <link rel="stylesheet" href="/bookproject/asset/css/user_modify.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/source.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/user_modify.css">
 
     <title>회원정보수정</title>
 </head>
@@ -36,7 +36,7 @@
                     <!-- 기본 프로필 사진 -->
                     <div class="float-l">
                         <label className="input-file-button" for="btn_file">
-                            <img id="user_icon" src="/bookproject/asset/img/login/빈프로필 사진.png">
+                            <img id="user_icon" src="${pageContext.request.contextPath}/asset/img/login/빈프로필 사진.png">
                         </label>
                         <input type="file" id="btn_file" name="" value="" style="display: none">
                     </div>

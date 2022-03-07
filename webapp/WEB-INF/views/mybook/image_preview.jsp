@@ -7,11 +7,11 @@
     <head>
         <meta charset="UTF-8">
         <title></title>
-        <link rel="stylesheet" href="/bookproject/asset/bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="/bookproject/asset/css/image_preview.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/image_preview.css">
 
-        <script src="/bookproject/asset/js/jquery-1.12.4.js"></script>
-        <script src="/bookproject/asset/bootstrap/js/bootstrap.js"></script>
+        <script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
+        <script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
     </head>
 
     <body>

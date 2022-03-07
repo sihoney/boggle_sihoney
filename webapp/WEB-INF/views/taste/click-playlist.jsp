@@ -5,10 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>playlist-like</title>
-<link rel="stylesheet" href="/bookproject/asset/bootstrap/css/bootstrap.css">
-<link rel="stylesheet" href="/bookproject/asset/css/playlist-click.css">
-<script type="text/javascript" src="/bookproject/asset/js/jquery-1.12.4.js"></script>
-<script src="/bookproject/asset/bootstrap/js/bootstrap.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/playlist-click.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
+<script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
 </head>
 <!--header-->
 <body>
@@ -18,15 +18,15 @@
 		<!-- ------nav------ -->
 		<div id="nav" class="clearfix">
 			<ul class="nav nav-tabs">
-				<li role="presentation"><a href="">내 서평</a></li>
-				<li role="presentation" class="active"><a href="">취향저격</a></li>
+				<li role="presentation"><a href="${pageContext.request.contextPath}/mybook">내 서평</a></li>
+				<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
 				<!--세션 아이디와 사이트아이디 같을때-->
-				<li role="presentation"><a href="">통계</a></li>
+				<li role="presentation"><a href="${pageContext.request.contextPath}/analyze">통계</a></li>
 			</ul>
 			<!-- 세션아이디랑 다를때는
 		      <ul class="nav nav-tabs">
 		          <li role="presentation"><a href="">'유저이름'님의 서평</a></li>
-		          <li role="presentation" class="active"><a href="">취향저격</a></li>
+		          <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
 		      </ul>	       
 		       -->
 		</div>
@@ -35,12 +35,10 @@
 		<ul id="nav2" class="nav nav-pills">
 			<!-- 세션아이디와 비교, 다를경우 '이름님의 취향' -->
 			<!-- <li role="presentation" class="active"><a href="">'유저이름'님의 취향</a></li> -->
-			<li role="presentation"><a href="">my 취향</a></li>
-			<li role="presentation"><a href="">좋아요한 서평</a></li>
-			<li role="presentation"><a href="">관심가는 책</a></li>
-			<li role="presentation" class="active"><a href="">플레이리스트</a></li>
-			<!-- 세션아이디와 비교, 같은 사람일경우에만 보이게 -->
-			<li role="presentation"><a href="">통계</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/taste_main">my 취향</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/review">좋아요한 서평</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/main_book">관심가는 책</a></li>
+			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/like_playlist">플레이리스트</a></li>
 		</ul>
 		
 		<div class="jumbotron">
@@ -103,12 +101,12 @@
 						<a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 더보기 <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-							<li role="presentation"><a role="menuitem" tabindex="-1" href="">플레이리스트에 추가<span id="plus">+</span></a></li>
+							<li role="presentation"><a id="add_pli" role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
 							<li role="presentation" class="divider"></li>
 							<li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
 							<li role="presentation" class="divider"></li>
 							<li role="presentation">
-							<li role="presentation"><a id="save_img" role="menuitem" target="_blank" tabindex="-1" href="/bookproject/imgpreview">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
+							<li role="presentation"><a id="save_img" role="menuitem" target="_blank" tabindex="-1" href="${pageContext.request.contextPath}/imgpreview">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
 						</ul>
 					</div>
 				</div>
