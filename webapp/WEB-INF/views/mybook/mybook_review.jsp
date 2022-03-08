@@ -91,7 +91,7 @@
                             </div>
                             <div id="reviews-footer">
                                 <div class="left">
-                                    <span id="heart" class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+                                    <span id="heart" class="glyphicon glyphicon-heart-empty" aria-hidden="true" onclick="changeClassName()"></span>
                                     <span>16.5k</span>
                                     <span>2022/02/22</span>
                                 </div>
@@ -236,6 +236,18 @@
                        
         </div> 
     </body>
+    
+    <script>
+
+	 	// 클래스 변경
+	    function changeClassName() {
+	      document.getElementById('heart').classList.add('glyphicon glyphicon-heart-empty');
+	      alert('변경전 : ' + document.getElementById('ex').className);
+	      document.getElementById('ex').classList.replace('bar', 'car');
+	      alert('변경후 : ' + document.getElementById('ex').className);
+	    }
+	
+	</script>
     
     <script src="${pageContext.request.contextPath}/asset/js/more.js"></script>
     
