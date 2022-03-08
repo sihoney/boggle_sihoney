@@ -18,7 +18,8 @@
 	 	<![CDATA[
 			SELECT  user_no userNo,
         			user_name userName,
-        			nickname nickname
+        			nickname,
+        			email
 			FROM users
 			WHERE email = #{email}
 			AND password = #{password}

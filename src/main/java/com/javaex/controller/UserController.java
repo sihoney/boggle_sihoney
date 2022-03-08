@@ -59,6 +59,18 @@ public class UserController {
 		}
 	}
 	
+	/* 로그아웃 */
+	@RequestMapping("/logout")
+	public String logout(HttpSession httpSession) {
+		
+		System.out.println("UserController>logout");
+		
+		//세션정보 삭제
+		httpSession.removeAttribute("authUser");
+		httpSession.invalidate();
+		
+		return "redirect:/";
+	}
 	
 	
 	/* 회원가입 */
@@ -70,12 +82,21 @@ public class UserController {
 	}
 	
 	
+<<<<<<< HEAD
 	
 	@RequestMapping("/modifyForm")
+=======
+	/* 회원정보수정 */
+	@RequestMapping("/user_modify")
+>>>>>>> branch 'master' of https://github.com/0rimi/4_project.git
 	public String user_modify() {
 		System.out.println("user_modify");
 		
 		return "user/user_modify";
 	}
+	
+	
+	
+	
 
 }
