@@ -8,6 +8,7 @@
         <meta charset="UTF-8">
         <title></title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/mybook_review.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/modal.css">
 

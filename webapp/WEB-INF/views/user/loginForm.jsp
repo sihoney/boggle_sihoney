@@ -14,6 +14,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.js"></script>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/source.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/loginForm.css" type="text/css">
 </head>
 

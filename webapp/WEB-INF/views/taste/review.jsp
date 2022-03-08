@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<title>playlist-like</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/main-review.css">
 	<link rel="stylesheet" href="/bookproject/asset/css/modal.css">
 	

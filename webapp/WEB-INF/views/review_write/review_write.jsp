@@ -11,6 +11,7 @@
     <script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
     <script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/write.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/modal.css">
 

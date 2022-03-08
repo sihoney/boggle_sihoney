@@ -1,55 +1,5 @@
 @charset "UTF-8";
 
-/* 책 제목 */
-@font-face {
-    font-family: 'KOHIBaeumOTF';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/KOHIBaeumOTF.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-/* 책 설명 */
-@font-face {
-    font-family: 'MinSans-Medium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/MinSans-Medium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-
-/* ---------헤더---------- */
-#header {
-    background-color: #FFFFFF;
-    transition: opacity 1s;
-}
-
-#header>a>img {
-    float: left;
-    width: 110px;
-    margin: 0px 40px 0px 10px;
-    cursor:pointer;
-}
-
-#header>ul>span>.img-circle {
-    width: 30px;
-    height: 30px;
-    cursor:pointer;
-}
-
-#header>ul>span {
-    cursor:pointer;
-}
-
-#header ul {
-    float: right;
-}
-
-#header>ul>li {
-    float:left;
-    padding: 10px 0px 10px 20px;
-}
-
-
 /* ---------날짜 검색---------- */
 #analyze_search {
     margin: 35px 0px 15px 0px;

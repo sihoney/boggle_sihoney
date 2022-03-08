@@ -13,6 +13,7 @@
     <script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/playlist_edit.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/style.css">
     <!-- font awesome icon 파일 -->
