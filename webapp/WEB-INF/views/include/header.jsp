@@ -11,7 +11,7 @@
 			<c:when test="${sessionScope.authUser eq null}">
 				<!-- 로그인전 -->
 				<ul class="list-unstyled">
-					<li><a class="btn btn-link" role="button" href="${pageContext.request.contextPath}/review_write">기록하기</a></li>
+					<li><a class="btn btn-link" role="button" href="${pageContext.request.contextPath}/review_write">회원가입</a></li>
 					<li><a class="btn btn-link" role="button" href="${pageContext.request.contextPath}/user/loginForm">로그인</a></li>
 				</ul>
 			</c:when>
@@ -24,7 +24,7 @@
 						<label for="user-img"></label>
 						<a class="btn btn-link" role="button" href="${pageContext.request.contextPath}/book/review">
 							<img id="user-img" src="${pageContext.request.contextPath}/asset/img/profile.png" class="img-circle"> 
-							<span>${sessionScope.authUser.userName}</span>
+							<span>${sessionScope.authUser.nickname}</span>
 						</a>
 					</li>
 				</ul>

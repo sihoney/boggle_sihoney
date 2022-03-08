@@ -22,13 +22,14 @@
             </div>
             <div class="links-container">
                 <ul class="links">
-                    <li><a href="">기록하기</a></li>
+                    <li><a href="">회원가입</a></li>
                     <li class="login">
                         <div class="userImg">
                             <img src="${pageContext.request.contextPath}/asset/img/profile.png" alt="">
                         </div>
                         <a href="">로그인</a>
                     </li>
+
 					<!-- 로그인 됐을때 화면
                     <li><a href="">기록하기</a></li>
                     <li class="login">

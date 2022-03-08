@@ -17,7 +17,8 @@
 	<select id="selectUser" parameterType="UserVo" resultType="UserVo">
 	 	<![CDATA[
 			SELECT  user_no userNo,
-        			user_name userName
+        			user_name userName,
+        			nickname nickname
 			FROM users
 			WHERE email = #{email}
 			AND password = #{password}
