@@ -15,6 +15,7 @@
 <script
 	src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
 
+<<<<<<< HEAD
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
 <link rel="stylesheet"
@@ -25,6 +26,14 @@
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
 	rel="stylesheet">
+=======
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/playlist_edit.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/style.css">
+    <!-- font awesome icon 파일 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+>>>>>>> branch 'master' of https://github.com/0rimi/4_project.git
 
 
 </head>

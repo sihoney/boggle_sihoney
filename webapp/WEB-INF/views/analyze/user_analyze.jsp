@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
 
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/source.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/user_analyze.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/modal.css">   
             

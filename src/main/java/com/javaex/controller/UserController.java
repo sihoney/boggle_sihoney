@@ -71,7 +71,7 @@ public class UserController {
 	
 	
 	
-	@RequestMapping("/user_modify")
+	@RequestMapping("/modifyForm")
 	public String user_modify() {
 		System.out.println("user_modify");
 		

@@ -8,6 +8,7 @@
         <meta charset="UTF-8">
         <title></title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/mybook_review.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/modal.css">
 
@@ -237,16 +238,19 @@
         </div> 
     </body>
     
-    <script>
-
-	 	// 클래스 변경
-	    function changeClassName() {
-	      document.getElementById('heart').classList.add('glyphicon glyphicon-heart-empty');
-	      alert('변경전 : ' + document.getElementById('ex').className);
-	      document.getElementById('ex').classList.replace('bar', 'car');
-	      alert('변경후 : ' + document.getElementById('ex').className);
-	    }
-	
+    <script>	
+		$('#heart').on('click',function(){			
+			//포함되어있으면 true
+			let isExist = document.getElementById('heart').classList.contains('glyphicon-heart-empty');
+			
+			if(isExist == true){
+				let like = document.getElementById('heart');
+				like.classList.replace("glyphicon-heart-empty", "glyphicon-heart");
+			}else{
+				let like = document.getElementById('heart');
+				like.classList.replace("glyphicon-heart", "glyphicon-heart-empty");
+			}			
+		});		
 	</script>
     
     <script src="${pageContext.request.contextPath}/asset/js/more.js"></script>

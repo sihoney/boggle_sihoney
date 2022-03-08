@@ -8,6 +8,7 @@
         <meta charset="UTF-8">
         <title></title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/joinForm.css">
 
         <script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>

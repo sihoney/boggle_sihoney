@@ -16,6 +16,7 @@
         <script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
 
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/source.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/book_detail.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/modal.css">
 

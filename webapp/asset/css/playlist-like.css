@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+<<<<<<< HEAD
 /* 전체 공통 */
 body, div, ul, li, dl, dt, ol, h1, h2, h3, h4, h5, h6, 
 input, fieldset, legend, p, select, table, th, td, tr, 
@@ -90,6 +91,20 @@ body {
     text-align: center;
     padding:12px;
     border-radius: 12px;
+=======
+/******************content********************/
+#content{
+    padding: 20px 25px;
+}
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
+/**********컨텐츠 공통**********/
+#content>div{
+>>>>>>> branch 'master' of https://github.com/0rimi/4_project.git
     margin-bottom: 20px;
 }
 

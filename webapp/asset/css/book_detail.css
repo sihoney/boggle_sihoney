@@ -1,42 +1,5 @@
 @charset "UTF-8";
 
-/* ---------헤더---------- */
-#header {
-    background-color: #FFFFFF;
-    transition: opacity 1s;
-}
-
-#header>a>img {
-    float: left;
-    width: 110px;
-    margin: 0px 40px 0px 10px;
-    cursor:pointer;
-}
-
-#header>ul>span>.img-circle {
-    width: 25px;
-    height: 25px;
-    cursor:pointer;
-}
-
-#header>ul>span {
-    cursor:pointer;
-}
-
-#header ul {
-    float: right;
-}
-
-#header>ul>li {
-    float:left;
-    padding: 10px 0px 10px 20px;
-}
-
-/* ------------nav---------------- */
-#nav {
-    padding: 5px 0px 5px 0px;
-}
-
 /* ------------컨텐츠 (책 소개)---------------- */
 #book_img {
     float: left;

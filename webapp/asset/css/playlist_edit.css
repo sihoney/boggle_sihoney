@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+<<<<<<< HEAD
 /* 책 제목 */
 @font-face {
     font-family: 'KOHIBaeumOTF';
@@ -88,6 +89,8 @@ body {
     padding: 10px 0px 10px 20px;
 }
 /* ---------//헤더---------- */
+=======
+>>>>>>> branch 'master' of https://github.com/0rimi/4_project.git
 
 .progress-bar-contents span{
     margin-left: 210px;
@@ -703,10 +706,10 @@ display:block;
 
 .clicked {
     /* background-color : gold !important; */
-    color: blue !important;
+    color: red !important;
     border-radius:100%;
     font-weight: bold;
-    border : 3px solid blue;
+    border : 3px solid red;
 
     cursor:pointer;
 }
