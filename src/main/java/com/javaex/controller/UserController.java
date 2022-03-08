@@ -59,6 +59,18 @@ public class UserController {
 		}
 	}
 	
+	/* 로그아웃 */
+	@RequestMapping("/logout")
+	public String logout(HttpSession httpSession) {
+		
+		System.out.println("UserController>logout");
+		
+		//세션정보 삭제
+		httpSession.removeAttribute("authUser");
+		httpSession.invalidate();
+		
+		return "redirect:/";
+	}
 	
 	
 	/* 회원가입 */
@@ -70,12 +82,16 @@ public class UserController {
 	}
 	
 	
-	
+	/* 회원정보수정 */
 	@RequestMapping("/user_modify")
 	public String user_modify() {
 		System.out.println("user_modify");
 		
 		return "user/user_modify";
 	}
+	
+	
+	
+	
 
 }

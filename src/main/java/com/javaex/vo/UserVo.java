@@ -12,9 +12,10 @@ public class UserVo {
 	
 	
 	public UserVo() {}
-	public UserVo(int userNo, String userName) {
+	public UserVo(int userNo, String userName, String nickname) {
 		this.userNo = userNo;
 		this.userName = userName;
+		this.nickname = nickname;
 	}
 	public UserVo(int userNo, String userName, String nickname, String email, String password, String userProfile,
 			String joinDate) {

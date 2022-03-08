@@ -18,30 +18,41 @@
         <!-- nav -->
         <nav>
             <div class="nav-header">
-                <h1 class="logo">SYB</h1>
+                <h1 class="logo">BOGGLE</h1>
             </div>
+            
             <div class="links-container">
                 <ul class="links">
-                    <li><a href="">회원가입</a></li>
-                    <li class="login">
-                        <div class="userImg">
-                            <img src="${pageContext.request.contextPath}/asset/img/profile.png" alt="">
-                        </div>
-                        <a href="">로그인</a>
-                    </li>
+                
+                	<c:choose>
+                		<c:when test="${sessionScope.authUser eq null}">
+                			<li>
+                				<a href="${pageContext.request.contextPath}/user/joinForm">회원가입</a>
+                			</li>
+                   			<li class="login">
+		                        <div class="userImg">
+		                            <img src="${pageContext.request.contextPath}/asset/img/profile.png" alt="">
+		                        </div>
+		                        <a href="${pageContext.request.contextPath}/user/loginForm">로그인</a>
+		                    </li>
+                		</c:when>
+                		<c:otherwise>
+                			<!-- 로그인 됐을때 화면 -->
+		                    <li><a href="${pageContext.request.contextPath}/review_write">기록하기</a></li>
+		                    <li class="login">
+		                        <div class="userImg">
+		                            <img src="${pageContext.request.contextPath}/asset/img/profile.png" alt="">
+		                        </div>
+		                        <a href="${pageContext.request.contextPath}/mybook">황태형</a>
+		                    </li>
+                		</c:otherwise>
+                	</c:choose>
 
-					<!-- 로그인 됐을때 화면
-                    <li><a href="">기록하기</a></li>
-                    <li class="login">
-                        <div class="userImg">
-                            <img src="${pageContext.request.contextPath}/asset/img/profile.png" alt="">
-                        </div>
-                        <a href="${pageContext.request.contextPath}/loginForm">황태형</a>
-                    </li>
-                     -->
                 </ul>
             </div>
+        
         </nav>
+        
         <button class="sidebarBtn">
             <i class="fa-solid fa-bars"></i>
         </button>
@@ -77,7 +88,7 @@
     <aside class="sidebar">
         <div class="sidebar-header">
             <div class="nav-header">
-                <h1 class="sidebar-logo">SYB</h1>
+                <h1 class="sidebar-logo">BOGGLE</h1>
             </div>
             <button type="button" class="close-btn">
                 <i class="fa-solid fa-xmark"></i>
