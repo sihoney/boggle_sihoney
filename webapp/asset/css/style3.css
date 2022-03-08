@@ -408,6 +408,8 @@ i.fa-solid에 position: absolute 을 줘서
   color: #b4b4b4;
   padding: 0.5rem 1rem;
   cursor: pointer;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
 }
 .playlist .playlist-container .static .playlistAddBtn {
   border: none;
