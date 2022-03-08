@@ -56,7 +56,7 @@
                         <div>이름*</div>
                         <div><input type="text" id="" name="username" placeholder="이름을 입력해주세요"></div>
                         <div>닉네임*</div>
-                        <div><input type="text" id="" name="username" placeholder="닉네임을 입력해주세요"></div>
+                        <div><input type="text" maxlength='6' id="" name="username" placeholder="닉네임을 입력해주세요"></div>
                         <div>이메일주소*</div>
                         <div class="except">
                             <input type="text" id="" name="e-mail"  placeholder="ID@example.com">

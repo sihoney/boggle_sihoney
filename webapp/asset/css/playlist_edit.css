@@ -20,6 +20,7 @@
 body, div, ul, li, dl, dt, ol, h1, h2, h3, h4, h5, 
 h6, input, fieldset, legend, p, select, table, th, 
 td, tr, textarea, button, form {
+	box-sizing : border-box;
     margin: 0; padding: 0;
 }
 /* clearfix */
@@ -30,6 +31,7 @@ td, tr, textarea, button, form {
 body {
     font-family: 'MinSans-Medium';
     font-size: 12px;
+    
 }
 
 #wrap {
@@ -220,7 +222,7 @@ display:block;
 #btn_delete {
     float:right;
     padding: auto;
-    margin: 0px 10px 0px 0px;
+    margin: auto;
     background-color: none;
 }
 #btn_modify {
@@ -493,7 +495,7 @@ display:block;
 	height: 50px;
 	width:1110px;
     margin-top: 100px;
-	display:block;
+	
 }
 
 #btn_cancle{
@@ -683,3 +685,30 @@ display:block;
     border-radius: 10px;
     border-style: none;
 }
+
+.textbox{
+	margin:0px 0px 20px 0px;
+}
+
+#playlist-delete{
+	display:block;
+	margin:auto;
+	text-align:center;
+}
+
+.btn-desc{
+	display:inline-block;
+	margin-right:20px;
+}
+
+.clicked {
+    /* background-color : gold !important; */
+    color: blue !important;
+    border-radius:100%;
+    font-weight: bold;
+    border : 3px solid blue;
+
+    cursor:pointer;
+}
+
+

@@ -98,4 +98,22 @@ public class test {
 		return "taste/review";
 	}
 	
+	@RequestMapping("/recommend_playlist")
+	public String recommend() {
+		System.out.println("recommend");
+		return "taste/recommend_playlist";
+	}
+	
+	@RequestMapping("/hot_playlist")
+	public String hot() {
+		System.out.println("hot_playlist");
+		return "taste/hot_playlist";
+	}
+	
+	@RequestMapping("/written_playlist")
+	public String written() {
+		System.out.println("written_playlist");
+		return "taste/written_playlist";
+	}
+	
 }
