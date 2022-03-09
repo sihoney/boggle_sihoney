@@ -207,3 +207,56 @@ insert into style
 values(seq_style_no.nextval, 12, '#d82249,NanumBarunPen');
 insert into style
 values(seq_style_no.nextval, 12, '#6fbf8b,NanumGothicEco');
+
+//////////////////////////
+// genre
+//////////////////////////
+insert into genre
+values('987', '과학');
+insert into genre
+values('55889', '에세이');
+insert into genre
+values('1', '소설/시/희곡');
+insert into genre
+values('656', '인문학');
+insert into genre
+values('2105', '고전');
+insert into genre
+values('517', '예술/대중문화');
+insert into genre
+values('336', '자기계발');
+
+--#전체 출력--
+select *
+from genre;
+
+//////////////////
+// books
+//////////////////
+
+insert into books
+values(9791189327156, '물고기는 존재하지 않는다', '룰루 밀러', 'https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=284657330', 987);
+insert into books
+values(9791197037153, '작은 별이지만 빛나고 있어', '소윤', 'https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=280389330', 55889);
+insert into books
+values(9791166686603, '다섯 번째 감각', '김보영', 'https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=287367114', 1);
+insert into books
+values(9791160804751, '자유로부터의 도피', '에리히 프롬', 'https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=250111513', 656);
+insert into books
+values(9788932039459, '나를 마릴린 먼로라고 하자', '한정현', 'https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=289253350', 1);
+
+insert into books
+values(9788936438715, '백의 그림자', '황정은', 'https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=287791901', 1);
+insert into books
+values(9788932474632, '인간과 사진', '제프 다이어', 'https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=290087728', 517);
+insert into books
+values(9791192085104, '동물은 어떻게 슬퍼하는가', '바버라 J. 킹', 'https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=289172502', 656);
+insert into books
+values(9788925578804, '슈퍼 해빗', '케이티 밀크먼', 'https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=289173060', 336);
+insert into books
+values(9791164051519, '생각은 어떻게 행동이 되는가', '데이비드 바드르', 'https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=287744195', 656);
+
+/******* 확인 *********
+select * 
+from genre, books
+where genre.genre_no = books.genre_no;
