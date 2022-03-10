@@ -55,6 +55,14 @@ insert into review_user
 values(seq_review_user_no.nextval, 6, 13, sysdate );
 
 
+/*1번서평 좋아요한 사용자 추가*/
+insert into review_user
+values(SEQ_REVIEW_USER_NO.nextval, 3, 1, sysdate);
+insert into review_user
+values(SEQ_REVIEW_USER_NO.nextval, 2, 1, sysdate);
+insert into review_user
+values(SEQ_REVIEW_USER_NO.nextval, 4, 1, sysdate);
+
 /********** select **********/
 select *
 from review_user;
