@@ -15,6 +15,7 @@ public class MybookService {
 	@Autowired
 	private  MybookDao mybookDao;
 	
+	//유저번호 입력시 해당유저 서평리스트 출력해주는 메소드
 	public List<MybookVo> list(int userNo){
 		System.out.println("mybookService.list()");
 		
@@ -22,6 +23,7 @@ public class MybookService {
 		
 		return mbList;
 	}
+	
 	
 
 }

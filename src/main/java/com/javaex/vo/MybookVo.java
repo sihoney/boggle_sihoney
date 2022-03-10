@@ -1,27 +1,37 @@
 package com.javaex.vo;
 
 public class MybookVo {
-
+	
+	private int reviewNo;
 	private String bookTitle;
-	private String userName;
+	private String nickname;
 	private int userNo;
 	private String reviewContent;
 	private String emoName;
 	private int emoNo;
 	private String reviewDate;
+	private int styleNo;
+	private int likecnt;
+	
 	
 	public MybookVo() {}
-	public MybookVo(String bookTitle, String userName, int userNo, String reviewContent, String emoName, int emoNo,
-			String reviewDate) {
+	public MybookVo(int reviewNo, String bookTitle, String nickname, int userNo, String reviewContent, String emoName,
+			int emoNo, String reviewDate, int styleNo, int likecnt) {
 		super();
+		this.reviewNo = reviewNo;
 		this.bookTitle = bookTitle;
-		this.userName = userName;
+		this.nickname = nickname;
 		this.userNo = userNo;
 		this.reviewContent = reviewContent;
 		this.emoName = emoName;
 		this.emoNo = emoNo;
 		this.reviewDate = reviewDate;
+		this.styleNo = styleNo;
+		this.likecnt = likecnt;
 	}
+	
+	
+	
 	
 	
 	public String getBookTitle() {
@@ -30,11 +40,11 @@ public class MybookVo {
 	public void setBookTitle(String bookTitle) {
 		this.bookTitle = bookTitle;
 	}
-	public String getUserName() {
-		return userName;
+	public String getNickname() {
+		return nickname;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	public int getUserNo() {
 		return userNo;
@@ -66,13 +76,32 @@ public class MybookVo {
 	public void setReviewDate(String reviewDate) {
 		this.reviewDate = reviewDate;
 	}
+	public int getReviewNo() {
+		return reviewNo;
+	}
+	public void setReviewNo(int reviewNo) {
+		this.reviewNo = reviewNo;
+	}
+	public int getStyleNo() {
+		return styleNo;
+	}
+	public void setStyleNo(int styleNo) {
+		this.styleNo = styleNo;
+	}
+	public int getLikecnt() {
+		return likecnt;
+	}
+	public void setLikecnt(int likecnt) {
+		this.likecnt = likecnt;
+	}
 	
 	
 	
 	@Override
 	public String toString() {
-		return "MybookVo [bookTitle=" + bookTitle + ", userName=" + userName + ", userNo=" + userNo + ", reviewContent="
-				+ reviewContent + ", emoName=" + emoName + ", emoNo=" + emoNo + ", reviewDate=" + reviewDate + "]";
+		return "MybookVo [reviewNo=" + reviewNo + ", bookTitle=" + bookTitle + ", nickname=" + nickname + ", userNo="
+				+ userNo + ", reviewContent=" + reviewContent + ", emoName=" + emoName + ", emoNo=" + emoNo
+				+ ", reviewDate=" + reviewDate + ", styleNo=" + styleNo + ", likecnt=" + likecnt + "]";
 	}
 	
 }

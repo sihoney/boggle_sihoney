@@ -74,125 +74,48 @@
 					</div>
 					<!-- list -->
 					<!-- 서평 리스트 -->
-					<div id="reviews">
-						<div id="reviews-header">
-							<div class="left">
-								<p>
-									<a href="${pageContext.request.contextPath}/bookdetail">데미안</a>
-								</p>
+					<c:forEach items="${mbList }" var="vo">
+						<div id="reviews">
+							<div id="reviews-header">
+								<div class="left">
+									<p>
+										<a href="${pageContext.request.contextPath}/bookdetail">${vo.bookTitle }</a>
+									</p>
+								</div>
+								<!-- 작성자아이디와 세션아이디가 동일할 시에만 보이게 -->
+								<div class="right">
+									<a>수정</a> <a>삭제</a>
+								</div>
 							</div>
-							<!-- 작성자아이디와 세션아이디가 동일할 시에만 보이게 -->
-							<div class="right">
-								<a>수정</a> <a>삭제</a>
+							<!-- 작성자아이디와 세션아이디가 동일할 경우에는 안보이게 -->
+							<div id="reviewer">
+								<a href="${pageContext.request.contextPath}/후추가득스테이크">${vo.nickname }</a>
 							</div>
-						</div>
-						<!-- 작성자아이디와 세션아이디가 동일할 경우에는 안보이게 -->
-						<div id="reviewer">
-							<a href="${pageContext.request.contextPath}/후추가득스테이크">후추가득스테이크</a>
-						</div>
-						<div id="reviews-content">
-							<p>새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한 개의 세계를 부숴야 한다. 그 새는 신을 향해 날아간다. 그 신의 이름은 아브락사스다.</p>
-							<span class="label label-default">우울한</span> <span class="label label-default">#mood</span>
-						</div>
-						<div id="reviews-footer">
-							<div class="left">
-								<span id="heart" class="glyphicon glyphicon-heart-empty" aria-hidden="true" onclick="changeClassName()"></span> <span>16.5k</span> <span>2022/02/22</span>
+							<div id="reviews-content">
+								<p>${vo.reviewContent }</p>
+								<span class="label label-default">${vo.emoName }</span> <span class="label label-default">#mood</span>
 							</div>
-							<div class="right">
-								<div class="dropup">
-									<a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 더보기 <span class="caret"></span>
-									</a>
-									<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-										<li role="presentation"><a id="add_pli" role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
-										<li role="presentation" class="divider"></li>
-										<li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
-										<li role="presentation" class="divider"></li>
-										<li role="presentation"><a role="menuitem" tabindex="-1" target="_blank" href="${pageContext.request.contextPath}/imgpreview">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
-									</ul>
+							<div id="reviews-footer">
+								<div class="left">
+									<span id="heart" class="glyphicon glyphicon-heart-empty" aria-hidden="true" onclick="changeClassName()"></span> <span>${vo.likecnt }</span> <span>${vo.reviewDate }</span>
+								</div>
+								<div class="right">
+									<div class="dropup">
+										<a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 더보기 <span class="caret"></span>
+										</a>
+										<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+											<li role="presentation"><a id="add_pli" role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
+											<li role="presentation" class="divider"></li>
+											<li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
+											<li role="presentation" class="divider"></li>
+											<li role="presentation"><a role="menuitem" tabindex="-1" target="_blank" href="${pageContext.request.contextPath}/imgpreview">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
+										</ul>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<!-- 서평 리스트 -->
-					<div id="reviews">
-						<div id="reviews-header">
-							<div class="left">
-								<p>
-									<a href="${pageContext.request.contextPath}/bookdetail">데미안</a>
-								</p>
-							</div>
-							<!-- 작성자아이디와 세션아이디가 동일할 시에만 보이게 -->
-							<div class="right">
-								<a>수정</a> <a>삭제</a>
-							</div>
-						</div>
-						<!-- 작성자아이디와 세션아이디가 동일할 경우에는 안보이게 -->
-						<div id="reviewer">
-							<a>돈까스먹는 오리</a>
-						</div>
-						<div id="reviews-content">
-							<p>새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한 개의 세계를 부숴야 한다. 그 새는 신을 향해 날아간다. 그 신의 이름은 아브락사스다.</p>
-							<span class="label label-default">우울한</span> <span class="label label-default">#mood</span>
-						</div>
-						<div id="reviews-footer">
-							<div class="left">
-								<span id="heart" class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span> <span>16.5k</span> <span>2022/02/22</span>
-							</div>
-							<div class="right">
-								<div class="dropup">
-									<a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 더보기 <span class="caret"></span>
-									</a>
-									<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-										<li role="presentation"><a id="add_pli" role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
-										<li role="presentation" class="divider"></li>
-										<li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
-										<li role="presentation" class="divider"></li>
-										<li role="presentation"><a role="menuitem" tabindex="-1" href="">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- 서평 리스트 -->
-					<div id="reviews">
-						<div id="reviews-header">
-							<div class="left">
-								<p>
-									<a>데미안</a>
-								</p>
-							</div>
-							<!-- 작성자아이디와 세션아이디가 동일할 시에만 보이게 -->
-							<div class="right">
-								<a>수정</a> <a>삭제</a>
-							</div>
-						</div>
-						<!-- 작성자아이디와 세션아이디가 동일할 경우에는 안보이게 -->
-						<div id="reviewer">
-							<a>돈까스먹는 오리</a>
-						</div>
-						<div id="reviews-content">
-							<p>새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한 개의 세계를 부숴야 한다. 그 새는 신을 향해 날아간다. 그 신의 이름은 아브락사스다.</p>
-							<span class="label label-default">우울한</span> <span class="label label-default">#mood</span>
-						</div>
-						<div id="reviews-footer">
-							<div class="left">
-								<span id="heart" class="glyphicon glyphicon-heart" aria-hidden="true"></span> <span>16.5k</span> <span>2022/02/22</span>
-							</div>
-							<div class="right">
-								<div class="dropup">
-									<a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 더보기 <span class="caret"></span>
-									</a>
-									<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-										<li role="presentation"><a id="add_pli" role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
-										<li role="presentation" class="divider"></li>
-										<li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
-										<li role="presentation" class="divider"></li>
-										<li role="presentation"><a role="menuitem" tabindex="-1" href="">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
+					</c:forEach>
+					<!-- 서평리스트 -->
 				</div>
 				<!-- //col-xs-8 -->
 				<!-- col-xs-4:프로필 -->
