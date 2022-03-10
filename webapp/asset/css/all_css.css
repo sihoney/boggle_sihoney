@@ -104,7 +104,7 @@ a:hover{
 
 /* 휴  패딩말고 수평 정렬 도와주세여...*/
 .write-postion{
-    padding-top: 20%;
+    padding-top: 15%;
 }
 
 .header-dLabe {
@@ -130,6 +130,7 @@ a:hover{
     border-style: none;
     width: 200px;
     height: 40px;
+    margin-bottom: 10px;
 }
 
 #header-menu-img {
