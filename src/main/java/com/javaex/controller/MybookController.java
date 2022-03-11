@@ -94,5 +94,14 @@ public class MybookController {
 		return "taste/taste-main";		
 	}
 	
+	//취향저격(좋아요한서평페이지)
+	@RequestMapping("/{nickname}/tastereview")
+	public String tastereview(@PathVariable(value="nickname") String nickname,
+						   HttpSession session, Model model) {
+		
+			
+		return "taste/review";		
+	}
+	
 	
 }

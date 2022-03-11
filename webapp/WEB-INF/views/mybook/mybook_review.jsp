@@ -79,7 +79,7 @@
 							<div id="reviews-header">
 								<div class="left">
 									<p>
-										<a href="${pageContext.request.contextPath}/bookdetail">${vo.bookTitle }</a>
+										<a href="${pageContext.request.contextPath}/bookdetail?bookNo=${vo.bookNo}">${vo.bookTitle }</a>
 									</p>
 								</div>
 								<!-- 작성자아이디와 세션아이디가 동일할 시에만 보이게 -->

@@ -4,6 +4,7 @@ public class MybookVo {
 	
 	private int reviewNo;
 	private String bookTitle;
+	private String bookNo;
 	private String nickname;
 	private int userNo;
 	private String reviewContent;
@@ -29,6 +30,22 @@ public class MybookVo {
 		this.styleNo = styleNo;
 		this.likecnt = likecnt;
 	}
+	public MybookVo(int reviewNo, String bookTitle, String bookNo, String nickname, int userNo, String reviewContent,
+			String emoName, int emoNo, String reviewDate, int styleNo, int likecnt) {
+		super();
+		this.reviewNo = reviewNo;
+		this.bookTitle = bookTitle;
+		this.bookNo = bookNo;
+		this.nickname = nickname;
+		this.userNo = userNo;
+		this.reviewContent = reviewContent;
+		this.emoName = emoName;
+		this.emoNo = emoNo;
+		this.reviewDate = reviewDate;
+		this.styleNo = styleNo;
+		this.likecnt = likecnt;
+	}
+	
 	
 	
 	
@@ -94,14 +111,22 @@ public class MybookVo {
 	public void setLikecnt(int likecnt) {
 		this.likecnt = likecnt;
 	}
+	public String getBookNo() {
+		return bookNo;
+	}
+	public void setBookNo(String bookNo) {
+		this.bookNo = bookNo;
+	}
+	
 	
 	
 	
 	@Override
 	public String toString() {
-		return "MybookVo [reviewNo=" + reviewNo + ", bookTitle=" + bookTitle + ", nickname=" + nickname + ", userNo="
-				+ userNo + ", reviewContent=" + reviewContent + ", emoName=" + emoName + ", emoNo=" + emoNo
-				+ ", reviewDate=" + reviewDate + ", styleNo=" + styleNo + ", likecnt=" + likecnt + "]";
+		return "MybookVo [reviewNo=" + reviewNo + ", bookTitle=" + bookTitle + ", bookNo=" + bookNo + ", nickname="
+				+ nickname + ", userNo=" + userNo + ", reviewContent=" + reviewContent + ", emoName=" + emoName
+				+ ", emoNo=" + emoNo + ", reviewDate=" + reviewDate + ", styleNo=" + styleNo + ", likecnt=" + likecnt
+				+ "]";
 	}
 	
 }
