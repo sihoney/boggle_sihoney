@@ -11,6 +11,7 @@
     <script src="${pageContext.request.contextPath}/asset/js/app3.js" defer></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/style3.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
 </head>
 <body>
 <!-- Header -->
@@ -40,10 +41,12 @@
                 			<!-- 로그인 됐을때 화면 -->
 		                    <li><a href="${pageContext.request.contextPath}/review_write">기록하기</a></li>
 		                    <li class="login">
-		                        <div class="userImg">
-		                            <img src="${pageContext.request.contextPath}/asset/img/profile.png" alt="">
-		                        </div>
-		                        <a href="${pageContext.request.contextPath}/mybook">황태형</a>
+		                    	<a href="${pageContext.request.contextPath}/${authUser.nickname}">
+		                    		<div class="userImg">
+			                            <img src="${pageContext.request.contextPath}/asset/img/profile.png" alt="">
+			                        </div>
+			                        <a href="${pageContext.request.contextPath}/mybook">${sessionScope.authUser.nickname }</a>
+		                    	</a>
 		                    </li>
                 		</c:otherwise>
                 	</c:choose>
@@ -97,21 +100,13 @@
         <div class="tags">
             <h2 class="subheading">감정 태그</h2>
             <div class="tag-box">
-                <button class="emoTag">행복</button>
-                <button class="emoTag">우울</button>
-                <button class="emoTag">편함</button>
-                <button class="emoTag">즐거움</button>
-                <button class="emoTag">외로움</button>
-                <button class="emoTag">행복</button>
-                <button class="emoTag">우울</button>
-                <button class="emoTag">편함</button>
-                <button class="emoTag">즐거움</button>
-                <button class="emoTag">외로움</button>
+                <!-- <button class="emoTag">행복</button> -->
             </div>
         </div>
         <div class="randomBtn">
             <button class="randomCheckBtn">
-                <i class="fa-solid fa-check"></i>
+            	<i class="fa-solid fa-shuffle"></i>
+                <!-- <i class="fa-solid fa-check"></i> -->
                 <!-- <i class="fa-solid fa-circle-check"></i> -->
             </button>
             <h2>랜덤 서평 재생하기</h2>
@@ -155,10 +150,20 @@
                     <button class="playlistAddBtn"><i class="fa-solid fa-plus"></i></button>
                 </div>
                 <ul class="playlist-list">
-                    <li>퇴근길에 보면 힘이 나는 플리</li>
-                    <li>우울할 때 정신차리고 갓생살기</li>
-                    <li>남친이 빡치게 하면 보기</li>
-                    <li>용기뿜뿜 명언 한구절</li>
+                	<c:choose>
+                		<c:when test="${sessionScope.authUser eq null}">
+                			<p>로그인 후 이용해주세요</p>
+                		</c:when>
+                		<c:otherwise>
+		                    
+		                    <li>퇴근길에 보면 힘이 나는 플리</li>
+		                    <li>우울할 때 정신차리고 갓생살기</li>
+		                    <li>남친이 빡치게 하면 보기</li>
+		                    <li>용기뿜뿜 명언 한구절</li> 
+		                                  		
+                		</c:otherwise>
+                	</c:choose>
+
                 </ul>
             </div>
         </div>
@@ -237,4 +242,7 @@
     </div>
 </body>
 </body>
+<script>
+
+</script>
 </html>

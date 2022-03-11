@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="emotion">
+
+	<!-- ResultMap -->
+	<resultMap id="RReviewVo" type="map">
+		<result column="review_no" property="reviewNo" />
+		<result column="book_no" property="bookNo" />
+		<result column="review_content" property="reviewContent" />
+		<result column="nickname" property="nickname" />
+		<result column="style_name" property="styleName" />
+		<result column="emo_no" property="emoNo" />
+		
+		<result column="user_no" property="userNo" />
+		<result column="style_no" property="styleNo" />
+		<result column="review_date" property="reviewDate" />
+		<result column="emo_name" property="emoName" />
+	</resultMap>	
+
+	<resultMap id="emotionMap" type="map">
+        <result property="emoName" column="emo_name" />
+        <result property="emoNo" column="emo_no" />
+    </resultMap> 
+
+	<select id="getEmotion" resultMap="emotionMap">
+		<![CDATA[
+			select emo_name,
+				   emo_no
+			from emotion
+		]]>
+	</select>
+
+	<select id="getReviewListByEmo" parameterType="int" resultMap="RReviewVo">
+		<![CDATA[
+			select review_content,
+			       review_no,
+			       nickname,
+			       review.book_no,
+			       style_name, 
+			       emotion.emo_no
+			from review, users, books, style, emotion
+			where review.user_no = users.user_no
+			and books.book_no = review.book_no
+			and review.style_no = style.style_no
+			and style.emo_no = emotion.emo_no
+			and emotion.emo_no = #{emoNum}
+		]]>
+	</select>
+</mapper>

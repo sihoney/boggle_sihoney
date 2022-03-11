@@ -1,83 +1,27 @@
 let array = [
     {
-        image: "#8257F6",
-        fontFamily: "'Nanum Myeongjo', serif",
-        review: "빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강",
-        userName: "mark",
-        rn: 1,
-        id: "a1"
+        bookNo: 9791189327156,
+		emoNo: 1,
+		nickname: "가짜정우성",
+		reviewContent: "우리가 어류에 대해 해온 일이 바로 이와 똑같다. 수많은 미묘한 차이들을 “어류”라는 하나의 단어 아래 몰아넣은 것이다.",
+		reviewNo: 1,
+		styleName: "#f905fb,NanumGothicEco"
     },
     {
-        image: "#34293C",
-        fontFamily: "'Nanum Brush Script', cursive",
-        review: "주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황.",
-        userName: "lisha",
-        rn: 2,
-        id: "a2"
+        bookNo: 9791197037153,
+		emoNo: 1,
+		nickname: "니모먹는스폰지밥",
+		reviewContent: "취향이 없을 때의 나는 무기력하고 나약했다. 상대의 결정만을따르면서 모든 선택에서 물러나길 밥 먹듯 했다. 그러다 문득, 나를잃고 있다는 생각이 머릿속을 스쳤다. 오로지 타인만을 위했던 행동이 나를 버리는 일이었다는 걸 깨닫게 된 것이다.",
+		reviewNo: 2,
+		styleName: "#ff7dfe,NanumMyeongjo"
     },
     {
-        image: "#31A848",
-        fontFamily: "'Do Hyeon', sans-serif",
-        review: "노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑",
-        userName: "nadan",
-        rn: 3,
-        id: "a3"
-    },
-    {
-        image: "#3623C9",
-        fontFamily: "'Nanum Myeongjo', serif",
-        review: "초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록초록",
-        userName: "doyoung",
-        rn: 4,
-        id: "a4"
-    },
-    {
-        image: "blue",
-        fontFamily: "'Nanum Brush Script', cursive",
-        review: "파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑파랑",
-        userName: "doyoung",
-        rn: 5,
-        id: "a5"
-    },
-    {
-        image: "navy",
-        fontFamily: "'Do Hyeon', sans-serif",
-        review: "남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색남색",
-        userName: "seohyun",
-        rn: 6,
-        id: "a6"
-    },
-    {
-        image: "purple",
-        fontFamily: "'Nanum Myeongjo', serif",
-        review: "보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라보라",
-        userName: "coly",
-        rn: 7,
-        id: "a7"
-    },
-    {
-        image: "red",
-        fontFamily: "'Nanum Brush Script', cursive",
-        review: "빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강빨강",
-        userName: "doyoung",
-        rn: 8,
-        id: "a8"
-    },
-    {
-        image: "orange",
-        fontFamily: "'Do Hyeon', sans-serif",
-        review: "주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황주황.",
-        userName: "cozy",
-        rn: 9,
-        id: "a9"
-    }
-    ,    {
-        image: "yellow",
-        fontFamily: "'Nanum Myeongjo', serif",
-        review: "노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑노랑",
-        userName: "doyoung",
-        rn: 10,
-        id: "a10"
+        bookNo: 9791166686603,
+		emoNo: 1,
+		nickname: "구직중입니다",
+		reviewContent: "세상은 원래부터 기괴하고 무섭고 아름답고 당황스러웠다. 그동안 우리는 두꺼운 습관의 담요를 뒤집어 쓰고 이를 무시하고 있었을 뿐이다. 그리고 김보영의 단편들을 읽는 것은 그 담요를 은근슬적 떨구는 과정이다. ",
+		reviewNo: 3,
+		styleName: "#ffcaff,NanumPen"
     }
 ];
 
@@ -125,7 +69,7 @@ const playBtn = document.querySelector(".playBtn")
 const audioEle = document.querySelector(".audioEle")
 
 let bgmPagination = document.querySelector(".bgm-pagination")
-let emoTags = document.querySelectorAll(".emoTag")
+//let emoTags = document.querySelectorAll(".emoTag")
 let randomCheckBtn = document.querySelector(".randomCheckBtn")
 let dim = document.querySelector(".dim")
 const playlistStatic = document.querySelector(".static")
@@ -149,6 +93,78 @@ let clickCnt = 0;
 
 let modeToggle = true;
 let heartToggle = false;
+
+let url
+
+window.addEventListener("DOMContentLoaded", function(){
+	console.log("dom content loaded")
+	
+	url = location.href + "/getemotion"
+	
+	fetch(url)
+	.then(response => response.json())
+	.then(data => {
+		renderEmoTag(data)
+		
+		let emoTags = document.querySelectorAll(".emoTag")
+		
+		for(let emoTag of emoTags) {
+			emoTag.onclick = function() {
+				for(let tag of emoTags) {
+					tag.classList.remove("checked")
+				}
+				
+				emoTag.classList.add("checked")
+				
+				// 사이드 바 닫히고 플레이리스트 로드
+			    sideBar.classList.remove("show-sidebar");
+
+			    dim.classList.remove("show-dim")
+			
+			    dim.addEventListener("transitionend", function(){
+			        this.classList.toggle("unstaged")
+			        this.removeEventListener("transitionend", arguments.callee)
+			    })
+
+				loadReviewList(emoTag.id)
+			}
+		}
+	})
+})
+
+/* 감정버튼 클릭시, 서평 리스트 불러오기 */
+function loadReviewList(emoNo) {
+	url = location.href + "/getReviewListByEmo" + "?emoNo="+emoNo ;
+	
+	fetch(url, {
+		method: "POST", 
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			emoNo: emoNo
+		})
+	}).then(response => response.json())
+	.then(data => {
+		console.log(data)
+
+		slideContainer.innerHTML = ''
+		
+		renderNewArray(data)
+	})	
+}
+
+/* 감정태그 목록 불러오기 */
+function renderEmoTag(arr) {
+	for(let item of arr) {
+		let btn = document.createElement("button")
+		btn.classList.add("emoTag")
+		btn.id = item.emoNo
+		btn.textContent = item.emoName
+		
+		document.querySelector(".tag-box").append(btn)
+	}
+}
 
 // 노래 끝났을 때 자동으로 다음 노래로 넘어감
 audioEle.addEventListener("ended", function(){
@@ -323,12 +339,6 @@ window.addEventListener("keydown", function(e){
     }
 })
 
-/* 감정 태그에 toggle 기능 주기 */
-for(let emoTag of emoTags) {
-    emoTag.onclick = function(e) {
-        emoTag.classList.toggle("checked")
-    }
-}
 
 /* 랜덤 체크 버튼에 toggle 기능 주기 */
 randomCheckBtn.onclick = function(e) {
@@ -431,7 +441,13 @@ function carousel() {
 }
 
 function render(item) {
-
+	
+	console.log(item)
+	
+	let styles = item.styleName.split(",")
+	let color = styles[0]
+	let fontFamily = styles[1]
+	
     const slide = document.createElement("div");
     const review = document.createElement("p");
     const username = document.createElement("p");
@@ -446,9 +462,10 @@ function render(item) {
         clearInterval(interval)
     }
     */
-    review.textContent = item.review;
-    username.textContent = item.userName;
-    slide.style.backgroundColor = `${item.image}`
+    review.textContent = item.reviewContent;
+    username.textContent = item.nickname;
+    slide.style.backgroundColor = color
+	review.style.fontFamily = fontFamily;
     heartBtn.innerHTML = '좋아요<i class="fa-regular fa-heart"></i>';
     addBtn.innerHTML = '플레이리스트<i class="fa-solid fa-plus"></i>';
 
@@ -473,8 +490,6 @@ function render(item) {
     btnContainer.classList.add("slideBtnContainer");
     heartBtn.classList.add("heartBtn");
     addBtn.classList.add("addBtn");
-
-    review.style.fontFamily = item.fontFamily;
 
     btnContainer.append(heartBtn, addBtn);
     slide.append(review, username, btnContainer);

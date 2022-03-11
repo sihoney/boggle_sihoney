@@ -88,6 +88,7 @@ container
   height: 100vh;
   overflow: hidden;
   position: relative;
+  min-width: 900px;
 }
 
 .slide-container {
@@ -275,6 +276,7 @@ i.fa-solid에 position: absolute 을 줘서
   padding: 0.3rem;
   border-radius: 0.3rem;
   margin-bottom: 0.7rem;
+  margin-right: 0.3rem;
   border: 1px #b4b4b4 solid;
   cursor: pointer;
   color: #707070;

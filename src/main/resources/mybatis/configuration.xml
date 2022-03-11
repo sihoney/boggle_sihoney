@@ -4,9 +4,11 @@
 	<typeAliases>
 		<typeAlias alias="UserVo" type="com.javaex.vo.UserVo"/>
 		<typeAlias alias="MybookVo" type="com.javaex.vo.MybookVo"/>
+		<typeAlias alias="ReviewVo" type="com.javaex.vo.ReviewVo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/mybook.xml" />
+		<mapper resource="mybatis/mappers/emotion.xml" />
 	</mappers>
 </configuration>
