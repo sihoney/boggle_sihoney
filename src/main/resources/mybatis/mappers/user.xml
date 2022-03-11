@@ -29,9 +29,9 @@
 	<!-- selectOne -->
 	<select id="selectOne" resultType="UserVo" parameterType="String">
 		<![CDATA[
-			select  user_no,
+			select  user_no userNo,
         			nickname,
-        			user_profile
+        			user_profile userProfile
 			from users
 			where nickname = #{nickname}
 			]]>
