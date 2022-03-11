@@ -75,3 +75,16 @@
 .box-line {border-style: 1px solid #8f8c8c;}
 
 
+.pageWrap {
+     text-align : center;
+}
+
+#contents {
+    padding: 10px 0px 40px 0px;
+    margin-bottom: 40px;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-bottom-color: #e4e4e4;
+}
+
+

@@ -10,5 +10,6 @@
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/mybook.xml" />
 		<mapper resource="mybatis/mappers/emotion.xml" />
+		<mapper resource="mybatis/mappers/bookdetail.xml" />
 	</mappers>
 </configuration>

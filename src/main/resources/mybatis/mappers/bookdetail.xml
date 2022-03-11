@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bookdetail">
+
+<!-- <select id="" parameterType="" resultType="">
+ 	<![CDATA[
+
+	]]>
+</select> -->
+
+	<!-- 해당 책 서평 리스트 출력(최신순) -->
+	<select id="reviewListLatest" parameterType="int" resultType="com.javaex.vo.BookreviewVo">
+	 	<![CDATA[
+			select  r.book_no bookNo,
+			        r.review_no reviewNo,
+			        r.emo_name emoName,
+			        b.book_title bookTitle,
+			        r.nickname nickName,
+			        to_char(r.review_date, 'yyyy/mm/dd') reviewDate,
+			        r.review_content reviewContent
+			from   (select  r.review_no,
+			                r.book_no,
+			                e.emo_no,
+			                e.emo_name,
+			                r.user_no,
+			                u.nickname,
+			                r.review_date,
+			                r.review_content
+			        from   review r, style s, emotion e, users u
+			        where  e.emo_no = s.emo_no
+			        and    r.style_no = s.style_no
+			        and    r.user_no = u.user_no) r, books b
+			where   r.book_no = b.book_no 
+			and     b.book_no = #{bookNo}
+			order by reviewDate desc
+		]]>
+	</select>
+	
+	
+	<!-- 해당 책 정보 --> 
+	<select id="getbookVo" parameterType="int" resultType="com.javaex.vo.BookdetailVo">
+	 	<![CDATA[
+			select  book_title bookTitle,
+			        author author,
+			        cover_url coverUrl,
+			        book_url bookUrl
+			from books
+			where book_no = #{bookNo}
+		]]>
+	</select>
+	
+	
+	<!-- 해당 서평의 총 수 --> 
+	<select id="bookReviewCount" parameterType="int" resultType="int">
+	 	<![CDATA[
+			select count(review_no)
+			from books, review
+			where books.book_no = review.book_no
+			and books.book_no = #{bookNo}
+		]]>
+	</select>
+	
+	
+	
+	
+
+
+
+</mapper>

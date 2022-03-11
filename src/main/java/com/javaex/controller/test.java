@@ -21,12 +21,6 @@ public class test {
 		return "analyze/user_analyze";
 	}
 	
-	@RequestMapping("/bookdetail")
-	public String bookdetail() {
-		System.out.println("book_detail");
-		
-		return "book_detail/book_detail";
-	}
 	
 	@RequestMapping("/mybook")
 	public String mybook() {
