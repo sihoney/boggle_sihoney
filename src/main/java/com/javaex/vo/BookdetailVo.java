@@ -19,15 +19,14 @@ public class BookdetailVo {
 		this.bookReviewCount = bookReviewCount;
 	}
 
-	public BookdetailVo(String bookTitle, String author, String bookUrl, String coverUrl) {
+	public BookdetailVo(String bookNo, String bookTitle, String author, String bookUrl, String coverUrl) {
 		super();
+		this.bookNo = bookNo;
 		this.bookTitle = bookTitle;
 		this.author = author;
 		this.bookUrl = bookUrl;
 		this.coverUrl = coverUrl;
 	}
-
-
 
 	public BookdetailVo(String bookNo, String bookTitle, String author, String bookUrl, String coverUrl,
 			int bookReviewCount) {

@@ -45,7 +45,8 @@
 			select  book_title bookTitle,
 			        author author,
 			        cover_url coverUrl,
-			        book_url bookUrl
+			        book_url bookUrl,
+			        book_no bookNo
 			from books
 			where book_no = #{bookNo}
 		]]>

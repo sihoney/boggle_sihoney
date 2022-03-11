@@ -47,7 +47,7 @@
                             <button type="button" class="btn btn-default">관심가는 책-</button> -->
                         </div>
                     </div>
-                    <button id="btn_write" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/reviewWrite';">이 책 서평 쓰기</button>
+                    <button id="btn_write" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/review_write';">이 책 서평 쓰기</button>
                 </div>
             </div>
 
