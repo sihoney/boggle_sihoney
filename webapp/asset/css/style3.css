@@ -162,8 +162,11 @@ message modal
 }
 
 /****************** container > slide > review, username, button ****************/
+.reviewLink {
+	text-decoration: none;
+	width: 70%;
+}
 .review {
-  width: 70%;
   font-size: 2rem;
   line-height: 3rem;
   color: #fff;

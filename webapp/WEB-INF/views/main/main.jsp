@@ -45,7 +45,7 @@
 		                    		<div class="userImg">
 			                            <img src="${pageContext.request.contextPath}/asset/img/profile.png" alt="">
 			                        </div>
-			                        <a href="${pageContext.request.contextPath}/mybook">${sessionScope.authUser.nickname }</a>
+			                        <a href="${pageContext.request.contextPath}/${sessionScope.authUser.nickname }">${sessionScope.authUser.nickname }</a>
 		                    	</a>
 		                    </li>
                 		</c:otherwise>

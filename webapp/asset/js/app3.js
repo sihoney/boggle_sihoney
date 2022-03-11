@@ -454,6 +454,9 @@ function render(item) {
     const btnContainer = document.createElement("div");
     const heartBtn = document.createElement("button");
     const addBtn = document.createElement("button");
+	const a = document.createElement("a")
+
+	a.setAttribute("href", location.href.substring(0, 34) + "bookdetail?bookNo=" + item.bookNo)
 
     slide.classList.add("slide");
     btnContainer.classList.add("btn-container");
@@ -490,9 +493,12 @@ function render(item) {
     btnContainer.classList.add("slideBtnContainer");
     heartBtn.classList.add("heartBtn");
     addBtn.classList.add("addBtn");
+	a.classList.add("reviewLink")
+
+	a.append(review)
 
     btnContainer.append(heartBtn, addBtn);
-    slide.append(review, username, btnContainer);
+    slide.append(a, username, btnContainer);
     
     slideContainer.append(slide)
     container.append(slideContainer);
