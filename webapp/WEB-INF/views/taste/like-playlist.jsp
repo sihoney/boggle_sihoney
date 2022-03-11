@@ -50,6 +50,7 @@
 		<!-- ------nav------ -->
 
 		<!-- ------nav2------ -->
+		<div id="navi2">
 		<ul id="nav2" class="nav nav-pills">
 			<!-- 세션아이디와 비교, 다를경우 '이름님의 취향' -->
 			<!-- <li role="presentation" class="active"><a href="">'유저이름'님의 취향</a></li> -->
@@ -60,12 +61,15 @@
 			<li role="presentation"><a
 				href="${pageContext.request.contextPath}/main_book">관심가는 책</a></li>
 			<li role="presentation" class="active"><a
-				href="${pageContext.request.contextPath}/like_playlist">플레이리스트</a></li>
+				href="${pageContext.request.contextPath}/like_playlist">플레이리스트</a></li>		
 		</ul>
+			<a href="${pageContext.request.contextPath}/playlist_edit"><button type="button" class="btn btn-primary" id="addp">
+			플레이리스트 추가 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			</button></a>
+		</div>
+		
 
 		<div id="content">
-			
-
 			<!--content4-->
 			<div id="content4">
 				<div class="minicontent">
