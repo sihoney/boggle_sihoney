@@ -68,7 +68,7 @@ public class test {
 		System.out.println("like_playlist");
 		
 		return "taste/like-playlist";
-	}
+	}/*내가 좋아요한*/
 	
 	@RequestMapping("/main_book")
 	public String main_book() {
@@ -102,18 +102,18 @@ public class test {
 	public String recommend() {
 		System.out.println("recommend");
 		return "taste/recommend_playlist";
-	}
+	}/*오늘의 추천 (2번째줄) 플레이리스트 */
 	
 	@RequestMapping("/hot_playlist")
 	public String hot() {
 		System.out.println("hot_playlist");
 		return "taste/hot_playlist";
-	}
+	}/*인기순*/
 	
 	@RequestMapping("/written_playlist")
 	public String written() {
 		System.out.println("written_playlist");
 		return "taste/written_playlist";
-	}
+	}/*내가 작성한 */
 	
 }

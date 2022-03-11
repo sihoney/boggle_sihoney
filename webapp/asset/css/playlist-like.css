@@ -1,97 +1,19 @@
 @charset "UTF-8";
 
-<<<<<<< HEAD
-/* 전체 공통 */
-body, div, ul, li, dl, dt, ol, h1, h2, h3, h4, h5, h6, 
-input, fieldset, legend, p, select, table, th, td, tr, 
-textarea, button, form {
-    margin: 0; padding: 0;
+/* 말줄임 */
+.word {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+
+    white-space: normal;
+    word-wrap : break-word; 
+    /* line-height: 1.2; */
 }
 
-/* clearfix */
-.clearfix{*zoom:1;}
-.clearfix:before, .clearfix:after {display: block; content: ""; line-height: 0;}
-.clearfix:after {clear: both;}
 
-body {
-    font-family: 'MinSans-Medium';
-    font-size: 12px;
-}
-
-#wrap {
-    width: 1130px;
-    margin: 0px auto;
-}
-
-/* layout */
-#header {
-    /* background-color: aqua; */
-    /* border: 2px solid #000000; */
-    padding: 30px 0px 30px 0px;
-    /* border-bottom: 2px solid #dddddd; */
-}
-
-/* #contents {
-} */
-
-/*header*/
-#header>a>img {
-    float: left;
-    width: 110px;
-    margin: 0px 40px 0px 10px;
-    cursor:pointer;
-}
-
-#header>ul>span>.img-circle {
-    width: 30px;
-    height: 30px;
-    cursor:pointer;
-}
-
-#header>ul>span {
-    cursor:pointer;
-}
-
-#header ul {
-    float: right;
-}
-
-.header>ul>a {
-    padding: 0px 10px 0px 0px;
-}
-/* /header*/
-/* nav */
-#nav {
-    padding: 5px 0px 5px 0px;
-}
-#nav li{
-    font-size: 18px;
-}
-
-/****************nav2*****************/
-#nav2>li{
-    width: 115px;
-    text-align: center;
-    font-size: 15px;
-    
-}
-#nav2>li.active>a{
-    background-color: none;
-    color: #2699FB;
-    font-weight: bold;
-}
-
-/*gallery*/
-.newplaylist{
-    font-size:16px;
-    float:right;
-    color:#ffffff;
-    background-color: #2699FB;
-    width: 240px; height: 48px;
-    text-align: center;
-    padding:12px;
-    border-radius: 12px;
-=======
 /******************content********************/
 #content{
     padding: 20px 25px;
@@ -104,107 +26,201 @@ body {
 }
 /**********컨텐츠 공통**********/
 #content>div{
->>>>>>> branch 'master' of https://github.com/0rimi/4_project.git
     margin-bottom: 20px;
 }
-
-/*gallery-contents*/
-
-.a{
-    margin: 20px 0px 20px 0px;
+#content>div>div{
+    margin-bottom: 30px;
+}
+.minicontent{
+    width: 1080px;
+    height: 25px;
+}
+.minicontent div p{
+    display: inline-block;
+    font-weight: bold;
+    font-size: 20px;
+    color : #707070;
+    
+}
+.minicontent>#more>p{
+    font-size: 15px;
+    color: #ABAAAC;
+    margin-top: 5px;
+    
 }
 
-.a>.b {
-    display: flex;
-    justify-content: space-between;
+
+/*************컨텐츠1 : 서평****************/
+#reviews{
+    width: 1050px;
+    margin : 15px 10px;
+    background-color: #e7e7e7;
+    padding : 15px 30px;
+    border-radius: 15px;
 }
-.a>.b>.index{
-    margin-left:28px;
-    font-weight:bold;
-    font-size : 20px;
+#reviews-header{
+    /*********리뷰박스크기따라조정할것*********/
+    width: 990px;
+    height : 25px;
+    margin-bottom : 3px;
+}
+#reviews-header>div>p{
+    font-size: 17px;
+    font-weight: bold;
     color: #707070;
 }
-
-.a>.b>.more{
-    color:#B4B4B4;
-    font-weight:bold;
-    font-size:16px;
+#reviews-header .right{
+    padding:5px 3px 0px 0px;
 }
-
-.glyphicon-right{
+#reviews-header>div>a{
+    margin-left: 5px;
+    color: #888888;
+    font-size: 12px;
+}
+#reviewer{
+    margin: 0px 0px 5px 0px;
+}
+#reviewer>a{
+    font-size: 12px;
+    color: #707070;
+}
+#reviews-content{
+    color: #909090;
+    border-bottom: 1px solid #B4B4B4; 
+    padding: 0px 0px 10px 0px;
+    margin: 0px 0px 10px 0px;
+}
+#reviews-content>p{
+    width: 800px;
+    margin-bottom: 5px;
+}
+#reviews-content>span{
+    margin-top: 3px;
+    background-color: #309BF8; 
+}
+#reviews-footer{
+    /*********리뷰박스크기따라조정할것*********/
+    width: 990px;
+    height : 15px;
+    color: #ABAAAC;
+    margin-top : 10px;
+}
+#reviews-footer span{
+    margin-right : 5px;
+}
+#reviews-footer #heart{
+    color: #309BF8;
+    padding: 2px 0px 0px 5px;
+}
+#reviews-footer .dropup a{
+    color: #707070;
+}
+#reviews-footer .dropup li a{
     color:#B4B4B4 !important;
+    padding: 3px 10px !important;
+    width: 180px;
+}
+#reviews-footer .dropup li a span{
+    float:right;
+    padding-right: 10px;
+}
+#reviews-footer #plus{
+    font-size: 20px;
 }
 
-.sub{
-    clear:both;
-    color:#B4B4B4;
-    font-weight:bold;
-    font-size:16px;
+/*************컨텐츠2:작가*****************/
+#content2>div{
+    text-align: center;
+}
+#content2>div>.likewriter{
+    display: inline-block;
+    width: 250px;
+    height: 400px;
+    margin: 5px 5px;
+    background-color: #e7e7e7;
+    border-radius: 15px;
+    text-align: center;
+}
+#content2>div>.likewriter>img{
+    display:inline-block;
+    margin-top: 60px;
+    border:3px solid #309BF8;
+    height:120px;
+    width:120px;
+}
+#writerinfo>h1{
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    color:#707070;
+}
+#writerinfo>p{
+    margin-top: 3px;
+    font-size: 13px;
+    color:#919191;
+}
+.likewriter>p{
+    margin: 20px 0px;
+    width: 250px;
+    height: 100px;
+    padding: 10px 50px;
+    text-align: center;
+    font-size: 13px;
+    color:#707070; 
 }
 
-/*container*/
 
-.container{
-    margin-top:20px;
-    display:flex;
-    align-items: center;
+/***********컨텐츠3************/
+#content3>#background>div{
+    margin-bottom: 20px;
+    background:linear-gradient(#FFFFFF00, #EAEAEA);
+    padding: 0px 10px;
+    text-align: center;
+}
+#content3>div img{
+    display:inline-block;
+    width: 190px;
+    height: 276px;
+    margin: 10px 5px 0px 5px;
 }
 
-.nail-first{
-    position:relative;
-    float:left;
-    background : #7656FD;
-    height: 180px; width:180px;
-    border-radius:12px;
+/**************컨텐츠4****************/
+.index{
+    font-size: 15px;
+    color: #ABAAAC;
+    margin-left: 35px;
+}
+
+/*gallery*/
+#content4 #playlist{
+    padding: 0px 30px;
+    text-align: center;
+}
+
+.nail{
+    display: inline-block;
+    width: 180px;
+    height: 180px;
+    border-radius: 12px;
     color:#ffffff;
-    text-align :left;
-    margin: 16px;
+    text-align: left;
+    margin: 10px;
+}
+.nail>div{
+    display: table;
+    width: 180px;
+    height: 100px;
 }
 
-.nail-sec{
-    position:relative;
-    float:left;
-    background : #63307E;
-    height: 180px; width:180px;
-    border-radius:12px;
-    color:#ffffff;
-    text-align :left;
-    margin: 16px;
+.purple{
+    background-color : #7656FD;
 }
-
-.nail-thrd{
-    position:relative;
-    float:left;
-    background : #31A848;
-    height: 180px; width:180px;
-    border-radius:12px;
-    color:#ffffff;
-    text-align :left;
-    margin: 16px;
+.deeppurple{
+    background-color : #63307E;
 }
-
-.nail-four{
-    position:relative;
-    float:left;
-    background : #AC0808;
-    height: 180px; width:180px;
-    border-radius:12px;
-    color:#ffffff;
-    text-align :left;
-    margin: 16px;
+.green{
+    background-color:  #31A848;
 }
-
-.nail-fifth{
-    position:relative;
-    float:left;
-    background : #e2183a;
-    height: 180px; width:180px;
-    border-radius:12px;
-    color:#ffffff;
-    text-align :left;
-    margin: 16px;
-}
-
 
 .nail-desc{
     padding:16px;
@@ -212,15 +228,16 @@ body {
 }
 
 #opac{
-    position:absolute;
-    bottom: 0;
+    display: table-cell;
+    vertical-align: bottom;
     background : #ffffff7c;
-    height: 90px; width:180px;
+    height: 80px; width:180px;
     border-bottom-right-radius:12px;
     border-bottom-left-radius:12px;
 
 }
 
+/****************footer******************/
 #footer {
     margin: 50px 0px 60px 0px;
     border-top : 2px solid #e4e4e4;
