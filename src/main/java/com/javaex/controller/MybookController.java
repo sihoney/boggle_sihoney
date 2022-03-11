@@ -22,12 +22,12 @@ public class MybookController {
 	
 	//필드
 	@Autowired
-	private MybookService mybookService;
-	
+	private MybookService mybookService;	
 	@Autowired
 	private UserService userService;
 	
-	//내가 로그인한 상태에서 블로그 상태
+	
+	//서재(서평페이지)
 	@RequestMapping("/{nickname}")
 	public String myreview(@PathVariable(value="nickname") String nickname,
 						   HttpSession session, Model model) {
@@ -82,9 +82,16 @@ public class MybookController {
 			model.addAttribute("mbList", mbList);
 			
 			return "mybook/mybook_review";
-		}
+		}		
+	}
+	
+	//취향저격(main페이지)
+	@RequestMapping("/{nickname}/tastemain")
+	public String tastemain(@PathVariable(value="nickname") String nickname,
+						   HttpSession session, Model model) {
 		
-		
+			
+		return "taste/taste-main";		
 	}
 	
 	

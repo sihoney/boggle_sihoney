@@ -21,8 +21,8 @@
 			<c:choose>
 				<c:when test="${result eq 'sameUser'}">
 					<ul class="nav nav-tabs">
-						<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/mybook">내 서평</a></li>
-						<li role="presentation"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
+						<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/${nickname}">내 서평</a></li>
+						<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/tastemain">취향저격</a></li>
 						<!--세션 아이디와 사이트아이디 같을때-->
 						<li role="presentation"><a href="${pageContext.request.contextPath}/analyze">통계</a></li>
 					</ul>
@@ -30,7 +30,7 @@
 				<c:otherwise>
 					<!-- 세션아이디랑 다를때는 사이트주소의 아이디와 같은 유저의 데이터들 불러오기-->
 					<ul class="nav nav-tabs">
-						<li role="presentation" class="active"><a href="">남 서평</a></li>
+						<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/${nickname}">서평</a></li>
 						<li role="presentation"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
 					</ul>
 				</c:otherwise>
@@ -83,14 +83,23 @@
 									</p>
 								</div>
 								<!-- 작성자아이디와 세션아이디가 동일할 시에만 보이게 -->
-								<div class="right">
-									<a>수정</a> <a>삭제</a>
-								</div>
+								<c:if test="${result eq 'sameUser'}">
+									<div class="right">
+										<a>수정</a> <a>삭제</a>
+									</div>
+								</c:if>
 							</div>
-							<!-- 작성자아이디와 세션아이디가 동일할 경우에는 안보이게 -->
-							<div id="reviewer">
-								<a href="${pageContext.request.contextPath}/후추가득스테이크">${vo.nickname }</a>
-							</div>
+							
+							<c:choose>	
+								<c:when test="${result eq 'sameUser'}">
+									<!-- 작성자아이디와 세션아이디가 동일할 경우에는 안보이게 -->		
+								</c:when>
+								<c:otherwise>
+									<div id="reviewer">
+										<a href="${pageContext.request.contextPath}/후추가득스테이크">${vo.nickname }</a>
+									</div>
+								</c:otherwise>
+							</c:choose>
 							<div id="reviews-content">
 								<p>${vo.reviewContent }</p>
 								<span class="label label-default">${vo.emoName }</span> <span class="label label-default">#mood</span>
@@ -135,7 +144,15 @@
 							<div id="profile">
 								<img id="profile-image" src="${pageContext.request.contextPath}/asset/img/profile.png">
 							</div>
-							<p id="username">${authUser.nickname}</p>
+								<c:choose>
+									<c:when test="${result eq 'sameUser'}">
+										<p id="username">${authUser.nickname}</p>
+									</c:when>
+									<c:otherwise>
+										<p id="username">${result}</p>
+									</c:otherwise>
+								</c:choose>
+								
 							<p id="level">Lv.0</p>
 							<div id="info">
 								<a href="${pageContext.request.contextPath}/user/user_modify">회원정보수정</a> <a>로그아웃</a>
