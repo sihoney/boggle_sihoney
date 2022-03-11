@@ -25,5 +25,17 @@
 			AND password = #{password}
 		]]>
 	</select>
+	
+	<!-- selectOne -->
+	<select id="selectOne" resultType="UserVo" parameterType="String">
+		<![CDATA[
+			select  user_no,
+        			nickname,
+        			user_profile
+			from users
+			where nickname = #{nickname}
+			]]>
+
+	</select>
 
 </mapper>

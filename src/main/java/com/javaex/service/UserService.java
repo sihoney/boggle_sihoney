@@ -22,5 +22,14 @@ public class UserService {
 		
 		return authUser;
 	}
+	
+	//유저닉네임을 주면 유저넘버, 닉네임, 프로필이미지를 주는 메소드
+	public UserVo getUser(String nickname) {
+		System.out.println("UserService.getUser()");
+		
+		UserVo otherUser = userDao.getUser(nickname);
+		
+		return otherUser;
+	}
 
 }

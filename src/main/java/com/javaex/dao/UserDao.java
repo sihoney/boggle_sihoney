@@ -23,5 +23,14 @@ public class UserDao {
 		
 		return authUser;
 	}
+	
+	public UserVo getUser(String nickname) {
+		System.out.println("UserDao.getUser()");
+		
+		UserVo otherUser = sqlSession.selectOne("user.selectOne", nickname);
+		System.out.println(otherUser);
+		
+		return otherUser;
+	}
 
 }

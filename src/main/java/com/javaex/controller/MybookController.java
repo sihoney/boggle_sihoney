@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.javaex.service.MybookService;
+import com.javaex.service.UserService;
 import com.javaex.vo.MybookVo;
 import com.javaex.vo.UserVo;
 
@@ -22,6 +23,7 @@ public class MybookController {
 	//필드
 	@Autowired
 	private MybookService mybookService;
+	private UserService userService;
 	
 	//내가 로그인한 상태에서 블로그 상태
 	@RequestMapping("/{nickname}")
@@ -35,7 +37,7 @@ public class MybookController {
 		System.out.println("지금 서재 닉네임 : "+nickname);
 		
 		//세션아이디의 유저넘버
-		int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
+		int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo(); 
 		
 		//세션아이디랑 지금 블로그닉네임이 같니?
 		if(nickname.equals(yours)) {
@@ -52,8 +54,11 @@ public class MybookController {
 			
 			List<MybookVo> mbList =  mybookService.list(userNo);
 			
+			//모델로 보내기
+			model.addAttribute("mbList", mbList);			
 			
 			return "mybook/mybook_review";
+			
 		}else {
 			
 			String result = nickname;
@@ -63,6 +68,11 @@ public class MybookController {
 			model.addAttribute("result", result);
 			
 			//지금 서재 닉네임을 주면 유저넘버, 닉네임, 프로필이미지를 주는 메소드 사용
+			UserVo otherUser = userService.getUser(nickname);
+			
+			//유저넘버를 주면 해당 유저가 작성한 리뷰를 불러오는 메소드
+			
+			//모델로 보내기
 			
 			return "mybook/mybook_review";
 		}
