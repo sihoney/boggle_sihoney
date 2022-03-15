@@ -5,11 +5,13 @@
 		<typeAlias alias="UserVo" type="com.javaex.vo.UserVo"/>
 		<typeAlias alias="MybookVo" type="com.javaex.vo.MybookVo"/>
 		<typeAlias alias="ReviewVo" type="com.javaex.vo.ReviewVo"/>
+		<typeAlias alias="lrVo" type="com.javaex.vo.LikeReviewVo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/mybook.xml" />
 		<mapper resource="mybatis/mappers/emotion.xml" />
 		<mapper resource="mybatis/mappers/bookdetail.xml" />
+		<mapper resource="mybatis/mappers/likeReview.xml"/>
 	</mappers>
 </configuration>
