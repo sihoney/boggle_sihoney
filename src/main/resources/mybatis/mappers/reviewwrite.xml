@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reviewwrite">
+
+	<!-- ResultMap -->
+	<!-- 
+	<resultMap id="emotionMap" type="map">
+        <result property="emoName" column="emo_name" />
+        <result property="emoNo" column="emo_no" />
+    </resultMap> 
+	-->
+	<select id="getReviewTotalCnt" parameterType="long" resultType="int">
+		<![CDATA[
+			select count(review_no)
+			from review
+			where book_no = #{isbn13}
+		]]>
+	</select>
+
+</mapper>

@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/style3.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
+    
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-pen.css" rel="stylesheet">
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-pen.css" rel="stylesheet">
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic-eco.css" rel="stylesheet">
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-myeongjo.css" rel="stylesheet">
 </head>
 <body>
 <!-- Header -->
@@ -30,7 +35,7 @@
                 			<li>
                 				<a href="${pageContext.request.contextPath}/user/joinForm">회원가입</a>
                 			</li>
-                   			<li class="login">
+                   			<li class="login" data-logStatus="logout">
 		                        <div class="userImg">
 		                            <img src="${pageContext.request.contextPath}/asset/img/profile.png" alt="">
 		                        </div>
@@ -40,7 +45,7 @@
                 		<c:otherwise>
                 			<!-- 로그인 됐을때 화면 -->
 		                    <li><a href="${pageContext.request.contextPath}/review_write">기록하기</a></li>
-		                    <li class="login">
+		                    <li class="login" data-logStatus="login" data-userNo="${sessionScope.authUser.userNo }">
 		                    	<a href="${pageContext.request.contextPath}/${authUser.nickname}">
 		                    		<div class="userImg">
 			                            <img src="${pageContext.request.contextPath}/asset/img/profile.png" alt="">
@@ -77,7 +82,7 @@
         </div>
 
         <div class="messageModal unstaged">
-            <p>슬라이드 전환 방식을 변경하고 싶으면 엔터를 눌러주세요</p>
+            <p>슬라이드 전환 방식을 변경하고 싶으면 '엔터'를 눌러주세요</p>
         </div>
 
         <div class="slide-container"></div>
@@ -104,12 +109,10 @@
             </div>
         </div>
         <div class="randomBtn">
-            <button class="randomCheckBtn">
+            <button class="random-btn">
             	<i class="fa-solid fa-shuffle"></i>
-                <!-- <i class="fa-solid fa-check"></i> -->
-                <!-- <i class="fa-solid fa-circle-check"></i> -->
             </button>
-            <h2>랜덤 서평 재생하기</h2>
+            <p class="random-text">랜덤 서평 재생하기</p>
         </div>
         <div class="bgm">
             <h2 class="subheading">BGM</h2>
@@ -145,22 +148,24 @@
                 </button>
             </div>
             <div class="playlist-container">
+            	<!-- 
                 <div class="static">
                     <p>새 플레이리스트 추가</p>
                     <button class="playlistAddBtn"><i class="fa-solid fa-plus"></i></button>
                 </div>
+                -->
                 <ul class="playlist-list">
                 	<c:choose>
                 		<c:when test="${sessionScope.authUser eq null}">
                 			<p>로그인 후 이용해주세요</p>
                 		</c:when>
                 		<c:otherwise>
-		                    
+		                    <!-- 
 		                    <li>퇴근길에 보면 힘이 나는 플리</li>
 		                    <li>우울할 때 정신차리고 갓생살기</li>
 		                    <li>남친이 빡치게 하면 보기</li>
 		                    <li>용기뿜뿜 명언 한구절</li> 
-		                                  		
+		                    -->         		
                 		</c:otherwise>
                 	</c:choose>
 
@@ -170,6 +175,7 @@
     </aside>
 
     <!--  모달 (새 플레이리스트 추가) -->
+    <!-- 
     <div class="modal-background">
         <div class="playlistAddModal">
             <div class="modal-header">
@@ -184,60 +190,31 @@
             </form>
         </div>
     </div>
-
+	-->
     <!--  모달 (서평 플레이리스트에 추가) -->
     <div class="review-modal-background modal-background">
         <div class="addReviewModal">
+        
             <div class="input-box">
-                <input type="text">
+                <p>My 플레이리스트</p>
                 <button class="modal-closeBtn">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
+            
             <div class="playlist-box">
                 <ul>
-                    <li class="playlist-li">
+                	<!-- 
+                    <li class="playlist-li" data-playlist-no="">
                         <p>플레이리스트 1</p>
                         <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
                     </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button  class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
-                    </li>
-                    <li class="playlist-li">
-                        <p>플레이리스트 1</p>
-                        <button class="reviewAddBtn"><i class="fa-solid fa-plus"></i></button>
-                    </li>
+                    -->
                 </ul>
             </div>
+            <form class="addPlaylist">
+            	<input class="addPly-input" type="text" placeholder="새 플레이리스트 추가" name="playlistTitle" required>
+            </form>
         </div>
     </div>
 </body>

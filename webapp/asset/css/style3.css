@@ -8,6 +8,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&family=Nanum+Myeongjo&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Brush+Script&family=Nanum+Myeongjo&display=swap");
 
+
 /***************** header ****************/
 header {
   position: fixed;
@@ -95,6 +96,7 @@ container
   width: 100%;
   height: 100%;
   position: relative;
+  background-color: cornflowerblue;
 }
 .slide {
   width: 100%;
@@ -167,10 +169,18 @@ message modal
 	width: 70%;
 }
 .review {
-  font-size: 2rem;
+  font-size: 20px;
   line-height: 3rem;
   color: #fff;
+  transition: all 0.3s;
+  border-radius: 0.3rem;
+  padding: 1rem;
 }
+
+.reviewLink:hover .review{
+	background-color: rgb(247 244 244 / 30%);
+}
+
 .username {
   padding: 1.5rem 0;
   color: white;
@@ -297,27 +307,30 @@ i.fa-solid에 position: absolute 을 줘서
 .randomBtn {
   display: flex;
   align-items: center;
-}
-
-.randomBtn h2 {
-  color: #2699fb;
-}
-
-.randomBtn .randomCheckBtn {
-  background: transparent;
-  border: none;
-  margin-right: 1rem;
-  width: 2rem;
   height: 2rem;
   cursor: pointer;
 }
-.randomBtn .randomCheckBtn .fa-check,
-.randomBtn .randomCheckBtn .fa-circle-check {
-  font-size: 2rem;
+
+.randomBtn .random-text {
+  color: #2699fb;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.randomBtn .random-btn {
+  background: transparent;
+  border: none;
+  margin-right: 1rem;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.randomBtn .random-btn .fa-shuffle {
+  font-size: 1.5rem;
   width: 100%;
   height: 100%;
   color: #2699fb;
 }
+
 /********************** sidebar > bgm-container **************/
 .bgm .bgm-container {
   border: 1px solid #e4e4e4;
@@ -407,6 +420,7 @@ i.fa-solid에 position: absolute 을 줘서
 .playlist .playlist-container ul {
   list-style: none;
 }
+/*
 .playlist .playlist-container .static {
   display: flex;
   background: #f7f7f7;
@@ -423,6 +437,7 @@ i.fa-solid에 position: absolute 을 줘서
   margin-left: 0.5rem;
   cursor: pointer;
 }
+*/
 .playlist .playlist-container .playlist-list {
   overflow-y: auto;
   height: 7rem;
@@ -462,9 +477,12 @@ i.fa-solid에 position: absolute 을 줘서
   right: 0;
   background: rgba(224, 221, 209, 0.7);
 }
+.show-modal {
+  visibility: visible;
+  z-index: 10;
+}
+/*
 .playlistAddModal {
-  /* visibility: hidden;
-  z-index: -10; */
   position: absolute;
   background-color: #fff;
   color: #707070;
@@ -475,10 +493,6 @@ i.fa-solid에 position: absolute 을 줘서
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 1rem;
-}
-.show-modal {
-  visibility: visible;
-  z-index: 10;
 }
 .playlistAddModal .modal-header {
   display: flex;
@@ -516,32 +530,32 @@ i.fa-solid에 position: absolute 을 줘서
   background: #707070;
   border: 1px solid #707070;
 }
+*/
 /***************** 모달 > 서평 플레이리스트에 추가 ****************/
 
 .addReviewModal {
   position: absolute;
   background-color: #fff;
   color: #707070;
-  width: 400px;
+  width: 490px;
   border-radius: 10px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 1rem;
+  padding: 1.5rem;
 }
 .addReviewModal .input-box {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid black;
 }
-.addReviewModal .input-box input {
-  padding: 0.5rem;
-  /* background: #d4d4d4; */
-  border: 1px solid #707070;
-  border-radius: 0.5rem;
-  width: 20rem;
+.addReviewModal .input-box p {
+	font-weight: bold;
+	font-size: 1.2rem;
 }
+
 .addReviewModal .input-box .modal-closeBtn {
   border: none;
   background: transparent;
@@ -590,4 +604,13 @@ i.fa-solid에 position: absolute 을 줘서
 /* 스크롤바 뒷 배경 설정*/
 .playlist-box::-webkit-scrollbar-track {
   background-color: rgba(0, 0, 0, 0);
+}
+.addReviewModal .addPly-input {
+	font-size: 1rem;
+	margin: 0 auto;
+	width: 440px;
+	display: block;
+	padding: 0.7rem;
+	border: none;
+	background-color: #a5d6ff;
 }

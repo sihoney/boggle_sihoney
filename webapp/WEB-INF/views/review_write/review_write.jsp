@@ -47,11 +47,13 @@
            
 
 			<!-- 책 선택하기 -->
-			<div id="contents" class="clearfix">
+			
+			<div id="contents" class="clearfix selectbook-header">
 				<div id="book_select">
 					<h1>책 선택하기</h1>
 				</div>
 			</div>
+			
 			<div class="jumbotron" data-toggle="modal" data-target="#modal_searchbook">
 				<div id="select_box">
 					<div class="button">
@@ -60,14 +62,11 @@
 					<p>읽은 책을 검색해주세요</p>
 				</div>
 			</div>
+			
 
             <!-- 책 선택 완료(selectBookOk) -->
-            <!-- <div id="contents" class="clearfix">
-				<div id="book_select">
-					<h1>책 선택하기</h1>
-				</div>
-            </div>
-            <div id="contents" class="clearfix">
+            <!-- 
+            <div id="contents" class="clearfix selectedbook">
 				<div id="select_box">
 					<div id="bookVo">
 						<img id="book_img" src="../img/book/book2.jpeg" alt="..." class="img-thumbnail">
@@ -82,8 +81,9 @@
 						<button id="btn_modify" type="button" class="btn btn-light">수정</button>
 					</div>
 				</div>
-			</div> -->
-
+			</div>
+			-->		
+	
 			<!-- 감정 태그 선택하기 -->
 			<div id="contents" class="clearfix">
 				<div id="mood_tag">
@@ -92,13 +92,7 @@
 			</div>
 
 			<div id="btn_mood">
-				<button type="button" class="btn btn-primary">감정 태그</button>
-				<button type="button" class="btn btn-default">감정 태그</button>
-				<button type="button" class="btn btn-default">감정 태그</button>
-				<button type="button" class="btn btn-default">감정 태그</button>
-				<button type="button" class="btn btn-default">감정 태그</button>
-				<button type="button" class="btn btn-default">감정 태그</button>
-				<button type="button" class="btn btn-default">감정 태그</button>
+				<!-- <button type="button" class="btn btn-primary">감정 태그</button> -->
 			</div>
             <!-- /감정 태그 선택하기 -->
 
@@ -137,6 +131,7 @@
 
 
             <!-- 이미지 저장 & 공유하기 -->
+            <!-- 
 			<div id="contents" class="clearfix">
 				<div id="download_img">
 					<h1>이미지 저장 / 공유하기 </h1>
@@ -149,6 +144,7 @@
             <div class="jumbotron2" data-toggle="modal" data-target="#modal_share_img">
                 <p>공유하기</p>
             </div>
+            -->
             <!-- /이미지 저장 & 공유하기 -->
 
 
@@ -203,4 +199,241 @@
 
     
 </body>
+<script> 
+	/* 
+		- 책 선택 모달에서 마지막 버튼 비활성화 안했음
+	*/
+	var query
+	var pageNo = 1
+
+	/* 화면 로드되기 전, 감정태그 출력 */
+	$("document").ready(function(){
+		
+		var url = location.href.substring(0, 34) + "/main/getemotion"
+		
+		$.ajax({
+			url: url,
+			type: "get",
+			
+			contentType: "json",
+			success: function(data){
+				
+				/* 화면 출력 */
+				for(let item of data) {
+					renderEmotionBtn(item)
+				}
+				
+				/* 이벤트 핸들러 넣기 */
+				var btnlist = $("#btn_mood").children()
+				
+				for(var btn of btnlist) {
+					btn.onclick = function(){
+
+						/* 하나만 선택 가능 */
+						for(var tag of btnlist) {
+							tag.classList.remove("active")
+						}
+						
+						$(this).addClass("active")
+						
+						/* 스타일 옵션 출력 */
+					}
+				}
+						
+				
+			},
+			error:  function(XHR, status, error){
+				console.log(status + " : " + error);
+			}
+			
+		})
+	})
+	
+	/* 책 검색 API */
+	$("#query-form").on("submit", function(e){
+		e.preventDefault()
+
+		let arr = $("#query-form").serializeArray()
+		query = arr[0].value
+		
+		let obj = {
+			query : query
+		}
+
+		sendRequest(obj)
+	})
+	
+	/* 모달 > 페이징 링크 클릭시 */
+	$(".pagination").on("click", ".page-item", function(e){
+		e.preventDefault()
+		var $this = $(this)
+		var target = $this[0].innerText
+
+		pageNo = parseInt(pageNo)
+		
+		if(target === '«') {
+			console.log("previous or next btn")
+			pageNo -= 1
+			
+		} 
+		else if(target === '»') {
+			console.log("previous or next btn")
+			pageNo += 1
+			
+		} 
+		else {
+			pageNo = target
+		}
+		
+		console.log(pageNo)
+		
+		var obj = {
+			query: query,
+			crtPage: pageNo
+		}
+
+		sendRequest(obj)
+	})
+	
+	/* 모달 > 책 선택시 */
+	$("#modal-playlist").on("click", ".list", function() {
+		var $this = $(this)
+
+		console.log($this)
+		
+		/* isbn, title, author, imgURL, link, category */
+		var isbn = $this.data("isbn")
+		var imgURL = $this[0].children[0].children[0].currentSrc
+		var title = $this[0].children[1].children[0].innerText
+		var author = $this[0].children[1].children[1].innerText
+		var totalCnt = $this[0].children[1].children[2].innerText
+		var bookUrl = $this.data("url")								/* db에 저장할 때 필요한 책 정보 (!) */
+		var category = $this.data("category")
+		
+		totalCnt = totalCnt.split(" ")[1]
+		
+		/* 선택 섹션 화면에서 안보이게 & modal 닫기 */
+		$(".jumbotron").css("display", "none")
+		$("#modal_searchbook").modal("hide")
+		
+		/* 출력 전 선택된 책 삭제 (처음 책 선택하는 건데도 출력된다...?) */
+		if($(".selected-book") !== null) {
+			$(".selected-book").remove()			
+		}
+		
+		/* 선택된 책 정보 섹션 출력 */
+		renderSelectedBook(isbn, imgURL, title, author, totalCnt)
+	})
+	
+	function renderEmotionBtn(item) {
+		var str = '<button type="button" class="btn btn-primary" id="'+ item.emoNo +'">'+ item.emoName +'</button>'
+		
+		$("#btn_mood").append(str)
+	}
+	
+	function renderSelectedBook(isbn, imgURL, title, author, totalCnt) { // isbn 넘겨줘야 할 것 같다...?
+		
+		var str = ''
+		str += '<div id="contents" class="clearfix selected-book" data-isbn="'+ isbn +'">'
+		str += '	<div id="select_box">'
+		str += '		<div id="bookVo">'
+		str += '			<img id="book_img" src="'+ imgURL +'" alt="..." class="img-thumbnail">'
+		str += '			<div id="book_detail">'
+		str += '				<h1>'+ title +'</h1>'
+		str += '				<h3>저자 '+ author +'</h3>'
+		str += '				<div id="book_review">'
+		str += '					<span class="review_count">서평 수 </span><span class="review_num">'+ totalCnt +'</span>'
+		str += '				</div>'
+		str += '			</div>'
+		str += '			<button id="btn_delete" type="button" class="btn btn-light">삭제</button>'
+		str += '			<button id="btn_modify" type="button" class="btn btn-light">수정</button>'
+		str += '		</div>'	
+		str += '	</div>'
+		str += '</div>'
+		
+		$(".selectbook-header").after(str)
+		
+		/* 취소, 수정 버튼 이벤트 핸들러 넣기 */
+		$("#btn_delete").on("click", function(){ // 삭제
+			$(".selected-book").remove()
+			$(".jumbotron").css("display", "block")
+		})
+		
+		$("#btn_modify").on("click", function(){
+			$("#modal_searchbook").modal("show")
+		})
+	}
+	
+	function sendRequest(obj) {
+		$.ajax({
+			url: "${pageContext.request.contextPath}/review_write/searchbook",
+			type: "post",
+			data: obj,
+			
+			dataType: "json",
+			success: function(data){
+				
+				var startBtnNo = data.startBtnNo
+				var endBtnNo = data.endBtnNo
+				var array = data.list
+				
+				/* 응답 정보 출력 전, 현재 리스트 & 페이징 삭제 */
+				$("#modal-playlist").children().remove()
+				$(".pagination").children().remove()
+				
+				/* response 출력 */
+				for(let item of array) {
+					renderBook(item)
+				}
+				
+				/* 페이징 출력 */
+				renderPaging(startBtnNo, endBtnNo)
+			},
+			error:  function(XHR, status, error){
+				console.log(status + " : " + error);
+			}
+		})
+	}
+	
+	function renderPaging(startNo, endNo) {
+		
+		var str = ''
+		if(pageNo == 1) {
+			str += '<li class="page-item" style="pointer-events: none"><a class="page-link" href="" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>'	
+		}
+		else {
+			str += '<li class="page-item"><a class="page-link" href="" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>'
+		}
+		
+		for(var i = startNo; i <= endNo; i++) {
+			if(i == pageNo) {
+				str += '<li class="page-item active"><a class="page-link" href="">' + i + '</a></li>'
+			}
+			else {
+				str += '<li class="page-item"><a class="page-link" href="">' + i + '</a></li>'	
+			}
+		}
+		
+		str += '<li class="page-item"><a class="page-link" href="" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>'
+		
+		$(".pagination").append(str)
+	}
+	
+	function renderBook(item) {
+		
+		var str = ""
+		str += '<li class="list" data-dismiss="modal" data-isbn="'+ item.isbn13 +'" data-url="'+ item.link +'" data-category="'+ item.categoryName +'">'
+		str += '	<div class="book-img-container">'
+		str += '		<img src="'+ item.cover +'" alt="" class="img-thumbnail">'
+		str += '	</div>'
+		str += '	<div class="info-container">'
+		str += '		<button class="book-title">'+ item.title +'</button>'
+		str += '		<div class="book-author">'+ item.author +'</div>'
+		str += '		<div class="review-count">서평수 '+ item.totalCnt +'</div>'
+		str += '	</div>'
+		str += '</li>'
+
+		$("#modal-playlist").append(str)
+	}
+</script>
 </html>

@@ -1,6 +1,5 @@
 package com.javaex.controller;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -8,12 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaex.service.MainService;
+import com.javaex.vo.PlaylistVo;
 import com.javaex.vo.ReviewVo;
 
 @Controller
@@ -39,19 +37,47 @@ public class MainController {
 		return mainService.getEmotion();
 	}
 	
-	// review 리스트 (emotion tag 클릭 했을 때)
 	@ResponseBody
-	@RequestMapping("/getReviewListByEmo")
-	public List<ReviewVo> getReviewListByEmo(@RequestBody String emoNo) throws JsonParseException, JsonMappingException, IOException {
+	@RequestMapping("/reviewListByEmo") //reviemusiclist?playlistNo=
+	public Map<String, Object> getReviewListByEmo(@RequestParam(value="emoNo", required=false) Integer emoNo,
+												  @RequestParam(value="playlistNo", required=false) Integer playlistNo) {
 		System.out.println("MainController > getReviewListByEmo()");
+		// defaultValue=Math.ramdom() 으로 디폴트 플리 설정해도 좋을 것 같다
 		
-		ObjectMapper mapper = new ObjectMapper();
-		
-		@SuppressWarnings("unchecked")
-		Map<String, String> map = mapper.readValue(emoNo, Map.class);
-
-		int emoNum = Integer.parseInt( map.get("emoNo"));
-
-		return mainService.getReviewListByEmo(emoNum);
+		return mainService.getReviewListByEmo(emoNo, playlistNo);
 	}
+	
+	@ResponseBody
+	@RequestMapping("/getMyPlaylist")
+	public List<PlaylistVo> getMyPlaylist(@RequestParam(value="userNo") int userNo) {
+		System.out.println("MainController > getMyPlaylist");
+		
+		return mainService.getMyPlaylist(userNo);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getMyPlaylistModal")
+	public List<Map<String, Object>> getMyPlaylistModal(@RequestBody ReviewVo reviewVo) { 
+		System.out.println("MainController > getMyPlaylistModal");
+		
+		List<Map<String, Object>> modalPlaylist = mainService.getMyPlaylistModal(reviewVo);
+		return modalPlaylist;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/addReviewToPly")
+	public void addReviewToPly(@RequestBody Map<String, Object> map) {
+		System.out.println("MainController > addReviewToPly");
+		
+		mainService.toggleReviewToPly(map);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/addNewPlaylist")
+	public int addNewPlaylist(@RequestBody PlaylistVo pvo) {
+		System.out.println("MainController > addNewPlaylist");
+		
+		return mainService.addNewPlaylist(pvo);
+	}
+
 }

@@ -9,8 +9,12 @@
     padding-bottom: 20px;
     margin-bottom: 20px;
 }
-
-
+/*
+.selected-emoBtn {
+	background-color: rgb(159 222 69);
+	border-color: rgb(159 222 69);
+}
+*/
 /* ----- progress bar ----- */
 .progress-bar-contents span {
     margin-left: 210px;
@@ -190,6 +194,7 @@ font-family: 'Nanum Myeongjo';
 	float:left;
     padding: 15px 40px 15px 40px;
     margin: 5px;
+    transition: all 0.3s;
 }
 
 

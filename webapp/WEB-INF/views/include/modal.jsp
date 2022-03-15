@@ -148,10 +148,13 @@
 					<button type="button" class="closeBtn" data-dismiss="modal" aria-label="Close">닫기</button>
 				</div>
 				<div class="modal-search">
-					<input type="text" class="search_box" id="query" placeholder=" ex) 책 제목, 저자명, 출판사를 검색해보세요">
+					<form id="query-form"> 				<!-- input 값 받아오려고 추가(희원) -->
+						<input type="text" class="search_box" id="query" placeholder=" ex) 책 제목, 저자명, 출판사를 검색해보세요" name="query"> 
+					</form>
 				</div>
 				<div class="modal-playlist">
-					<ul>
+					<ul id="modal-playlist"> <!-- ul에 id 추가(희원) -->
+						<!--  
 						<li class="list">
 							<div class="book-img-container">
 								<img src="${pageContext.request.contextPath}/asset/img/book/book2.jpeg" alt="" class="img-thumbnail">
@@ -162,49 +165,24 @@
 								<div class="review-count">서평수 163+</div>
 							</div>
 						</li>
-						<li class="list">
-							<div class="book-img-container">
-								<img src="${pageContext.request.contextPath}/asset/img/book/book2-2.jpeg" alt="" class="img-thumbnail">
-							</div>
-							<div class="info-container">
-								<button class="book-title">다섯 번째 감각</button>
-								<div class="book-author">김보영</div>
-								<div class="review-count">서평수 200+</div>
-							</div>
-						</li>
-						<li class="list">
-							<div class="book-img-container">
-								<img src="${pageContext.request.contextPath}/asset/img/book/book3-3.jpeg" alt="" class="img-thumbnail">
-							</div>
-							<div class="info-container">
-								<button class="book-title">물고기는 존재하지 않는다</button>
-								<div class="book-author">룰루 밀러(Lulu Miller)</div>
-								<div class="review-count">서평수 199+</div>
-							</div>
-						</li>
-						<li class="list">
-							<div class="book-img-container">
-								<img src="${pageContext.request.contextPath}/asset/img/book/book4.jpeg" alt="" class="img-thumbnail">
-							</div>
-							<div class="info-container">
-								<button class="book-title">백의 그림자</button>
-								<div class="book-author">황정은</div>
-								<div class="review-count">서평수 75+</div>
-							</div>
-						</li>
+						-->
 					</ul>
 				</div>
 				<nav class="paging" aria-label="Page navigation example">
 					<ul class="pagination">
+						<!-- 
 						<li class="page-item"><a class="page-link" href="" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 						</a></li>
+						
 						<li class="page-item"><a class="page-link" href="">1</a></li>
 						<li class="page-item"><a class="page-link" href="">2</a></li>
 						<li class="page-item"><a class="page-link" href="">3</a></li>
 						<li class="page-item"><a class="page-link" href="">4</a></li>
 						<li class="page-item"><a class="page-link" href="">5</a></li>
+						
 						<li class="page-item"><a class="page-link" href="" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 						</a></li>
+						-->
 					</ul>
 				</nav>
 			</div>

@@ -46,4 +46,99 @@
 			and emotion.emo_no = #{emoNum}
 		]]>
 	</select>
+	
+	<select id="getReviewListByPly" parameterType="int" resultMap="RReviewVo">
+		<![CDATA[
+			select review_content,
+			       review_no,
+			       nickname,
+			       review.book_no,
+			       style_name,
+			       emo_name
+			from review, users, books, style, emotion
+			where review.user_no = users.user_no
+			and books.book_no = review.book_no
+			and review.style_no = style.style_no
+			and style.emo_no = emotion.emo_no
+			and review_no in (select playlist_review_no
+			                    from playlist_review
+			                    where playlist_no = #{playlistNo})		
+		]]>
+	</select>
+	
+	<select id="getMusicListByEmo" parameterType="int" resultType="MusicVo">
+		<![CDATA[
+			select music_title musicTitle,
+			       artist, 
+			       music_path musicPath
+			from music, emotion
+			where music.emo_no = emotion.emo_no
+			and music.emo_no = #{emoNo}
+		]]>
+	</select>
+	
+	<select id="getMusicTotalCnt" parameterType="int" resultType="int">
+		<![CDATA[
+			select count(music_no)
+			from music, emotion
+			where music.emo_no = emotion.emo_no
+			and music.emo_no = #{emoNo}
+		]]>
+	</select>	
+	
+	<select id="getMyPlaylist" parameterType="int" resultType="PlaylistVo">
+		<![CDATA[
+			select playlist_name playlistName,
+			       playlist.playlist_no playlistNo
+			from user_playlist, playlist
+			where user_playlist.playlist_no = playlist.playlist_no
+			and user_playlist.user_no = #{userNo}
+			order by playlist_date desc
+		]]>
+	</select>
+	
+	<insert id="addNewPlaylist" parameterType="PlaylistVo">
+		<selectKey keyProperty="playlistNo" resultType="int" order="BEFORE">
+			select seq_playlist_no.nextval from dual
+		</selectKey>
+	
+		<![CDATA[
+			insert into playlist
+			values(#{playlistNo}, #{userNo}, sysdate, #{playlistName})
+		]]>
+	</insert>
+	
+	<insert id="addNewPlaylistAtUser" parameterType="PlaylistVo">
+		<![CDATA[
+			insert into user_playlist
+			values(seq_user_playlist_no.nextval, #{userNo}, #{playlistNo})
+		]]>
+	</insert>
+	
+	<insert id="addReviewToPly" parameterType="map">
+		<![CDATA[
+			insert into playlist_review
+			values(seq_playlist_review_no.nextval, #{playlistNo}, #{reviewNo}, sysdate)
+		]]>
+	</insert>
+	
+	<select id="alreadyAdded" parameterType="map" resultType="int">
+		<![CDATA[
+			select count(playlist_review_no)
+			from playlist_review, playlist, users
+			where playlist_review.playlist_no = playlist.playlist_no
+			and playlist.user_no = users.user_no
+			and review_no = #{reviewNo}
+			and playlist.playlist_no = #{playlistNo}
+			and users.user_no = #{userNo}
+		]]>
+	</select>
+	
+	<delete id="deleteReviewFromPly" parameterType="map">
+		<![CDATA[
+			delete from playlist_review
+			where playlist_no = #{playlistNo}
+			and review_no = #{reviewNo}
+		]]>
+	</delete>
 </mapper>
