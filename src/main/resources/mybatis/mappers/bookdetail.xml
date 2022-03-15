@@ -11,7 +11,7 @@
 </select> -->
 
 	<!-- 해당 책 서평 리스트 출력(최신순) -->
-	<select id="reviewListLatest" parameterType="int" resultType="com.javaex.vo.BookreviewVo">
+	<select id="reviewListLatest" parameterType="int" resultType="BookreviewVo">
 	 	<![CDATA[
 			select  r.book_no bookNo,
 			        r.review_no reviewNo,
@@ -40,7 +40,7 @@
 	
 	
 	<!-- 해당 책 정보 --> 
-	<select id="getbookVo" parameterType="int" resultType="com.javaex.vo.BookdetailVo">
+	<select id="getbookVo" parameterType="int" resultType="BookdetailVo">
 	 	<![CDATA[
 			select  book_title bookTitle,
 			        author author,

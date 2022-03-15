@@ -1,124 +1,216 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="ko">
+
 <head>
-<meta charset="UTF-8">
-<title>playlist-like</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/playlist-click.css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
-<script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
+	<meta charset="UTF-8">
+	<title>플레이리스트 폴더</title>
+	
+    <script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+    <script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
+	
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/playlist-click.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/style.css">
 </head>
+
 <!--header-->
 <body>
 	<div id="wrap">
-		<!-- 헤더 -->
+		
+		<!-- ------header------ -->
 		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
+		<!-- ------header------ -->
+		
 		<!-- ------nav------ -->
-		<div id="nav" class="clearfix">
-			<ul class="nav nav-tabs">
-				<li role="presentation"><a href="${pageContext.request.contextPath}/mybook">내 서평</a></li>
-				<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
-				<!--세션 아이디와 사이트아이디 같을때-->
-				<li role="presentation"><a href="${pageContext.request.contextPath}/analyze">통계</a></li>
-			</ul>
-			<!-- 세션아이디랑 다를때는
+        <div id="nav" class="clearfix">
+		      <ul class="nav nav-tabs">
+		          <li role="presentation"><a href="${pageContext.request.contextPath}/mybook">내 서평</a></li>
+		          <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
+		          <!--세션 아이디와 사이트아이디 같을때-->
+		          <li role="presentation"><a href="${pageContext.request.contextPath}/analyze">통계</a></li>
+		      </ul>
+		      <!-- 세션아이디랑 다를때는
 		      <ul class="nav nav-tabs">
 		          <li role="presentation"><a href="">'유저이름'님의 서평</a></li>
 		          <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
 		      </ul>	       
 		       -->
-		</div>
-		
-		<!-- ------nav2------ -->
+ 		</div>
+        <!-- ------nav------ -->
+
+        <!-- ------nav2------ -->
 		<ul id="nav2" class="nav nav-pills">
 			<!-- 세션아이디와 비교, 다를경우 '이름님의 취향' -->
 			<!-- <li role="presentation" class="active"><a href="">'유저이름'님의 취향</a></li> -->
-			<li role="presentation"><a href="${pageContext.request.contextPath}/taste_main">my 취향</a></li>
+			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">my 취향</a></li>
 			<li role="presentation"><a href="${pageContext.request.contextPath}/review">좋아요한 서평</a></li>
 			<li role="presentation"><a href="${pageContext.request.contextPath}/main_book">관심가는 책</a></li>
-			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/like_playlist">플레이리스트</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/like_playlist">플레이리스트</a></li>
 		</ul>
-		
-		<div class="jumbotron">
-			<div>
-				<p class="sub">김고은님이 좋아할 법한 플레이리스트</p>
-				<span class="edit"><a href="">수정</a></span>
-				<p>
-					일상의 휴식<br>잔잔한 감동을 위한 플레이리스트
-				</p>
+
+		<!--cover-->
+		<div id="playlist-cover" class="clearfix">
+			<div class="float-l">
+				<p>${authUser.nickname}님의 플레이리스트</p>
+				<h1 id="playlist-title">${requestScope.playlistVo.playlistCover}</h1>
 			</div>
-			<div id="buttonjumbo">
-				<p>
-					<a class="btn btn-primary btn-lg" href="" role="button">재생 <span class="glyphicon glyphicon-triangle-right"></span></a>
-				</p>
-				<p>
-					<a class="btn btn-primary btn-lg" href="" role="button"> 좋아요 <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-					</a>
-				</p>
+			
+			<div id="btn-cover" class="float-r">
+				<button type="button" class="btn btn-default float-r">좋아요<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span></button>	
+				<a><button type="button" class="btn btn-default float-r">전체재생</button></a>
+			</div>
+
+		</div>
+		<!--cover-->
+		
+		<div id="middle-content">
+			<div id="playlist-add">
+				<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+				<span>플레이리스트 서평 추가</span>
+			</div>
+
+			<div id="btnwrap-delete">
+				<button type="button" class="btn btn-default">전체선택</button>
+				<button type="button" class="btn btn-default">선택삭제</button>
 			</div>
 		</div>
-		<!--jumbotron-->
-		<!--tag nav-->
-		<ul class="nav nav-pills">
-			<li role="presentation" class="active"><a href="">두근두근하는</a></li>
-			<li role="presentation"><a href="">스팩타클한</a></li>
-			<li role="presentation"><a href="">감동적인</a></li>
-			<li role="presentation"><a href="">섬뜩한</a></li>
-			<li role="presentation"><a href="">잔잔한</a></li>
-			<li role="presentation"><a href="">용기를 북돋는</a></li>
-			<li role="presentation"><a href="">눈물나는</a></li>
-			<li role="presentation"><a href="">환상적인</a></li>
-		</ul>
-		<!-- 서평 리스트 -->
-		<div id="reviews">
-			<div id="reviews-header">
-				<div class="left">
-					<p>
-						<a>스며드는 것</a>
-					</p>
-				</div>
-				<!-- 작성자아이디와 세션아이디가 동일할 시에만 보이게 -->
-				<div class="right">
-					<a>수정</a> <a>삭제</a>
-				</div>
-			</div>
-			<!-- 작성자아이디와 세션아이디가 동일할 경우에는 안보이게 -->
-			<div id="reviewer">
-				<a>안도현</a>
-			</div>
-			<div id="reviews-content">
-				<p>꽃게가 간장 속에 반쯤 몸을 담그고 엎드려 있다 등판에 간장이 울컥울컥 쏟아질 때 꽃게는 뱃속의 알을 껴안으려고 꿈틀거리다가 더 낮게 버둥겨렸으리라 버둥거리다가 어찌할 수 없어서 살 속으로 스며드는 것을 한 때의 어스름을 꽃게는 천천히 받아들였으리라 껍질이 먹먹해지기 전에 가만히 알들에게 말했으리라 저녁이야 불 끄고 잘 시간이야</p>
-				<span class="label label-default">우울한</span> <span class="label label-default">#mood</span>
-			</div>
-			<div id="reviews-footer">
-				<div class="left">
-					<span id="heart" class="glyphicon glyphicon-heart" aria-hidden="true"></span> <span>16.5k</span> <span>2022/02/22</span>
-				</div>
-				<div class="right">
-					<div class="dropup">
-						<a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 더보기 <span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-							<li role="presentation"><a id="add_pli" role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
-							<li role="presentation" class="divider"></li>
-							<li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
-							<li role="presentation" class="divider"></li>
-							<li role="presentation">
-							<li role="presentation"><a id="save_img" role="menuitem" target="_blank" tabindex="-1" href="${pageContext.request.contextPath}/imgpreview">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
-						</ul>
+
+		<!--review List-->
+		<div id="review-wrap">
+			
+			<c:forEach items="${requestScope.playlistVo.playList}" var="playlist">
+				<!-- 서평 리스트 vo-->
+				<div class="jumbotron">
+					<div id="reviewVo-wrap">
+						<div id="review_first">
+							<h3><a href="${pageContext.request.contextPath}/bookdetail?bookNo=${playlist.bookNo}&userNo=${playlist.userNo}">${playlist.bookTitle}</a></h3>
+		
+							<!-- 자기글에만 수정 삭제 노출 -->
+							<c:if test="${authUser.userNo == playlist.userNo}">
+								<a href="" class="review_modify">삭제</a><a href="" class="review_modify">수정</a>
+							</c:if>
+		
+							<a href="${pageContext.request.contextPath}/${playlist.nickname}" class="review_nick">${playlist.nickname}<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+		
+							<div class="multiline-ellipsis">${playlist.reviewContent}</div>
+						</div>
+		
+						<div id="review_second">
+							<!-- 좋아요 활성화 -->
+							<span id="btn_like" class="glyphicon glyphicon-heart icon-success" aria-hidden="true"></span>
+							<!-- 좋아요 활성화 -->
+		
+							<!-- 좋아요 비활성화
+							<span id="btn_like" class="glyphicon glyphicon-heart-empty icon-success" aria-hidden="true"></span> -->
+		
+							<span class="review_like">16.2k</span><span class="review_like">${playlist.reviewDate}</span>
+							<span id="tag_btn">#${playlist.emoName}</span>
+							<!-- 더보기 클릭시 모달창 오픈 -->
+							<!-- <button type="button" class="btn btn-default btn-sm">+더보기</button> -->
+							
+							<div class="dropup float-r">
+								<a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									+ 더보기
+									<!-- <span class="caret"></span> -->
+								</a>
+								<ul class="dropdown-menu radius-15" role="menu" aria-labelledby="dropdownMenu2">
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="#">플레이리스트에 추가<span id="plus">+</span></a></li>
+									<li role="presentation" class="divider"></li>
+									<li role="presentation" ><a id="shr_review" role="menuitem" tabindex="-1" href="#">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
+									<li role="presentation" class="divider"></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="#">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
+								</ul>
+							</div>
+		
+						</div>
 					</div>
 				</div>
-			</div>	
+				<!-- 서평 리스트 vo-->
+			
+			</c:forEach>
+			
+
+			<!-- 페이징 -->
+			<nav id="page">
+				<ul class="pagination">
+				  <li>
+					<a href="#" aria-label="Previous">
+					  <span aria-hidden="true">&laquo;</span>
+					</a>
+				  </li>
+				  <li class="active"><a href="#">1</a></li>
+				  <li><a href="#">2</a></li>
+				  <li><a href="#">3</a></li>
+				  <li><a href="#">4</a></li>
+				  <li><a href="#">5</a></li>
+				  <li>
+					<a href="#" aria-label="Next">
+					  <span aria-hidden="true">&raquo;</span>
+					</a>
+				  </li>
+				</ul>
+			</nav>
+			<!-- 페이징 -->
+
+			<!-- footer -->
+			<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>     
+			<!-- footer -->
 		</div>
-		
-		<!-- footer -->
-        <c:import url="/WEB-INF/views/include/footer.jsp"></c:import>           
-		
+		<!-- playlist-wrap -->
 	</div>
 	<!--wrap-->
+
+	<!-- 서평 추가 모달 -->
+	<div id="review-add" class="modal fade" role="dialog" style="z-index: 1600;">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="modal-container">
+						<div class="modal-header">
+							<a href=""> <i class="fa-solid fa-arrow-left"></i> 뒤로가기
+							</a>
+							<div class="input-box">
+								<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+								<input type="text" placeholder="키워드를 검색해 주세요"> <i class="fa-solid fa-magnifying-glass"></i>
+								<button id="btn-search" type="button" class="btn">검색</button>
+							</div>
+						</div>
+						<div class="modal-options">
+							<button class="optionBtn">서재안의 모든 서평</button>
+						</div>
+						<div class="modal-list">
+							<ul id="reviewAll">
+								<!-- 서평 vo 반복 -->
+								<!-- 리스트 출력될 곳 -->
+							</ul>
+						</div>
+						<nav class="paging" aria-label="Page navigation example">
+							<ul class="pagination">
+								<li class="page-item"><a class="page-link" href="" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+								</a></li>
+								<li class="page-item"><a class="page-link" href="">1</a></li>
+								<li class="page-item"><a class="page-link" href="">2</a></li>
+								<li class="page-item"><a class="page-link" href="">3</a></li>
+								<li class="page-item"><a class="page-link" href="" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+								</a></li>
+							</ul>
+						</nav>
+
+						<button class="addReviewBtn">선택한 서평 담기</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 서평 추가 모달 -->
 </body>
+
+<script src="${pageContext.request.contextPath}/asset/js/more.js"></script>
+
 </html>
-</DOCTYPE>

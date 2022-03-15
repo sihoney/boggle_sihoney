@@ -60,9 +60,9 @@
   .modal-options .optionBtn.option-selected {
     color: #2699fb;
   }
-  .modal-options .optionBtn:nth-child(1) {
+ /* .modal-options .optionBtn:nth-child(1) {
     border-right: 1px solid #707070;
-  }
+  } */
   /* .modal-list {
   } */
   .modal-list ul {
@@ -70,7 +70,7 @@
   }
   .modal-list ul .review-card {
     width: 100%;
-    height: 190px;
+    height: 160px;
     background: #f7f7f7;
     border-radius: 16px;
     padding: 0 1.5rem;
@@ -142,4 +142,12 @@
     padding: 0.7rem 0;
     cursor: pointer;
   }
+  
+ #btn-search{
+  	font-size: 12px;
+  	background-color: #707070;
+  	padding: 3px 5px;
+  	color: #ffffff;
+  }
+  
   

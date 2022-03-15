@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="playlistFolder">
+	<!-- <select id="" parameterType="" resultType="">
+	 	<![CDATA[
+	
+		]]>
+	</select> -->
+	
+	<!-- 해당 플리 서평리스트 -->
+	<select id="reviewList" parameterType="int" resultType="PlaylistFolderVo">
+	 	<![CDATA[
+			select r.playlist_name playlistName,
+			       r.playlist_no playlistNo,
+			       r.review_no reviewNo,
+			       r.nickname nickname,
+			       r.user_no userNo,
+			       r.book_no bookNo,
+			       r.review_content reviewContent,
+			       to_char(r.review_date,'yyyy-mm-dd') reviewDate,
+			       r.style_no styleNo,
+			       b.book_title bookTitle,
+			       e.emo_name emoName
+			from (select p.playlist_name,
+			             p.playlist_no,
+			             r.review_no,
+			             u.nickname,
+			             u.user_no,
+			             r.book_no,
+			             r.review_content,
+			             r.review_date,
+			             r.style_no
+			        from playlist p, playlist_review pr, review r, users u
+			        where p.playlist_no = pr.playlist_no
+			        and pr.review_no = r.review_no
+			        and u.user_no = r.user_no
+			        order by pr.playlist_review_date desc) r, books b,style s, emotion e
+			where b.book_no = r.book_no
+			and r.style_no = s.style_no
+			and s.emo_no = e.emo_no
+			and r.playlist_no = #{playlistNo}
+		]]>
+	</select>
+	
+	<!-- 플레이리스트 커버 -->
+	<select id="playlistCover" parameterType="map" resultType="String">
+	 	<![CDATA[
+			select playlist_name
+			from playlist
+			where user_no = #{userNo}
+			and playlist_no = #{playlistNo}
+		]]>
+	</select>
+
+
+	<!-- 전체 서평 리스트 -->
+	<select id="reviewAll" resultType="BookreviewVo">
+	 	<![CDATA[
+			select  r.review_no reviewNo,
+			        r.user_no userNo,
+			        r.book_no bookNo,
+			        r.style_no style_no,
+			        r.review_content reviewContent,
+			        r.review_date reviewDate,
+			        e.emo_name emoName,
+			        b.book_title bookTitle
+			from review r, style s, emotion e, books b
+			where r.style_no = s.style_no
+			and s.emo_no = e.emo_no
+			and b.book_no = r.book_no
+			order by review_date desc
+		]]>
+	</select>
+
+
+
+
+</mapper>
