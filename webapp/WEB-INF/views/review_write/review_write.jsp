@@ -366,7 +366,7 @@
 	
 	function sendRequest(obj) {
 		$.ajax({
-			url: "${pageContext.request.contextPath}/write/searchbook",
+			url: "${pageContext.request.contextPath}/review/searchbook",
 			type: "post",
 			data: obj,
 			

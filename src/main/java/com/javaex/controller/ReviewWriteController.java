@@ -34,7 +34,7 @@ public class ReviewWriteController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/write/searchbook", method = {RequestMethod.GET, RequestMethod.POST}, produces="applicatioin/json;charset=UTF-8")
+	@RequestMapping(value="/searchbook", method = {RequestMethod.GET, RequestMethod.POST}, produces="applicatioin/json;charset=UTF-8")
 	public String searchbook(@RequestParam String query, 
 							 @RequestParam(value="crtPage", required=false, defaultValue="1") String crtPage) throws IOException {
 		System.out.println("ReviewWriteController > searchbook()");
