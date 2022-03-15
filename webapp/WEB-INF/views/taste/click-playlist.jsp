@@ -60,8 +60,8 @@
 			</div>
 			
 			<div id="btn-cover" class="float-r">
-				<button type="button" class="btn btn-default float-r">좋아요<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span></button>	
-				<a><button type="button" class="btn btn-default float-r">전체재생</button></a>
+				<button type="button" class="btn btn-default float-r">좋아요<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span></button>
+				<button type="button" class="btn btn-default float-r">전체재생</button>
 			</div>
 
 		</div>
