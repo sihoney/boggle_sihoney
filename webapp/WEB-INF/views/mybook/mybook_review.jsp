@@ -184,8 +184,10 @@
       
       
       //포함되어있으면 true      
-      let isExist = document.getElementById('heart').classList
+      let isExist = document.getElementsByClassName('heart').classList
             .contains('glyphicon-heart-empty');
+      
+      console.log(isExist);
 
       //좋아요
       if (isExist == true) {
@@ -251,44 +253,6 @@
       
    });
 
-   $('.reviews').on(
-         'click',
-         '#heart',
-         function() {
-
-            //포함되어있으면 true
-            let isExist = document.getElemenstByClassName('like').classList
-                  .contains('glyphicon-heart-empty');
-
-            //데이터수집
-            var reviewNo = $("#reviewNo").val();
-
-            //출력(리뷰넘버찍어보기)
-            console.log(reviewNo);
-
-            var clickReview = {
-               reviewNo : reviewNo
-            };
-
-            //좋아요
-            if (isExist == true) {
-               console.log("좋아요")
-
-               let like = document.getElementById('heart');
-               like.classList.replace("glyphicon-heart-empty",
-                     "glyphicon-heart");
-               //좋아요취소인경우
-            } else {
-               console.log("좋아요취소")
-
-               let like = document.getElementById('heart');
-               like.classList.replace("glyphicon-heart",
-                     "glyphicon-heart-empty");
-            }
-
-            
-
-         });
 </script>
 <script src="${pageContext.request.contextPath}/asset/js/more.js"></script>
 </html>
