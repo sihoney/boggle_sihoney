@@ -19,21 +19,22 @@ import com.javaex.service.ReviewWriteService;
 import com.javaex.util.HttpUtil;
 
 @Controller
-@RequestMapping("write")
+@RequestMapping("/review")
 public class ReviewWriteController {
 
 	@Autowired
 	ReviewWriteService reviewWriteService;
 	
-	@RequestMapping("/review")
-	public String review_write() {
-		System.out.println("review_write");
-		
-		return "review_write/review_write";
-	}
+	@RequestMapping("/write")
+   public String review_write() {
+      System.out.println("write");
+      
+      return "review_write/review_write";
+   }
+	
 	
 	@ResponseBody
-	@RequestMapping(value="searchbook", method = {RequestMethod.GET, RequestMethod.POST}, produces="applicatioin/json;charset=UTF-8")
+	@RequestMapping(value="/write/searchbook", method = {RequestMethod.GET, RequestMethod.POST}, produces="applicatioin/json;charset=UTF-8")
 	public String searchbook(@RequestParam String query, 
 							 @RequestParam(value="crtPage", required=false, defaultValue="1") String crtPage) throws IOException {
 		System.out.println("ReviewWriteController > searchbook()");
