@@ -22,7 +22,13 @@ public class PlaylistFolderVo {
 	
 	//생성자
 	public PlaylistFolderVo() {}
-	
+
+	public PlaylistFolderVo(int playlistNo, String playlistName) {
+		super();
+		this.playlistNo = playlistNo;
+		this.playlistName = playlistName;
+	}
+
 	public PlaylistFolderVo(int playlistNo, String playlistName, int reviewNo, String reviewContent, String reviewDate,
 			String nickname, int userNo, String bookNo, String bookTitle, int styleNo, String emoName) {
 		super();

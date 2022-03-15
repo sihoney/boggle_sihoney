@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/playlist-click.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 </head>
 
 <!--header-->
@@ -56,12 +57,12 @@
 		<div id="playlist-cover" class="clearfix">
 			<div class="float-l">
 				<p>${authUser.nickname}님의 플레이리스트</p>
-				<h1 id="playlist-title">${requestScope.playlistVo.playlistCover}</h1>
+				<h1 id="playlist-title">${requestScope.playlistVo.playlistCover.playlistName}</h1>
 			</div>
 			
 			<div id="btn-cover" class="float-r">
 				<button type="button" class="btn btn-default float-r">좋아요<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span></button>
-				<button type="button" class="btn btn-default float-r">전체재생</button>
+				<button type="button" class="btn btn-default float-r" onclick="location.href='${pageContext.request.contextPath}/main/reviewmusiclist?playlistNo=${requestScope.playlistVo.playlistCover.playlistNo}';">전체재생</button>
 			</div>
 
 		</div>

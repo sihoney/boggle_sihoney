@@ -32,7 +32,7 @@ public class PlaylistFolderDao {
 	
 	
 	/* 플레이리스트 커버 */
-	public String playlistCover(int playlistNo, int userNo) {
+	public PlaylistFolderVo playlistCover(int playlistNo, int userNo) {
 		
 		System.out.println("Dao.playlistCover");
 		
@@ -41,7 +41,7 @@ public class PlaylistFolderDao {
 		playlist.put("userNo", userNo);
 		
 		//커버 
-		String playlistCover = sqlSession.selectOne("playlistFolder.playlistCover",playlist);
+		PlaylistFolderVo playlistCover = sqlSession.selectOne("playlistFolder.playlistCover",playlist);
 		System.out.println(playlistCover);
 				
 		

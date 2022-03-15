@@ -26,7 +26,7 @@ public class PlaylistFolderService {
 		List<PlaylistFolderVo> playList = playlistfolderDao.playlistReviewList(playlistNo);
 		
 		//선택한 플리 커버 내용
-		String playlistCover = playlistfolderDao.playlistCover(playlistNo,userNo);
+		PlaylistFolderVo playlistCover = playlistfolderDao.playlistCover(playlistNo,userNo);
 		
 		//데이터 모으기
 		Map<String, Object> playlistVo = new HashMap<String, Object>();
