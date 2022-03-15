@@ -48,7 +48,7 @@ public class UserController {
 			session.setAttribute("authUser", authUser);
 			
 			//리다이렉트
-			return "redirect:/";
+			return "redirect:/main";
 		}else {
 			System.out.println("로그인실패");
 			

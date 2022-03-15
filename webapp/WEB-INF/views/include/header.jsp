@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- ------헤더------ -->
 <div id="header">
-	<a href="${pageContext.request.contextPath}/"> 
+	<a href="${pageContext.request.contextPath}/main"> 
 		<img src="${pageContext.request.contextPath}/asset/img/logo/1_logo.png">
 	</a>
 
