@@ -44,7 +44,7 @@
                 		</c:when>
                 		<c:otherwise>
                 			<!-- 로그인 됐을때 화면 -->
-		                    <li><a href="${pageContext.request.contextPath}/review_write">기록하기</a></li>
+		                    <li><a href="${pageContext.request.contextPath}/write/review">기록하기</a></li>
 		                    <li class="login" data-logStatus="login" data-userNo="${sessionScope.authUser.userNo }">
 		                    	<a href="${pageContext.request.contextPath}/${authUser.nickname}">
 		                    		<div class="userImg">

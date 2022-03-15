@@ -19,11 +19,18 @@ import com.javaex.service.ReviewWriteService;
 import com.javaex.util.HttpUtil;
 
 @Controller
-@RequestMapping("review_write")
+@RequestMapping("write")
 public class ReviewWriteController {
 
 	@Autowired
 	ReviewWriteService reviewWriteService;
+	
+	@RequestMapping("/review")
+	public String review_write() {
+		System.out.println("review_write");
+		
+		return "review_write/review_write";
+	}
 	
 	@ResponseBody
 	@RequestMapping(value="searchbook", method = {RequestMethod.GET, RequestMethod.POST}, produces="applicatioin/json;charset=UTF-8")

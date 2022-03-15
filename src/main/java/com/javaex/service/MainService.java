@@ -32,20 +32,22 @@ public class MainService {
 		System.out.println("plyNo: " + playlistNo);
 		
 		List<ReviewVo> reviewList = new ArrayList<ReviewVo>();
+		List<MusicVo> musicList = new ArrayList<MusicVo>();
+		int musicTotalCnt = 0;
 		
 		if(emoNo != null) {
 			System.out.println("list sort by emotion");
 			
 			reviewList = emoDao.getReviewListByEmo(emoNo);
+			musicList = emoDao.getMusicListByEmo(emoNo);
+			musicTotalCnt = emoDao.getMusicTotalCnt(emoNo);
 		}
 		else if(playlistNo != null) {
 			System.out.println("list sort by playlist");
 			
 			reviewList = emoDao.getReviewListByPly(playlistNo);
+			//emoDao.getMusicListByRandom();
 		}
-				
-		List<MusicVo> musicList = emoDao.getMusicListByEmo(emoNo);
-		int musicTotalCnt = emoDao.getMusicTotalCnt(emoNo);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("musicTotalCnt", musicTotalCnt);
