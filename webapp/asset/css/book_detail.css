@@ -233,6 +233,19 @@
     height: 60px;
 }
 
+.pageWrap {
+     text-align : center;
+}
+
+#contents {
+    padding: 10px 0px 40px 0px;
+    margin-bottom: 40px;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-bottom-color: #e4e4e4;
+}
+
+
 /* --------------footer------------- */
 #footer {
     margin: 50px 0px 60px 0px;

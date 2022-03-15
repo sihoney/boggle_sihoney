@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class test {
 	
-	@RequestMapping("")
-	public String bookDetail() {
-		System.out.println("main");
-		
-		return "main/main";
-	}
+//	@RequestMapping("")
+//	public String bookDetail() {
+//		System.out.println("main");
+//		
+//		return "main/main";
+//	}
 	
 	@RequestMapping("/analyze")
 	public String analyze() {
@@ -22,12 +22,12 @@ public class test {
 	}
 	
 	
-	@RequestMapping("/mybook")
-	public String mybook() {
-		System.out.println("mybook");
-		
-		return "mybook/mybook_review";
-	}
+//	@RequestMapping("/mybook")
+//	public String mybook() {
+//		System.out.println("mybook");
+//		
+//		return "mybook/mybook_review";
+//	}
 	
 	@RequestMapping("/imgpreview")
 	public String imgpreview() {
@@ -36,26 +36,26 @@ public class test {
 		return "mybook/image_preview";
 	}
 	
-	@RequestMapping("/review_write")
-	public String review_write() {
-		System.out.println("review_write");
-		
-		return "review_write/review_write";
-	}
+//	@RequestMapping("/review_write")
+//	public String review_write() {
+//		System.out.println("review_write");
+//		
+//		return "review_write/review_write";
+//	}
 	
-	@RequestMapping("/taste_main")
-	public String taste_main() {
-		System.out.println("taste_main");
-		
-		return "taste/taste-main";
-	}
+//	@RequestMapping("/taste_main")
+//	public String taste_main() {
+//		System.out.println("taste_main");
+//		
+//		return "taste/taste-main";
+//	}
 	
-	@RequestMapping("/click_playlist")
-	public String click_playlist() {
-		System.out.println("click_playlist");
-		
-		return "taste/click-playlist";
-	}
+//	@RequestMapping("/click_playlist")
+//	public String click_playlist() {
+//		System.out.println("click_playlist");
+//		
+//		return "taste/click-playlist";
+//	}
 	
 	@RequestMapping("/like_playlist")
 	public String like_playlist() {
