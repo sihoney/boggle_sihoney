@@ -85,12 +85,6 @@ public class test {
 		return "taste/playlist";
 	}
 	
-	@RequestMapping("/review")
-	public String review() {
-		System.out.println("review");
-		
-		return "taste/review";
-	}
 	
 	@RequestMapping("/recommend_playlist")
 	public String recommend() {

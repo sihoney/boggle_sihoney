@@ -19,9 +19,6 @@ public class PlaylistVo {
 		this.playlistName = playlistName;
 	}
 
-
-
-
 	public int getPlaylistNo() {
 		return playlistNo;
 	}

@@ -17,27 +17,44 @@
 		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 		<!-- ------nav------ -->
 		<div id="nav" class="clearfix">
-			<ul class="nav nav-tabs">
-				<li role="presentation"><a href="${pageContext.request.contextPath}/mybook">내 서평</a></li>
-				<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
-				<!--세션 아이디와 사이트아이디 같을때-->
-				<li role="presentation"><a href="${pageContext.request.contextPath}/analyze">통계</a></li>
-			</ul>
-			<!-- 세션아이디랑 다를때는
-			      <ul class="nav nav-tabs">
-			          <li role="presentation"><a href="">'유저이름'님의 서평</a></li>
-			          <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
-			      </ul>-->
+			<c:choose>
+				<c:when test="${result eq 'sameUser'}">
+					<ul class="nav nav-tabs">
+						<li role="presentation" class="active"><a
+							href="${pageContext.request.contextPath}/${nickname}">내 서평</a></li>
+						<li role="presentation"><a
+							href="${pageContext.request.contextPath}/${nickname}/tastemain">취향저격</a></li>
+						<!--세션 아이디와 사이트아이디 같을때-->
+						<li role="presentation"><a
+							href="${pageContext.request.contextPath}/analyze">통계</a></li>
+					</ul>
+				</c:when>
+				<c:otherwise>
+
+					<ul class="nav nav-tabs">
+						<li role="presentation" class="active"><a
+							href="${pageContext.request.contextPath}/${nickname}">서평</a></li>
+						<li role="presentation"><a
+							href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
+					</ul>
+
+					<!-- ------nav2------ -->
+					<ul id="nav2" class="nav nav-pills">
+						<li role="presentation"><a
+							href="${pageContext.request.contextPath}/${nickname}/taste_main">my
+								취향</a></li>
+						<li role="presentation"><a
+							href="${pageContext.request.contextPath}/${nickname}/tastereview">좋아요한
+								서평</a></li>
+						<li role="presentation"  class="active"><a
+							href="${pageContext.request.contextPath}/${nickname}/main_book">관심가는
+								책</a></li>
+						<li role="presentation"><a
+							href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
+					</ul>
+				</c:otherwise>
+			</c:choose>
 		</div>
-		<!-- ------nav2------ -->
-		<ul id="nav2" class="nav nav-pills">
-			<!-- 세션아이디와 비교, 다를경우 '이름님의 취향' -->
-			<!-- <li role="presentation" class="active"><a href="">'유저이름'님의 취향</a></li> -->
-			<li role="presentation"><a href="${pageContext.request.contextPath}/taste_main">my 취향</a></li>
-			<li role="presentation"><a href="${pageContext.request.contextPath}/review">좋아요한 서평</a></li>
-			<li role="presentation" class="active"><a href="">관심가는 책</a></li>
-			<li role="presentation"><a href="${pageContext.request.contextPath}/like_playlist">플레이리스트</a></li>
-		</ul>
 		<!--tag nav-->
 		<ul id="nav3" class="nav nav-pills">
 			<li role="presentation" class="active"><a href="">두근두근하는</a></li>
@@ -52,7 +69,7 @@
 		<!--/tag nav-->
 		<div id="likebook">
 			<div>
-				<p id="thumb-text">'김고은'님이 관심가는 책</p>
+				<p id="thumb-text">내가 관심가는 책</p>
 			</div>
 			<div class="gradient">
 				<div class="gallery">

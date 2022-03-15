@@ -86,6 +86,10 @@
     font-size: 20px;
 }
 
+#nav3>li.active>a{
+    background-color: #2699FB;
+}
+
 /*************서평****************/
 
 #reviews{

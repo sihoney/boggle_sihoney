@@ -1,6 +1,8 @@
 package com.javaex.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,8 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.javaex.service.LikeReviewService;
 import com.javaex.service.MybookService;
 import com.javaex.service.UserService;
+import com.javaex.vo.ReviewVo;
 import com.javaex.vo.MybookVo;
 import com.javaex.vo.UserVo;
 
@@ -94,14 +98,6 @@ public class MybookController {
 		return "taste/taste-main";		
 	}
 	
-	//취향저격(좋아요한서평페이지)
-	@RequestMapping("/{nickname}/tastereview")
-	public String tastereview(@PathVariable(value="nickname") String nickname,
-						   HttpSession session, Model model) {
-		
-			
-		return "taste/review";		
-	}
 	
 	
 }
