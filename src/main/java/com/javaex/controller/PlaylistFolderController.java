@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.PlaylistFolderService;
-import com.javaex.vo.BookreviewVo;
+import com.javaex.vo.PlaylistFolderVo;
 
 @Controller
 @RequestMapping("/playlist")
@@ -41,17 +41,49 @@ public class PlaylistFolderController {
 		
 	}
 	
-	/* 해당 플레이리스트 폴더에 서평 추가하기 */
+	/* 플리 모달 페이징+리스트 */
 	@ResponseBody
-	@RequestMapping("/reviewmodalList")
-	public List<BookreviewVo> reviewModalList() {
+	@RequestMapping("/modalListPage")
+	public Map<String, Object> modalListPage(@RequestParam(value = "crtPage", required = false, defaultValue = "1") int crtPage) {
 		
-		System.out.println("Controller.reviewModalList");
-		List<BookreviewVo> reviewListAll = playlistfolderService.ReviewListSelect();
-		System.out.println(reviewListAll);
+		System.out.println("Controller.modalListPage");
+		System.out.println(crtPage);
 		
-		return reviewListAll;
+		//해당페이지의 글 리스트 5개
+		Map<String, Object> playlistMap = playlistfolderService.madalListPage(crtPage);
+		System.out.println(playlistMap);
 		
+		
+		return playlistMap;
 	}
+	
+	
+	/* 플리 모달 검색창 */
+	@ResponseBody
+	@RequestMapping("/reviewSearch")
+	public List<PlaylistFolderVo> reviewSearch(@RequestParam(value="SearchTxt") String searchTxt ) {
+		
+		System.out.println("Controller.reviewSearch");
+		System.out.println(searchTxt);
+		
+		List<PlaylistFolderVo> searchResult = playlistfolderService.getSearchResult(searchTxt);
+		System.out.println("컨트롤러:"+searchResult);
+		
+		
+		return searchResult;
+	}
+	
+	/* 플리 모달 추가 선택 등록 */
+	@ResponseBody
+	@RequestMapping("/addReviews")
+	public String addReviews() {
+		
+		System.out.println("Controller.addReviews");
+		
+		return "";
+	}
+	
+	
+	
 
 }

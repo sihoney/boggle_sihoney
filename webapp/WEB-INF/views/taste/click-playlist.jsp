@@ -15,7 +15,6 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/playlist-click.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/style.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 </head>
 
 <!--header-->
@@ -57,19 +56,19 @@
 		<div id="playlist-cover" class="clearfix">
 			<div class="float-l">
 				<p>${authUser.nickname}님의 플레이리스트</p>
-				<h1 id="playlist-title">${requestScope.playlistVo.playlistCover.playlistName}</h1>
+				<h1 id="playlist-title">${requestScope.playlistVo.playlistCover}</h1>
 			</div>
 			
 			<div id="btn-cover" class="float-r">
-				<button type="button" class="btn btn-default float-r">좋아요<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span></button>
-				<button type="button" class="btn btn-default float-r" onclick="location.href='${pageContext.request.contextPath}/main/reviewmusiclist?playlistNo=${requestScope.playlistVo.playlistCover.playlistNo}';">전체재생</button>
+				<button type="button" class="btn btn-default float-r">좋아요<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span></button>	
+				<button type="button" class="btn btn-default float-r" onclick="location.href = '${pageContext.request.contextPath}/main/playlist?playlistNo='">전체재생</button>
 			</div>
 
 		</div>
 		<!--cover-->
 		
 		<div id="middle-content">
-			<div id="playlist-add">
+			<div id="playlist-add" data-keyboard="false" data-backdrop="static">
 				<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 				<span>플레이리스트 서평 추가</span>
 			</div>
@@ -166,19 +165,19 @@
 	<!--wrap-->
 
 	<!-- 서평 추가 모달 -->
-	<div id="review-add" class="modal fade" role="dialog" style="z-index: 1600;">
+	<div id="review-add" class="modal fade" role="dialog" style="z-index: 1600;" >
 		<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="modal-container">
 						<div class="modal-header">
-							<a href=""> <i class="fa-solid fa-arrow-left"></i> 뒤로가기
-							</a>
+							<a class="modal-close">뒤로가기</a>
 							<div class="input-box">
-								<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-								<input type="text" placeholder="키워드를 검색해 주세요"> <i class="fa-solid fa-magnifying-glass"></i>
-								<button id="btn-search" type="button" class="btn">검색</button>
+								<!-- <form action="reviewSearch" method="get"> -->
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									<input id="reviewSearch" type="text" placeholder="키워드를 검색해 주세요(Enter)" name="SearchTxt" value=""> <i class="fa-solid fa-magnifying-glass"></i>
+								<!-- </form> -->
 							</div>
 						</div>
 						<div class="modal-options">
@@ -190,18 +189,15 @@
 								<!-- 리스트 출력될 곳 -->
 							</ul>
 						</div>
+						
+						<!-- paging -->
 						<nav class="paging" aria-label="Page navigation example">
-							<ul class="pagination">
-								<li class="page-item"><a class="page-link" href="" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-								</a></li>
-								<li class="page-item"><a class="page-link" href="">1</a></li>
-								<li class="page-item"><a class="page-link" href="">2</a></li>
-								<li class="page-item"><a class="page-link" href="">3</a></li>
-								<li class="page-item"><a class="page-link" href="" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-								</a></li>
+							<ul id="addModal-pagination" class="pagination">
+								<!-- 페이징 번호 -->
 							</ul>
 						</nav>
-
+						<!-- paging -->
+						
 						<button class="addReviewBtn">선택한 서평 담기</button>
 					</div>
 
@@ -213,5 +209,6 @@
 </body>
 
 <script src="${pageContext.request.contextPath}/asset/js/more.js"></script>
+<script src="${pageContext.request.contextPath}/asset/js/playlistFolder.js"></script>
 
 </html>
