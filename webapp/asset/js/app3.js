@@ -872,7 +872,7 @@ function render(item) {
 	
 	if(logStatus === "login") {
 
-		a.setAttribute("href", urlPath + "/bookdetail?bookNo=" + item.bookNo)		
+		a.setAttribute("href", urlPath + "/bookdetail?bookNo=" + item.bookNo + "&userNo=" + userNo)		
 	}
 	
 	a.classList.add("reviewLink")
