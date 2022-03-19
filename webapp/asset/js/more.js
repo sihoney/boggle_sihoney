@@ -93,54 +93,6 @@ $('#playlist-add').on('click', function(){
 
 })
 
-//리스트 그리기
-function fetchList(){
-	
-	$.ajax({
-		url : "reviewModalList",
-		type : "post",
-		
-		dataType : "json",
-		success : function(reviewList){
-		/*성공시 처리해야될 코드 작성*/
-			console.log(reviewList);
-			
-			//객체 리스트 돌리기(화면 출력)
-			for(var i = 0; i<reviewList.length; i++){
-				//그리기
-				render(reviewList[i]);
-			}
-		
-		},
-		error : function(XHR, status, error) {
-		console.error(status + " : " + error);
-		}
-		
-	});
-	
-	
-}
-
-
-function render(reviewVo){
-	
-	var str = '';
-	str +='	<li> ';
-	str +='		<div class="review-card"> ';
-	str +=' 		<p class="bookname">'+reviewVo.bookTitle+'</p> ';
-	str +=' 		<p class="review-content">'+reviewVo.reviewContent+'</p> ';
-	str +=' 		<span class="tag">#'+reviewVo.emoName+'</span> ';
-	str +=' 		<button class="checkBtn"> ';
-	str +=' 			<i class="fa-solid fa-circle-check"></i> ';
-	str +=' 		</button> ';
-	str +=' 	</div> ';
-	str +=' </li> ';
-	
-	$('#reviewAll').append(str);
-
-}
-
-
 
 // 더보기, 서평 공유하기
 $('#shr_review').on('click',function(){

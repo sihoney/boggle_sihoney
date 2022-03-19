@@ -32,7 +32,7 @@
 					<!-- 세션아이디랑 다를때는 사이트주소의 아이디와 같은 유저의 데이터들 불러오기-->
 					<ul class="nav nav-tabs">
 						<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/${nickname}">남 서평</a></li>
-						<li role="presentation"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
+						<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/taste_main">취향저격</a></li>
 					</ul>
 				</c:otherwise>
 			</c:choose>
@@ -73,50 +73,10 @@
 							</ul>
 						</div>
 					</div>
-					<c:if test="${result eq 'sameUser'}">
+					<!-- 서평리스트 -->
+					<c:if test="${result eq nickname }">
 						<div id="rvlist"></div>
 					</c:if>
-					
-					<!-- 서평 리스트 -->
-					<!-- 
-               
-	               <c:forEach items="${mbList }" var="vo">
-	                  <div id="reviews">
-	                     <div id="reviews-header">
-	                        <div class="left">
-	                           <p>
-	                              <a href="${pageContext.request.contextPath}/bookdetail?bookNo=${vo.bookNo}">${vo.bookTitle }</a>
-	                           </p>
-	                        </div>                                                
-	                        <div class="right">
-	                           <a>수정</a> <a>삭제</a>
-	                        </div>                      
-	                     </div>
-	                     	
-	                     <div id="reviews-content">
-	                        <p>${vo.reviewContent }</p>
-	                     </div>
-	                     <div id="reviews-footer">
-	                        <div class="left">
-	                           <span id="heart" data-reviewno="${vo.reviewNo }" class="like glyphicon glyphicon-heart-empty" aria-hidden="true"></span> <span>${vo.likecnt }</span> <span>${vo.reviewDate }</span>
-	                        </div>
-	                        <div class="right">
-	                           <div class="dropup">
-	                              <a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 더보기 <span class="caret"></span>
-	                              </a>
-	                              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-	                                 <li role="presentation"><a id="add_pli" role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
-	                                 <li role="presentation" class="divider"></li>
-	                                 <li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
-	                                 <li role="presentation" class="divider"></li>
-	                                 <li role="presentation"><a role="menuitem" tabindex="-1" target="_blank" href="${pageContext.request.contextPath}/imgpreview">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
-	                                 </a></li>
-	                              </ul>
-	                           </div>
-	                        </div>
-	                     </div>
-	                  </div>
-	               </c:forEach> -->
 					<!-- 서평리스트 -->
 				</div>
 				<!-- //col-xs-8 -->
@@ -309,8 +269,8 @@
 				//포함되어있으면 true      
 			    let isExist = document.getElementById('latest-order').classList.contains('txt-b');  
 			    console.log(isExist);				
-			    console.log(no);			 
-			   
+			    console.log(no);
+			    
 			  	//좋아요인경우
 			   	if (likeok.likecheck == 0) {	
 			   		
@@ -324,7 +284,6 @@
 				    $this.next().html(likeok.likecnt+1);	
 				    
 				  
-				  	
 			   } else {
 				   
 			       console.log("좋아요취소");
@@ -333,44 +292,6 @@
 			       
 			       $this.next().html(likeok.likecnt-1);
 			   }
-			   
-			    
-			    /*
-			   	//좋아요인경우
-			   	if (likeok == 0) {	
-			   		
-				    console.log("좋아요");
-								  
-				  	if(isExist == true){
-				  		
-				  		//$("r"+no).remove();
-				  		//print(no);
-				  		
-				  		
-				  		//초기화 후 그리기
-						$("#rvlist").empty();
-						fetchList();
-				  		
-				  	}else{
-				  		//초기화 후 그리기
-						$("#rvlist").empty();
-						popularList();
-				  	}	
-			   } else {
-				   
-			       console.log("좋아요취소");
-			      
-			       if(isExist == true){
-				  		//초기화 후 그리기
-						$("#rvlist").empty();
-						fetchList();	
-				  	}else{
-				  		//초기화 후 그리기
-						$("#rvlist").empty();
-						popularList();
-				  	}			       
-			   }
-			   */  
 			    
 
 			},
@@ -388,25 +309,25 @@
 		var str = '';
 		str += '	<div class="reviews" id=r'+mybookVo.reviewNo+'> ';
 		str += '		<div class="reviews-header"> ';
-		str += ' 		<div class="left"> ';
-		str += ' 			<p><a href="${pageContext.request.contextPath}/bookdetail?bookNo='+ mybookVo.bookNo + '">' + mybookVo.bookTitle + '</a></p> ';
+		str += ' 			<div class="left"> ';
+		str += ' 				<p><a href="${pageContext.request.contextPath}/bookdetail?bookNo='+ mybookVo.bookNo + '">' + mybookVo.bookTitle + '</a></p> ';
+		str += ' 			</div> ';
 		str += ' 		</div> ';
-		str += ' 		<div class="right"> ';
-		str += ' 			<a>수정</a> <a>삭제</a> ';
+		str += ' 		<div id="reviewer">	 ';
+		str += ' 			<a href="${pageContext.request.contextPath}/'+mybookVo.nickname+'">'+ mybookVo.nickname + '</a> ';
 		str += ' 		</div> ';
-		str += ' 	</div> ';
-		str += ' 	<div class="reviews-content"> ';
-		str += ' 		<p>' + mybookVo.reviewContent + '</p> ';
-		str += ' 		<span class="label label-default">'+mybookVo.emoName+'</span> ';
-		str += ' 	</div> ';
-		str += ' 	<div class="reviews-footer"> ';
-		str += ' 		<div class="left likecontrol"> ';
+		str += ' 		<div class="reviews-content"> ';
+		str += ' 			<p>' + mybookVo.reviewContent + '</p> ';
+		str += '	 		<span class="label label-default">'+mybookVo.emoName+'</span> ';
+		str += ' 		</div> ';
+		str += ' 		<div class="reviews-footer"> ';
+		str += ' 			<div class="left likecontrol"> ';
 		if(mybookVo.likecheck == 0){
-	         str += ' <span id="heart" data-reviewno="'+mybookVo.reviewNo+'" class="like glyphicon glyphicon-heart-empty" aria-hidden="true"></span> <span class="likecnt" data-likecnt="'+mybookVo.likecnt+'">'+ mybookVo.likecnt+ '</span> <span>'+ mybookVo.reviewDate+ '</span> ';
+	    str += ' <span id="heart" data-reviewno="'+mybookVo.reviewNo+'" class="like glyphicon glyphicon-heart-empty" aria-hidden="true"></span> <span class="likecnt" data-likecnt="'+mybookVo.likecnt+'">'+ mybookVo.likecnt+ '</span> <span>'+ mybookVo.reviewDate+ '</span> ';
 	    }else{
-	         str += ' <span id="heart" data-reviewno="'+mybookVo.reviewNo+'" class="like glyphicon glyphicon-heart" aria-hidden="true"></span> <span class="likecnt" data-likecnt="'+mybookVo.likecnt+'">'+ mybookVo.likecnt+ '</span> <span>'+ mybookVo.reviewDate+ '</span> ';
+	    str += ' <span id="heart" data-reviewno="'+mybookVo.reviewNo+'" class="like glyphicon glyphicon-heart" aria-hidden="true"></span> <span class="likecnt" data-likecnt="'+mybookVo.likecnt+'">'+ mybookVo.likecnt+ '</span> <span>'+ mybookVo.reviewDate+ '</span> ';
 	    }		
-		str += ' 		</div> ';
+		str += ' 			</div> ';
 		str += ' 		<div class="right"> ';
 		str += ' 			<div class="dropup"> ';
 		str += ' 				<a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 더보기 <span class="caret"></span></a> ';

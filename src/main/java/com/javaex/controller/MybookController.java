@@ -7,9 +7,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.MybookService;
@@ -29,10 +30,11 @@ public class MybookController {
    private UserService userService;
    
    
-   //서재(서평페이지)
+   //내서재
    @RequestMapping("/{nickname}")
    public String myreview(@PathVariable(value="nickname") String nickname,
                      HttpSession session, Model model) {
+	   
       System.out.println("mybook");
       
       //세션의 닉네임
@@ -52,17 +54,6 @@ public class MybookController {
          //세션아이디의 유저넘버
          int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo(); 
          
-         
-         //서평리스트출력
-         //유저넘버를 주면 해당 유저가 작성한 리뷰를 불러오는 메소드
-         System.out.println("유저넘버"+userNo+"의 리스트");
-         
-         List<MybookVo> mbList =  mybookService.list(userNo);
-         
-         //모델로 보내기
-         model.addAttribute("mbList", mbList);         
-         
-         
          return "mybook/mybook_review";
          
       }else {
@@ -78,67 +69,154 @@ public class MybookController {
          UserVo otherUser = userService.getUser(nickname);
          int userNo = otherUser.getUserNo();
          
-         //유저넘버를 주면 해당 유저가 작성한 리뷰를 불러오는 메소드
-         System.out.println("유저넘버"+userNo+"의 리스트");
-         
-         List<MybookVo> mbList =  mybookService.list(userNo);
-         
-         //모델로 보내기
-         model.addAttribute("mbList", mbList);
-         
-         
-         return "mybook/mybook_review";
+        
+         return "mybook/otherbook_review";
       }
       
+      
+//      else if(nickname == null){
+//    	  System.out.println("세션만료 로그인필요");
+//    	  
+//    	  return "user/loginForm";
+//      }
    }
    
-   /*
+   
    //리스트 출력 기능
    @ResponseBody  //리스폰스바디에 붙여 보낼게!
    @RequestMapping("/{nickname}/list")
    public List<MybookVo> list(@PathVariable(value="nickname") String nickname,
-                           HttpSession session, Model model) {
+                           HttpSession session, Model model,
+                           @RequestParam("sort") String sort) {
       System.out.println("mybook.list");
       
       //세션의 닉네임
       String yours = ((UserVo)session.getAttribute("authUser")).getNickname();
-            
-      //세션아이디랑 지금 블로그닉네임이 같니?
-      if(nickname.equals(yours)) {
-         
-         //세션아이디의 유저넘버
-         int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
-
-         //서평리스트출력
-         //유저넘버를 주면 해당 유저가 작성한 리뷰를 불러오는 메소드
-         System.out.println("유저넘버"+userNo+"의 리스트");
-         
-         List<MybookVo> mbList = mybookService.list(userNo);
-      
-         return mbList;
-         
+        
+      if(sort.equals("latest")) {
+    	//세션아이디랑 지금 블로그닉네임이 같니?
+	      if(nickname.equals(yours)) {
+	         
+	         //세션아이디의 유저넘버
+	         int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
+	
+	         //서평리스트출력
+	         //유저넘버를 주면 해당 유저가 작성한 리뷰를 불러오는 메소드
+	         System.out.println("유저넘버"+userNo+"의 최신 리스트");
+	         
+	         List<MybookVo> mbList = mybookService.list(userNo);
+	         
+	         //중복체크 및 값 set해서 List 업데이트, 지금 로그인한 유저
+	         for(int i=0; i<mbList.size(); i++) {
+	        	 
+	        	 int reviewNo = mbList.get(i).getReviewNo();
+	        	 
+	        	 //0일시 좋아요 안 한 상태, 1일시 좋아요 한 상태
+	        	 MybookVo checklike = new MybookVo(reviewNo, userNo);
+		         int likecheck = mybookService.likeok(checklike);
+		         
+		         mbList.get(i).setLikecheck(likecheck);
+	        	 
+	         }
+	            
+	         return mbList;
+	         
+	      }else {
+	    	  
+	    	 //로그인한 유저넘버
+	    	 int nowuserNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
+	                  
+	         //지금 서재 닉네임을 주면 유저넘버, 닉네임, 프로필이미지를 주는 메소드 사용
+	         UserVo otherUser = userService.getUser(nickname);
+	         int userNo = otherUser.getUserNo();
+	         
+	         //유저넘버를 주면 해당 유저가 작성한 리뷰를 불러오는 메소드
+	         System.out.println("유저넘버"+userNo+"의 최신 리스트");
+	         
+	         List<MybookVo> mbList = mybookService.list(userNo);
+	         
+	         //중복체크 및 값 set해서 List 업데이트
+	         for(int i=0; i<mbList.size(); i++) {
+	        	 
+	        	 int reviewNo = mbList.get(i).getReviewNo();
+	        	 
+	        	 //0일시 좋아요 안 한 상태, 1일시 좋아요 한 상태
+	        	 MybookVo checklike = new MybookVo(reviewNo, nowuserNo);
+		         int likecheck = mybookService.likeok(checklike);
+		         
+		         mbList.get(i).setLikecheck(likecheck);
+	        	 
+	         }
+	         
+	         return mbList;
+	      }  
       }else {
-                  
-         //지금 서재 닉네임을 주면 유저넘버, 닉네임, 프로필이미지를 주는 메소드 사용
-         UserVo otherUser = userService.getUser(nickname);
-         int userNo = otherUser.getUserNo();
-         
-         //유저넘버를 주면 해당 유저가 작성한 리뷰를 불러오는 메소드
-         System.out.println("유저넘버"+userNo+"의 리스트");
-         
-         List<MybookVo> mbList = mybookService.list(userNo);
-         
-         return mbList;
-      }
-      
+    	  
+    	//세션아이디랑 지금 블로그닉네임이 같니?
+          if(nickname.equals(yours)) {
+             
+             //세션아이디의 유저넘버
+             int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
+
+             //서평리스트출력
+             //유저넘버를 주면 해당 유저가 작성한 리뷰를 불러오는 메소드
+             System.out.println("유저넘버"+userNo+"의 인기 리스트");
+             
+             List<MybookVo> popularlist = mybookService.popularlist(userNo);
+             
+             //중복체크 및 값 set해서 List 업데이트
+	         for(int i=0; i<popularlist.size(); i++) {
+	        	 
+	        	 int reviewNo = popularlist.get(i).getReviewNo();
+	        	 
+	        	 //0일시 좋아요 안 한 상태, 1일시 좋아요 한 상태
+	        	 MybookVo checklike = new MybookVo(reviewNo, userNo);
+		         int likecheck = mybookService.likeok(checklike);
+		         
+		         popularlist.get(i).setLikecheck(likecheck);
+	        	 
+	         }
+             
+          
+             return popularlist;
+             
+          }else {
+             
+        	  //로그인한 유저넘버
+ 	    	 int nowuserNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
+        	  
+             //지금 서재 닉네임을 주면 유저넘버, 닉네임, 프로필이미지를 주는 메소드 사용
+             UserVo otherUser = userService.getUser(nickname);
+             int userNo = otherUser.getUserNo();
+             
+             //유저넘버를 주면 해당 유저가 작성한 리뷰를 불러오는 메소드
+             System.out.println("유저넘버"+userNo+"의 인기 리스트");
+             
+             List<MybookVo> popularlist = mybookService.popularlist(userNo);
+             
+             //중복체크 및 값 set해서 List 업데이트
+	         for(int i=0; i<popularlist.size(); i++) {
+	        	 
+	        	 int reviewNo = popularlist.get(i).getReviewNo();
+	        	 
+	        	 //0일시 좋아요 안 한 상태, 1일시 좋아요 한 상태
+	        	 MybookVo checklike = new MybookVo(reviewNo, nowuserNo);
+		         int likecheck = mybookService.likeok(checklike);
+		         
+		         popularlist.get(i).setLikecheck(likecheck);
+	        	 
+	         }
+             
+             return popularlist;
+          }   
+      }      
    }
-   */
    
    //좋아요버튼을 눌렀을때의 기능
    @ResponseBody
    @RequestMapping("/like")
-   public String like(HttpSession session,
-                  @ModelAttribute MybookVo clickReview) {
+   public MybookVo like(HttpSession session,
+		   		   @RequestBody MybookVo clickReview) {
       
       //세션아이디의 유저넘버
       int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
@@ -147,19 +225,35 @@ public class MybookController {
       
       System.out.println("로그인한 유저 넘버 : " + userNo);
       System.out.println("클릭한 서평 넘버 : " + clickNo);
+      
+      MybookVo checklike = new MybookVo(clickNo, userNo);
 
-      //일단 중복이 있는지 부터 확인하자, 해당유저가 이 서평을 좋아요했는지 안했는지 알아보기
-//         int likeok = mybookService.likeok(userNo);
-//      if(//좋아요테이블에 해당서평과 유저넘버가 이미 존재하는경우가 아닐때 ok) {
-//         //세션아이디의 유저넘버 넣어주면 좋아요 반영해주고 좋아요 수도 되돌려주는 메소드
-//         MybookVo likeVo = mybookService.like(userNo);
-//      }else {
-//         //좋아요를 아직 안한경우
+      //해당유저가 좋아요를 했는지 안했는지, 좋아요가 몇갠지 불러오기.
+      MybookVo likeok = mybookService.likecnt(checklike);
       
+      System.out.println("좋아요 갯수 : "+likeok.getLikecnt());
+      System.out.println("좋아요 여부 확인 : "+likeok.getLikecheck());
       
-      //유저넘버가져오기
-      
-      return "";
+      //좋아요를 안한경우
+      if(likeok.getLikecheck() == 0) {
+         
+		 //review_user table에 인서트
+    	 mybookService.like(checklike);
+	     
+	     System.out.println(checklike.getReviewNo()+"번 서평 좋아요");
+	     
+	     return likeok;
+	     
+      //좋아요를 이미 한 경우
+      }else {
+    	  
+         //review_user에서 삭제
+    	 mybookService.dislike(checklike); 
+    	  
+    	 System.out.println(checklike.getReviewNo()+"번 서평 좋아요 취소");
+    	 
+    	 return likeok;
+      }
    }
 
    //취향저격(main페이지)
@@ -167,6 +261,8 @@ public class MybookController {
    public String tastemain(@PathVariable(value="nickname") String nickname,
                      HttpSession session, Model model) {
       
+	  //좋아요 리스트 하나만 출력해주는 메소드
+	   
          
       return "taste/taste-main";      
    }

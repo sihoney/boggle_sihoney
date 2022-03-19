@@ -43,7 +43,7 @@ public class PlaylistFolderController {
 	
 	/* 해당 플레이리스트 폴더에 서평 추가하기 */
 	@ResponseBody
-	@RequestMapping("/reviewModalList")
+	@RequestMapping("/reviewmodalList")
 	public List<BookreviewVo> reviewModalList() {
 		
 		System.out.println("Controller.reviewModalList");

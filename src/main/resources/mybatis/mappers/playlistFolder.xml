@@ -45,9 +45,10 @@
 	</select>
 	
 	<!-- 플레이리스트 커버 -->
-	<select id="playlistCover" parameterType="map" resultType="String">
+	<select id="playlistCover" parameterType="map" resultType="PlaylistFolderVo">
 	 	<![CDATA[
-			select playlist_name
+			select playlist_name playlistName,
+					playlist_no playlistNo
 			from playlist
 			where user_no = #{userNo}
 			and playlist_no = #{playlistNo}
