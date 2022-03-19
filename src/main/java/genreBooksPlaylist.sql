@@ -108,21 +108,53 @@ increment by 1
 start with 1
 nocache;
 
+delete from user_playlist;
+delete from playlist_review;
+delete from playlist;
+
+select * from emotion;
+////////////////////////////////////
+--#playlist_name dataType 변경--
+////////////////////////////////////
+
+--#데이터 타입 변경(글자수 변경)
+alter table playlist 
+modify playlist_name varchar2(100 char);
+
+--#테이블 정보 삭제--
+delete from playlist;
+
+--#시퀀스 삭제--
+drop sequence seq_playlist_no;
+
+--#시퀀스 생성
+create sequence seq_playlist_no
+increment by 1
+start with 1
+nocache;
+
 --#insert 
 insert into playlist
-values(seq_playlist_no.nextval, 1, sysdate, '와 이 노래가 벌써... 세월 무엇?');
+values(seq_playlist_no.nextval, 1, sysdate, '와 이 노래가 벌써... 세월 무엇?', 1);
 
 insert into playlist
-values(seq_playlist_no.nextval, 2, sysdate, '세련된 카페 안, 나 그리고 커피와 음악');
+values(seq_playlist_no.nextval, 2, sysdate, '세련된 카페 안, 나 그리고 커피와 음악', 2);
 
 insert into playlist
-values(seq_playlist_no.nextval, 3, sysdate, '이거 참 시티팝 듣기 딱 좋은 날씨네');
+values(seq_playlist_no.nextval, 3, sysdate, '이거 참 시티팝 듣기 딱 좋은 날씨네', 3);
 
 insert into playlist
-values(seq_playlist_no.nextval, 4, sysdate, '포근한 봄맞이, 달콤한 프렌치 팝');
+values(seq_playlist_no.nextval, 4, sysdate, '포근한 봄맞이, 달콤한 프렌치 팝', 4);
 
 insert into playlist
-values(seq_playlist_no.nextval, 2, sysdate, '힙하게 시작하는 하루!');
+values(seq_playlist_no.nextval, 2, sysdate, '힙하게 시작하는 하루!', 5);
 
 --#전체 출력--
 select * from playlist;
+
+////////////////////////////
+select playlist_name,
+       playlist_no,
+       emo_name
+from playlist, emotion
+where playlist.emo_no = emotion.emo_no;

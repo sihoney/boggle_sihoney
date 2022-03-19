@@ -389,7 +389,7 @@
 		str += '	<div class="reviews" id=r'+mybookVo.reviewNo+'> ';
 		str += '		<div class="reviews-header"> ';
 		str += ' 		<div class="left"> ';
-		str += ' 			<p><a href="${pageContext.request.contextPath}/bookdetail?bookNo='+ mybookVo.bookNo + '">' + mybookVo.bookTitle + '</a></p> ';
+		str += ' 			<p><a href="${pageContext.request.contextPath}/bookdetail?bookNo='+ mybookVo.bookNo + '&userNo='+mybookVo.userNo+'">' + mybookVo.bookTitle + '</a></p> ';
 		str += ' 		</div> ';
 		str += ' 		<div class="right"> ';
 		str += ' 			<a>수정</a> <a>삭제</a> ';
@@ -415,7 +415,7 @@
 		str += ' 					<li role="presentation" class="divider"></li> ';
 		str += ' 					<li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li> ';
 		str += ' 					<li role="presentation" class="divider"></li> ';
-		str += ' 					<li role="presentation"><a role="menuitem" tabindex="-1" target="_blank" href="${pageContext.request.contextPath}/imgpreview">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li> ';
+		str += ' 					<li role="presentation"><a role="menuitem" tabindex="-1" target="_blank" href="${pageContext.request.contextPath}/view/'+mybookVo.reviewNo+'">이미지 미리보기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li> ';
 		str += ' 				</ul> ';
 		str += ' 			</div> ';
 		str += ' 		</div> ';
