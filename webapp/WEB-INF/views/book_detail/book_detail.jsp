@@ -42,69 +42,32 @@
                         </div>
                         <div id="btn_review">
                             <button type="button" class="btn blue-2 font-color-w " onclick="window.open('${requestScope.bookMap.bookVo.bookUrl}')">알라딘 북스</button>
-                            <button type="button" class="btn btn-default">관심가는 책+</button>
-                            <!-- 관심가는책 빼기
-                            <button type="button" class="btn btn-default">관심가는 책-</button> -->
+
+							<!-- 북마크 버튼 -->
+							<div id="bookmark" data-userno="${authUser.userNo}" data-bookno="${bookMap.bookVo.bookNo}">
+	                       		
+                       		</div>
+							<!-- 북마크 버튼 -->
+							
                         </div>
                     </div>
-                    <button id="btn_write" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/review_write';">이 책 서평 쓰기</button>
+                    <button id="btn_write" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/reviewWrite?bookNo=';">이 책 서평 쓰기</button>
                 </div>
             </div>
 
             <div class="reviewVo" class="clearfix">
                 <div id="list" class="clearfix">
-                    <ul>
-                        <li><a class="latest-order"><span>최신순</span></a></li>
-                        <li><a class="best-order"><span>인기순</span></a></li>
+                    <ul id="listing" data-bookno="${bookMap.bookVo.bookNo}" data-userno="${authUser.userNo}">
+                        <li><a id="latest-order" class=""><span>최신순</span></a></li>
+                        <li><a id="best-order" class=""><span>인기순</span></a></li>
                     </ul>
                 </div>
 
-				<c:forEach items="${requestScope.bookMap.reviewList}" var="reviewVo">
+				<!-- 서평 리스트 vo-->
+				<div id="reviewlistVo">
+
+				</div>
                 <!-- 서평 리스트 vo-->
-                <div class="jumbotron">
-                    <div id="review_first">
-                        <h3>${reviewVo.bookTitle}</h3>
-
-                        <!-- 자기글에만 수정 삭제 노출 -->
-                        <a href="" class="review_modify">삭제</a>
-                        <a href="" class="review_modify">수정</a>
-
-                        <a href="${pageContext.request.contextPath}/${reviewVo.nickName}" class="review_nick">${reviewVo.nickName}<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
-
-                        <div class="multiline-ellipsis">${reviewVo.reviewContent}</div>
-                    </div>
-
-                    <div id="review_second">
-                        <!-- 좋아요 활성화 -->
-                        <span id="btn_like" class="glyphicon glyphicon-heart icon-success" aria-hidden="true"></span>
-                        <!-- 좋아요 활성화 -->
-
-                        <!-- 좋아요 비활성화
-                        <span id="btn_like" class="glyphicon glyphicon-heart-empty icon-success" aria-hidden="true"></span> -->
-
-                        <span class="review_like">16.2k</span><span class="review_like">${reviewVo.reviewDate}</span>
-                        <span id="tag_btn">#${reviewVo.emoName}</span>
-                        <!-- 더보기 클릭시 모달창 오픈 -->
-                        <!-- <button type="button" class="btn btn-default btn-sm">+더보기</button> -->
-                        
-                        <div class="dropup float-r">
-                            <a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                + 더보기
-                                <!-- <span class="caret"></span> -->
-                            </a>
-                            <ul class="dropdown-menu radius-15" role="menu" aria-labelledby="dropdownMenu2">
-                                <li role="presentation"><a id="add_pli" role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><li role="presentation"><a id="save_img" role="menuitem" target="_blank" tabindex="-1" href="${pageContext.request.contextPath}/imgpreview">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
-                            </ul>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- 서평 리스트 vo-->
-				</c:forEach>
                
             </div>
 
@@ -169,7 +132,8 @@
         </div>
          
     </body>
-
+    
+	<script src="${pageContext.request.contextPath}/asset/js/bookdetail.js"></script>
     <script src="${pageContext.request.contextPath}/asset/js/more.js"></script>
-
+	
 </html>

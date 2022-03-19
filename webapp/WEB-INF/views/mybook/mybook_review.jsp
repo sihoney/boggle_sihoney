@@ -389,7 +389,7 @@
 		str += '	<div class="reviews" id=r'+mybookVo.reviewNo+'> ';
 		str += '		<div class="reviews-header"> ';
 		str += ' 		<div class="left"> ';
-		str += ' 			<p><a href="${pageContext.request.contextPath}/bookdetail?bookNo='+ mybookVo.bookNo + '">' + mybookVo.bookTitle + '</a></p> ';
+		str += ' 			<p><a href="${pageContext.request.contextPath}/bookdetail?bookNo='+ mybookVo.bookNo + '&userNo='+mybookVo.userNo+'">' + mybookVo.bookTitle + '</a></p> ';
 		str += ' 		</div> ';
 		str += ' 		<div class="right"> ';
 		str += ' 			<a>수정</a> <a>삭제</a> ';

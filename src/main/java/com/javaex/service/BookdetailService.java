@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.javaex.dao.BookdetailDao;
 import com.javaex.vo.BookdetailVo;
-import com.javaex.vo.ReviewVo;
+import com.javaex.vo.BookreviewVo;
 
 @Service
 public class BookdetailService {
@@ -16,7 +16,7 @@ public class BookdetailService {
 	private BookdetailDao bookdetailDao;
 
 	/* 해당 책 서평 리스트 */
-	public List<ReviewVo> getReviewList(String bookNo) {
+	public List<BookreviewVo> getReviewList(String bookNo) {
 
 		System.out.println("Service.getReviewList");
 		return bookdetailDao.getReviewList(bookNo);
@@ -39,5 +39,56 @@ public class BookdetailService {
 		
 		return getCount;
 	}
+	
+	/* 로딩 북마크 체크 */
+	public String bookmarkCheck(String bookNo, String userNo) {
+		
+		System.out.println("Service.bookmarkCheck");
+		int bookmarkCheck = bookdetailDao.bookmarkCheck(bookNo,userNo);
+		
+		if(bookmarkCheck == 0) {
+			return "true";
+		}else if(bookmarkCheck == 1){
+			return "false";
+		}else {
+			return "error";
+		}
+
+	}
+	
+	/* 북마크 추가*/ 
+	public String bookmarkInsert(String userNo, String bookNo) {
+		
+		System.out.println("Service.bookmark");
+		//북마크 추가 
+		int addCount = bookdetailDao.bookmarkInsert(userNo,bookNo);
+		
+		/*-로 화면 변경되어야함*/
+		String addResult = "true";
+		if(addCount == 1) {
+			addResult = "false";
+		}
+		
+		return addResult;
+	}
+	
+	
+	/* 북마크 제거 */
+	public String bookmarkDelete(String userNo, String bookNo) {
+		
+		System.out.println("Service.bookmarkDelete");
+		int deleteCount = bookdetailDao.bookmarkDelete(userNo,bookNo);
+		
+		/* +로 화변 변경되어야함 */
+		String deleteResult = "false";
+		if(deleteCount == 1) {
+			deleteResult = "true";
+		}
+		
+		return deleteResult;
+		
+	}
+	
+	
 
 }

@@ -49,10 +49,20 @@
     
 }
 
-#btn_review>button {
+#btn_review>button{
     padding: 10px 40px 10px 40px;
     margin: 5px;
     border-radius: 10px;
+}
+
+#btn_review>button>div>botton{
+    padding: 10px 40px 10px 40px;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+#bookmark {
+	display: inline-block;
 }
 
 #btn_write {
@@ -244,7 +254,6 @@
     border-bottom-width: 2px;
     border-bottom-color: #e4e4e4;
 }
-
 
 /* --------------footer------------- */
 #footer {

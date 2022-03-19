@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="bookdetail">
-
+<!-- 해당 책 서평 리스트 출력(최신순) -->
 <!-- <select id="" parameterType="" resultType="">
  	<![CDATA[
 
@@ -19,7 +19,8 @@
 			        b.book_title bookTitle,
 			        r.nickname nickName,
 			        to_char(r.review_date, 'yyyy/mm/dd') reviewDate,
-			        r.review_content reviewContent
+			        r.review_content reviewContent,
+			        r.user_no userNo
 			from   (select  r.review_no,
 			                r.book_no,
 			                e.emo_no,
@@ -63,6 +64,38 @@
 		]]>
 	</select>
 	
+	
+	<!-- 로딩시 북마크 체크 -->
+	<select id="bookmarkCheck" parameterType="map" resultType="int">
+	 	<![CDATA[
+			select count(book_user_no)
+			from book_user
+			where user_no = #{userNo}
+			and book_no = #{bookNo}
+		]]>
+	</select>
+	
+	
+	<!-- 북마크 추가 -->
+	<insert id="bookmarkInsert" parameterType="map">
+	 	<![CDATA[
+			insert into book_user
+			values (seq_book_user_no.nextval,
+					#{bookNo},
+					#{userNo},
+					sysdate
+					)
+		]]>
+	</insert>
+	
+	<!-- 북마크 제거 -->
+	<delete id="bookmarkDelete" parameterType="map">
+	 	<![CDATA[
+			delete from book_user
+			where user_no = #{userNo}
+			and book_no = #{bookNo}
+		]]>
+	</delete>
 	
 	
 	
