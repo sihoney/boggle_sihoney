@@ -27,8 +27,7 @@ public class MainController {
 		
 		return "main/main";
 	}
-	
-	// emotion tag 리스트 가져오기
+
 	@ResponseBody
 	@RequestMapping("/getemotion")
 	public List<Map<String, Object>> getEmotion() {
@@ -38,13 +37,34 @@ public class MainController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/reviewListByEmo") //reviemusiclist?playlistNo=
-	public Map<String, Object> getReviewListByEmo(@RequestParam(value="emoNo", required=false) Integer emoNo,
-												  @RequestParam(value="playlistNo", required=false) Integer playlistNo) {
-		System.out.println("MainController > getReviewListByEmo()");
-		// defaultValue=Math.ramdom() 으로 디폴트 플리 설정해도 좋을 것 같다
+	@RequestMapping("/reviewmusiclist") 
+	public Map<String, Object> getReviewListByEmo(@RequestParam(value="emoNo", required=false) String emoNo,
+												  @RequestParam(value="playlistNo", required=false) Integer playlistNo,
+												  @RequestParam(value="userNo", required=false) String userNo) {
+		System.out.println("MainController > getReviewList()");
+
+		System.out.println("userNo: " + userNo);
+		System.out.println("emoNo: " + emoNo);
+		System.out.println("plyNo: " + playlistNo);
+
+		if(emoNo == null) {
+			emoNo = "null";
+		}
 		
-		return mainService.getReviewListByEmo(emoNo, playlistNo);
+		Integer emoNoInt = null;
+		if( !"null".equals(emoNo) ) {
+			System.out.println("emoNo은 null이 아닙니다.");
+			emoNoInt = Integer.parseInt(emoNo);
+		}
+
+		Integer userNoInt = null;
+		if( !userNo.equals("undefined") && !userNo.equals("null") ) {
+			System.out.println("userNo는 null 또는 undefined 이 아닙니다");
+			userNoInt = Integer.parseInt(userNo);
+		} 
+
+		return mainService.getReviewListByEmo(userNoInt, emoNoInt, playlistNo);
+		
 	}
 	
 	@ResponseBody
@@ -65,19 +85,35 @@ public class MainController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/addReviewToPly")
-	public void addReviewToPly(@RequestBody Map<String, Object> map) {
-		System.out.println("MainController > addReviewToPly");
+	@RequestMapping("/toggleReviewToPly")
+	public Integer toggleReviewToPly(@RequestBody Map<String, Object> map) {
+		System.out.println("MainController > toggleReviewToPly");
 		
-		mainService.toggleReviewToPly(map);
+		return mainService.toggleReviewToPly(map);
 	}
 	
 	@ResponseBody
 	@RequestMapping("/addNewPlaylist")
-	public int addNewPlaylist(@RequestBody PlaylistVo pvo) {
-		System.out.println("MainController > addNewPlaylist");
+	public int addNewPlaylist(@RequestBody PlaylistVo pvo) { // userNo, playlistName, emoNo
+		System.out.println("MainController > addNewPlaylist" + pvo);
 		
 		return mainService.addNewPlaylist(pvo);
 	}
+	
+	@ResponseBody
+	@RequestMapping("/toggleReviewLike")	
+	public int toggleReviewLike(@RequestBody ReviewVo reviewVo) { // reviewNo, userNo
+		System.out.println("MainController > toggleReviewLike");
+		
+		return mainService.toggleReviewLike(reviewVo);
+	}
 
+	@RequestMapping("/playlist")
+	public String playlist(@RequestParam(value="playlistNo") int playlistNo) {
+		System.out.println("MainController > playlist");
+		
+		//model.addAttribute("playlistNo", playlistNo);
+		
+		return "main/main";
+	}
 }

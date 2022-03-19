@@ -7,18 +7,19 @@ public class PlaylistVo {
 	private String nickname;
 	private String playlistDate;
 	private String playlistName;
-	
+	private int emoNo;
 	
 	public PlaylistVo() {}
-	public PlaylistVo(int playlistNo, int userNo, String nickname, String playlistDate, String playlistName) {
+	public PlaylistVo(int playlistNo, int userNo, String nickname, String playlistDate, String playlistName,
+			int emoNo) {
 		super();
 		this.playlistNo = playlistNo;
 		this.userNo = userNo;
 		this.nickname = nickname;
 		this.playlistDate = playlistDate;
 		this.playlistName = playlistName;
+		this.emoNo = emoNo;
 	}
-
 	public int getPlaylistNo() {
 		return playlistNo;
 	}
@@ -30,6 +31,12 @@ public class PlaylistVo {
 	}
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	public String getPlaylistDate() {
 		return playlistDate;
@@ -43,20 +50,17 @@ public class PlaylistVo {
 	public void setPlaylistName(String playlistName) {
 		this.playlistName = playlistName;
 	}
-	public String getNickname() {
-		return nickname;
+	public int getEmoNo() {
+		return emoNo;
 	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setEmoNo(int emoNo) {
+		this.emoNo = emoNo;
 	}
-	
-	
-	
 	@Override
 	public String toString() {
 		return "PlaylistVo [playlistNo=" + playlistNo + ", userNo=" + userNo + ", nickname=" + nickname
-				+ ", playlistDate=" + playlistDate + ", playlistName=" + playlistName + "]";
+				+ ", playlistDate=" + playlistDate + ", playlistName=" + playlistName + ", emoNo=" + emoNo + "]";
 	}
-	
+
 	
 }

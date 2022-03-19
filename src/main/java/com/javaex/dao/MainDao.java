@@ -25,18 +25,20 @@ public class MainDao {
 		return list;
 	}
 
-	public List<ReviewVo> getReviewListByEmo(int emoNum) {
+	public List<Map<String, Object>> getReviewListByEmo(int emoNum) {
 		System.out.println("EmotionDao.getReviewListByEmo()");
 		
-		List<ReviewVo> list =  sqlSession.selectList("emotion.getReviewListByEmo", emoNum);
+		List<Map<String, Object>> list =  sqlSession.selectList("emotion.getReviewListByEmo", emoNum);
+		
+		System.out.println("list sort by emoNo: " + list);
 		
 		return list;
 	}
 	
-	public List<ReviewVo> getReviewListByPly(int playlistNo) {
-		List<ReviewVo> list = sqlSession.selectList("emotion.getReviewListByPly", playlistNo);
+	public List<Map<String, Object>> getReviewListByPly(int playlistNo) {
+		List<Map<String, Object>> list = sqlSession.selectList("emotion.getReviewListByPly", playlistNo);
 		
-		System.out.println(list);
+		System.out.println("review list sort by playlistNo: " + list);
 		
 		return list;
 	}
@@ -47,13 +49,25 @@ public class MainDao {
 		
 		List<MusicVo> list = sqlSession.selectList("emotion.getMusicListByEmo", emoNo);
 		
+		System.out.println("music list sort by emotion no: " + list);
+		
 		return list;
 	}
 	
-	public int getMusicTotalCnt(int emoNo) {
-		int totalCnt = sqlSession.selectOne("emotion.getMusicTotalCnt", emoNo);
-
-		return totalCnt;
+	public List<MusicVo> getMusicListByPly(int playlistNo) {
+		List<MusicVo> list = sqlSession.selectList("emotion.getMusicListByPly", playlistNo);
+		
+		System.out.println("playlist music list: " + list);
+		
+		return list;
+	}
+	
+	public int getTotalEmotagCnt() {
+		int result = sqlSession.selectOne("emotion.getTotalEmoTagCnt");
+		
+		System.out.println("total emotag count: " + result);
+		
+		return result;
 	}
 	
 	public List<PlaylistVo> getMyPlaylist(int userNo) {
@@ -64,23 +78,22 @@ public class MainDao {
 	
 	public void addNewPlaylist(PlaylistVo pvo) {
 		sqlSession.insert("emotion.addNewPlaylist", pvo);
-		
-		System.out.println(pvo);
 	}
 	
 	public int addNewPlaylistAtUser(PlaylistVo pvo) {
 		return sqlSession.insert("emotion.addNewPlaylistAtUser", pvo);
 	}
 	
-	public void addReviewToPly(Map<String, Object> map) {
+	public int addReviewToPly(Map<String, Object> map) {
 		int result = sqlSession.insert("emotion.addReviewToPly", map);
 		System.out.println(result + "건 : 리뷰를 플리에 저장");
+		return result;
 	}
 	
-	public void deleteReviewFromPly(Map<String, Object> map) {
-		System.out.println(map);
+	public int deleteReviewFromPly(Map<String, Object> map) {
 		int result = sqlSession.delete("emotion.deleteReviewFromPly", map);
 		System.out.println(result + "건 : 리뷰를 플리에서 삭제");
+		return result;
 	}
 	
 	public int alreadyAdded(Map<String, Object> map) {
@@ -89,4 +102,25 @@ public class MainDao {
 		return result;
 	}
 	
+	public int alreadyLiked(Map<String, Object> reviewVo) {
+		int result = sqlSession.selectOne("emotion.alreadyLiked", reviewVo);
+
+		return result;
+	}
+	
+	public int likeReview(ReviewVo reviewVo) {
+		int result = sqlSession.insert("emotion.likeReview", reviewVo);
+		
+		System.out.println(result + "건  좋아요");
+		
+		return result;
+	}
+	
+	public int cancelLike(ReviewVo reviewVo) {
+		int result = sqlSession.delete("emotion.cancelLike", reviewVo);
+		
+		System.out.println(result + "건 좋아요 취소");
+		
+		return result;
+	}
 }

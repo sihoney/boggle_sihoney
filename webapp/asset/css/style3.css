@@ -114,7 +114,7 @@ container
   background-position: center;
   background-repeat: no-repeat;
   /***********************/
-  transition: all 0.25s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 .dim {
   width: 100vw;
@@ -136,7 +136,7 @@ container
 message modal
 *************************************/
 .messageModal {
-  width: 450px;
+  width: 570px;
   position: fixed;
   background-color: #ffffffd1;
 
@@ -153,6 +153,7 @@ message modal
 .messageModal p {
   font-weight: bold;
   color: #5889ff;
+  text-align: center;
 }
 .messageModal.opaque {
   opacity: 1;
@@ -169,7 +170,7 @@ message modal
 	width: 70%;
 }
 .review {
-  font-size: 20px;
+  font-size: 25px;
   line-height: 3rem;
   color: #fff;
   transition: all 0.3s;
@@ -293,6 +294,7 @@ i.fa-solid에 position: absolute 을 줘서
   border: 1px #b4b4b4 solid;
   cursor: pointer;
   color: #707070;
+  transition: all 0.3s;
 }
 .checked {
   background-color: #2699fb;
@@ -310,7 +312,6 @@ i.fa-solid에 position: absolute 을 줘서
   height: 2rem;
   cursor: pointer;
 }
-
 .randomBtn .random-text {
   color: #2699fb;
   font-size: 1.5rem;
@@ -440,7 +441,7 @@ i.fa-solid에 position: absolute 을 줘서
 */
 .playlist .playlist-container .playlist-list {
   overflow-y: auto;
-  height: 7rem;
+  height: 10rem;
 }
 .playlist .playlist-container .playlist-list li {
   padding: 1rem;
@@ -537,13 +538,16 @@ i.fa-solid에 position: absolute 을 줘서
   position: absolute;
   background-color: #fff;
   color: #707070;
-  width: 490px;
+  width: 500px;
   border-radius: 10px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 1.5rem;
+  z-index: 2;
+  transition: transform 0.3s;
 }
+
 .addReviewModal .input-box {
   display: flex;
   justify-content: space-between;
@@ -588,6 +592,7 @@ i.fa-solid에 position: absolute 을 줘서
   font-size: 1.3rem;
   cursor: pointer;
 }
+
 /* 스크롤바 설정*/
 .playlist-box::-webkit-scrollbar {
   width: 6px;
@@ -608,9 +613,70 @@ i.fa-solid에 position: absolute 을 줘서
 .addReviewModal .addPly-input {
 	font-size: 1rem;
 	margin: 0 auto;
-	width: 440px;
+	width: 450px;
 	display: block;
 	padding: 0.7rem;
 	border: none;
 	background-color: #a5d6ff;
+}
+
+.addReviewModal.move {
+	transform: translate(-50%, -70%);
+}
+.emotion-select-box.show {
+	transform: translate(-50%, 61%);
+}
+
+.emotion-select-box {
+	width: 500px;
+	height: 170px;
+	background-color: white;
+	position: absolute;
+	padding: 1.5rem;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, 8%);
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	transition: transform 0.3s;
+	display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.emotion-select-box ul{
+	list-style: none;
+	overflow-x: scroll;
+	display: flex;
+	margin-bottom: 1rem;
+}
+.tag {
+	background-color: #a5d6ff;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    line-height: 4rem;
+    text-align: center;
+    font-size: .7rem;
+    letter-spacing: 2px;
+    margin-right: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.tag.selected {
+	background-color: darkblue;
+	color: white;
+}
+.tag:hover {
+	background-color: darkblue;
+}
+.emotion-select-box .plySubmitBtn {
+	height: 2rem;
+}
+/* 스크롤 바 없애기 */
+.emotion-select-box ul {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.emotion-select-box ul::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
 }

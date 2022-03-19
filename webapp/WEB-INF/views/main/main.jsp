@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Boggle - main</title>
     <script src="${pageContext.request.contextPath}/asset/js/app3.js" defer></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/style3.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -82,7 +82,7 @@
         </div>
 
         <div class="messageModal unstaged">
-            <p>슬라이드 전환 방식을 변경하고 싶으면 '엔터'를 눌러주세요</p>
+            <p>슬라이드 전환 방식을 변경하고 싶으면 '스페이스바'를 눌러주세요</p>
         </div>
 
         <div class="slide-container"></div>
@@ -125,7 +125,6 @@
                     <button class="bgmBtn arrow prevArrow">
                         <i class="fa-solid fa-chevron-left"></i>
                     </button>
-                    <!-- <audio src="${pageContext.request.contextPath}/asset/img/whale.mp3" autoplay loop controls id="myAudio">오디오 지원되지 않는 브라우저</audio> -->
                     <button class="bgmBtn playBtn">
                         <i class="fa-solid fa-play"></i>
                     </button>
@@ -174,23 +173,6 @@
         </div>
     </aside>
 
-    <!--  모달 (새 플레이리스트 추가) -->
-    <!-- 
-    <div class="modal-background">
-        <div class="playlistAddModal">
-            <div class="modal-header">
-                <p>새 플레이리스트 추가</p>
-                <button class="modal-closeBtn">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <form>
-                <input type="text">
-                <button type="submit">추가</button>
-            </form>
-        </div>
-    </div>
-	-->
     <!--  모달 (서평 플레이리스트에 추가) -->
     <div class="review-modal-background modal-background">
         <div class="addReviewModal">
@@ -212,9 +194,20 @@
                     -->
                 </ul>
             </div>
+            
             <form class="addPlaylist">
             	<input class="addPly-input" type="text" placeholder="새 플레이리스트 추가" name="playlistTitle" required>
             </form>
+        </div>
+        <div class="emotion-select-box">
+        	<ul class="emotion-select-ul">
+        		<!--
+        		<li>
+        			<div class="tag" data-emoNo="">감사한</div>
+        		</li>
+				-->
+        	</ul>
+        	<button class="plySubmitBtn" type="submit">등 록</button>
         </div>
     </div>
 </body>

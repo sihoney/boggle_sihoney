@@ -35,15 +35,22 @@
 			select review_content,
 			       review_no,
 			       nickname,
-			       review.book_no,
+			       book_no,
 			       style_name, 
-			       emotion.emo_no
-			from review, users, books, style, emotion
-			where review.user_no = users.user_no
-			and books.book_no = review.book_no
-			and review.style_no = style.style_no
-			and style.emo_no = emotion.emo_no
-			and emotion.emo_no = #{emoNum}
+			       emo_no
+			from(select review_content,
+			           review_no,
+			           nickname,
+			           review.book_no,
+			           style_name, 
+			           emotion.emo_no
+			    from review, users, style, emotion
+			    where users.user_no = review.user_no
+			    and review.style_no = style.style_no
+			    and style.emo_no = emotion.emo_no
+			    and emotion.emo_no = #{emoNo}
+			    order by DBMS_RANDOM.RANDOM)
+			where rownum < 20
 		]]>
 	</select>
 	
@@ -52,17 +59,29 @@
 			select review_content,
 			       review_no,
 			       nickname,
-			       review.book_no,
+			       book_no,
 			       style_name,
 			       emo_name
-			from review, users, books, style, emotion
-			where review.user_no = users.user_no
-			and books.book_no = review.book_no
-			and review.style_no = style.style_no
-			and style.emo_no = emotion.emo_no
-			and review_no in (select playlist_review_no
-			                    from playlist_review
-			                    where playlist_no = #{playlistNo})		
+			from(select review_content,
+			           tt.review_no,
+			           nickname,
+			           book_no,
+			           style_name,
+			           emo_name
+			    from playlist_review, (select review_content,
+			                                   review_no,
+			                                   nickname,
+			                                   book_no,
+			                                   style_name,
+			                                   emo_name
+			                            from users, review, emotion, style
+			                            where users.user_no = review.user_no
+			                            and review.style_no = style.style_no
+			                            and style.emo_no = emotion.emo_no) tt
+			    where playlist_review.review_no = tt.review_no
+			    and playlist_no = #{playlistNo}
+			    order by DBMS_RANDOM.RANDOM)
+			where rownum < 20
 		]]>
 	</select>
 	
@@ -71,20 +90,40 @@
 			select music_title musicTitle,
 			       artist, 
 			       music_path musicPath
-			from music, emotion
-			where music.emo_no = emotion.emo_no
-			and music.emo_no = #{emoNo}
+			from(select music_title,
+			           artist, 
+			           music_path 
+			    from music, emotion
+			    where music.emo_no = emotion.emo_no
+			    and music.emo_no = #{emoNo}
+			    order by DBMS_RANDOM.RANDOM)
+			where rownum < 7
 		]]>
 	</select>
 	
-	<select id="getMusicTotalCnt" parameterType="int" resultType="int">
+	<select id="getMusicListByPly" parameterType="int" resultType="MusicVo">
 		<![CDATA[
-			select count(music_no)
-			from music, emotion
-			where music.emo_no = emotion.emo_no
-			and music.emo_no = #{emoNo}
+			select music_title musicTitle,
+			       music_path musicPath,
+			       artist
+			from (select music_title,
+			               music_path,
+			               artist,
+			               music.emo_no
+			        from music, playlist
+			        where music.emo_no = playlist.emo_no
+			        and playlist_no = #{playlistNo}
+			        order by DBMS_RANDOM.RANDOM)
+			where rownum < 7
 		]]>
-	</select>	
+	</select>
+	
+	<select id="getTotalEmoTagCnt" resultType="int">
+		<![CDATA[
+			select count(*)
+			from emotion
+		]]>
+	</select>
 	
 	<select id="getMyPlaylist" parameterType="int" resultType="PlaylistVo">
 		<![CDATA[
@@ -104,7 +143,7 @@
 	
 		<![CDATA[
 			insert into playlist
-			values(#{playlistNo}, #{userNo}, sysdate, #{playlistName})
+			values(#{playlistNo}, #{userNo}, sysdate, #{playlistName}, #{emoNo})
 		]]>
 	</insert>
 	
@@ -141,4 +180,40 @@
 			and review_no = #{reviewNo}
 		]]>
 	</delete>
+	
+	<select id="alreadyLiked" parameterType="map" resultType="int">
+		<![CDATA[
+			select count(review_user_no)
+			from review_user
+			where review_no = #{reviewNo}
+			and user_no = #{userNo}
+		]]>
+	</select>
+	
+	<insert id="likeReview" parameterType="ReviewVo">
+		<![CDATA[
+			insert into review_user
+			values(seq_review_user_no.nextval, #{userNo}, #{reviewNo}, sysdate)		
+		]]>
+	</insert>
+	
+	<delete id="cancelLike" parameterType="ReviewVo">
+		<![CDATA[
+			delete from review_user
+			where user_no = #{userNo}
+			and review_no = #{reviewNo}
+		]]>
+	</delete>
+	
+	<select id="getReviewInfo" parameterType="int" resultMap="RReviewVo">
+		<![CDATA[
+			select review_content,
+			       style_name,
+			       nickname
+			from review, users, style
+			where review.user_no = users.user_no
+			and review.style_no = style.style_no
+			and review_no = #{reviewNo}
+		]]>
+	</select>
 </mapper>
