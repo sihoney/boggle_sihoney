@@ -57,7 +57,7 @@ public class test {
 //		return "taste/click-playlist";
 //	}
 	
-	@RequestMapping("/like_playlist")
+	@RequestMapping("/{nickname}/like_playlist")
 	public String like_playlist() {
 		System.out.println("like_playlist");
 		

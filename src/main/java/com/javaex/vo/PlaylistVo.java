@@ -8,6 +8,7 @@ public class PlaylistVo {
 	private String playlistDate;
 	private String playlistName;
 	private int emoNo;
+	private int likeuser;
 	
 	public PlaylistVo() {}
 	public PlaylistVo(int playlistNo, int userNo, String nickname, String playlistDate, String playlistName,
@@ -20,6 +21,20 @@ public class PlaylistVo {
 		this.playlistName = playlistName;
 		this.emoNo = emoNo;
 	}
+	public PlaylistVo(int playlistNo, int userNo, String nickname, String playlistDate, String playlistName, int emoNo,
+			int likeuser) {
+		super();
+		this.playlistNo = playlistNo;
+		this.userNo = userNo;
+		this.nickname = nickname;
+		this.playlistDate = playlistDate;
+		this.playlistName = playlistName;
+		this.emoNo = emoNo;
+		this.likeuser = likeuser;
+	}
+	
+	
+	
 	public int getPlaylistNo() {
 		return playlistNo;
 	}
@@ -56,6 +71,15 @@ public class PlaylistVo {
 	public void setEmoNo(int emoNo) {
 		this.emoNo = emoNo;
 	}
+	public int getLikeuser() {
+		return likeuser;
+	}
+	public void setLikeuser(int likeuser) {
+		this.likeuser = likeuser;
+	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "PlaylistVo [playlistNo=" + playlistNo + ", userNo=" + userNo + ", nickname=" + nickname

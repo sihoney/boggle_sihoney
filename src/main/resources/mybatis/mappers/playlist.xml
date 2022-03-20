@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="playlist">
+	
+	<!-- likelist -->
+	<select id="likelist" resultType="PlaylistVo" parameterType="int">
+		<![CDATA[
+			select  up.user_no likeuser,
+        			up.playlist_no playlistNo,
+        			p.playlist_date playlistDate,
+        			p.playlist_name playlistName,
+        			p.emo_no emoNo,
+        			p.user_no userNo,
+        			u.nickname
+			from user_playlist up, playlist p, users u
+			where up.playlist_no = p.playlist_no
+			and p.user_no = u.user_no
+			and up.user_no = #{userNo}
+		]]>
+
+	</select>
+	
+	
+</mapper>
