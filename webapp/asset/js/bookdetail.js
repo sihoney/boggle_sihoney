@@ -73,18 +73,18 @@ function fetchBest(){
 	
     $.ajax({
         url :"bookdetail/reviewBest",
-        type : "get",
-        contentType : "application/json",
+        type : "post",
+		contentType : "application/json",
         data : {bookNo: bookNo},
 
         dataType : "json",
-        success : function(latestList){
+        success : function(bestList){
         /*성공시 처리해야될 코드 작성*/
-			console.log(latestList);
+			console.log(bestList);
 			
 			//객체 리스트
-			for(var i = 0; i<latestList.length; i++){
-				rendering(latestList[i]);
+			for(var i = 0; i<bestList.length; i++){
+				rendering(bestList[i]);
 			}
 
         },
@@ -256,7 +256,7 @@ $('#bookmark').on('click','#addMark', function(){
 function addRender(){
 	
 	var str = '';
-	str += ' <button id="addMark" type="button" class="btn btn-default" data-markresult="true">관심가는 책 + </button> ';
+	str += ' <button id="addMark" type="button" class="btn Markbtn" data-markresult="true">관심가는 책 + </button> ';
 	
 	$('#bookmark').html(str);
 	
@@ -266,7 +266,7 @@ function addRender(){
 function deleteRender(){
 	
 	var str = '';
-	str += ' <button id="deleteMark" type="button" class="btn btn-default" data-markresult="false">관심가는 책 - </button> ';
+	str += ' <button id="deleteMark" type="button" class="btn Markbtn" data-markresult="false">관심가는 책 - </button> ';
 	
 	$('#bookmark').html(str);
 	

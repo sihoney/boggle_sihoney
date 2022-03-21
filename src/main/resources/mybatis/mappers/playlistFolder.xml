@@ -12,46 +12,100 @@
 	</select> -->
 	
 	<!-- 해당 플리 서평리스트 -->
-	<select id="reviewList" parameterType="int" resultType="PlaylistFolderVo">
+	<select id="reviewList" parameterType="map" resultType="PlaylistFolderVo">
 	 	<![CDATA[
-			select r.playlist_name playlistName,
-			       r.playlist_no playlistNo,
-			       r.review_no reviewNo,
-			       r.nickname nickname,
-			       r.user_no userNo,
-			       r.book_no bookNo,
-			       r.review_content reviewContent,
-			       to_char(r.review_date,'yyyy-mm-dd') reviewDate,
-			       r.style_no styleNo,
-			       b.book_title bookTitle,
-			       e.emo_name emoName
-			from (select p.playlist_name,
-			             p.playlist_no,
-			             r.review_no,
-			             u.nickname,
-			             u.user_no,
-			             r.book_no,
-			             r.review_content,
-			             r.review_date,
-			             r.style_no
-			        from playlist p, playlist_review pr, review r, users u
-			        where p.playlist_no = pr.playlist_no
-			        and pr.review_no = r.review_no
-			        and u.user_no = r.user_no
-			        order by pr.playlist_review_date desc) r, books b,style s, emotion e
-			where b.book_no = r.book_no
-			and r.style_no = s.style_no
-			and s.emo_no = e.emo_no
-			and r.playlist_no = #{playlistNo}
+			select lst.rn rn,
+			       lst.playlistName playlistName,
+			       lst.playlistNo playlistNo,
+			       lst.reivewNo reivewNo,
+			       lst.nickname nickname,
+			       lst.userNo userNo,
+			       lst.bookNo bookNo,
+			       lst.reviewContent reviewContent,
+			       lst.reviewDate reviewDate,
+			       lst.styleNo styleNo,
+			       lst.bookTitle bookTitle,
+			       lst.emoName emoName,
+			       lst.playlistDate playlistDate
+			from(select rownum rn,
+			            rnt.playlistName playlistName,
+			            rnt.playlistNo playlistNo,
+			            rnt.reivewNo reivewNo,
+			            rnt.nickname nickname,
+			            rnt.userNo userNo,
+			            rnt.bookNo bookNo,
+			            rnt.reviewContent reviewContent,
+			            rnt.reviewDate reviewDate,
+			            rnt.styleNo styleNo,
+			            rnt.bookTitle bookTitle,
+			            rnt.emoName emoName,
+			            rnt.playlistDate playlistDate
+			    from (select  nt.playlistName playlistName,
+			                  nt.playlistNo playlistNo,
+			                  nt.reivewNo reivewNo,
+			                  nt.nickname nickname,
+			                  nt.userNo userNo,
+			                  nt.bookNo bookNo,
+			                  nt.reviewContent reviewContent,
+			                  nt.reviewDate reviewDate,
+			                  nt.styleNo styleNo,
+			                  nt.bookTitle bookTitle,
+			                  nt.emoName emoName,
+			                  nt.playlistDate playlistDate
+			            from (select r.playlist_name playlistName,
+			                         r.playlist_no playlistNo,
+			                         r.review_no reivewNo,
+			                         r.nickname nickname,
+			                         r.user_no userNo,
+			                         r.book_no bookNo,
+			                         r.review_content reviewContent,
+			                         to_char(r.review_date,'yyyy-mm-dd') reviewDate,
+			                         r.style_no styleNo,
+			                         b.book_title bookTitle,
+			                         e.emo_name emoName,
+			                         r.playlist_review_date playlistDate
+			                    from (select p.playlist_name,
+			                                 p.playlist_no,
+			                                 r.review_no,
+			                                 u.nickname,
+			                                 u.user_no,
+			                                 r.book_no,
+			                                 r.review_content,
+			                                 r.review_date,
+			                                 r.style_no,
+			                                 pr.playlist_review_date
+			                            from playlist p, playlist_review pr, review r, users u
+			                            where p.playlist_no = pr.playlist_no
+			                            and pr.review_no = r.review_no
+			                            and u.user_no = r.user_no) r, books b,style s, emotion e
+			                    where b.book_no = r.book_no
+			                    and r.style_no = s.style_no
+			                    and s.emo_no = e.emo_no
+			                    and r.playlist_no = #{playlistNo}
+			                    order by r.playlist_review_date desc) nt) rnt) lst
+			where rn >= #{startRnum}
+			and rn <= #{endRnum}
 		]]>
 	</select>
 	
-	<!-- 플레이리스트 커버 -->
-	<select id="playlistCover" parameterType="map" resultType="String">
+	<!-- 해당 플리 서평 카운트 -->
+	<select id="folderReviewCnt" parameterType="int" resultType="int">
 	 	<![CDATA[
-			select  playlist_name
-			from playlist
-			where user_no = #{userNo}
+			select count(review_no)
+			from playlist_review
+			where playlist_no = #{playlistNo}
+		]]>
+	</select>
+	
+	<!-- 해당 플리 커버(해당 플리의 유저) -->
+	<select id="playlistCover" parameterType="map" resultType="PlaylistFolderVo">
+	 	<![CDATA[
+			select  p.playlist_no playlistNo,
+			        p.playlist_name playlistName,
+			        u.user_no userNo,
+			        u.nickname nickname
+			from playlist p, users u
+			where p.user_no = u.user_no
 			and playlist_no = #{playlistNo}
 		]]>
 	</select>
@@ -101,15 +155,14 @@
 		]]>
 	</select>
 	
-	
-	<!-- 플리 모달 서평 전체 카운트 -->
+	<!-- 서평 전체 카운트 -->
 	<select id="totalCnt" resultType="int">
 	 	<![CDATA[
 			select count(*)
 			from review
 		]]>
 	</select>
-	
+
 	<!-- 플리 모달 검색창 -->
 	<select id="playlistSearch" parameterType="String" resultType="PlaylistFolderVo">
 	 	<![CDATA[
@@ -131,7 +184,54 @@
 		]]>
 	</select>
 
+	<!-- 선택 서평 추가등록 -->
+	<select id="reviewsInsert" parameterType="PlaylistFolderVo" resultType="PlaylistFolderVo">
+	 	<![CDATA[
+			insert into playlist_review
+			values(seq_playlist_review_no.nextval, 
+									#{playlistNo}, 
+									  #{reviewNo}, 
+										 sysdate)
+		]]>
+	</select>
 
 
-
+	<!-- 서평 삭제 -->
+	<!-- <delete id="reviewDelete" parameterType="">
+	 	<![CDATA[
+	
+		]]>
+	</delete>
+	 -->
+	
+	<!-- 플레이리스트 로딩시 좋아요 체크 -->
+	<select id="checkLike" parameterType="PlaylistFolderVo" resultType="int">
+	 	<![CDATA[
+			select count(*)
+			from user_playlist
+			where user_no = #{userNo}
+			and playlist_no = #{playlistNo}
+		]]>
+	</select>
+	
+	<!-- 좋아요 취소 -->
+	<delete id="playlistUnlike" parameterType="PlaylistFolderVo">
+	 	<![CDATA[
+			delete from user_playlist
+			where user_no = #{userNo}
+			and playlist_no = #{playlistNo}
+		]]>
+	</delete>
+	
+	<!-- 해당 플리 좋아요 -->
+	<insert id="playlistlike" parameterType="PlaylistFolderVo">
+	 	<![CDATA[
+			insert into user_playlist 
+			values(seq_user_playlist_no.nextval,
+								  	  #{userNo}, 
+								  #{playlistNo})
+		]]>
+	</insert>
+	
+	
 </mapper>

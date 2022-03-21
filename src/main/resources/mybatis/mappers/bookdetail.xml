@@ -97,6 +97,64 @@
 		]]>
 	</delete>
 	
+	<!-- 해당 책 서평 리스트 출력(인기순) -->
+	<select id="reviewListBest" parameterType="int" resultType="BookdetailVo">
+	 	<![CDATA[
+			select rownum rn,
+			       ot.book_no bookNo,
+			       ot.book_title bookTitle,
+			       ot.review_no reviewNo,
+			       ot.review_content reviewContent,
+			       ot.review_date reviewDate,
+			       ot.style_no styleNo,
+			       ot.emo_name emoName,
+			       ot.user_no userNo,
+			       ot.nickname nickname,
+			       NVL(ot.likecnt,0) likecnt
+			from (select rt.book_no,
+			             rt.book_title,
+			             rt.review_no,
+			             rt.review_content,
+			             rt.review_date,
+			             rt.style_no,
+			             rt.emo_name,
+			             rt.user_no,
+			             rt.nickname,
+			             rt.likecnt
+			        from (select  bt.book_no,
+			                      bt.book_title,
+			                      bt.review_no,
+			                      bt.review_content,
+			                      bt.review_date,
+			                      bt.style_no,
+			                      bt.emo_name,
+			                      bt.user_no,
+			                      bt.nickname,
+			                      lt.likecnt
+			                from(select b.book_no,
+			                            b.book_title,
+			                            r.review_no,
+			                            r.review_content,
+			                            r.review_date,
+			                            s.style_no,
+			                            e.emo_name,
+			                            u.user_no,
+			                            u.nickname
+			                    from books b, review r, style s, emotion e, users u
+			                    where b.book_no = r.book_no
+			                    and r.style_no = s.style_no
+			                    and s.emo_no = e.emo_no
+			                    and r.user_no = u.user_no
+			                    and b.book_no = #{bookNo}) bt,(select  review_no,
+			                                                                count(review_no) likecnt
+			                                                        from review_user
+			                                                        group by review_no) lt
+			                where bt.review_no = lt.review_no(+)) rt
+			        order by rt.likecnt asc) ot
+		]]>
+	</select>
+	
+	
 	
 	
 

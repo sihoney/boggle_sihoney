@@ -26,8 +26,8 @@ public class BookdetailController {
 	/* 책 상세페이지 */
 	@RequestMapping("")
 	public String bookDetail(@RequestParam("bookNo") String bookNo,
-							@RequestParam("userNo") String userNo,
-							Model model) {
+							 @RequestParam("userNo") String userNo,
+							 Model model) {
 		
 		System.out.println(bookNo);
 		System.out.println("Controller.bookdetail");
@@ -55,7 +55,7 @@ public class BookdetailController {
 		return "book_detail/book_detail";
 	}
 	
-	/* 최신순, 인기순 정렬 */
+	/* 최신순 정렬 */
 	@ResponseBody
 	@RequestMapping("/reviewLatest")
 	public List<BookreviewVo> reviewListing(@RequestParam("bookNo") String bookNo,
@@ -71,6 +71,17 @@ public class BookdetailController {
 		
 		return reviewList;
 		
+	}
+	
+	/* 인기순 정렬 */
+	@ResponseBody
+	@RequestMapping("/reviewBest")
+	public String reviewBest(@RequestParam("bookNo") int bookNo,
+											Model model) {
+							
+		System.out.println("Controller.reviewBest");
+		
+		return "";
 	}
 	
 	/* 로딩시 이전 북마크 데이터 확인 */

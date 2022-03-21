@@ -4,6 +4,7 @@
 //- 모달 페이징 요청
 var crtPage = 1;
 var reviewChkBoxArr = [];
+
 //===============[플레이리스트 모달 ready/close]==========================
 /*모달 ready*/
 $('#playlist-add').on('click', function(){
@@ -29,7 +30,16 @@ $('.modal-close').on('click', function(){
 	$('#reviewAll').empty();
 	
 	crtPage = 1;
+	reviewChkBoxArr = [];
 
+});
+
+//===============[페이지 로딩]=========================================
+$(document).ready(function(){
+	console.log('페이지 로딩 성공');
+	
+	playlistLike();
+	
 })
 
 //===============[데이터 요청]=========================================
@@ -124,16 +134,39 @@ function getSearch(){
 function addCheck(reviewChkBoxArr){
 	
 	console.log('체크박스 등록 요청');
+	console.log(reviewChkBoxArr);
+	
+	var playlistNo = $('#reviewAll').data('playlistno');
+	console.log('folder:'+playlistNo);
+	
+	var userNo = $('#reviewAll').data('userno');
+	console.log('userNo:'+userNo);
+
+	console.log('요청전'+reviewChkBoxArr);
+	
+	$('#review-add').modal('hide');
+	$('#reviewAll').empty();
 	
 	$.ajax({
 		url : "addReviews",
 		type : "post",
-		data : {reviewChkBoxArr: reviewChkBoxArr},
+		//contentType : "application/json",
+		data : {reviewChkBoxArr: reviewChkBoxArr,
+				playlistNo: playlistNo,
+				userNo: userNo},
 		
 		dataType : "json",
 		success : function(result){
 		/*성공시 처리해야될 코드 작성*/
-		
+			console.log('데이터 추가 성공');
+			console.log(result);
+			
+			if(result == 1){
+				location.href="folder?playlistNo="+playlistNo+"&userNo="+userNo+"&crtPage=1";
+			}else{
+				alert('앗! 다시 시도해주세요! :-)')
+			}
+			
 		},
 		
 		error : function(XHR, status, error) {
@@ -143,20 +176,125 @@ function addCheck(reviewChkBoxArr){
 	
 }
 
+//로딩시 좋아요 데이터 요청
+function playlistLike(){
+	
+	console.log('로딩시 좋아요 체크');
+	
+	var playlistNo = $('#platlistLike').data('playlistno');
+	var userNo = $('#platlistLike').data('userno');
+	
+	console.log('플리'+playlistNo);
+	console.log('유저'+userNo);
+	
+	$.ajax({
+		url : "checkLike",
+		type : "post",
+		data : {playlistNo: playlistNo,
+				userNo: userNo
+				},
+		
+		dataType : "json",
+		success : function(checkLike){
+		/*성공시 처리해야될 코드 작성*/
+			console.log('좋아요 체크:'+checkLike);
 
-$('.addReviewBtn').on('click', function(){
+			//좋아요(화면 출력)
+			if(checkLike == 0){
+				$('#likeview').attr('class','glyphicon glyphicon-heart-empty');
+			}else{
+				$('#likeview').attr('class','glyphicon glyphicon-heart');
+			}
+		
+		},
+		error : function(XHR, status, error) {
+		console.error(status + " : " + error);
+		}
+		
+	});
+
+}
+
+/*좋아요 취소*/
+function playlistUnlike(){
 	
-	console.log('선택 등록 버튼 클릭');
+	console.log('좋아요 취소');
 	
-	var playlistNo = $('.glyphicon-check');
+	var playlistNo = $('#platlistLike').data('playlistno');
+	var userNo = $('#platlistLike').data('userno');
 	
-	for(let item of playlistNo) { 
-		var reivewVo = item.dataset;
-		reviewChkBoxArr.push(reivewVo);
-		console.log(reviewChkBoxArr);
-	};
+	console.log('플리'+playlistNo);
+	console.log('유저'+userNo);
 	
-})
+	$.ajax({
+		url : "playlistUnlike",
+		type : "post",
+		data : {playlistNo: playlistNo,
+				userNo: userNo
+				},
+		
+		dataType : "json",
+		success : function(unlike){
+		/*성공시 처리해야될 코드 작성*/
+			console.log('좋아요 취소:'+unlike);
+
+			//좋아요(화면 출력)
+			if(unlike == 1){
+				$('#playlistLike').attr('class','glyphicon glyphicon-heart');
+			}else{
+				$('#playlistLike').attr('class','glyphicon glyphicon-heart-empty');
+			}
+		
+		},
+		error : function(XHR, status, error) {
+		console.error(status + " : " + error);
+		}
+		
+	});
+	
+}
+
+
+/*좋아요 등록*/
+function addplaylistLike(){
+	
+	console.log('좋아요 등록');
+	
+	var playlistNo = $('#platlistLike').data('playlistno');
+	var userNo = $('#platlistLike').data('userno');
+	
+	console.log('플리'+playlistNo);
+	console.log('유저'+userNo);
+	
+	$.ajax({
+		url : "addplaylistLike",
+		type : "post",
+		data : {playlistNo: playlistNo,
+				userNo: userNo
+				},
+		
+		dataType : "json",
+		success : function(like){
+		/*성공시 처리해야될 코드 작성*/
+			console.log('플리 좋아요:'+like);
+			console.log(typeof like);
+
+			//좋아요(화면 출력)
+			if(like == 0){
+				$('#playlistLike').attr('class','glyphicon glyphicon-heart');
+			}else{
+				$('#playlistLike').attr('class','glyphicon glyphicon-heart-empty');
+			}
+		
+		},
+		error : function(XHR, status, error) {
+		console.error(status + " : " + error);
+		}
+		
+	});
+	
+}
+
 
 //===============[화면 출력]===================================================
 //해당 페이지 서평 리스트
@@ -170,7 +308,7 @@ function render(modalList){
 	str +=' 		<p class="bookname">'+modalList.bookTitle+'</p> ';
 	str +=' 		<p class="review-content">'+modalList.reviewContent+'</p> ';
 	str +=' 		<span class="tag">#'+modalList.emoName+'</span> ';
-	str +=' 		<span class="glyphicon glyphicon-unchecked btn-check" aria-hidden="true" data-playlistno="'+modalList.playlistNo+'" data-reviewno="'+modalList.reviewNo+'"></span> ';
+	str +=' 		<span class="glyphicon glyphicon-unchecked btn-check" aria-hidden="true" data-reviewno="'+modalList.reviewNo+'"></span> ';
 	str +=' 	</div> ';
 	str +=' </li> ';
 	
@@ -194,7 +332,7 @@ function renderPaging(playlistMap,crtPage){
 	for(var i = playlistMap.startPageBtnNo; i<=playlistMap.endPageBtnNo; i++){
 		/*현재페이지는 active 버튼데이터(요청한 파라미터) == 받아온 페이지*/
 		if(i == crtPage){
-			str += ' <li class="page-item active"><a class="page-link" data-crtpage="'+i+'">'+i+'</a></li> ';
+			str += ' <li class="page-item"><a class="page-link b-blue" data-crtpage="'+i+'">'+i+'</a></li> ';
 		}else{
 			str += ' <li class="page-item"><a class="page-link" data-crtpage="'+i+'">'+i+'</a></li> ';
 		}
@@ -229,7 +367,24 @@ $('#reviewAll').on('click','.glyphicon-check', function(){
 })
 
 
-//--------------------------------------------------------------
+//선택한 서평 해당 플리에 추가등록
+$('.addReviewBtn').on('click', function(){
+	
+	console.log('선택 등록 버튼 클릭');
+	var checkNo = $('.glyphicon-check');
+	console.log(checkNo);
+	
+	for(let item of checkNo){
+		var checkdata = item.dataset;
+		reviewChkBoxArr.push(checkdata.reviewno);
+	}
+	
+	console.log(reviewChkBoxArr);
+	
+	addCheck(reviewChkBoxArr);
+})
+
+
 //키워드 검색
 $('#reviewSearch').keydown(function(keyNum){
 	
@@ -244,6 +399,18 @@ $('#reviewSearch').keydown(function(keyNum){
 	
 })
 
+//플리 좋아요 버튼
+$('#platlistLike').on('click','#likeview', function(){
+	
+	console.log('플레이리스트 좋아요 클릭');
+	
+	if(($('.glyphicon-heart'))){
+		addplaylistLike();
+	}else{
+		playlistUnlike();
+	}
+	
+})
 
 
 

@@ -3,12 +3,22 @@ package com.javaex.vo;
 public class BookdetailVo {
 	
 	//필드
+		private int rn;
+		
 		private String bookNo;
 		private String bookTitle;
 		private String author;
 		private String bookUrl;
 		private String coverUrl;
 		
+		private int reviewNo;
+		private String reviewDate;
+		private int styleNo;
+		private String emoName;
+		private int userNo;
+		private String nickname;
+		
+		private int likecnt;
 		private int bookReviewCount;
 
 
@@ -39,6 +49,25 @@ public class BookdetailVo {
 			this.bookReviewCount = bookReviewCount;
 		}
 
+		public BookdetailVo(int rn, String bookNo, String bookTitle, String author, String bookUrl, String coverUrl,
+				int reviewNo, String reviewDate, int styleNo, String emoName, int userNo, String nickname, int likecnt,
+				int bookReviewCount) {
+			super();
+			this.rn = rn;
+			this.bookNo = bookNo;
+			this.bookTitle = bookTitle;
+			this.author = author;
+			this.bookUrl = bookUrl;
+			this.coverUrl = coverUrl;
+			this.reviewNo = reviewNo;
+			this.reviewDate = reviewDate;
+			this.styleNo = styleNo;
+			this.emoName = emoName;
+			this.userNo = userNo;
+			this.nickname = nickname;
+			this.likecnt = likecnt;
+			this.bookReviewCount = bookReviewCount;
+		}
 
 		//메소드g,s
 
@@ -89,6 +118,73 @@ public class BookdetailVo {
 		public void setBookReviewCount(int bookReviewCount) {
 			this.bookReviewCount = bookReviewCount;
 		}
+
+		public int getRn() {
+			return rn;
+		}
+
+		public void setRn(int rn) {
+			this.rn = rn;
+		}
+
+		public int getReviewNo() {
+			return reviewNo;
+		}
+
+		public void setReviewNo(int reviewNo) {
+			this.reviewNo = reviewNo;
+		}
+
+		public String getReviewDate() {
+			return reviewDate;
+		}
+
+		public void setReviewDate(String reviewDate) {
+			this.reviewDate = reviewDate;
+		}
+
+		public int getStyleNo() {
+			return styleNo;
+		}
+
+		public void setStyleNo(int styleNo) {
+			this.styleNo = styleNo;
+		}
+
+		public String getEmoName() {
+			return emoName;
+		}
+
+		public void setEmoName(String emoName) {
+			this.emoName = emoName;
+		}
+
+		public int getUserNo() {
+			return userNo;
+		}
+
+		public void setUserNo(int userNo) {
+			this.userNo = userNo;
+		}
+
+		public String getNickname() {
+			return nickname;
+		}
+
+		public void setNickname(String nickname) {
+			this.nickname = nickname;
+		}
+
+		public int getLikecnt() {
+			return likecnt;
+		}
+
+		public void setLikecnt(int likecnt) {
+			this.likecnt = likecnt;
+		}
+
+		
+		
 
 		//메소드 일반
 

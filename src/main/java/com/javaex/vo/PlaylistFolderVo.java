@@ -5,6 +5,7 @@ public class PlaylistFolderVo {
 	//필드
 	private int playlistNo;
 	private String playlistName;
+	private String playlistDate;
 	
 	private int reviewNo;
 	private String reviewContent;
@@ -29,6 +30,23 @@ public class PlaylistFolderVo {
 		super();
 		this.playlistNo = playlistNo;
 		this.playlistName = playlistName;
+	}
+
+	public PlaylistFolderVo(int playlistNo, String playlistName, String nickname) {
+		super();
+		this.playlistNo = playlistNo;
+		this.playlistName = playlistName;
+		this.nickname = nickname;
+	}
+	
+	
+
+	public PlaylistFolderVo(int playlistNo, String playlistName, String nickname, int userNo) {
+		super();
+		this.playlistNo = playlistNo;
+		this.playlistName = playlistName;
+		this.nickname = nickname;
+		this.userNo = userNo;
 	}
 
 	public PlaylistFolderVo(int playlistNo, int reviewNo, String reviewContent, String bookNo, String bookTitle,
@@ -79,6 +97,25 @@ public class PlaylistFolderVo {
 		super();
 		this.playlistNo = playlistNo;
 		this.playlistName = playlistName;
+		this.reviewNo = reviewNo;
+		this.reviewContent = reviewContent;
+		this.reviewDate = reviewDate;
+		this.nickname = nickname;
+		this.userNo = userNo;
+		this.bookNo = bookNo;
+		this.bookTitle = bookTitle;
+		this.styleNo = styleNo;
+		this.emoName = emoName;
+		this.rn = rn;
+	}
+	
+	public PlaylistFolderVo(int playlistNo, String playlistName, String playlistDate, int reviewNo,
+			String reviewContent, String reviewDate, String nickname, int userNo, String bookNo, String bookTitle,
+			int styleNo, String emoName, int rn) {
+		super();
+		this.playlistNo = playlistNo;
+		this.playlistName = playlistName;
+		this.playlistDate = playlistDate;
 		this.reviewNo = reviewNo;
 		this.reviewContent = reviewContent;
 		this.reviewDate = reviewDate;
@@ -188,12 +225,21 @@ public class PlaylistFolderVo {
 		this.rn = rownum;
 	}
 
+	public String getPlaylistDate() {
+		return playlistDate;
+	}
+
+	public void setPlaylistDate(String playlistDate) {
+		this.playlistDate = playlistDate;
+	}
+
+
 	//메소드 일반
 	@Override
 	public String toString() {
-		return "PlaylistFolderVo [playlistNo=" + playlistNo + ", playlistName=" + playlistName + ", reviewNo="
-				+ reviewNo + ", reviewContent=" + reviewContent + ", reviewDate=" + reviewDate + ", nickname="
-				+ nickname + ", userNo=" + userNo + ", bookNo=" + bookNo + ", bookTitle=" + bookTitle + ", styleNo="
-				+ styleNo + ", emoName=" + emoName + ", rownum=" + rn + "]";
+		return "PlaylistFolderVo [playlistNo=" + playlistNo + ", playlistName=" + playlistName + ", playlistDate="
+				+ playlistDate + ", reviewNo=" + reviewNo + ", reviewContent=" + reviewContent + ", reviewDate="
+				+ reviewDate + ", nickname=" + nickname + ", userNo=" + userNo + ", bookNo=" + bookNo + ", bookTitle="
+				+ bookTitle + ", styleNo=" + styleNo + ", emoName=" + emoName + ", rn=" + rn + "]";
 	}
 }
