@@ -15,7 +15,7 @@ public class LikeReviewService {
 	private LikeReviewDao likeReviewDao;
 	
 	/*해당 유저가 좋아요한 서평 리스트*/
-	public List<LikeReviewVo> list(int userNo){
+	public List<LikeReviewVo> getLRist(int userNo){
 		System.out.println("Service.getLikeReviewList");
 
 		List<LikeReviewVo> lrList= likeReviewDao.getLRist(userNo);
