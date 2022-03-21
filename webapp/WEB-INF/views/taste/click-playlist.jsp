@@ -55,48 +55,49 @@
 		<!--cover-->
 		<div id="playlist-cover" class="clearfix">
 			<div class="float-l">
-				<p>${authUser.nickname}님의 플레이리스트</p>
-				<h1 id="playlist-title">${requestScope.playlistVo.playlistCover}</h1>
+				<p>${requestScope.foldermainMap.playlistCover.nickname}님의 플레이리스트</p>
+				<h1 id="playlist-title">${requestScope.foldermainMap.playlistCover.playlistName}</h1>
 			</div>
 			
 			<div id="btn-cover" class="float-r">
-				<button type="button" class="btn btn-default float-r">좋아요<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span></button>	
-				<button type="button" class="btn btn-default float-r" onclick="location.href = '${pageContext.request.contextPath}/main/playlist?playlistNo='">전체재생</button>
+				<button id="platlistLike" type="button" class="btn btn-default float-r" data-playlistno="${param.playlistNo}" data-userno="${authUser.userNo}">좋아요<span id="likeview" class="" aria-hidden="true"></span></button>	
+				<button type="button" class="btn btn-default float-r" onclick="location.href = '${pageContext.request.contextPath}/main/playlist?playlistNo=${requestScope.foldermainMap.playlistCover.playlistNo}';">전체재생</button>
 			</div>
-
 		</div>
 		<!--cover-->
 		
 		<div id="middle-content">
-			<div id="playlist-add" data-keyboard="false" data-backdrop="static">
-				<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-				<span>플레이리스트 서평 추가</span>
-			</div>
-
-			<div id="btnwrap-delete">
-				<button type="button" class="btn btn-default">전체선택</button>
-				<button type="button" class="btn btn-default">선택삭제</button>
-			</div>
+			<c:if test="${authUser.userNo == param.userNo}">
+				<div id="playlist-add" data-keyboard="false" data-backdrop="static">
+					<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+					<span>플레이리스트 서평 추가</span>
+				</div>
+	
+				<div id="btnwrap-delete">
+					<button type="button" class="btn btn-default">전체선택</button>
+					<button type="button" class="btn btn-default">선택삭제</button>
+				</div>
+			</c:if>
 		</div>
 
 		<!--review List-->
 		<div id="review-wrap">
 			
-			<c:forEach items="${requestScope.playlistVo.playList}" var="playlist">
+			<c:forEach items="${requestScope.foldermainMap.playList}" var="playlistVo">
 				<!-- 서평 리스트 vo-->
 				<div class="jumbotron">
 					<div id="reviewVo-wrap">
 						<div id="review_first">
-							<h3><a href="${pageContext.request.contextPath}/bookdetail?bookNo=${playlist.bookNo}&userNo=${playlist.userNo}">${playlist.bookTitle}</a></h3>
+							<h3><a href="${pageContext.request.contextPath}/bookdetail?bookNo=${playlistVo.bookNo}&userNo=${playlistVo.userNo}">${playlistVo.bookTitle}</a></h3>
 		
 							<!-- 자기글에만 수정 삭제 노출 -->
-							<c:if test="${authUser.userNo == playlist.userNo}">
+							<c:if test="${authUser.userNo == playlistVo.userNo}">
 								<a href="" class="review_modify">삭제</a><a href="" class="review_modify">수정</a>
 							</c:if>
 		
-							<a href="${pageContext.request.contextPath}/${playlist.nickname}" class="review_nick">${playlist.nickname}<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+							<a href="${pageContext.request.contextPath}/${playlistVo.nickname}" class="review_nick">${playlistVo.nickname}<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
 		
-							<div class="multiline-ellipsis">${playlist.reviewContent}</div>
+							<div class="multiline-ellipsis">${playlistVo.reviewContent}</div>
 						</div>
 		
 						<div id="review_second">
@@ -107,8 +108,8 @@
 							<!-- 좋아요 비활성화
 							<span id="btn_like" class="glyphicon glyphicon-heart-empty icon-success" aria-hidden="true"></span> -->
 		
-							<span class="review_like">16.2k</span><span class="review_like">${playlist.reviewDate}</span>
-							<span id="tag_btn">#${playlist.emoName}</span>
+							<span class="review_like">16.2k</span><span class="review_like">${playlistVo.reviewDate}</span>
+							<span id="tag_btn">#${playlistVo.emoName}</span>
 							<!-- 더보기 클릭시 모달창 오픈 -->
 							<!-- <button type="button" class="btn btn-default btn-sm">+더보기</button> -->
 							
@@ -122,7 +123,7 @@
 									<li role="presentation" class="divider"></li>
 									<li role="presentation" ><a id="shr_review" role="menuitem" tabindex="-1" href="#">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
 									<li role="presentation" class="divider"></li>
-									<li role="presentation"><a role="menuitem" tabindex="-1" href="#">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="#">이미지 미리보기<span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></li>
 								</ul>
 							</div>
 		
@@ -137,21 +138,38 @@
 			<!-- 페이징 -->
 			<nav id="page">
 				<ul class="pagination">
-				  <li>
-					<a href="#" aria-label="Previous">
-					  <span aria-hidden="true">&laquo;</span>
-					</a>
-				  </li>
-				  <li class="active"><a href="#">1</a></li>
-				  <li><a href="#">2</a></li>
-				  <li><a href="#">3</a></li>
-				  <li><a href="#">4</a></li>
-				  <li><a href="#">5</a></li>
-				  <li>
-					<a href="#" aria-label="Next">
-					  <span aria-hidden="true">&raquo;</span>
-					</a>
-				  </li>
+
+					<c:if test="${foldermainMap.prev == true}">
+					  <li>
+						<a href="${pageContext.request.contextPath}/playlist/folder?playlistNo=${foldermainMap.playlistCover.playlistNo}&userNo=${foldermainMap.playlistCover.userNo}&crtPage=${foldermainMap.startPageBtnNo-1}" aria-label="Previous">
+						  <span aria-hidden="true">&laquo;</span>
+						</a>
+					  </li>
+					</c:if>
+			
+					<c:forEach begin="${requestScope.foldermainMap.startPageBtnNo}" end="${requestScope.foldermainMap.endPageBtnNo}" step="1" var="i">
+						<c:choose>
+							<c:when test="${param.crtPage == i}">
+								<li class="active">
+									<a href="${pageContext.request.contextPath}/playlist/folder?playlistNo=${foldermainMap.playlistCover.playlistNo}&userNo=${foldermainMap.playlistCover.userNo}&crtPage=${i}">${i}</a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li>
+									<a href="${pageContext.request.contextPath}/playlist/folder?playlistNo=${foldermainMap.playlistCover.playlistNo}&userNo=${foldermainMap.playlistCover.userNo}&crtPage=${i}">${i}</a>
+								</li>
+							</c:otherwise>
+						</c:choose>
+				  	</c:forEach>
+		  	
+					<c:if test="${foldermainMap.next == true}">
+						<li>
+							<a href="${pageContext.request.contextPath}/playlist/folder?playlistNo=${foldermainMap.playlistCover.playlistNo}&userNo=${foldermainMap.playlistCover.userNo}&crtPage=${foldermainMap.endPageBtnNo+1}" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</c:if>
+
 				</ul>
 			</nav>
 			<!-- 페이징 -->
@@ -164,7 +182,7 @@
 	</div>
 	<!--wrap-->
 
-	<!-- 서평 추가 모달 -->
+	<!-- 서평 추가 모달 ------------------------------------------------------->
 	<div id="review-add" class="modal fade" role="dialog" style="z-index: 1600;" >
 		<div class="modal-dialog">
 			<!-- Modal content-->
@@ -184,7 +202,7 @@
 							<button class="optionBtn">서재안의 모든 서평</button>
 						</div>
 						<div class="modal-list">
-							<ul id="reviewAll">
+							<ul id="reviewAll" data-playlistno="${requestScope.foldermainMap.playlistCover.playlistNo}" data-userno="${param.userNo}">
 								<!-- 서평 vo 반복 -->
 								<!-- 리스트 출력될 곳 -->
 							</ul>

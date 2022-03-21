@@ -65,6 +65,13 @@
 	display: inline-block;
 }
 
+#bookmark>button{
+	padding: 10px 40px 10px 40px;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+
 #btn_write {
     float:right;
     padding: 10px 60px 10px 60px;

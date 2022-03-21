@@ -103,7 +103,7 @@
             <!-- Modal -->
 
             <!-- 페이지네이션 -->
-            <nav class="pageWrap">
+            <!-- <nav class="pageWrap">
                 <ul class="pagination">
                   <li>
                     <a href="" aria-label="Previous">
@@ -121,7 +121,7 @@
                     </a>
                   </li>
                 </ul>
-            </nav>
+            </nav> -->
 
             <!-- footer -->
             <c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
