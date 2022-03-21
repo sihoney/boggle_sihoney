@@ -35,12 +35,9 @@
 	
 	
 						<ul class="article-list">
-	
-							<li class="article-list-item "><a href="${pageContext.request.contextPath}/help/read" class="article-list-link">터치가 동작하지 않아요.</a></li>
-							<li class="article-list-item "><a href="" class="article-list-link">내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.</a></li>
-							<li class="article-list-item "><a href="" class="article-list-link">내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.</a></li>
-							<li class="article-list-item "><a href="" class="article-list-link">내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.</a></li>
-							<li class="article-list-item "><a href="" class="article-list-link">내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.</a></li>
+							<c:forEach items="${helpList}" var="helpVo">
+								<li class="article-list-item "><a href="${pageContext.request.contextPath}/help/read?&no=${helpVo.no}" class="article-list-link">${helpVo.title}</a></li>
+							</c:forEach>
 						</ul>
 	
 					</section>

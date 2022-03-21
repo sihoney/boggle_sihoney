@@ -87,56 +87,48 @@
 						<a href="${pageContext.request.contextPath}/help/list">고객 문의</a>
 					</h3>
 		
-					<div class="category-board">
+				
+					
 						<ul class="article-list">
-		
-		
-							<li class="article-list-item"><a href="${pageContext.request.contextPath}/help/read">터치가 동작하지 않아요.</a></li>
-							<li class="article-list-item"><a href="">내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.</a></li>
-							<li class="article-list-item"><a href="">내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.</a></li>
-							<li class="article-list-item"><a href="">내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.</a></li>
-							<li class="article-list-item"><a href="">내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.</a></li>
-		
+							<c:forEach items="${helpList}" var="helpVo">
+								<li class="article-list-item "><a href="${pageContext.request.contextPath}/help/read?&no=${helpVo.no}" class="article-list-link">${helpVo.title}</a></li>
+							</c:forEach>
 						</ul>
+				
+					
+
 		
-						<ul class="blocks-list">
-		
-						</ul>
-		
-						<ul class="blocks-list">
-		
-						</ul>
-		
-						<ul class="blocks-list">
-		
-						</ul>
-		
-						<ul class="blocks-list">
-		
-						</ul>
-				</section>
+				
 		
 		
 				<section class="section contact">
 					<section class="section contact-guide">
 						<h3>고객 </h3>
 						<ul class="contact-list">
-							<li class="contact-item"><a class="contact-item-link" href="${pageContext.request.contextPath}/help/writeForm">
-									<div class="contact-item-link-innerwrapper">
-										<img class="img_contact" src="${pageContext.request.contextPath}/asset/img/help/pencil.png">
-										<h4 class="contact-title">1:1 문의</h4>
-									</div>
-							</a> <a class="contact-item-link" href="mailto:help@bogglebooks.com">
-									<div class="contact-item-link-innerwrapper">
-										<img class="img_contact" src="${pageContext.request.contextPath}/asset/img/help/email.png">
-										<h4 class="contact-title">이메일 문의</h4>
-									</div>
-							</a> <a class="contact-item-link" href="">
-									<div class="contact-item-link-innerwrapper">
-										<img class="img_contact" src="${pageContext.request.contextPath}/asset/img/help/chat.png">
-										<h4 class="contact-title">채팅 상담</h4>
-									</div>
-							</a></li>
+							<li class="contact-item">
+								
+								
+						
+									<a class="contact-item-link" href="${pageContext.request.contextPath }/help/writeForm?no=${authUser.userNo}">
+										<div class="contact-item-link-innerwrapper">
+											<img class="img_contact" src="${pageContext.request.contextPath}/asset/img/help/pencil.png">
+											<h4 class="contact-title">1:1 문의</h4>
+										</div>
+									</a> 
+								
+									<a class="contact-item-link" href="mailto:help@bogglebooks.com">
+										<div class="contact-item-link-innerwrapper">
+											<img class="img_contact" src="${pageContext.request.contextPath}/asset/img/help/email.png">
+											<h4 class="contact-title">이메일 문의</h4>
+										</div>
+									</a> 
+									<a class="contact-item-link" href="">
+										<div class="contact-item-link-innerwrapper">
+											<img class="img_contact" src="${pageContext.request.contextPath}/asset/img/help/chat.png">
+											<h4 class="contact-title">채팅 상담</h4>
+										</div>
+									</a>
+							</li>
 						</ul>
 					</section>
 					<section class="section contact-guide">

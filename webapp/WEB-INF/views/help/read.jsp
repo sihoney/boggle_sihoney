@@ -32,16 +32,13 @@
 
 				<article class="article">
 					<header class="article-header">
-						<h1 title="터치가 동작하지 않아요." class="article-title">터치가 동작하지 않아요.</h1>
+						<h1 title="" class="article-title">${helpVo.title}</h1>
 					</header>
 
 					<section class="article-info">
 						<div class="article-content">
 							<div class="article-body">
-								<p>페이퍼 제품의 화면을 터치하여도 동작되지 않는 증상은 크게 화면의 일부만 터치가 되지 않는 증상과, 화면 전체가 터치되지 않는 증상으로 나눌 수 있습니다.</p>
-								<p>화면의 일부만 터치되지 않는 증상 화면 전체가 터치되지 않는 증상 먼저 전원 버튼을 짧게 눌러 슬립모드(슬립화면)로 변경되는지 확인해 주세요.</p>
-								<p>슬립모드로 변경되는 경우 전원을 껐다가 켜도 동일한 경우 터치 고장으로 인한 증상일 수 있으므로 저희 리디북스 고객센터를 통해 A/S를 신청해 주세요.</p>
-								<p>슬립모드로 변경되지 않는 경우 페이퍼 동작이 멈추었거나 배터리가 부족한 상황일 수 있으므로 아래 방법으로 페이퍼 전원을 껐다가 켠 후 정상적으로 동작하는지 여부를 확인해 주세요.</p>
+								${helpVo.content}
 							</div>
 						</div>
 					</section> 
@@ -52,8 +49,12 @@
 
 		<div class="article-votes">
 			<div class="article-votes-controls" role='radiogroup'>
-				<a id="btn_modify_read" href="${pageContext.request.contextPath}/help/modifyForm">수정</a>
-				<a id="btn_delete_read" href="${pageContext.request.contextPath}/help/list">삭제</a>
+				<c:if test="${helpVo.userNo == authUser.userNo}">
+					<a id="btn_modify_read" href="${pageContext.request.contextPath}/help/modifyForm?no=${helpVo.no}">수정</a>
+				</c:if>
+				<c:if test="${helpVo.userNo == authUser.userNo}">
+					<a id="btn_delete_read" href="${pageContext.request.contextPath}/help/delete?no=${helpVo.no}">삭제</a>
+				</c:if>
 			</div>
 		</div>
 

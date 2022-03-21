@@ -31,45 +31,23 @@
 	
 	
 				<div class="form">
-					<form id="new_request" class="request-form" data-form="" data-form-type="request" action="/hc/ko/requests" accept-charset="UTF-8" method="post">
-						<input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="hc:requests:server:rWIC-2HjnvsKIeXieMgEoYrWsbrqO3aROVQnUkolVVdnJOdUqp8SVrTOt1_zROEYp94JK8F3ngP0g4xxagy9hg" />
-	
-						<!-- <div class="form-field string request_subject">
-							<label id="request_subject_label" for="request_subject">작성자</label> <input type="text" name="request[subject]" id="request_subject" maxlength="150" size="150" aria-required="true" aria-labelledby="request_subject_label" />
-						</div> -->
-						
+					<form action="write" method="get">
+						<input name="userNo" type="text" value="${authUser.userNo}" />
+					
 						<div class="form-field string  required  request_subject">
-							<label id="request_subject_label" for="request_subject">제목</label> <input type="text" name="request[subject]" id="request_subject" maxlength="150" size="150" aria-required="true" aria-labelledby="request_subject_label" />
+							<label id="request_subject_label" for="request_subject">제목</label>
+							<input type="text" name="title" id="request_subject" value=""/>
 						</div>
-	
-	
-						<div class="suggestion-list" data-hc-class="searchbox" data-hc-suggestion-list="true"></div>
-	
 	
 						<div class="form-field text  required  request_description">
 							<label id="request_description_label" for="request_description">상세 설명</label>
-							<textarea name="request[description]" id="request_description" aria-required="true" aria-labelledby="request_description_label"></textarea>
-							<input type="hidden" name="request[description_mimetype]" id="request_description_mimetype" value="text/plain" style="display: none;" />
+							<textarea name="content" id="request_description" ></textarea>
 						</div>
 	
-						<!-- <div class="form-field">
-							<label for="request-attachments"> 첨부 파일 </label>
-							<div id="upload-dropzone" class="upload-dropzone">
-								<input type="file" multiple="true" id="request-attachments" data-fileupload="true" data-dropzone="upload-dropzone" data-error="upload-error" data-create-url="/hc/ko/request_uploads" data-name="request[attachments][]" data-pool="request-attachments-pool" data-delete-confirm-msg="" aria-describedby="upload-error" /> <span> <a>파일 추가</a> 또는 파일을 여기로 드래그
-								</span>
-							</div>
-	
-							<div id="upload-error" class="notification notification-error notification-inline">
-								<span data-upload-error-message></span>
-							</div>
-							<ul id="request-attachments-pool" class="upload-pool" data-template="upload-template"></ul>
-						</div>
-						 -->
-	
-						<footer>
-							<a id="btn_delete_modifyForm" href="${pageContext.request.contextPath}/help/list">제출</a>
-							<a id="btn_delete_modifyForm" href="${pageContext.request.contextPath}/help/list">취소</a>
-						</footer>
+				
+						<button id="btn_delete_modifyForm" type="submit">제출</button>
+						<a id="btn_delete_modifyForm" href="${pageContext.request.contextPath}/help/#">취소</a>
+					
 					</form>
 				</div>
 	

@@ -31,31 +31,23 @@
 	
 	
 				<div class="form">
-					<form id="new_request" class="request-form" data-form="" data-form-type="request" action="/hc/ko/requests" accept-charset="UTF-8" method="post">
-						<input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="hc:requests:server:rWIC-2HjnvsKIeXieMgEoYrWsbrqO3aROVQnUkolVVdnJOdUqp8SVrTOt1_zROEYp94JK8F3ngP0g4xxagy9hg" />
-	
-						<!-- <div class="form-field string request_subject">
-							<label id="request_subject_label" for="request_subject">작성자</label> <input type="text" name="request[subject]" id="request_subject" maxlength="150" size="150" aria-required="true" aria-labelledby="request_subject_label" />
-						</div> -->
+					<form id="new_request" class="request-form"  action="modify"  method="get">
+					
 						
 						<div class="form-field string  required  request_subject">
-							<label id="request_subject_label" for="request_subject">제목</label> <input type="text" name="request[subject]" id="request_subject" maxlength="150" size="150" aria-required="true" aria-labelledby="request_subject_label" />
+							<label id="request_subject_label" for="request_subject">제목</label>
+							<input type="text" value="${boardVo.title}" name="title" id="request_subject"/>
 						</div>
-	
-	
-						<div class="suggestion-list" data-hc-class="searchbox" data-hc-suggestion-list="true"></div>
-	
+
 	
 						<div class="form-field text  required  request_description">
 							<label id="request_description_label" for="request_description">상세 설명</label>
-							<textarea name="request[description]" id="request_description" aria-required="true" aria-labelledby="request_description_label"></textarea>
-							<input type="hidden" name="request[description_mimetype]" id="request_description_mimetype" value="text/plain" style="display: none;" />
+							<textarea name="content" id="request_description">${boardVo.content}</textarea>
 						</div>
 	
-						<footer>
-							<a id="btn_modify_modifyForm" href="${pageContext.request.contextPath}/help/modifyForm">수정</a>
-							<a id="btn_delete_modifyForm" href="${pageContext.request.contextPath}/help/list">삭제</a>
-						</footer>
+						<button id="btn_modify_modifyForm" type="submit" name="no" value="${param.no}">수정</button>
+						<a id="btn_delete_modifyForm" href="${pageContext.request.contextPath}/help/list">취소</a>
+				
 					</form>
 				</div>
 	
