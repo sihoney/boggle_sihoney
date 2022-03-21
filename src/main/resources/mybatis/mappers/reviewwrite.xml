@@ -17,4 +17,62 @@
 		]]>
 	</select>
 
+		<!-- configuration.xml - StyleVo 추가! -->
+	<select id="getStyle" parameterType="int" resultType="StyleVo">
+		<![CDATA[
+			select style_no styleNo,
+			       style_name styleName
+			from style
+			where emo_no = #{emoNo}
+		]]>
+	</select>
+	
+	<insert id="addReview" parameterType="map">
+		<![CDATA[
+			insert into review
+			values(seq_review_no.nextval, 
+			       #{userNo}, 
+			       #{bookNo},
+			       #{styleNo},
+			       #{reviewContent}, 
+			       sysdate)
+		]]>
+	</insert>
+	
+	<insert id="addGenre" parameterType="map">
+		<![CDATA[
+			insert into genre
+			values(#{genreNo}, #{genreName})
+		]]>
+	</insert>
+	
+	<insert id="addBook" parameterType="map">
+		<![CDATA[
+			insert into books
+			values(
+				#{bookNo}, 
+				#{bookTitle}, 
+				#{author}, 
+				#{bookURL},
+				#{genreNo}, 
+				#{coverURL}
+			)
+		]]>
+	</insert>
+	
+	<select id="checkGenre" parameterType="map" resultType="int">
+		<![CDATA[
+			select count(genre_no)
+			from genre
+			where genre_no = #{genreNo}
+		]]>
+	</select>
+	
+	<select id="checkBook" parameterType="map" resultType="int">
+		<![CDATA[
+			select count(book_no)
+			from books
+			where book_no = #{bookNo}
+		]]>
+	</select>
 </mapper>

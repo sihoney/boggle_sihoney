@@ -109,12 +109,14 @@ font-family: 'Nanum Myeongjo';
 
 /* ----- 서평 쓰기 ----- */
 #review_box {
-    display: table;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 	padding: 30px;
 	height: 650px;
     width: 1030px;
     border-radius: 16px;
-    background: #2E8B57;
+    background-color: #2E8B57;
     color:#ffffff;
     margin: auto;
    /* background-image: url(/static/imagefarm/101074948/7jq08lxPGuzxsz0f1zZAJIH4xmwITUMM) */
@@ -132,13 +134,29 @@ font-family: 'Nanum Myeongjo';
    /* background-image: url(/static/imagefarm/101074948/7jq08lxPGuzxsz0f1zZAJIH4xmwITUMM) */
 }
 
-
+/*
 #review_box p {
     display: table-cell;
     vertical-align: middle;
     text-align:center;
     font-size: 20px;
 	font-family: 'Nanum Myeongjo'; 
+}
+*/
+#review_box textarea {
+    margin: auto;
+    width: 70%;
+    font-size: 20px;
+    background: transparent;
+    text-align: center;
+    resize: none;
+    border: none;
+    line-height: 3rem;
+    height: 10rem;
+}
+
+#review_box textarea::placeholder {
+	color: #ffffff;
 }
 
 #contents #limit-text>p{

@@ -13,6 +13,7 @@
 		<typeAlias alias="PlaylistFolderVo" type="com.javaex.vo.PlaylistFolderVo"/>
 		<typeAlias alias="PlaylistVo" type="com.javaex.vo.PlaylistVo"/>
 		<typeAlias alias="HelpVo" type="com.javaex.vo.HelpVo"/>
+		<typeAlias alias="StyleVo" type="com.javaex.vo.StyleVo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />

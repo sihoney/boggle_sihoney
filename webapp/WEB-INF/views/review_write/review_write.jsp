@@ -30,16 +30,18 @@
 			
 			<!-- 헤더 -->
             <c:import url="/WEB-INF/views/include/header.jsp"></c:import>
+            
+            <!-- userNo -->
+            <input class="userNo" type="hidden" name="userNo" value="${sessionScope.authUser.userNo }">
 
 			<!-- progress bar -->
 			<div id="" class="clearfix">
                 <div class="progressbar-wrapper">
                     <ul class="progressbar">
-                        <li class="active">책 선택</li>
+                        <li>책 선택</li>
                         <li>감정 태그</li>
                         <li>스타일</li>
                         <li>서평 쓰기</li>
-                        <li>플레이리스트</li>
                     </ul>
                 </div>
             </div>
@@ -106,11 +108,13 @@
 
 			<div id="select-style" class="clearfix">
 				<div class="btn-group" role="group" aria-label="...">
-					<button class="btn_style btn-outline-secondary"></button>
-					<button class="btn_style"></button>
-					<button class="btn_style"></button>
-					<button class="btn_style"></button>
-					<button class="btn_style"></button>
+					<!-- 
+					<button class="btn_style btn-outline-secondary">폰트</button>
+					<button class="btn_style btn-outline-secondary">폰트</button>
+					<button class="btn_style btn-outline-secondary">폰트</button>
+					<button class="btn_style btn-outline-secondary">폰트</button>
+					<button class="btn_style btn-outline-secondary">폰트</button>
+					-->
 				</div>
 			</div>
 			<!-- /스타일 선택하기 -->
@@ -119,13 +123,17 @@
 			<!-- 서평 쓰기 -->
 			<div id="contents" class="clearfix">
 				<div id="review_box">
+					<!--  
                     <p>
                         “내 삶에서 불가피하게 직면해야 했던 시기가 있습니다.<br>바로 1958년의 여름, 나의 열일곱 살 무렵 말입니다. <br> 나는 그 시기를 사회·역사적으로 그려 내기를 바랐고,<br> 이를테면 오토픽션의 방법으로 『그들의 말 혹은 침묵』을 썼습니다.” <br> -아니 에르노					
                     </p>
+                    -->
+                    
+                    <textarea id="review_textarea" placeholder="글자를 입력하세요" spellcheck="false"></textarea>
 				</div>
 			</div>
             <p id="limit-text" >
-                100/100
+                0/100
             </p>
             <!-- /서평 쓰기 -->
 
@@ -149,6 +157,7 @@
 
 
 			<!-- 플레이리스트에 추가 -->
+			<!-- 
             <div id="contents" class="clearfix">
 				<div id="add_playlist">
 					<h1>플레이리스트에 추가</h1>
@@ -162,7 +171,7 @@
 					<p>플레이리스트</p>
 				</div>
 			</div>
-
+			-->
 			<!-- 모달창 -->
 			<c:import url="/WEB-INF/views/include/modal.jsp"></c:import>
 
@@ -199,12 +208,25 @@
 
     
 </body>
+
 <script> 
 	/* 
 		- 책 선택 모달에서 마지막 버튼 비활성화 안했음
 	*/
 	var query
 	var pageNo = 1
+	
+	var userNo = $(".userNo").val()
+	var bookNo
+	var styleNo
+	var reviewContent
+	
+	var bookTitle
+	var author
+	var bookURL
+	var genreName
+	var coverURL
+	var genreNo
 
 	/* 화면 로드되기 전, 감정태그 출력 */
 	$("document").ready(function(){
@@ -228,15 +250,56 @@
 				
 				for(var btn of btnlist) {
 					btn.onclick = function(){
-
+						
 						/* 하나만 선택 가능 */
 						for(var tag of btnlist) {
 							tag.classList.remove("active")
 						}
-						
 						$(this).addClass("active")
 						
+						/* 진행 바 */
+						$(".progressbar li:nth-child(2)").addClass("active")
+						
 						/* 스타일 옵션 출력 */
+						$(".btn-group").children().remove()
+						
+						var emoNo = this.id
+						
+						var url = "${pageContext.request.contextPath}/review/getStyle?emoNo=" + emoNo
+						
+						$.ajax({
+							url: url,
+							type: "post",
+
+							dataType: "json",
+							success: function(data){
+								/* 스타일 버튼 화면 렌더 */
+								for(let item of data) {
+									renderStyleBtn(item)	
+								}
+								
+								/* 이벤트 추가 */
+								var btnList = $(".btn_style")
+								
+								for(let btn of btnList) {
+									
+									btn.onclick =  function(){
+										/* 진행 바 */
+										$(".progressbar li:nth-child(3)").addClass("active")
+										
+										var backgroundColor = $(this).css("background-color")
+										var fontFamily = $(this).css("font-family")
+										styleNo = $(this).data("styleno")
+										
+										$("#review_box").css("background-color", backgroundColor)
+										$("#review_box>textarea").css("font-family", fontFamily)
+									}
+								}
+							},
+							error:  function(XHR, status, error){
+								console.log(status + " : " + error);
+							}
+						})
 					}
 				}
 						
@@ -247,6 +310,73 @@
 			}
 			
 		})
+	})
+	
+	/* 기록하기 */
+	$("#btn_admit").on("click", function(){
+
+		var obj = {
+			bookURL: bookURL,
+			userNo: userNo,
+			styleNo: styleNo,
+			reviewContent: reviewContent,
+			bookNo: bookNo,
+			bookTitle: bookTitle,
+			author: author,
+			genreName: genreName,
+			coverURL: coverURL,
+			genreNo: genreNo
+		}
+
+		if(userNo == null || userNo == 0) {
+			alert("로그인 후 이용해 주세요")
+		} 
+		else {
+			var url = "${pageContext.request.contextPath}/review/addReview"
+				
+				$.ajax({
+					url: url,
+					type: "post",
+					contentType: 'application/json; charset=UTF-8',
+					data: JSON.stringify(obj),
+
+					dataType: "json",
+					success: function(data){
+						console.log(data)
+						/*
+						if(data === "user/loginForm") {
+							location.href = location.href.substring(0, 35) + data
+						} else {
+							location.href = location.href.substring(0, 35) + data
+						}	
+						*/
+					},
+					error:  function(XHR, status, error){
+						console.log(status + " : " + error);
+					}
+				})	
+		}
+	})
+	
+	/* 서평쓰기 부분 이벤트 감지 */
+	$("#review_textarea").on("keyup", function(){
+		var length = $(this).val().length
+		
+		if(length > 100) {
+			$(this).val($(this).val().substring(0, 100))
+		}
+		else if(length > 0) {
+			/* 진행 바 */
+			$(".progressbar li:nth-child(4)").addClass("active")
+			
+			$("#limit-text").text(length + "/100")	
+		}
+		else if(length == 0) {
+			/* 진행 바 */
+			$(".progressbar li:nth-child(4)").removeClass("active")
+		}
+		
+		reviewContent = $(this).val()
 	})
 	
 	/* 책 검색 API */
@@ -298,17 +428,21 @@
 	/* 모달 > 책 선택시 */
 	$("#modal-playlist").on("click", ".list", function() {
 		var $this = $(this)
-
-		console.log($this)
-		
+		/*
+		var genreNo
+		var coverURL
+		*/
 		/* isbn, title, author, imgURL, link, category */
-		var isbn = $this.data("isbn")
-		var imgURL = $this[0].children[0].children[0].currentSrc
-		var title = $this[0].children[1].children[0].innerText
-		var author = $this[0].children[1].children[1].innerText
+		bookNo = $this.data("isbn")
+		coverURL = $this[0].children[0].children[0].currentSrc
+		bookTitle = $this[0].children[1].children[0].innerText
+		author = $this[0].children[1].children[1].innerText
 		var totalCnt = $this[0].children[1].children[2].innerText
-		var bookUrl = $this.data("url")								/* db에 저장할 때 필요한 책 정보 (!) */
-		var category = $this.data("category")
+		bookURL = $this.data("url")					/* db에 저장할 때 필요한 책 정보 (!) */
+		genreName = $this.data("category")
+		genreNo = $this.data("categoryid")
+		
+		console.log("genreNo: " + genreNo)
 		
 		totalCnt = totalCnt.split(" ")[1]
 		
@@ -316,14 +450,36 @@
 		$(".jumbotron").css("display", "none")
 		$("#modal_searchbook").modal("hide")
 		
+		/* 모달 input, search result 다 지우기 (~~~~~~~~~~~ 추가 ~~~~~~~~~)*/
+		$(".search_box").val("")
+		//$("#modal-playlist").children().remove()		/*  에러 발생(모달이 안닫힘)  */
+		
 		/* 출력 전 선택된 책 삭제 (처음 책 선택하는 건데도 출력된다...?) */
 		if($(".selected-book") !== null) {
 			$(".selected-book").remove()			
 		}
 		
 		/* 선택된 책 정보 섹션 출력 */
-		renderSelectedBook(isbn, imgURL, title, author, totalCnt)
+		renderSelectedBook(bookNo, coverURL, bookTitle, author, totalCnt)
+		
+		/* 진행 바 */
+		$(".progressbar li:nth-child(1)").addClass("active")
+
 	})
+	
+	function renderStyleBtn(item) {
+
+		var arr = item.styleName.split(",")
+		
+
+		var background = arr[0]
+		var font = arr[1]
+		
+		var str = '<button data-styleNo="'+ item.styleNo +'"class="btn_style btn-outline-secondary" style="background-color: '+ background +'; font-family: '+ font +'">폰트</button>'
+		
+		$(".btn-group").append(str)
+		
+	}
 	
 	function renderEmotionBtn(item) {
 		var str = '<button type="button" class="btn btn-primary" id="'+ item.emoNo +'">'+ item.emoName +'</button>'
@@ -357,6 +513,9 @@
 		$("#btn_delete").on("click", function(){ // 삭제
 			$(".selected-book").remove()
 			$(".jumbotron").css("display", "block")
+			
+			/* 진행 바 */
+			$(".progressbar li").removeClass("active")
 		})
 		
 		$("#btn_modify").on("click", function(){
@@ -422,7 +581,7 @@
 	function renderBook(item) {
 		
 		var str = ""
-		str += '<li class="list" data-dismiss="modal" data-isbn="'+ item.isbn13 +'" data-url="'+ item.link +'" data-category="'+ item.categoryName +'">'
+		str += '<li class="list" data-dismiss="modal" data-isbn="'+ item.isbn13 +'" data-url="'+ item.link +'" data-category="'+ item.categoryName +'" data-categoryId="'+ item.categoryId +'">'
 		str += '	<div class="book-img-container">'
 		str += '		<img src="'+ item.cover +'" alt="" class="img-thumbnail">'
 		str += '	</div>'
@@ -436,4 +595,5 @@
 		$("#modal-playlist").append(str)
 	}
 </script>
+
 </html>
