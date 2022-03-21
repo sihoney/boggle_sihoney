@@ -39,7 +39,7 @@
 					<form action="/review_write" method="get">
 						<div class="write-postion">
 							<button onclick = "location.href = '${pageContext.request.contextPath}/${authUser.nickname}'" id="header-btn-write" type="button">내 서재</button>
-							<button id="header-btn-write" type="button">기록하기</button>
+							<button onclick = "location.href = '${pageContext.request.contextPath}/review/write'" id="header-btn-write" type="button">기록하기</button>
 						</div>
 					</form>
 				</div>

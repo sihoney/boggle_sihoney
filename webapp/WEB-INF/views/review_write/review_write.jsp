@@ -475,7 +475,7 @@
 		var background = arr[0]
 		var font = arr[1]
 		
-		var str = '<button data-styleNo="'+ item.styleNo +'"class="btn_style btn-outline-secondary" style="background-color: '+ background +'; font-family: '+ font +'">폰트</button>'
+		var str = '<button data-styleNo="'+ item.styleNo +'"class="btn_style btn-outline-secondary" style="background-color: '+ background +'; font-family: '+ font +'"></button>'
 		
 		$(".btn-group").append(str)
 		
