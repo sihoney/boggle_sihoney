@@ -69,7 +69,7 @@ public class UserController {
 		httpSession.removeAttribute("authUser");
 		httpSession.invalidate();
 		
-		return "redirect:/";
+		return "redirect:/main";
 	}
 	
 	

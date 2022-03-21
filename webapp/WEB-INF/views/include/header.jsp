@@ -19,21 +19,20 @@
 			<!-- 로그인후 -->
 			<div id="header-dropdown" class="dropdown ">
 				<button id="dLabel" class="header-dLabe" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<img id="header-img-icon" src="${authUser.userProfile }" class="img-circle"> 
+					<img id="header-img-icon" src="${authUser.userProfile }" class="img-circle" onerror="this.src='${pageContext.request.contextPath}/asset/img/profile.png'"> 
 					<span>${authUser.nickname}</span> 
 					<span class="caret"></span>
 				</button>
 
 				<div id="header-dropdown-menu" class="dropdown-menu dropdown-menu-right txt-center" role="menu" aria-labelledby="dLabel">
 					<div>
-						<img id="header-menu-img" src="${authUser.userProfile }">
+						<img id="header-menu-img" src="${authUser.userProfile }" onerror="this.src='${pageContext.request.contextPath}/asset/img/profile.png'">
 						<div class="margin-tb-10">
 							<div>${authUser.userName}</div>
 							<div>${authUser.email}</div>
 						</div>
-		
 						<div>
-							<a id="btn-logout" href="${pageContext.request.contextPath}/asset/user/logout">로그아웃</a>
+							<a id="btn-logout" href="${pageContext.request.contextPath}/user/logout">로그아웃</a>
 						</div>
 					</div>
 					

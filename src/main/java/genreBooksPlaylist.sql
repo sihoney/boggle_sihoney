@@ -133,6 +133,9 @@ increment by 1
 start with 1
 nocache;
 
+ALTER TABLE PLAYLIST
+ADD emo_no number;
+
 --#insert 
 insert into playlist
 values(seq_playlist_no.nextval, 1, sysdate, '와 이 노래가 벌써... 세월 무엇?', 1);

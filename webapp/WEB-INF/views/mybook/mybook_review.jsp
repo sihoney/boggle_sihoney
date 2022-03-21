@@ -137,7 +137,7 @@
 						</div>
 						<div class="panel-body">
 							<div id="profile">
-								<img class="img-circle" id="profile-image" src="${Userinfo.userProfile }">
+								<img class="img-circle" id="profile-image" src="${Userinfo.userProfile }" onerror="this.src='${pageContext.request.contextPath}/asset/img/profile.png'">
 							</div>
 							<c:choose>
 								<c:when test="${result eq 'sameUser'}">
