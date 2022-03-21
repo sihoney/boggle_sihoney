@@ -92,9 +92,7 @@ public class MybookDao {
 		System.out.println("MybookDao.reviewcnt");
 		
 		MybookVo reviewcnt = sqlSession.selectOne("mybook.reviewcnt", userNo);
-		
-		System.out.println(reviewcnt);
-		
+				
 		return reviewcnt;
 	}
 	

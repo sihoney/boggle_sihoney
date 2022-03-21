@@ -21,4 +21,22 @@ public class PlaylistDao {
 		
 		return likeplay;
 	}
+	
+	//인기리스트출력
+	public List<PlaylistVo> popularlist(){
+		
+		List<PlaylistVo> popularlist = sqlSession.selectList("playlist.popularplay");
+		
+		return popularlist;
+	}
+	
+	//특정유저가 만든 리스트 출력
+	public List<PlaylistVo> makelist(int userNo){
+		
+		List<PlaylistVo> makelist = sqlSession.selectList("playlist.makelist", userNo);
+		
+		return makelist;
+	}
+	
+	
 }

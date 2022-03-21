@@ -58,13 +58,13 @@
 								<p>'${nickname}'님이 좋아요한 서평</p>
 							</c:when>
 							<c:otherwise>
-								<p>'${otherUser}'님이 좋아요한 서평</p>
+								<p>'${otherUser.nickname}'님이 좋아요한 서평</p>
 							</c:otherwise>
 						</c:choose>
 					</div>
 					<div class="right" id="more">
 						<p>
-							<a href="${pageContext.request.contextPath}/review">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+							<a href="${pageContext.request.contextPath}/${nickname }/review">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
 						</p>
 					</div>
 				</div>
@@ -127,7 +127,7 @@
 								<p>'${nickname}'님이 좋아요한 유저</p>
 							</c:when>
 							<c:otherwise>
-								<p>'${otherUser}'님이 좋아요한 유저</p>
+								<p>'${otherUser.nickname}'님이 좋아요한 유저</p>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -157,13 +157,13 @@
 								<p>'${nickname}'님이 관심있는 책</p>
 							</c:when>
 							<c:otherwise>
-								<p>'${otherUser}'님이 관심있는 책</p>
+								<p>'${otherUser.nickname}'님이 관심있는 책</p>
 							</c:otherwise>
 						</c:choose>
 					</div>
 					<div class="right" id="more">
 						<p>
-							<a href="${pageContext.request.contextPath}/main_book">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+							<a href="${pageContext.request.contextPath}/${nickname }/main_book">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
 						</p>
 					</div>
 				</div>
@@ -183,13 +183,13 @@
 								<p>'${nickname}'님이 좋아요한 플레이리스트</p>
 							</c:when>
 							<c:otherwise>
-								<p>'${otherUser}'님이 좋아요한 플레이리스트</p>
+								<p>'${otherUser.nickname}'님이 좋아요한 플레이리스트</p>
 							</c:otherwise>
 						</c:choose>
 					</div>
 					<div class="right" id="more">
 						<p>
-							<a href="${pageContext.request.contextPath}/like_playlist">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+							<a href="${pageContext.request.contextPath}/${nickname }/like_playlist">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
 						</p>
 					</div>
 				</div>
@@ -199,50 +199,18 @@
 				<div id="playlist">
 				
 					<c:forEach items="${likeplay}" var="vo">
-						<c:if test="${vo.emoNo < 5}">
-							<div class="nail purple"> <!-- 1~14까지 감정으로색깔 -->
-								<div class="nail-desc">
-									<p>
-										출근할 때 즐기는<br>에너제틱 플레이리스트
-									</p>
-								</div>
-								<div>
-									<div id="opac">
-										<span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
-									</div>
+						<div class="nail purple" onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&userNo=${vo.userNo }'"> <!-- 1~14까지 감정으로색깔 -->
+							<div class="nail-desc">
+								<p>${vo.playlistName }</p>
+							</div>
+							<div>
+								<div id="opac">
+									<span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
 								</div>
 							</div>
-						</c:if>
-						<c:if test="${10 > vo.emoNo >= 5}">
-							<div class="nail deeppurple"> <!-- 1~14까지 감정으로색깔 -->
-								<div class="nail-desc">
-									<p>
-										출근할 때 즐기는<br>에너제틱 플레이리스트
-									</p>
-								</div>
-								<div>
-									<div id="opac">
-										<span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
-									</div>
-								</div>
-							</div>
-						</c:if>	
-						<c:if test="${vo.emoNo >= 10}">
-							<div class="nail green"> <!-- 1~14까지 감정으로색깔 -->
-								<div class="nail-desc">
-									<p>
-										출근할 때 즐기는<br>에너제틱 플레이리스트
-									</p>
-								</div>
-								<div>
-									<div id="opac">
-										<span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
-									</div>
-								</div>
-							</div>
-						</c:if>	
+						</div>	
 					</c:forEach>
-				
+					
 				</div>
 			</div>
 			<!--content4-->

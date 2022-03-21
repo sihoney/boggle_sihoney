@@ -5,20 +5,94 @@
 	<!-- likelist -->
 	<select id="likelist" resultType="PlaylistVo" parameterType="int">
 		<![CDATA[
-			select  up.user_no likeuser,
-        			up.playlist_no playlistNo,
-        			p.playlist_date playlistDate,
-        			p.playlist_name playlistName,
-        			p.emo_no emoNo,
-        			p.user_no userNo,
-        			u.nickname
-			from user_playlist up, playlist p, users u
-			where up.playlist_no = p.playlist_no
-			and p.user_no = u.user_no
-			and up.user_no = #{userNo}
+			select  p.likeuser,
+        p.playlist_no playlistNo,
+        p.playlist_date playlistDate,
+        p.playlist_name playlistName,
+        p.emo_no emoNo,
+        p.makeuser userNo,
+        p.nickname
+from (select  up.user_no likeuser,
+                up.playlist_no,
+                p.playlist_date,
+                p.playlist_name,
+                p.emo_no,
+                p.user_no makeuser,
+                u.nickname
+        from user_playlist up, playlist p, users u
+        where up.playlist_no = p.playlist_no
+        and p.user_no = u.user_no
+        and up.user_no = #{userNo}) p
+where rownum <= 5
 		]]>
 
 	</select>
+	
+	<!-- 전체플레이리스트, 인기순 출력 5개 -->
+	<!-- popularplay -->
+	<select id="popularplay" resultType="PlaylistVo">
+		<![CDATA[
+			select  p.likeuser,
+        			p.playlist_no playlistNo,
+        			p.playlist_name playlistName,
+        			p.emo_no emoNo,
+        			p.makeuser userNo,
+        			p.nickname
+			from (select  up.user_no likeuser,
+        					up.playlist_no,
+        					p.playlist_date,
+        					p.playlist_name,
+        					p.emo_no,
+        					p.user_no makeuser,
+        					u.nickname,
+        					cnt.likecnt
+					from user_playlist up, playlist p, users u, (select  playlist_no,
+                                                    					count(playlist_no) likecnt
+                                            					from user_playlist
+                                            					group by playlist_no) cnt
+					where up.playlist_no = p.playlist_no
+					and p.user_no = u.user_no
+					and p.playlist_no = cnt.playlist_no
+					ORDER BY cnt.likecnt desc) p
+			where rownum <= 5
+		]]>
+
+	</select>
+	
+	
+	
+	<!-- 특정유저가 만든 플레이리스트 목록 -->
+	<!-- makelist -->
+	<select id="makelist" resultType="PlaylistVo" parameterType="int">
+		<![CDATA[
+			select  p.likeuser,
+        			p.playlist_no playlistNo,
+        			p.playlist_name playlistName,
+        			p.emo_no emoNo,
+        			p.makeuser userNo,
+        			p.nickname
+			from (select  up.user_no likeuser,
+        				up.playlist_no,
+        				p.playlist_date,
+        				p.playlist_name,
+        				p.emo_no,
+        				p.user_no makeuser,
+        				u.nickname,
+        				cnt.likecnt
+					from user_playlist up, playlist p, users u, (select  playlist_no,
+                    	                                				count(playlist_no) likecnt
+                                            					from user_playlist
+                                            					group by playlist_no) cnt
+					where up.playlist_no = p.playlist_no
+					and p.user_no = u.user_no
+					and p.playlist_no = cnt.playlist_no
+					and p.user_no = #{userNo}) p
+			where rownum <= 5
+		]]>
+
+	</select>
+	
+	
 	
 	
 </mapper>

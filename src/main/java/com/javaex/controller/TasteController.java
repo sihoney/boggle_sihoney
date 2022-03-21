@@ -62,6 +62,7 @@ public class TasteController {
 			
 			//해당유저 넘버를 주면 좋아요한 플레이리스트를 출력하는 메소드
 			List<PlaylistVo> likeplay = playlistService.likelist(userNo);
+			model.addAttribute("likeplay", likeplay);
 
 		} else {
 
@@ -74,6 +75,7 @@ public class TasteController {
 			// 지금 서재 닉네임을 주면 유저넘버, 닉네임, 프로필이미지를 주는 메소드 사용
 			UserVo otherUser = userService.getUser(nickname);
 			int userNo = otherUser.getUserNo();
+			model.addAttribute("otherUser", otherUser);
 			
 			//해당유저 넘버를 주면 좋아요한 서평을 출력하는 메소드
 			List<MybookVo> like1 = mybookService.likereview(userNo);
@@ -92,4 +94,70 @@ public class TasteController {
 		return "taste/taste-main";
 	}
 
+	
+	// 플레이리스트(main페이지)
+	@RequestMapping("/{nickname}/like_playlist")
+	public String playlistmain(@PathVariable(value = "nickname") String nickname, HttpSession session, Model model) {
+
+		System.out.println("tastemain");
+
+		// 세션의 닉네임
+		String yours = ((UserVo) session.getAttribute("authUser")).getNickname();
+		System.out.println("로그인사람의 닉네임 : " + yours);
+		System.out.println("지금 서재 닉네임 : " + nickname);
+
+		// 세션아이디랑 지금 블로그닉네임이 같니?
+		if (nickname.equals(yours)) {
+
+			String result = "sameUser";
+			System.out.println(result);
+
+			// result 값 보내주기
+			model.addAttribute("result", result);
+
+			// 세션아이디의 유저넘버
+			int userNo = ((UserVo) session.getAttribute("authUser")).getUserNo();
+
+			//해당유저 넘버를 주면 좋아요한 플레이리스트를 출력하는 메소드
+			List<PlaylistVo> likeplay = playlistService.likelist(userNo);
+			model.addAttribute("likeplay", likeplay);
+			
+			//인기있는 플레이리스트 출력하는 메소드
+			List<PlaylistVo> popularlist = playlistService.popularlist();
+			model.addAttribute("popularlist", popularlist);
+			
+			//특정 유저 넘버 주면, 해당 유저가 만든 플리 리스트 출력
+			List<PlaylistVo> makelist = playlistService.makelist(userNo);
+			model.addAttribute("makelist", makelist);
+
+		} else {
+
+			String result = nickname;
+			System.out.println("anotherUser");
+
+			// result 값 보내주기
+			model.addAttribute("result", result);
+
+			// 지금 서재 닉네임을 주면 유저넘버, 닉네임, 프로필이미지를 주는 메소드 사용
+			UserVo otherUser = userService.getUser(nickname);
+			int userNo = otherUser.getUserNo();
+			model.addAttribute("otherUser", otherUser);
+			
+			//해당유저 넘버를 주면 좋아요한 플레이리스트를 출력하는 메소드
+			List<PlaylistVo> likeplay = playlistService.likelist(userNo);
+			model.addAttribute("likeplay", likeplay);
+			
+			//인기있는 플레이리스트 출력하는 메소드
+			List<PlaylistVo> popularlist = playlistService.popularlist();
+			model.addAttribute("popularlist", popularlist);
+			
+			//특정 유저 넘버 주면, 해당 유저가 만든 플리 리스트 출력
+			List<PlaylistVo> makelist = playlistService.makelist(userNo);
+			model.addAttribute("makelist", makelist);			
+			
+			
+		}
+
+		return "taste/like-playlist";
+	}
 }

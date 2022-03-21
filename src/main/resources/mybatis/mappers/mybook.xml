@@ -296,7 +296,7 @@ from (select    ru.review_like_date reviewLikeDate,
                     where r.review_no = ru.review_no) r, books b
             where   r.book_no = b.book_no) r, review_user ru
         where ru.review_no = r.reviewNo
-        and user_no = 1
+        and user_no = #{userNo}
         ORDER BY reviewLikeDate desc) r
         where rownum <= 4
 		]]>

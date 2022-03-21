@@ -57,12 +57,12 @@ public class test {
 //		return "taste/click-playlist";
 //	}
 	
-	@RequestMapping("/{nickname}/like_playlist")
-	public String like_playlist() {
-		System.out.println("like_playlist");
-		
-		return "taste/like-playlist";
-	}/*내가 좋아요한*/
+//	@RequestMapping("/{nickname}/like_playlist")
+//	public String like_playlist() {
+//		System.out.println("like_playlist");
+//		
+//		return "taste/like-playlist";
+//	}/*내가 좋아요한*/
 	
 	@RequestMapping("/main_book")
 	public String main_book() {
