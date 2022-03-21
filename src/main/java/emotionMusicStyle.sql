@@ -218,19 +218,19 @@ ALTER TABLE style
 ADD videourl varchar2(1000);
 
 UPDATE style
-SET imgurl='${pageContext.request.contextPath}/asset/img/reviewcard/rainywindow'
+SET imgurl='rainywindow'
 where style_no = 1;
 UPDATE style
-SET imgurl='${pageContext.request.contextPath}/asset/img/reviewcard/rainyday'
+SET imgurl='rainyday'
 where style_no = 2;
 UPDATE style
-SET imgurl='${pageContext.request.contextPath}/asset/img/reviewcard/puppy1'
+SET imgurl='puppy1'
 where style_no = 3;
 UPDATE style
-SET imgurl='${pageContext.request.contextPath}/asset/img/reviewcard/puppy2'
+SET imgurl='puppy2'
 where style_no = 4;
 UPDATE style
-SET imgurl='${pageContext.request.contextPath}/asset/img/reviewcard/moon'
+SET imgurl='moon'
 where style_no = 5;
 
 UPDATE style
