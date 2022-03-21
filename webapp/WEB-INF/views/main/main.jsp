@@ -76,7 +76,7 @@
             <button class="upBtn">
                 <i class="fa-solid fa-chevron-up"></i>
             </button>
-            <button class="autoModeBtn">
+            <button class="autoModeBtn" title="슬라이드 자동 전환">
                 <i class="fa-solid fa-expand"></i>
             </button>
         </div>
@@ -135,7 +135,6 @@
                 <div class="bgm-pagination"></div>
                 <audio preload="auto" src="" class="audioEle"></audio>
             </div>
-            
         </div>
         <div class="playlist">
             <div class="playlist-header">
@@ -156,7 +155,7 @@
                 <ul class="playlist-list">
                 	<c:choose>
                 		<c:when test="${sessionScope.authUser eq null}">
-                			<p>로그인 후 이용해주세요</p>
+                			<p class="logout-msg">로그인 후 이용해주세요</p>
                 		</c:when>
                 		<c:otherwise>
 		                    <!-- 
@@ -167,10 +166,12 @@
 		                    -->         		
                 		</c:otherwise>
                 	</c:choose>
-
                 </ul>
             </div>
         </div>
+        <div class="help">
+          	<a class="help-link" role="button" href="${pageContext.request.contextPath}/help">고객 센터</a>
+       	</div>
     </aside>
 
     <!--  모달 (서평 플레이리스트에 추가) -->

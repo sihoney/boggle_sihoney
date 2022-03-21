@@ -136,6 +136,8 @@ window.addEventListener("DOMContentLoaded", function(){
 				loadReviewMusicList(emoTag.id, "emotion")
 				afterLoadAutoMode()
 				
+				window.addEventListener("keydown", enterEventHandler)
+				
 				emoTag.blur()
 				slideContainer.click()
 			}
@@ -146,7 +148,6 @@ window.addEventListener("DOMContentLoaded", function(){
 	 사이드바 > 마이 플레이리스트 출력 
 	****************************/	
 	if(logStatus === "login") {
-		
 		
 		url = urlPath + "/getMyPlaylist?userNo=" + userNo
 	
@@ -332,6 +333,12 @@ function renderPlaylist(list, loca) {
 		for(let plybtn of playlistBtns) {
 			
 			plybtn.onclick = function(e){
+				/* 클릭시 색 스타일 */
+				for(let plyBtn of playlistBtns) {
+					playBtn.classList.remove("selected")
+				}
+				this.classList.add("selected")
+				
 				let playlistNo = e.path[1].getAttribute("data-playlistno")
 
 				console.log("sidebar > playlistNo: " + playlistNo)
@@ -357,6 +364,8 @@ function renderPlaylist(list, loca) {
 				timeout = null
 				
 				changeMode()
+				
+				window.addEventListener("keydown", enterEventHandler)
 			}
 		}
 		
@@ -497,7 +506,7 @@ function loadReviewMusicList(no, sort) {
 		
 		reviewList = data.reviewList
 		musicList = data.musicList
-		let musicTotalCnt =musicList.length // 이거 왜 가져오지? musiclist length 하면 될텐데?
+		let musicTotalCnt = musicList.length // 이거 왜 가져오지? musiclist length 하면 될텐데?
 
 		// 먼저 현재 있던 슬라이드들 삭제
 		slideContainer.innerHTML = ""
@@ -516,18 +525,21 @@ function loadReviewMusicList(no, sort) {
 			// 슬라이드 출력
 			renderNewArray(reviewList)
 			
-			// music 첫 번째 출력
-			bgmIndex = 0
-			
-		    singer.textContent = musicList[bgmIndex].artist
-		    songTitle.textContent = musicList[bgmIndex].musicTitle
-		    audioEle.src = "/bookproject/asset/music/" + musicList[bgmIndex].musicPath + ".mp3"
-			
 			// 예전 paging 삭제
 			bgmPagination.innerHTML = ""
 			
 			// bgm paging
-			renderBgmPaging(musicTotalCnt)		
+			renderBgmPaging(musicTotalCnt)	
+			
+			// music 첫 번째 출력
+			bgmIndex = 0
+			
+			updateBgm()
+			/*
+		    singer.textContent = musicList[bgmIndex].artist
+		    songTitle.textContent = musicList[bgmIndex].musicTitle
+		    audioEle.src = "/bookproject/asset/music/" + musicList[bgmIndex].musicPath + ".mp3"
+			*/	
 		}
 	})
 }
@@ -652,7 +664,9 @@ modalCloseBtn.onclick = function(){
 	addPlyInput.value = null;
 	
 	/* 다시 자동 재생 */
-	changeMode()
+	if(autoMode == true) {
+		changeMode()
+	}
 }
 
 /* 사이드 바 열기, 닫기 */
@@ -661,6 +675,8 @@ sidebarToggle.addEventListener("click", function() {
 
     dim.classList.remove("unstaged")
     dim.classList.add("show-dim")
+
+	window.removeEventListener("keydown", enterEventHandler)
 })
 
 closeBtn.addEventListener("click", function() {
@@ -672,6 +688,8 @@ closeBtn.addEventListener("click", function() {
         this.classList.add("unstaged")
         this.removeEventListener("transitionend", arguments.callee)
     })
+
+	window.addEventListener("keydown", enterEventHandler)
 })
 
 dim.onclick = function(){
@@ -683,6 +701,8 @@ dim.onclick = function(){
         this.classList.add("unstaged")
         this.removeEventListener("transitionend", arguments.callee)
     })
+
+	window.addEventListener("keydown", enterEventHandler)
 }
 
 /* 전체 화면 버튼(자동 전환) > 슬라이드 전환 방식 변경 */
@@ -710,18 +730,45 @@ function renderMsg(){
     }, 2000)
 }
 
+function audioPlay(){
+	audioEle.play()
+	console.log("music playing...")
+}
+
 function changeMode(){
 
     renderMsg()
 
     if(autoMode === false) { // 자동 전환 모드
         console.log("auto true")
-	
-		audioEle.addEventListener("canplaythrough", function(){
-			console.log("can play music")
+		
+		if(musicupdated === true) { // 새로운 음악 파일이 로드됐다면 기다렸다가 재생
+			console.log("music updated:" + musicupdated)
+		
+			audioEle.addEventListener("canplaythrough", function(){
+				console.log("audio can play!")
+				audioEle.play()
+			})
 			
+			//musicupdated != musicupdated
+		}
+		else {
+			audioEle.play()
+		}
+		
+		/*
+		audioEle.addEventListener("canplaythrough", function(){
+			console.log("audio can play!")
 			audioEle.play()
 		})
+		*/
+		//audioEle.addEventListener("canplay", audioPlay)
+		/*
+		if(canplayToggle == true) {
+			console.log("canplayToggle: " + canplayToggle)
+			audioEle.play()	
+		}
+		*/
 		playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>'
 		play = !play;
 
@@ -730,6 +777,15 @@ function changeMode(){
         autoMode = !autoMode
     } else {                // 수동 전환 모드
         console.log("auto false")
+
+		if(musicupdated === true) {
+			audioEle.removeEventListener("canplaythrough", audioPlay)
+			
+			musicupdated = false
+			
+			console.log("changeMode > removeEventListener > musicupdated: " + musicupdated)
+		}
+		
 
 		audioEle.pause()
 		playBtn.innerHTML = '<i class="fa-solid fa-play"></i>'
@@ -794,7 +850,11 @@ function carousel() {
     })
 }
 
+let musicupdated = false
+
 function updateBgm() {
+
+	//canplayToggle = !canplayToggle
 
     // 바로 재생되게 하기
     if(play === true) { // 재생되고 있는 음악 멈춤
@@ -805,6 +865,8 @@ function updateBgm() {
     singer.textContent = musicList[bgmIndex].artist
     songTitle.textContent = musicList[bgmIndex].musicTitle
     audioEle.src = "/bookproject/asset/music/" + musicList[bgmIndex].musicPath + ".mp3"
+
+	musicupdated = true
 
     // play 상태에서 next btn 누르면 play
     // pause 상태에서 next btn 누르면 pause 상태로 넘어감
@@ -903,8 +965,11 @@ function render(item) {
 		addBtn.onclick = function() {
 			location.href = urlPath.substring(0, 12) + '/user/loginForm'
 		}
-	}
-	else {
+		
+		review.setAttribute("title", "로그인 후 이용 가능합니다.")
+		heartBtn.setAttribute("title", "로그인 후 이용 가능합니다.")
+		addBtn.setAttribute("title", "로그인 후 이용 가능합니다.")
+	} else {
 		console.log("item.alreadyLikedCnt: " + item.alreadyLikedCnt)
 
 		if(item.alreadyLikedCnt == 0) {
@@ -949,9 +1014,13 @@ function render(item) {
 		/* 서평 플리에 추가 모달 버튼 (reviewNo, playlistNo, userNo)*/
 	    addBtn.onclick = function(){
 	
-			if(autoMode == true) {
+			if(autoMode == true) { 
 				console.log("auto mode stop...")
-				changeMode()	
+				changeMode()
+				/*
+				autoMode = !autoMode
+				play = !play	
+				*/
 			}
 
 			userNo = document.querySelector(".login").getAttribute("data-userNo")
@@ -995,10 +1064,3 @@ function render(item) {
     slideContainer.append(slide)
     container.append(slideContainer);
 }
-
-function init() {
-
-    //upBtn.style.display = "none";
-}
-
-init();

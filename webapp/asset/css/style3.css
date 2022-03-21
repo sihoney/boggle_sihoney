@@ -237,7 +237,6 @@ message modal
   background-color: #f7f7f7;
   z-index: 4;
   display: grid;
-  /* grid-template-rows: auto 1fr 1fr auto auto; */
   row-gap: 1rem;
   transition: all 0.3s ease;
   transform: translateX(-100%);
@@ -406,6 +405,17 @@ i.fa-solid에 position: absolute 을 줘서
   height: 1.5rem;
   margin-bottom: 0.7rem;
   cursor: pointer;
+  transition: all 0.3s;
+}
+.playlistBtn:hover {
+	background-color: #2699fb63;
+    color: #707070;
+    font-weight: bold;
+}
+.playlistBtn.selected {
+	background-color: #2699fb;
+    color: #707070;
+    font-weight: bold;
 }
 .playlist .playlist-header .playlistBtn .fa-arrow-right-long {
   width: 100%;
@@ -443,6 +453,12 @@ i.fa-solid에 position: absolute 을 줘서
   overflow-y: auto;
   height: 10rem;
 }
+.playlist .playlist-container .playlist-list .logout-msg {
+	text-align: center;
+	line-height: 10rem;
+	font-weight: bold;
+	color: #a0a0a0;
+}
 .playlist .playlist-container .playlist-list li {
   padding: 1rem;
   border-bottom: #b4b4b4 solid 1px;
@@ -465,6 +481,16 @@ i.fa-solid에 position: absolute 을 줘서
 /* 스크롤바 뒷 배경 설정*/
 .playlist-list::-webkit-scrollbar-track {
   background-color: rgba(0, 0, 0, 0);
+}
+
+/******************* 고객 센터 *******************/
+.help-link {
+	text-decoration: none;
+	color: #a0a3af;
+	font-weight: bold;
+}
+.help-link:hover {
+	text-decoration: underline;
 }
 
 /***************** 모달 > 새 플레이리스트 추가 ****************/
