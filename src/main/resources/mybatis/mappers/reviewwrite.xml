@@ -20,10 +20,12 @@
 		<!-- configuration.xml - StyleVo 추가! -->
 	<select id="getStyle" parameterType="int" resultType="StyleVo">
 		<![CDATA[
-			select style_no styleNo,
-			       style_name styleName
+			select  style_no styleNo,
+       				style_name styleName,
+       				imgurl,
+       				videourl
 			from style
-			where emo_no = #{emoNo}
+			where emo_no = #{emoNo} 
 		]]>
 	</select>
 	
