@@ -18,6 +18,8 @@ public class PlaylistFolderVo {
 	
 	private int styleNo;
 	private String emoName;
+	
+	private int rn;
 
 	
 	//생성자
@@ -27,6 +29,32 @@ public class PlaylistFolderVo {
 		super();
 		this.playlistNo = playlistNo;
 		this.playlistName = playlistName;
+	}
+
+	public PlaylistFolderVo(int playlistNo, int reviewNo, String reviewContent, String bookNo, String bookTitle,
+			String emoName) {
+		super();
+		this.playlistNo = playlistNo;
+		this.reviewNo = reviewNo;
+		this.reviewContent = reviewContent;
+		this.bookNo = bookNo;
+		this.bookTitle = bookTitle;
+		this.emoName = emoName;
+	}
+
+	public PlaylistFolderVo(int playlistNo, int reviewNo, String reviewContent, String reviewDate, int userNo,
+			String bookNo, String bookTitle, int styleNo, String emoName, int rn) {
+		super();
+		this.playlistNo = playlistNo;
+		this.reviewNo = reviewNo;
+		this.reviewContent = reviewContent;
+		this.reviewDate = reviewDate;
+		this.userNo = userNo;
+		this.bookNo = bookNo;
+		this.bookTitle = bookTitle;
+		this.styleNo = styleNo;
+		this.emoName = emoName;
+		this.rn = rn;
 	}
 
 	public PlaylistFolderVo(int playlistNo, String playlistName, int reviewNo, String reviewContent, String reviewDate,
@@ -43,6 +71,24 @@ public class PlaylistFolderVo {
 		this.bookTitle = bookTitle;
 		this.styleNo = styleNo;
 		this.emoName = emoName;
+	}
+
+
+	public PlaylistFolderVo(int playlistNo, String playlistName, int reviewNo, String reviewContent, String reviewDate,
+			String nickname, int userNo, String bookNo, String bookTitle, int styleNo, String emoName, int rn) {
+		super();
+		this.playlistNo = playlistNo;
+		this.playlistName = playlistName;
+		this.reviewNo = reviewNo;
+		this.reviewContent = reviewContent;
+		this.reviewDate = reviewDate;
+		this.nickname = nickname;
+		this.userNo = userNo;
+		this.bookNo = bookNo;
+		this.bookTitle = bookTitle;
+		this.styleNo = styleNo;
+		this.emoName = emoName;
+		this.rn = rn;
 	}
 
 	//메소드 g,s
@@ -133,16 +179,21 @@ public class PlaylistFolderVo {
 	public void setEmoName(String emoName) {
 		this.emoName = emoName;
 	}
-
-
 	
-	
+	public int getRownum() {
+		return rn;
+	}
+
+	public void setRownum(int rownum) {
+		this.rn = rownum;
+	}
+
 	//메소드 일반
 	@Override
 	public String toString() {
 		return "PlaylistFolderVo [playlistNo=" + playlistNo + ", playlistName=" + playlistName + ", reviewNo="
 				+ reviewNo + ", reviewContent=" + reviewContent + ", reviewDate=" + reviewDate + ", nickname="
 				+ nickname + ", userNo=" + userNo + ", bookNo=" + bookNo + ", bookTitle=" + bookTitle + ", styleNo="
-				+ styleNo + ", emoName=" + emoName + "]";
+				+ styleNo + ", emoName=" + emoName + ", rownum=" + rn + "]";
 	}
 }

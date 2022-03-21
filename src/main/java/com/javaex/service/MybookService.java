@@ -63,14 +63,11 @@ public class MybookService {
 	}
 	
 	//좋아요를 하는 메소드(review_user에 인서트)
-	public int like(MybookVo checklike) {
+	public void like(MybookVo checklike) {
 		System.out.println("mybookService.like()");
 		
 		//현재+1
 		mybookDao.like(checklike);
-		
-		//실제 값가져오기
-		return 5;
 	}
 	
 	//좋아요 취소하는 메소드(review_user에서 삭제)
@@ -80,5 +77,34 @@ public class MybookService {
 		mybookDao.dislike(checklike);
 	}
 	
+	//유저넘버 입력시 해당유저가 가장 최근에 좋아요한 서평가져오기
+	public List<MybookVo> likereview(int userNo) {
+		System.out.println("mybookService.likereview");
+		
+		List<MybookVo> likereview = mybookDao.likereview(userNo);
+		
+		return likereview;
+	}
+	
+	//해당유저 넘버를 주면 좋아요한 서평리스트를 출력하는 메소드+해당유저의 서평 총 갯수 출력
+	public List<MybookVo> likelist(int userNo) {
+		System.out.println("mybookService.likelist");
+		
+		List<MybookVo> likelist = mybookDao.likelist(userNo);
+		
+		for(int i=0; i<likelist.size(); i++) {
+			
+			int No = likelist.get(i).getUserNo();
+			
+			MybookVo reviewcnt = mybookDao.reviewcnt(No);
+			int rvcnt = reviewcnt.getLikecheck();
+			
+			likelist.get(i).setLikecheck(rvcnt);
+		}
+		
+		System.out.println("좋아요한유저서평들"+likelist);
+		
+		return likelist;
+	}
 	
 }

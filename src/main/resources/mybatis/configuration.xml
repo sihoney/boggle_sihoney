@@ -11,6 +11,7 @@
 		<typeAlias alias="BookreviewVo" type="com.javaex.vo.BookreviewVo"/>
 		<typeAlias alias="BookdetailVo" type="com.javaex.vo.BookdetailVo"/>
 		<typeAlias alias="PlaylistFolderVo" type="com.javaex.vo.PlaylistFolderVo"/>
+		<typeAlias alias="PlaylistVo" type="com.javaex.vo.PlaylistVo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
@@ -20,5 +21,6 @@
 		<mapper resource="mybatis/mappers/reviewwrite.xml" />
 		<mapper resource="mybatis/mappers/likeReview.xml"/>
 		<mapper resource="mybatis/mappers/playlistFolder.xml"/>
+		<mapper resource="mybatis/mappers/playlist.xml"/>
 	</mappers>
 </configuration>

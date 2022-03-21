@@ -14,6 +14,8 @@ public class MybookVo {
 	private int styleNo;
 	private int likecnt;
 	private int likecheck;
+	private String reviewLikeDate;
+	private String userPro;
 	
 	
 	public MybookVo() {}
@@ -66,8 +68,43 @@ public class MybookVo {
 		this.reviewDate = reviewDate;
 		this.styleNo = styleNo;
 		this.likecnt = likecnt;
+	}public MybookVo(int reviewNo, String bookTitle, String bookNo, String nickname, int userNo, String reviewContent,
+			String emoName, int emoNo, String reviewDate, int styleNo, int likecnt, int likecheck,
+			String reviewLikeDate) {
+		super();
+		this.reviewNo = reviewNo;
+		this.bookTitle = bookTitle;
+		this.bookNo = bookNo;
+		this.nickname = nickname;
+		this.userNo = userNo;
+		this.reviewContent = reviewContent;
+		this.emoName = emoName;
+		this.emoNo = emoNo;
+		this.reviewDate = reviewDate;
+		this.styleNo = styleNo;
+		this.likecnt = likecnt;
+		this.likecheck = likecheck;
+		this.reviewLikeDate = reviewLikeDate;
 	}
-	
+	public MybookVo(int reviewNo, String bookTitle, String bookNo, String nickname, int userNo, String reviewContent,
+			String emoName, int emoNo, String reviewDate, int styleNo, int likecnt, int likecheck,
+			String reviewLikeDate, String userPro) {
+		super();
+		this.reviewNo = reviewNo;
+		this.bookTitle = bookTitle;
+		this.bookNo = bookNo;
+		this.nickname = nickname;
+		this.userNo = userNo;
+		this.reviewContent = reviewContent;
+		this.emoName = emoName;
+		this.emoNo = emoNo;
+		this.reviewDate = reviewDate;
+		this.styleNo = styleNo;
+		this.likecnt = likecnt;
+		this.likecheck = likecheck;
+		this.reviewLikeDate = reviewLikeDate;
+		this.userPro = userPro;
+	}
 	
 	
 	
@@ -145,8 +182,18 @@ public class MybookVo {
 	public void setLikecheck(int likecheck) {
 		this.likecheck = likecheck;
 	}
-	
-	
+	public String getReviewLikeDate() {
+		return reviewLikeDate;
+	}
+	public void setReviewLikeDate(String reviewLikeDate) {
+		this.reviewLikeDate = reviewLikeDate;
+	}
+	public String getUserPro() {
+		return userPro;
+	}
+	public void setUserPro(String userPro) {
+		this.userPro = userPro;
+	}
 	
 	
 	

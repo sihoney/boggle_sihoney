@@ -3,6 +3,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="playlistFolder">
+
+	
 	<!-- <select id="" parameterType="" resultType="">
 	 	<![CDATA[
 	
@@ -45,33 +47,87 @@
 	</select>
 	
 	<!-- 플레이리스트 커버 -->
-	<select id="playlistCover" parameterType="map" resultType="PlaylistFolderVo">
+	<select id="playlistCover" parameterType="map" resultType="String">
 	 	<![CDATA[
-			select playlist_name playlistName,
-					playlist_no playlistNo
+			select  playlist_name
 			from playlist
 			where user_no = #{userNo}
 			and playlist_no = #{playlistNo}
 		]]>
 	</select>
-
-
-	<!-- 전체 서평 리스트 -->
-	<select id="reviewAll" resultType="BookreviewVo">
+	
+	<!-- 플리 모달 페이징 -->
+	<select id="modalPage" parameterType="map" resultType="PlaylistFolderVo">
 	 	<![CDATA[
-			select  r.review_no reviewNo,
-			        r.user_no userNo,
-			        r.book_no bookNo,
-			        r.style_no style_no,
-			        r.review_content reviewContent,
-			        r.review_date reviewDate,
+	 	
+			select se.rn rn,
+			       se.reviewNo reviewNo,
+			       se.userNo userNo,
+			       se.bookNo bookNo,
+			       se.styleNo styleNo,
+			       se.reviewContent reviewContent,
+			       se.reviewDate reviewDate,
+			       se.emoName emoName,
+			       se.bookTitle bookTitle,
+			       se.playlistNo playlistNo
+			from (select rownum rn,
+			             fr.reviewNo,
+			             fr.userNo,
+			             fr.bookNo,
+			             fr.styleNo,
+			             fr.reviewContent,
+			             fr.reviewDate,
+			             fr.emoName,
+			             fr.bookTitle,
+			             fr.playlistNo
+			        from (select  r.review_no reviewNo,
+			                      r.user_no userNo,
+			                      r.book_no bookNo,
+			                      r.style_no styleNo,
+			                      r.review_content reviewContent,
+			                      r.review_date reviewDate,
+			                      e.emo_name emoName,
+			                      b.book_title bookTitle,
+			                      pr.playlist_no playlistNo
+			              from review r, style s, emotion e, books b, playlist_review pr
+			              where r.style_no = s.style_no
+			              and s.emo_no = e.emo_no
+			              and b.book_no = r.book_no
+			              and r.review_no = pr.review_no
+			              order by review_date desc) fr) se
+			where rn >= #{startRnum}
+			and rn <= #{endRnum}
+	
+		]]>
+	</select>
+	
+	
+	<!-- 플리 모달 서평 전체 카운트 -->
+	<select id="totalCnt" resultType="int">
+	 	<![CDATA[
+			select count(*)
+			from review
+		]]>
+	</select>
+	
+	<!-- 플리 모달 검색창 -->
+	<select id="playlistSearch" parameterType="String" resultType="PlaylistFolderVo">
+	 	<![CDATA[
+			select  r.review_content reviewContent,
+			        r.review_no reviewNo,
 			        e.emo_name emoName,
-			        b.book_title bookTitle
-			from review r, style s, emotion e, books b
+			        b.book_title bookTitle,
+			        b.book_no bookNo,
+			        pr.playlist_no playlistNo
+			from review r, style s, emotion e, books b, playlist_review pr
 			where r.style_no = s.style_no
 			and s.emo_no = e.emo_no
 			and b.book_no = r.book_no
-			order by review_date desc
+			and r.review_no = pr.review_no
+			and (r.review_content like '%'||#{param}||'%' 
+			     or b.book_title like '%'||#{param}||'%'  
+			     or e.emo_name like '%'||#{param}||'%'
+			     )
 		]]>
 	</select>
 

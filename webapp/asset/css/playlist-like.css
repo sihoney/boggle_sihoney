@@ -233,13 +233,19 @@
 }
 
 #opac{
-    display: table-cell;
+    display : table;
     vertical-align: bottom;
     background : #ffffff7c;
-    height: 80px; width:180px;
+    height: 80px; width:180px !important;
     border-bottom-right-radius:12px;
     border-bottom-left-radius:12px;
-
+    text-align : center;
+}
+#opac>span {
+	display : table-cell;
+	vertical-align : middle;
+	font-size: 45px;
+	text-align : center;
 }
 
 /****************footer******************/

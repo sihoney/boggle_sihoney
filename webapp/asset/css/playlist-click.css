@@ -35,6 +35,7 @@
 
 #btn-cover>button {
     width: 150px;
+
     margin-right:20px;
     color: #fff;
     background-color: #ffffff48;
@@ -242,4 +243,5 @@
     width: 660px;
     height: 60px;
 }
+
 

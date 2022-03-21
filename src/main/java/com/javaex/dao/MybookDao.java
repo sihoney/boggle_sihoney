@@ -62,14 +62,38 @@ public class MybookDao {
 		System.out.println(count+"건을 좋아요하였습니다.");
 	}
 	
-	
-	
-	
 	public void dislike(MybookVo checklike) {
 		System.out.println("MybookDao.dislike()");
 		
 		int count = sqlSession.delete("mybook.dislike", checklike);
 		System.out.println(count+"건을 좋아요 취소하였습니다.");
+	}
+	
+	//유저넘버 입력시 해당유저가 가장 최근에 좋아요한 서평가져오기
+	public List<MybookVo> likereview(int userNo) {
+		System.out.println("MybookDao.likereview");
+		
+		List<MybookVo> likereview = sqlSession.selectList("mybook.like1", userNo);
+		
+		return likereview;
+	}
+	
+	//유저넘버 입력시 해당유저가 가장 최근에 좋아요한 서평 유저목록
+	public List<MybookVo> likelist(int userNo) {
+		System.out.println("MybookDao.likelist");
+		
+		List<MybookVo> likelist = sqlSession.selectList("mybook.likelist", userNo);
+		
+		return likelist;
+	}
+	
+	//유저넘버 입력시 해당 유저의 총 서평갯수
+	public MybookVo reviewcnt(int userNo) {
+		System.out.println("MybookDao.reviewcnt");
+		
+		MybookVo reviewcnt = sqlSession.selectOne("mybook.reviewcnt", userNo);
+				
+		return reviewcnt;
 	}
 	
 	

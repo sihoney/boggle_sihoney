@@ -19,7 +19,8 @@
 			SELECT  user_no userNo,
         			user_name userName,
         			nickname,
-        			email
+        			email,
+        			user_profile userProfile
 			FROM users
 			WHERE email = #{email}
 			AND password = #{password}

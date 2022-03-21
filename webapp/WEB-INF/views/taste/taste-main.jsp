@@ -1,34 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-
 <html lang="ko">
-
 <head>
 <meta charset="UTF-8">
 <title>taste-main</title>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/asset/css/all_css.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/asset/css/taste-main.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/taste-main.css">
 <link rel="stylesheet" href="/bookproject/asset/css/modal.css">
-
-<script
-	src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
-<script
-	src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
+<script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
 </head>
 <!--header-->
-
 <body>
 	<div id="wrap">
 		<!-- 헤더 -->
 		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
-
-
 		<!-- ------nav------ -->
 		<div id="nav" class="clearfix">
 			<c:choose>
@@ -36,6 +24,7 @@
 					<ul class="nav nav-tabs">
 						<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}">내 서평</a></li>
 						<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/${nickname}/tastemain">취향저격</a></li>
+						<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
 						<!--세션 아이디와 사이트아이디 같을때-->
 						<li role="presentation"><a href="${pageContext.request.contextPath}/analyze">통계</a></li>
 					</ul>
@@ -44,283 +33,194 @@
 					<!-- 세션아이디랑 다를때는 사이트주소의 아이디와 같은 유저의 데이터들 불러오기-->
 					<ul class="nav nav-tabs">
 						<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}">남 서평</a></li>
-						<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
+						<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/${nickname}/tastemain">취향저격</a></li>
+						<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
 					</ul>
 				</c:otherwise>
 			</c:choose>
 		</div>
 		<!-- ------nav------ -->
-
 		<!-- ------nav2------ -->
 		<ul id="nav2" class="nav nav-pills">
 			<!-- 세션아이디와 비교, 다를경우 '이름님의 취향' -->
 			<!-- <li role="presentation" class="active"><a href="">'유저이름'님의 취향</a></li> -->
-			<li role="presentation" class="active"><a
-				href="${pageContext.request.contextPath}/${nickname}/tastemain">my 취향</a></li>
-			<li role="presentation"><a
-				href="${pageContext.request.contextPath}/${nickname}/tastereview">좋아요한 서평</a></li>
-			<li role="presentation"><a
-				href="${pageContext.request.contextPath}/main_book">관심가는 책</a></li>
-			<li role="presentation"><a
-				href="${pageContext.request.contextPath}/like_playlist">플레이리스트</a></li>
+			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/${nickname}/tastemain">my 취향</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/tastereview">좋아요한 서평</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/main_book">관심가는 책</a></li>
 		</ul>
-
 		<div id="content">
 			<!--content1-->
 			<div id="content1">
 				<div class="minicontent">
 					<div class="left">
-						<p>'김고은'님이 좋아요한 서평</p>
+						<c:choose>
+							<c:when test="${result eq 'sameUser'}">
+								<p>'${nickname}'님이 좋아요한 서평</p>
+							</c:when>
+							<c:otherwise>
+								<p>'${otherUser.nickname}'님이 좋아요한 서평</p>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<div class="right" id="more">
 						<p>
-							<a href="${pageContext.request.contextPath}/review">더보기</a><span
-								class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+							<a href="${pageContext.request.contextPath}/${nickname }/review">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
 						</p>
 					</div>
 				</div>
 				<!-- 서평 리스트 -->
-				<div id="reviews">
-					<div id="reviews-header">
-						<div class="left">
-							<p>
-								<a>스며드는 것</a>
-							</p>
+				<c:forEach items="${like1 }" var="vo">
+					<div id="reviews">
+						<div id="reviews-header">
+							<div class="left">
+								<p>
+									<a href="${pageContext.request.contextPath}/bookdetail?bookNo=${vo.bookNo}">${vo.bookTitle }</a>
+								</p>
+							</div>
+							<!-- 작성자아이디와 세션아이디가 동일할 시에만 보이게 -->
+							<div class="right">
+								<c:if test="${result eq 'sameUser'}">
+									<a>수정</a>
+									<a>삭제</a>
+								</c:if>
+							</div>
 						</div>
-						<!-- 작성자아이디와 세션아이디가 동일할 시에만 보이게 -->
-						<div class="right">
-							<a>수정</a> <a>삭제</a>
+						<!-- 작성자아이디와 세션아이디가 동일할 경우에는 안보이게 -->
+						<div id="reviewer">
+							<a>${vo.nickname }</a>
 						</div>
-					</div>
-					<!-- 작성자아이디와 세션아이디가 동일할 경우에는 안보이게 -->
-					<div id="reviewer">
-						<a>안도현</a>
-					</div>
-					<div id="reviews-content">
-						<p>꽃게가 간장 속에 반쯤 몸을 담그고 엎드려 있다 등판에 간장이 울컥울컥 쏟아질 때 꽃게는 뱃속의 알을
-							껴안으려고 꿈틀거리다가 더 낮게 버둥겨렸으리라 버둥거리다가 어찌할 수 없어서 살 속으로 스며드는 것을 한 때의
-							어스름을 꽃게는 천천히 받아들였으리라 껍질이 먹먹해지기 전에 가만히 알들에게 말했으리라 저녁이야 불 끄고 잘 시간이야</p>
-						<span class="label label-default">우울한</span> <span
-							class="label label-default">#mood</span>
-					</div>
-					<div id="reviews-footer">
-						<div class="left">
-							<span id="heart" class="glyphicon glyphicon-heart"
-								aria-hidden="true"></span> <span>16.5k</span> <span>2022/02/22</span>
+						<div id="reviews-content">
+							<p>${vo.reviewContent }</p>
+							<span class="label label-default">${vo.emoName }</span>
 						</div>
-						<div class="right">
-							<div class="dropup">
-								<a id="dLabel" type="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false"> 더보기 <span
-									class="caret"></span>
-								</a>
-								<ul class="dropdown-menu" role="menu"
-									aria-labelledby="dropdownMenu2">
-									<li role="presentation"><a id="add_pli" role="menuitem"
-										tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
-									<li role="presentation" class="divider"></li>
-									<li role="presentation"><a id="shr_review" role="menuitem"
-										tabindex="-1">서평 공유하기<span
-											class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
-									<li role="presentation" class="divider"></li>
-									<li role="presentation">
-									<li role="presentation"><a id="save_img" role="menuitem"
-										target="_blank" tabindex="-1"
-										href="${pageContext.request.contextPath}/imgpreview">이미지
-											저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
-									</a></li>
-								</ul>
+						<div id="reviews-footer">
+							<div class="left">
+								<span id="heart" class="glyphicon glyphicon-heart" aria-hidden="true"></span> <span>${vo.likecnt }</span> <span>${vo.reviewDate }</span>
+							</div>
+							<div class="right">
+								<div class="dropup">
+									<a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 더보기 <span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+										<li role="presentation"><a id="add_pli" role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
+										<li role="presentation" class="divider"></li>
+										<li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
+										<li role="presentation" class="divider"></li>
+										<li role="presentation">
+										<li role="presentation"><a id="save_img" role="menuitem" target="_blank" tabindex="-1" href="${pageContext.request.contextPath}/imgpreview">이미지 미리보기<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+										</a></li>
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				</c:forEach>
+				<!-- 서평 -->
 			</div>
 			<!--content1-->
-
 			<!--content2-->
 			<div id="content2">
 				<div class="minicontent">
 					<div class="left">
-						<p>'김고은'님이 좋아요한 작가</p>
+						<c:choose>
+							<c:when test="${result eq 'sameUser'}">
+								<p>'${nickname}'님이 좋아요한 유저</p>
+							</c:when>
+							<c:otherwise>
+								<p>'${otherUser.nickname}'님이 좋아요한 유저</p>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 				<div>
-					<div class="likewriter">
-						<img
-							src="${pageContext.request.contextPath}/asset/img/yjprofile.jpg"
-							alt="..." class="img-circle">
-						<div id="writerinfo">
-							<h1>우동먹는 오리</h1>
-							<p>서평 수 : 913</p>
+					<c:forEach items="${likelist}" var="vo">
+						<div class="likewriter">
+							<a href="${pageContext.request.contextPath}/${vo.nickname}">
+							<img src="${vo.userPro }" alt="${pageContext.request.contextPath}/asset/img/profile.png" class="img-circle">
+							</a>
+							<div id="writerinfo">
+								<h1>${vo.nickname}</h1>
+								<p>서평 수 : ${vo.likecheck }</p>
+							</div>
+							<p class="word">${vo.reviewContent }</p>
 						</div>
-						<p class="word">새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한
-							개의 세계를 부숴야 한다. 새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한 개의
-							세계를 부숴야 한다. 새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한 개의 세계를
-							부숴야 한다. 새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한 개의 세계를 부숴야
-							한다.</p>
-					</div>
-					<div class="likewriter">
-						<img
-							src="${pageContext.request.contextPath}/asset/img/yjprofile.jpg"
-							alt="..." class="img-circle">
-						<div id="writerinfo">
-							<h1>우동먹는 오리</h1>
-							<p>서평 수 : 913</p>
-						</div>
-						<p class="word">새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한
-							개의 세계를 부숴야 한다. 새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한 개의
-							세계를 부숴야 한다. 새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한 개의 세계를
-							부숴야 한다. 새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한 개의 세계를 부숴야
-							한다.</p>
-					</div>
-					<div class="likewriter">
-						<img
-							src="${pageContext.request.contextPath}/asset/img/yjprofile.jpg"
-							alt="..." class="img-circle">
-						<div id="writerinfo">
-							<h1>우동먹는 오리</h1>
-							<p>서평 수 : 913</p>
-						</div>
-						<p class="word">새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한
-							개의 세계를 부숴야 한다. 새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한 개의
-							세계를 부숴야 한다. 새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한 개의 세계를
-							부숴야 한다. 새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한 개의 세계를 부숴야
-							한다.</p>
-					</div>
-					<div class="likewriter">
-						<img
-							src="${pageContext.request.contextPath}/asset/img/yjprofile.jpg"
-							alt="..." class="img-circle">
-						<div id="writerinfo">
-							<h1>우동먹는 오리</h1>
-							<p>서평 수 : 913</p>
-						</div>
-						<p class="word">새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한
-							개의 세계를 부숴야 한다. 새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한 개의
-							세계를 부숴야 한다. 새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한 개의 세계를
-							부숴야 한다. 새는 알에서 빠져나오려고 몸부림친다. 알은 세계이다. 태어나려는 자는 누구든 한 개의 세계를 부숴야
-							한다.</p>
-					</div>
+					</c:forEach>
 				</div>
 			</div>
 			<!--content2-->
-
 			<!--content3-->
 			<div id="content3">
 				<div class="minicontent">
 					<div class="left">
-						<p>'김고은'님이 관심있는 책</p>
+						<c:choose>
+							<c:when test="${result eq 'sameUser'}">
+								<p>'${nickname}'님이 관심있는 책</p>
+							</c:when>
+							<c:otherwise>
+								<p>'${otherUser.nickname}'님이 관심있는 책</p>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<div class="right" id="more">
 						<p>
-							<a href="${pageContext.request.contextPath}/main_book">더보기</a><span
-								class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+							<a href="${pageContext.request.contextPath}/${nickname }/main_book">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
 						</p>
 					</div>
 				</div>
 				<div id="background">
 					<div>
-						<img class="cover"
-							src="https://image.aladin.co.kr/product/26/0/cover500/s742633278_1.jpg"
-							alt="image" /> <img class="cover"
-							src="https://image.aladin.co.kr/product/26/0/cover500/s742633278_1.jpg"
-							alt="image" /> <img class="cover"
-							src="https://image.aladin.co.kr/product/26/0/cover500/s742633278_1.jpg"
-							alt="image" /> <img class="cover"
-							src="https://image.aladin.co.kr/product/26/0/cover500/s742633278_1.jpg"
-							alt="image" /> <img class="cover"
-							src="https://image.aladin.co.kr/product/26/0/cover500/s742633278_1.jpg"
-							alt="image" />
+						<img class="cover" src="https://image.aladin.co.kr/product/26/0/cover500/s742633278_1.jpg" alt="image" /> <img class="cover" src="https://image.aladin.co.kr/product/26/0/cover500/s742633278_1.jpg" alt="image" /> <img class="cover" src="https://image.aladin.co.kr/product/26/0/cover500/s742633278_1.jpg" alt="image" /> <img class="cover" src="https://image.aladin.co.kr/product/26/0/cover500/s742633278_1.jpg" alt="image" /> <img class="cover" src="https://image.aladin.co.kr/product/26/0/cover500/s742633278_1.jpg" alt="image" />
 					</div>
-
 				</div>
 			</div>
 			<!--content3-->
-
 			<!--content4-->
 			<div id="content4">
 				<div class="minicontent">
 					<div class="left">
-						<p>'김고은'님이 좋아하는 플레이리스트</p>
+						<c:choose>
+							<c:when test="${result eq 'sameUser'}">
+								<p>'${nickname}'님이 좋아요한 플레이리스트</p>
+							</c:when>
+							<c:otherwise>
+								<p>'${otherUser.nickname}'님이 좋아요한 플레이리스트</p>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<div class="right" id="more">
 						<p>
-							<a href="${pageContext.request.contextPath}/like_playlist">더보기</a><span
-								class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+							<a href="${pageContext.request.contextPath}/${nickname }/like_playlist">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
 						</p>
 					</div>
 				</div>
 				<div>
 					<p class="index">오늘의 플레이리스트를 확인해보세요!</p>
 				</div>
-
 				<div id="playlist">
-
-					<div class="nail purple">
-						<div class="nail-desc">
-							<p>
-								출근할 때 즐기는<br>에너제틱 플레이리스트
-							</p>
-						</div>
-						<div>
-							<div id="opac"></div>
-						</div>
-					</div>
-
-					<div class="nail deeppurple">
-						<div class="nail-desc">
-							<p>
-								그래 가보자고<br>의욕 뿜뿜 플레이리스트
-							</p>
-						</div>
-						<div>
-							<div id="opac"></div>
-						</div>
-					</div>
-
-					<div class="nail green">
-						<div class="nail-desc">
-							<p>
-								나만 이런 게 아니었어<br>공감 꾹꾹 플레이리스트
-							</p>
-						</div>
-						<div id="opac"></div>
-					</div>
-
-					<div class="nail green">
-						<div class="nail-desc">
-							<p>
-								나만 이런 게 아니었어<br>공감 꾹꾹 플레이리스트
-							</p>
-						</div>
-						<div id="opac"></div>
-					</div>
-
-					<div class="nail green">
-						<div class="nail-desc">
-							<p>
-								나만 이런 게 아니었어<br>공감 꾹꾹 플레이리스트
-							</p>
-						</div>
-						<div id="opac"></div>
-					</div>
+				
+					<c:forEach items="${likeplay}" var="vo">
+						<div class="nail purple" onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&userNo=${vo.userNo }'"> <!-- 1~14까지 감정으로색깔 -->
+							<div class="nail-desc">
+								<p>${vo.playlistName }</p>
+							</div>
+							<div>
+								<div id="opac">
+									<span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+								</div>
+							</div>
+						</div>	
+					</c:forEach>
+					
 				</div>
-
 			</div>
 			<!--content4-->
-
 		</div>
-
 		<!-- footer -->
 		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
-
 		<!-- modal창 -->
 		<c:import url="/WEB-INF/views/include/modal.jsp"></c:import>
-
 	</div>
 	<!--wrap-->
 </body>
-
 <script src="${pageContext.request.contextPath}/asset/js/more.js"></script>
-
 </html>

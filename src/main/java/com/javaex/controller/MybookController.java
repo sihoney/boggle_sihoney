@@ -53,6 +53,9 @@ public class MybookController {
          
          //세션아이디의 유저넘버
          int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo(); 
+         UserVo Userinfo = userService.getUser(yours);
+         
+         model.addAttribute("Userinfo", Userinfo);
          
          return "mybook/mybook_review";
          
@@ -69,7 +72,8 @@ public class MybookController {
          UserVo otherUser = userService.getUser(nickname);
          int userNo = otherUser.getUserNo();
          
-        
+         model.addAttribute("Userinfo", otherUser);
+         
          return "mybook/otherbook_review";
       }
       
@@ -255,18 +259,5 @@ public class MybookController {
     	 return likeok;
       }
    }
-
-   //취향저격(main페이지)
-   @RequestMapping("/{nickname}/tastemain")
-   public String tastemain(@PathVariable(value="nickname") String nickname,
-                     HttpSession session, Model model) {
-      
-	  //좋아요 리스트 하나만 출력해주는 메소드
-	   
-         
-      return "taste/taste-main";      
-   }
-   
-   
-   
+  
 }
