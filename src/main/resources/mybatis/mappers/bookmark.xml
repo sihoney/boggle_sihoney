@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bookmark">
+
+	<select id="bookMarkList" parameterType="int" resultType="BookmarkVo">
+		<![CDATA[
+			select  b.userNo,
+			        b.nickname,
+			        b.book_user_no,
+			        b.book_title,
+			        b.author,
+			        b.bookNo,
+			        b.bookmark_date,
+			        b.cover_url,
+			        b.book_url
+			    from(select
+			        a.userNo,
+			        a.book_user_no,
+			        a.bookNo,
+			        a.bookmark_date,
+			        a.nickname,
+			        a.book_title,
+			        a.author,
+			        a.book_url,
+			        a.genre_no,
+			        a.cover_url
+			        from (select  bu.user_no userNo,
+			                bu.book_user_no,
+			                bu.book_no bookNo,
+			                bu.bookmark_date,
+			                u.nickname,
+			                bo.book_no,
+			                bo.book_title,
+			                bo.author,
+			                bo.book_url,
+			                bo.genre_no,
+			                bo.cover_url
+			            from users u, book_user bu, books bo
+			            where u.user_no = bu.user_no
+			            and bu.book_no = bo.book_no
+			            order by book_user_no desc
+			                    )a
+			                )b
+			            where userNo=2
+			            and b.bookNo = (select max(bu.book_no)
+			            from book_user bu
+			            where bu.book_no = b.bookNo)
+			            order by book_user_no asc
+		]]>
+	</select>
+
+</mapper>
