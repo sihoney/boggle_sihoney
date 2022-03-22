@@ -135,8 +135,7 @@
 				<div>
 					<c:forEach items="${likelist}" var="vo">
 						<div class="likewriter">
-							<a href="${pageContext.request.contextPath}/${vo.nickname}">
-							<img src="${vo.userPro }" onerror="this.src='${pageContext.request.contextPath}/asset/img/profile.png'" class="img-circle">
+							<a href="${pageContext.request.contextPath}/${vo.nickname}"> <img src="${vo.userPro }" onerror="this.src='${pageContext.request.contextPath}/asset/img/profile.png'" class="img-circle">
 							</a>
 							<div id="writerinfo">
 								<h1>${vo.nickname}</h1>
@@ -169,13 +168,10 @@
 				</div>
 				<div id="background">
 					<div>
-					
-					<c:forEach items="${get5book}" var="vo">
-						<a class="a" href="${pageContext.request.contextPath}/bookdetail?bookNo=${vo.bookNo}&userNo=${vo.userNo}">
-							<img class="cover" src="${vo.cover_url }" alt="image" />
-						</a>
-					</c:forEach>
-					
+						<c:forEach items="${get5book}" var="vo">
+							<a class="a" href="${pageContext.request.contextPath}/bookdetail?bookNo=${vo.bookNo}&userNo=${vo.userNo}"> <img class="cover" src="${vo.cover_url }" alt="image" />
+							</a>
+						</c:forEach>
 					</div>
 				</div>
 			</div>
@@ -203,20 +199,19 @@
 					<p class="index">오늘의 플레이리스트를 확인해보세요!</p>
 				</div>
 				<div id="playlist">
-				
 					<c:forEach items="${likeplay}" var="vo">
-						<div class="nail purple"> <!-- 1~14까지 감정으로색깔 -->
+						<div class="nail purple">
+							<!-- 1~14까지 감정으로색깔 -->
 							<div onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&userNo=${vo.userNo }&nickname=${vo.nickname}'" class="nail-desc">
 								<p>${vo.playlistName }</p>
 							</div>
 							<div>
-								<div onclick="location.href='${pageContext.request.contextPath}/main/playlist?playlistNo=${vo.playlistNo }'" id="opac">  
+								<div onclick="location.href='${pageContext.request.contextPath}/main/playlist?playlistNo=${vo.playlistNo }'" id="opac">
 									<span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
 								</div>
 							</div>
-						</div>	
+						</div>
 					</c:forEach>
-					
 				</div>
 			</div>
 			<!--content4-->
@@ -228,76 +223,75 @@
 	</div>
 	<!--wrap-->
 </body>
-
 <script type="text/javascript">
-//좋아요 버튼을 클릭했을때(이벤트)
-$("#content1").on("click", ".like", function() {
-	
-	//데이터수집
-	var $this = $(this);
-	
-	var no = $this.data("reviewno");
-	//var likecnt = parseInt($(this).next().data("likecnt"));
-	var likecnt = $this.next().data("likecnt");
-	
-	//출력(리뷰넘버찍어보기), json 으로 보내주기
-	console.log("서평넘버 : "+no+", 좋아요 수 : "+likecnt);
-	
-	var clickReviewVo = {
-		reviewNo : no
-	};
-	
-	//요청 : json 방식
-	$.ajax({
-		//url로 요청할게!    
-		url : "${pageContext.request.contextPath }/like",
-		type : "post",
-		contentType : "application/json", //보낼때 json으로 보낼게
-		data : JSON.stringify(clickReviewVo),
-		//주소뒤에 갈 데이터 전송방식, //자바 스크립트 객체를 json형식으로 변경
-		dataType : "json", //json> javascript
+
+	//로딩되기전에 하트모양 요청
+	$(document).ready(function(){
 		
-		success : function(likeok) {
-			
-			//포함되어있으면 true      
-		    let isExist = document.getElementById('latest-order').classList.contains('txt-b');  
-		    console.log(isExist);				
-		    console.log(no);			 
-		   
-		  	//좋아요인경우
-		   	if (likeok.likecheck == 0) {	
-		   		
-			    console.log("좋아요");
-			    console.log(likeok.likecnt);
-				
-			  	//하트모양변경
-		      	$this.attr('class', 'like glyphicon glyphicon-heart');
-			  	
-			    //카운트 +1
-			    $this.next().html(likeok.likecnt+1);	
-			    
-			  
-		   } else {
-			   
-		       console.log("좋아요취소");
-		      
-		       $this.attr('class','like glyphicon glyphicon-heart-empty');
-		       
-		       $this.next().html(likeok.likecnt-1);
-		   }		   
-
-		},
-		//로그인하지 않은경우(모달창띄워주기)
-		error : function(XHR, status, error) {
-		   console.error(status + " : " + error);
-		}
+		$('#heart').attr('class','like glyphicon glyphicon-heart');
+		
 	});
+	
 
-});
 
+	//좋아요 버튼을 클릭했을때(이벤트)
+	$("#content1").on("click",".like",function() {
 
+		//데이터수집
+		var $this = $(this);
+
+		var no = $this.data("reviewno");
+		//var likecnt = parseInt($(this).next().data("likecnt"));
+		var likecnt = $this.next().data("likecnt");
+
+		//출력(리뷰넘버찍어보기), json 으로 보내주기
+		console.log("서평넘버 : " + no + ", 좋아요 수 : " + likecnt);
+
+		var clickReviewVo = {
+			reviewNo : no
+		};
+
+		//요청 : json 방식
+		$.ajax({
+			//url로 요청할게!    
+			url : "${pageContext.request.contextPath }/like",
+			type : "post",
+			contentType : "application/json", //보낼때 json으로 보낼게
+			data : JSON.stringify(clickReviewVo),
+			//주소뒤에 갈 데이터 전송방식, //자바 스크립트 객체를 json형식으로 변경
+			dataType : "json", //json> javascript
+
+			success : function(likeok) {
+
+				//좋아요인경우
+				if (likeok.likecheck == 0) {
+
+					console.log("좋아요");
+					console.log(likeok.likecnt);
+
+					//하트모양변경
+					$this.attr('class','like glyphicon glyphicon-heart');
+
+					//카운트 +1
+					$this.next().html(likeok.likecnt + 1);
+
+				} else {
+
+					console.log("좋아요취소");
+
+					$this.attr('class','like glyphicon glyphicon-heart-empty');
+
+					$this.next().html(likeok.likecnt - 1);
+				}
+
+			},
+			//로그인하지 않은경우(모달창띄워주기)
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+
+	});
 </script>
-
-
 <script src="${pageContext.request.contextPath}/asset/js/more.js"></script>
 </html>

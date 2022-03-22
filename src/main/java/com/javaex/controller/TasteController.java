@@ -38,7 +38,13 @@ public class TasteController {
 	public String tastemain(@PathVariable(value = "nickname") String nickname, HttpSession session, Model model) {
 
 		System.out.println("tastemain");
-
+		
+		if (session == null || session.getAttribute("authUser") == null || session.getAttribute("authUser").equals("")) {
+		   System.out.println("세션만료 혹은 잘못된 접근");
+		   
+		   return "user/loginForm";
+	   }
+		
 		// 세션의 닉네임
 		String yours = ((UserVo) session.getAttribute("authUser")).getNickname();
 		System.out.println("로그인사람의 닉네임 : " + yours);
