@@ -136,7 +136,7 @@
 					<c:forEach items="${likelist}" var="vo">
 						<div class="likewriter">
 							<a href="${pageContext.request.contextPath}/${vo.nickname}">
-							<img src="${vo.userPro }" alt="${pageContext.request.contextPath}/asset/img/profile.png" class="img-circle">
+							<img src="${vo.userPro }" onerror="this.src='${pageContext.request.contextPath}/asset/img/profile.png'" class="img-circle">
 							</a>
 							<div id="writerinfo">
 								<h1>${vo.nickname}</h1>

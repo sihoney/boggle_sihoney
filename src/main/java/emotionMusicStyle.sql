@@ -218,33 +218,33 @@ ALTER TABLE style
 ADD videourl varchar2(1000);
 
 UPDATE style
-SET imgurl='rainywindow'
+SET imgurl='rainywindow.png'
 where style_no = 1;
 UPDATE style
-SET imgurl='rainyday'
+SET imgurl='rainyday.png'
 where style_no = 2;
 UPDATE style
-SET imgurl='puppy1'
+SET imgurl='puppy1.png'
 where style_no = 3;
 UPDATE style
-SET imgurl='puppy2'
+SET imgurl='puppy2.png'
 where style_no = 4;
 UPDATE style
-SET imgurl='moon'
+SET imgurl='moon.png'
 where style_no = 5;
 
 UPDATE style
-SET videourl='https://vod-progressive.akamaized.net/exp=1647852285~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F1351%2F9%2F231759069%2F820068934.mp4~hmac=d7ba763ced6e65dacece593e63ba3bafb2fbc666d0e2919443d23bed96bf4a0d/vimeo-prod-skyfire-std-us/01/1351/9/231759069/820068934.mp4?filename=Graphic+-+11722.mp4'
+SET videourl='rainywindow.mp4'
 where style_no = 1;
 UPDATE style
-SET videourl='https://vod-progressive.akamaized.net/exp=1647852788~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F1563%2F7%2F182817488%2F600609303.mp4~hmac=6ba7e83e155f6b9d733a643c926970bef66be7b42120c06e3c901e4ad77e9056/vimeo-prod-skyfire-std-us/01/1563/7/182817488/600609303.mp4?filename=Rainy+Day+-+5278.mp4'
+SET videourl='rainyday.mp4'
 where style_no = 2;
 UPDATE style
-SET videourl='https://vod-progressive.akamaized.net/exp=1648011624~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F2141%2F27%2F685705714%2F3163162730.mp4~hmac=717c2c1698781f30c6a87d148fe45f41ba3a96e66af419198b327f0fc015bb69/vimeo-prod-skyfire-std-us/01/2141/27/685705714/3163162730.mp4'
+SET videourl='puppy1.mp4'
 where style_no = 3;
 UPDATE style
-SET videourl='https://vod-progressive.akamaized.net/exp=1647852920~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F947%2F7%2F179738694%2F586744338.mp4~hmac=c7c6925cff84805d0983b6bfc341f8a8ad26419a30ed154da1cafd82f58a410d/vimeo-prod-skyfire-std-us/01/947/7/179738694/586744338.mp4?filename=Puppy+-+4740.mp4'
+SET videourl='puppy2.mp4'
 where style_no = 4;
 UPDATE style
-SET videourl='https://vod-progressive.akamaized.net/exp=1647853002~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F1426%2F16%2F407130953%2F1743906140.mp4~hmac=feb1df573750cf3c396914be37f25d2d662163e35f3bfd94fbaf2e709b31a7d5/vimeo-prod-skyfire-std-us/01/1426/16/407130953/1743906140.mp4?filename=Moon+-+35455.mp4'
+SET videourl='moon.mp4'
 where style_no = 5;

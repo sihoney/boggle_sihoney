@@ -35,6 +35,21 @@ values(seq_user_no.nextval, '황인경', '후추가득스테이크', 'inKe831@na
 insert into users
 values(seq_user_no.nextval, '황희원', '마크부인캐나다인', 'hee1@naver.com', '1234', '@@@@@', sysdate);
 
+
+
+update users set user_profile = 'https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202201/04/9d10eb85-214f-4dd2-a2f7-c3ae80387913.jpg'
+where user_no = 1;
+update users set user_profile = 'https://ww.namu.la/s/bd52223e4d1f11fcc4c7f6506bf3321b26579bf118db6c1ca20492b9af4228a414edd25f1006baace220e4ca771288e0f38d6cbf253ae4e9d39aaf4b881600b0d65e518e7d94891837ee9a0c6a723aac0f4d2b7bf4a65b36bd1fe636aa49c632'
+where user_no = 2;
+update users set user_profile = 'https://pbs.twimg.com/media/Ewva3yqVoAAorHA.jpg'
+where user_no = 3;
+update users set user_profile = 'https://mblogthumb-phinf.pstatic.net/MjAxOTAyMThfMjg2/MDAxNTUwNDU1NDM0OTM0.3hZ14ZKCNfOzeeZHVghxdpyX_8p2GV0B9dbry4phXwwg.ik9Pp55K8tkx-3okJ7TlYlGT4iNL6RZmyNf5PriSnSMg.PNG.green-solar/image.png?type=w800'
+where user_no = 4;
+update users set user_profile = 'http://file3.instiz.net/data/cached_img/upload/2019/04/29/1/931ae4250ebf5040df54dc8e78492926.jpg'
+where user_no = 5;
+update users set user_profile = 'https://pbs.twimg.com/media/EUMmqQkU4AAZ6Oj.jpg'
+where user_no = 6;
+
        
 commit;   
 
