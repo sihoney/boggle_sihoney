@@ -13,7 +13,7 @@
         			r.review_content reviewContent,
         			r.style_no styleNo,
         			r.emo_name emoName,
-        			r.likecnt,
+        			NVL(r.likecnt,0) likecnt,
         			to_char(r.review_date, 'yyyy/mm/dd') reviewDate
 			from   (select  r.review_no,
                 			ru.likecnt,
@@ -39,7 +39,7 @@
                 			and     r.user_no = u.user_no) r,(select review_no, count(review_no) likecnt
                                                     		  from review_user
                                                     		  group by review_no) ru
-        			where r.review_no = ru.review_no) r, books b
+        			where r.review_no = ru.review_no(+)) r, books b
 			where   r.book_no = b.book_no
 			and r.user_no = #{userNo}
 			ORDER BY reviewDate asc
@@ -58,7 +58,7 @@
         			r.review_content reviewContent,
         			r.style_no styleNo,
         			r.emo_name emoName,
-        			r.likecnt,
+        			NVL(r.likecnt,0) likecnt,
         			to_char(r.review_date, 'yyyy/mm/dd') reviewDate
 			from   (select  r.review_no,
                 			ru.likecnt,
@@ -84,7 +84,7 @@
                 			and     r.user_no = u.user_no) r,(select review_no, count(review_no) likecnt
                                                     		  from review_user
                                                     		  group by review_no) ru
-        			where r.review_no = ru.review_no) r, books b
+        			where r.review_no = ru.review_no(+)) r, books b
 			where   r.book_no = b.book_no
 			and r.user_no = #{userNo}
 			ORDER BY r.likecnt desc
@@ -127,7 +127,7 @@
 			select  r.review_no reviewNo,
         			r.user_no userNo,
         			r.nickname,
-        			r.likecnt
+        			NVL(r.likecnt,0) likecnt
 			from   (select  r.review_no,
                 			ru.likecnt,
                 			r.style_no,
@@ -152,7 +152,7 @@
                 			and     r.user_no = u.user_no) r,(select review_no, count(review_no) likecnt
                                                   			from review_user
                                                   			group by review_no) ru
-        			where r.review_no = ru.review_no) r, books b
+        			where r.review_no = ru.review_no(+)) r, books b
 					where   r.book_no = b.book_no
 					and r.review_no = #{reviewNo}
 		]]>
@@ -171,7 +171,7 @@
         r.reviewContent,
         r.styleNo,
         r.emoName,
-        r.likecnt,
+        NVL(r.likecnt,0) likecnt,
         r.reviewDate
 from (select    ru.review_like_date reviewLikeDate,
                 r.reviewNo,
@@ -218,7 +218,7 @@ from (select    ru.review_like_date reviewLikeDate,
                                 and     r.user_no = u.user_no) r,(select review_no, count(review_no) likecnt
                                                                 from review_user
                                                                 group by review_no) ru
-                    where r.review_no = ru.review_no) r, books b
+                    where r.review_no = ru.review_no(+)) r, books b
             where   r.book_no = b.book_no) r, review_user ru
         where ru.review_no = r.reviewNo
         and user_no = #{userNo}
@@ -241,7 +241,7 @@ where rownum <= 1
                 r.reviewContent,
                 r.styleNo,
                 r.emoName,
-                r.likecnt,
+                NVL(r.likecnt,0) likecnt,
                 r.reviewDate,
                 r.user_profile userPro
 from (select    ru.review_like_date reviewLikeDate,
@@ -293,7 +293,7 @@ from (select    ru.review_like_date reviewLikeDate,
                                 and     r.user_no = u.user_no) r,(select review_no, count(review_no) likecnt
                                                                 from review_user
                                                                 group by review_no) ru
-                    where r.review_no = ru.review_no) r, books b
+                    where r.review_no = ru.review_no(+)) r, books b
             where   r.book_no = b.book_no) r, review_user ru
         where ru.review_no = r.reviewNo
         and user_no = #{userNo}
@@ -312,8 +312,5 @@ from (select    ru.review_like_date reviewLikeDate,
 		]]>
 	</select>	
 	
-	
-	
-
 	
 </mapper>

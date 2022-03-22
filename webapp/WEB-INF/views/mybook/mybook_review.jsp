@@ -394,7 +394,7 @@
 		str += ' 			<p><a href="${pageContext.request.contextPath}/bookdetail?bookNo='+ mybookVo.bookNo + '&userNo='+mybookVo.userNo+'">' + mybookVo.bookTitle + '</a></p> ';
 		str += ' 		</div> ';
 		str += ' 		<div class="right"> ';
-		str += ' 			<a>수정</a> <a>삭제</a> ';
+		str += ' 			<a href="${pageContext.request.contextPath}/review/write?reviewNo='+mybookVo.reviewNo+'">수정</a> <a href="${pageContext.request.contextPath}/delete?reviewNo='+mybookVo.reviewNo+'">삭제</a> ';
 		str += ' 		</div> ';
 		str += ' 	</div> ';
 		str += ' 	<div class="reviews-content"> ';

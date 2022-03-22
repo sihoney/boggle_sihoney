@@ -28,14 +28,19 @@ public class MybookController {
    private MybookService mybookService;   
    @Autowired
    private UserService userService;
-   
-   
+      
    //내서재
    @RequestMapping("/{nickname}")
    public String myreview(@PathVariable(value="nickname") String nickname,
                      HttpSession session, Model model) {
 	   
       System.out.println("mybook");
+      
+      if (session == null || session.getAttribute("authUser") == null || session.getAttribute("authUser").equals("")) {
+		   System.out.println("세션만료 혹은 잘못된 접근");
+		   
+		   return "user/loginForm";
+	   }
       
       //세션의 닉네임
       String yours = ((UserVo)session.getAttribute("authUser")).getNickname();

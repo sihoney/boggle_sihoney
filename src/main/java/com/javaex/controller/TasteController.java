@@ -10,9 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.javaex.service.BookmarkService;
 import com.javaex.service.MybookService;
 import com.javaex.service.PlaylistService;
 import com.javaex.service.UserService;
+import com.javaex.vo.BookmarkVo;
 import com.javaex.vo.MybookVo;
 import com.javaex.vo.PlaylistVo;
 import com.javaex.vo.UserVo;
@@ -28,6 +30,8 @@ public class TasteController {
 	private UserService userService;
 	@Autowired
 	private PlaylistService playlistService;
+	@Autowired
+	private BookmarkService bookmarkService;
 
 	// 취향저격(main페이지)
 	@RequestMapping("/{nickname}/tastemain")
@@ -63,7 +67,11 @@ public class TasteController {
 			//해당유저 넘버를 주면 좋아요한 플레이리스트를 출력하는 메소드
 			List<PlaylistVo> likeplay = playlistService.likelist(userNo);
 			model.addAttribute("likeplay", likeplay);
-
+			
+			//해당유저넘버를 주면 좋아요한 책 목록을 출력하는 메소드
+			List<BookmarkVo> get5book = bookmarkService.get5book(userNo);
+			model.addAttribute("get5book", get5book);
+			
 		} else {
 
 			String result = nickname;
@@ -89,6 +97,9 @@ public class TasteController {
 			List<PlaylistVo> likeplay = playlistService.likelist(userNo);
 			model.addAttribute("likeplay", likeplay);
 			
+			//해당유저넘버를 주면 좋아요한 책 목록을 출력하는 메소드
+			List<BookmarkVo> get5book = bookmarkService.get5book(userNo);
+			model.addAttribute("get5book", get5book);
 		}
 
 		return "taste/taste-main";

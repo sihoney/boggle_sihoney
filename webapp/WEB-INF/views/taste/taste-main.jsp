@@ -74,14 +74,14 @@
 						<div id="reviews-header">
 							<div class="left">
 								<p>
-									<a href="${pageContext.request.contextPath}/bookdetail?bookNo=${vo.bookNo}">${vo.bookTitle }</a>
+									<a href="${pageContext.request.contextPath}/bookdetail?bookNo=${vo.bookNo}&userNo=${vo.userNo}">${vo.bookTitle }</a>
 								</p>
 							</div>
 							<!-- 작성자아이디와 세션아이디가 동일할 시에만 보이게 -->
 							<div class="right">
 								<c:if test="${result eq 'sameUser'}">
-									<a>수정</a>
-									<a>삭제</a>
+									<a href="${pageContext.request.contextPath}/review/write?reviewNo=${vo.reviewNo}">수정</a>
+									<a href="${pageContext.request.contextPath}/delete?reviewNo=${vo.reviewNo}">삭제</a>
 								</c:if>
 							</div>
 						</div>
@@ -95,7 +95,7 @@
 						</div>
 						<div id="reviews-footer">
 							<div class="left">
-								<span id="heart" class="glyphicon glyphicon-heart" aria-hidden="true"></span> <span>${vo.likecnt }</span> <span>${vo.reviewDate }</span>
+								<span class="like" data-reviewno="${vo.reviewNo }" id="heart" class="glyphicon glyphicon-heart" aria-hidden="true"></span> <span class="likecnt" data-likecnt="${vo.likecnt}">${vo.likecnt }</span> <span>${vo.reviewDate }</span>
 							</div>
 							<div class="right">
 								<div class="dropup">
@@ -169,7 +169,13 @@
 				</div>
 				<div id="background">
 					<div>
-						<img class="cover" src="https://image.aladin.co.kr/product/26/0/cover500/s742633278_1.jpg" alt="image" /> <img class="cover" src="https://image.aladin.co.kr/product/26/0/cover500/s742633278_1.jpg" alt="image" /> <img class="cover" src="https://image.aladin.co.kr/product/26/0/cover500/s742633278_1.jpg" alt="image" /> <img class="cover" src="https://image.aladin.co.kr/product/26/0/cover500/s742633278_1.jpg" alt="image" /> <img class="cover" src="https://image.aladin.co.kr/product/26/0/cover500/s742633278_1.jpg" alt="image" />
+					
+					<c:forEach items="${get5book}" var="vo">
+						<a class="a" href="${pageContext.request.contextPath}/bookdetail?bookNo=${vo.bookNo}&userNo=${vo.userNo}">
+							<img class="cover" src="${vo.cover_url }" alt="image" />
+						</a>
+					</c:forEach>
+					
 					</div>
 				</div>
 			</div>
@@ -199,12 +205,12 @@
 				<div id="playlist">
 				
 					<c:forEach items="${likeplay}" var="vo">
-						<div class="nail purple" onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&userNo=${vo.userNo }'"> <!-- 1~14까지 감정으로색깔 -->
-							<div class="nail-desc">
+						<div class="nail purple"> <!-- 1~14까지 감정으로색깔 -->
+							<div onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&userNo=${vo.userNo }&nickname=${vo.nickname}'" class="nail-desc">
 								<p>${vo.playlistName }</p>
 							</div>
 							<div>
-								<div id="opac">
+								<div onclick="location.href='${pageContext.request.contextPath}/main/playlist?playlistNo=${vo.playlistNo }'" id="opac">  
 									<span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
 								</div>
 							</div>
@@ -222,5 +228,76 @@
 	</div>
 	<!--wrap-->
 </body>
+
+<script type="text/javascript">
+//좋아요 버튼을 클릭했을때(이벤트)
+$("#content1").on("click", ".like", function() {
+	
+	//데이터수집
+	var $this = $(this);
+	
+	var no = $this.data("reviewno");
+	//var likecnt = parseInt($(this).next().data("likecnt"));
+	var likecnt = $this.next().data("likecnt");
+	
+	//출력(리뷰넘버찍어보기), json 으로 보내주기
+	console.log("서평넘버 : "+no+", 좋아요 수 : "+likecnt);
+	
+	var clickReviewVo = {
+		reviewNo : no
+	};
+	
+	//요청 : json 방식
+	$.ajax({
+		//url로 요청할게!    
+		url : "${pageContext.request.contextPath }/like",
+		type : "post",
+		contentType : "application/json", //보낼때 json으로 보낼게
+		data : JSON.stringify(clickReviewVo),
+		//주소뒤에 갈 데이터 전송방식, //자바 스크립트 객체를 json형식으로 변경
+		dataType : "json", //json> javascript
+		
+		success : function(likeok) {
+			
+			//포함되어있으면 true      
+		    let isExist = document.getElementById('latest-order').classList.contains('txt-b');  
+		    console.log(isExist);				
+		    console.log(no);			 
+		   
+		  	//좋아요인경우
+		   	if (likeok.likecheck == 0) {	
+		   		
+			    console.log("좋아요");
+			    console.log(likeok.likecnt);
+				
+			  	//하트모양변경
+		      	$this.attr('class', 'like glyphicon glyphicon-heart');
+			  	
+			    //카운트 +1
+			    $this.next().html(likeok.likecnt+1);	
+			    
+			  
+		   } else {
+			   
+		       console.log("좋아요취소");
+		      
+		       $this.attr('class','like glyphicon glyphicon-heart-empty');
+		       
+		       $this.next().html(likeok.likecnt-1);
+		   }		   
+
+		},
+		//로그인하지 않은경우(모달창띄워주기)
+		error : function(XHR, status, error) {
+		   console.error(status + " : " + error);
+		}
+	});
+
+});
+
+
+</script>
+
+
 <script src="${pageContext.request.contextPath}/asset/js/more.js"></script>
 </html>
