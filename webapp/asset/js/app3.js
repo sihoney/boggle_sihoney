@@ -390,6 +390,7 @@ function renderPlaylist(list, loca) {
 				btn.innerHTML = '<i class="fa-solid fa-plus"></i>'
 			} else { // 추가했음
 				btn.innerHTML = '<i class="fa-solid fa-check"></i>'
+				li.classList.add("selected")
 			}
 			
 			li.setAttribute("data-playlistNo", item.playlistNo)
@@ -431,15 +432,16 @@ function renderPlaylist(list, loca) {
 					body : JSON.stringify(obj)
 				}).then(response => response.json())
 				.then(data => {
-					console.log(data + "건 | 서평을 플리에 저장")
+					console.log(data + "건 | 서평을 플리에 저장 또는 삭제")
 				})
 				
 				////// 화면 ICON 변경 ///////	
-			
 		        if(icon == 'fa-plus') { // 저장할 때
 		            addBtn.innerHTML = '<i class="fa-solid fa-check"></i>'
+					this.parentNode.classList.add("selected")
 		        } else { // 삭제할 때
 		            addBtn.innerHTML = '<i class="fa-solid fa-plus"></i>'
+					this.parentNode.classList.remove("selected")
 		        }
 		    }
 		}
@@ -970,6 +972,11 @@ function render(item) {
 		heartBtn.setAttribute("title", "로그인 후 이용 가능합니다.")
 		addBtn.setAttribute("title", "로그인 후 이용 가능합니다.")
 	} else {
+		
+		username.onclick = function(){
+			location.href = urlPath.substring(0, 12) + "/" + item.nickname
+		}
+		
 		console.log("item.alreadyLikedCnt: " + item.alreadyLikedCnt)
 
 		if(item.alreadyLikedCnt == 0) {

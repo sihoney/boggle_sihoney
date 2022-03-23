@@ -185,6 +185,7 @@ message modal
 .username {
   padding: 1.5rem 0;
   color: white;
+  cursor: pointer;
 }
 .slideBtnContainer button {
   border: 1px solid #fff;
@@ -609,6 +610,14 @@ i.fa-solid에 position: absolute 을 줘서
   border-bottom: 1px solid #cfcfcf;
   padding: 1rem 0.5rem;
   font-weight: bold;
+  transition: all 0.3s;
+}
+.addReviewModal .playlist-box ul .playlist-li:hover {
+	background-color: #a5d6ff4d;
+}
+.addReviewModal .playlist-box ul .playlist-li.selected {
+	background-color: #2699fb;
+    color: #fff;
 }
 .addReviewModal .playlist-box ul .playlist-li button {
   border: none;
@@ -696,7 +705,16 @@ i.fa-solid에 position: absolute 을 줘서
 	background-color: darkblue;
 }
 .emotion-select-box .plySubmitBtn {
-	height: 2rem;
+	height: 2.5rem;
+    background-color: #d6d6d6;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.emotion-select-box .plySubmitBtn:hover {
+	background-color: #939090;
 }
 /* 스크롤 바 없애기 */
 .emotion-select-box ul {
