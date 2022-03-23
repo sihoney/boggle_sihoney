@@ -32,13 +32,13 @@
 							<h1>고객 문의</h1>
 						</header>
 	
-	
-	
-						<ul class="article-list">
-							<c:forEach items="${helpList}" var="helpVo">
-								<li class="article-list-item "><a href="${pageContext.request.contextPath}/help/read?&no=${helpVo.no}" class="article-list-link">${helpVo.title}</a></li>
-							</c:forEach>
-						</ul>
+						<div id="helpListBox_list">
+							<ul class="article-list">
+								<c:forEach items="${helpList}" var="helpVo">
+									<li class="article-list-item "><a href="${pageContext.request.contextPath}/help/read?&no=${helpVo.no}" class="article-list-link">${helpVo.title}</a></li>
+								</c:forEach>
+							</ul>
+						</div>
 	
 					</section>
 				</div>
