@@ -422,8 +422,15 @@
 		if(userNo == null || userNo == 0) {
 			alert("로그인 후 이용해 주세요")
 		} 
-		else {
-			var url = "${pageContext.request.contextPath}/review/addReview"
+		else if($(".progressbar li:nth-child(4)").hasClass("active")) {
+			
+			if($(this).text() == "수정하기") {
+				console.log("수정하기")
+				var url = "${pageContext.request.contextPath}/review/modifyReview"	
+			} else {
+				console.log("저장하기")
+				var url = "${pageContext.request.contextPath}/review/addReview"	
+			}
 				
 				$.ajax({
 					url: url,
@@ -433,23 +440,25 @@
 
 					dataType: "json",
 					success: function(data){
-
+						
+						//location.href.substring(0, 34)
 						console.log(location.href.substring(0, 34) + data.redirect)
 						
 						location.href = location.href.substring(0, 34) + data.redirect
-
 						/*
-						if(data === "user/loginForm") {
-							location.href = location.href.substring(0, 35) + data
+						if(data.redirect === "user/loginForm") {
+							 
+							location.href = location.href.substring(0, 35) + data.redirect
 						} else {
-							location.href = location.href.substring(0, 35) + data
-						}	
+							location.href = location.href.substring(0, 35) + data.redirect
+						}
 						*/
+						
 					},
 					error:  function(XHR, status, error){
 						console.log(status + " : " + error);
 					}
-				})	
+				})			
 		}
 	})
 	
