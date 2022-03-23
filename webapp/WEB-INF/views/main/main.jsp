@@ -48,7 +48,7 @@
 		                    <li class="login" data-logStatus="login" data-userNo="${sessionScope.authUser.userNo }">
 		                    	<a href="${pageContext.request.contextPath}/${authUser.nickname}">
 		                    		<div class="userImg">
-			                            <img src="${pageContext.request.contextPath}/asset/img/profile.png" alt="">
+			                            <img id="header-img-icon" src="${authUser.userProfile }" class="img-circle" onerror="this.src='${pageContext.request.contextPath}/asset/img/profile.png'">
 			                        </div>
 			                        <a href="${pageContext.request.contextPath}/${sessionScope.authUser.nickname }">${sessionScope.authUser.nickname }</a>
 		                    	</a>
