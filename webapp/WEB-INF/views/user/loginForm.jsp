@@ -31,7 +31,7 @@
                 <h2 class="login_h2">playbook으로 가볍게 떠먹어요</h2>
             </div>
 			
-			<form action="${pageContext.request.contextPath}/user/login" method="get">
+			<form action="${pageContext.request.contextPath}/user/login" method="post">
 	            <div>	            	
 	            	<c:choose>
 	            		<c:when test="${param.result eq 'fail'}">
@@ -42,7 +42,7 @@
 		                </c:when>
 		                <c:otherwise>
 		                	<input id="email"  class="login_input" type="text" name="email" value="" placeholder="이메일 주소를 입력해 주세요">
-	                		<input id="password" class="login_input" type="text" name="password" value="" placeholder="비밀번호를 입력해 주세요">
+	                		<input id="password" class="login_input" type="password" name="password" value="" placeholder="비밀번호를 입력해 주세요">
 		                </c:otherwise>
 		            </c:choose>             
 	                

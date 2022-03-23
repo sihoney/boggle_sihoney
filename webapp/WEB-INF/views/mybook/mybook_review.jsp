@@ -162,6 +162,7 @@
 		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 		<!-- modal창 -->
 		<c:import url="/WEB-INF/views/include/modal.jsp"></c:import>
+				
 	</div>
 </body>
 <script type="text/javascript">
@@ -252,26 +253,6 @@
 					//그리기
 					render(popularlist[i], "down");
 				}
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
-		});
-	};
-
-	//특정 서평 그리기
-	function print(no) {
-
-		$.ajax({
-			url : "${pageContext.request.contextPath }/${nickname}/list?sort=latest", ///<<<파라미터로 인기순 최신순 나눠보기
-			type : "get",
-
-			dataType : "json",
-			success : function(mbList) {
-
-				//객체 리스트 돌리기(화면 출력)
-				render(mbList[no], "down");
-			
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
@@ -384,9 +365,52 @@
 
 	});
 	
-	//$("r"+no).remove();
 	//삭제 버튼을 눌렀을때
-	
+	$("#rvlist").on("click", ".delete", function() {
+
+		//데이터수집
+		var $this = $(this);
+		var no = $this.data("reviewno");
+		
+		//출력
+		console.log("삭제하려는서평 : "+no);
+		
+		var clickReviewVo = {
+				reviewNo : no
+			};
+		
+		
+		//요청 : json 방식
+		$.ajax({
+			//url로 요청할게!    
+			url : "${pageContext.request.contextPath }/delete",
+			type : "post",
+			contentType : "application/json", //보낼때 json으로 보낼게
+			data : JSON.stringify(clickReviewVo),
+			//주소뒤에 갈 데이터 전송방식, //자바 스크립트 객체를 json형식으로 변경
+			dataType : "json", //json> javascript
+			
+			success : function(checkuser) {
+				if(checkuser == 1){
+					//해당 서평 삭제(화면변화)
+					$("#r"+no).remove();	
+					//삭제알림  
+					console.log("리뷰삭제")
+					alert('서평이 삭제되었습니다! :-)');
+				}else{
+					//삭제실패알림  
+					console.log("리뷰삭제실패")
+					alert('잘못된 접근입니다! :-/');
+				}
+			},
+			//로그인하지 않은경우(모달창띄워주기)
+			error : function(XHR, status, error) {
+			   console.error(status + " : " + error);
+			}
+		});		
+	});
+		
+				
 	 
 	function render(mybookVo, updown) {
 		
@@ -397,7 +421,7 @@
 		str += ' 			<p><a href="${pageContext.request.contextPath}/bookdetail?bookNo='+ mybookVo.bookNo + '&userNo='+mybookVo.userNo+'">' + mybookVo.bookTitle + '</a></p> ';
 		str += ' 		</div> ';
 		str += ' 		<div class="right"> ';
-		str += ' 			<a href="${pageContext.request.contextPath}/review/write?reviewNo='+mybookVo.reviewNo+'">수정</a> <a href="${pageContext.request.contextPath}/delete?reviewNo='+mybookVo.reviewNo+'">삭제</a> ';
+		str += ' 			<a href="${pageContext.request.contextPath}/review/write?reviewNo='+mybookVo.reviewNo+'">수정</a> <a class="delete" data-reviewno="'+mybookVo.reviewNo+'">삭제</a> ';
 		str += ' 		</div> ';
 		str += ' 	</div> ';
 		str += ' 	<div class="reviews-content"> ';
@@ -435,6 +459,31 @@
 			console.log("방향오류");
 		}
 	}
+	
+	
+	
+	
+	/*
+	//특정 서평 그리기
+	function print(no) {
+
+		$.ajax({
+			url : "${pageContext.request.contextPath }/${nickname}/list?sort=latest", ///<<<파라미터로 인기순 최신순 나눠보기
+			type : "get",
+
+			dataType : "json",
+			success : function(mbList) {
+
+				//객체 리스트 돌리기(화면 출력)
+				render(mbList[no], "down");
+			
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	};
+	*/
 	
 </script>
 <script src="${pageContext.request.contextPath}/asset/js/more.js"></script>

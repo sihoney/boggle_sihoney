@@ -96,5 +96,20 @@ public class MybookDao {
 		return reviewcnt;
 	}
 	
+	//리뷰넘버정보를 주면 해당 리뷰를 쓴 유저 정보를 줌
+	public MybookVo checkuser(int reviewNo) {
+		System.out.println("mybookDao.checkuser()");
+		
+		MybookVo checkuser = sqlSession.selectOne("mybook.checkuser", reviewNo);
+		
+		return checkuser;
+	}
+	
+	//리뷰넘버정보를 주면 해당 리뷰 삭제
+	public void delete(int reviewNo) {
+		System.out.println("mybookDao.delete()");
+		
+		sqlSession.delete("mybook.delete", reviewNo);
+	}
 	
 }
