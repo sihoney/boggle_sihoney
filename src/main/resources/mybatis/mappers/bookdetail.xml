@@ -17,7 +17,7 @@
 			        r.review_no reviewNo,
 			        r.emo_name emoName,
 			        b.book_title bookTitle,
-			        r.nickname nickName,
+			        r.nickname nickname,
 			        to_char(r.review_date, 'yyyy/mm/dd') reviewDate,
 			        r.review_content reviewContent,
 			        r.user_no userNo,
