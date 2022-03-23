@@ -46,7 +46,7 @@
 			<!-- <li role="presentation" class="active"><a href="">'유저이름'님의 취향</a></li> -->
 			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/${nickname}/tastemain">my 취향</a></li>
 			<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/tastereview">좋아요한 서평</a></li>
-			<li role="presentation"><a href="${pageContext.request.contextPath}/main_book">관심가는 책</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/main_book">관심가는 책</a></li>
 		</ul>
 		<div id="content">
 			<!--content1-->

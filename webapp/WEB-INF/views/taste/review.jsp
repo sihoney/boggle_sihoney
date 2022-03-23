@@ -56,16 +56,7 @@
 			<p id="thumb-text">'${authUser.nickname}'가 좋아요한 서평</p>
 		</div>
 		<!--tag nav-->
-		<ul id="nav3" class="nav nav-pills">
-			<li role="presentation" class="active"><a href="">두근두근하는</a></li>
-			<li role="presentation"><a href="">스팩타클한</a></li>
-			<li role="presentation"><a href="">감동적인</a></li>
-			<li role="presentation"><a href="">섬뜩한</a></li>
-			<li role="presentation"><a href="">잔잔한</a></li>
-			<li role="presentation"><a href="">용기를 북돋는</a></li>
-			<li role="presentation"><a href="">눈물나는</a></li>
-			<li role="presentation"><a href="">환상적인</a></li>
-		</ul>
+
 		<!-- 서평 리스트 -->
 		<c:forEach items="${lrList}" var="vo">
 			<div id="reviews">
