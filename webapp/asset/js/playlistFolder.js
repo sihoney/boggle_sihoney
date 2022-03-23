@@ -5,6 +5,9 @@
 var crtPage = 1;
 var reviewChkBoxArr = [];
 
+var playlistNo = $('#platlistLike').data('playlistno');
+var userNo = $('#platlistLike').data('userno');
+
 //===============[플레이리스트 모달 ready/close]==========================
 /*모달 ready*/
 $('#playlist-add').on('click', function(){
@@ -111,7 +114,7 @@ function getSearch(){
 			$('#addModal-pagination').html('');
 			
 			if(searchResult == ''){
-				$('#reviewAll').html('<li>검색 결과가 없습니다</li>')
+				$('#reviewAll').html('<li class="txt-center">[검색 결과가 없습니다] </li>')
 			}else{
 				//검색 결과 리스팅
 				for(var i =0; i<searchResult.length; i++){
@@ -260,9 +263,6 @@ function addplaylistLike(){
 	
 	console.log('좋아요 등록');
 	
-	var playlistNo = $('#platlistLike').data('playlistno');
-	var userNo = $('#platlistLike').data('userno');
-	
 	console.log('플리'+playlistNo);
 	console.log('유저'+userNo);
 	
@@ -291,6 +291,37 @@ function addplaylistLike(){
 		console.error(status + " : " + error);
 		}
 		
+	});
+	
+}
+
+//서평 삭제
+function reviewDelete(){
+	
+	console.log('서평삭제 요청');
+	var reviewNo = $('#reviewDelete').data('reviewno');
+	console.log(reviewNo);
+	
+	$.ajax({
+		url : "reviewDelete",
+		type : "post",
+		data : {reviewNo: reviewNo},
+		
+		dataType : "json",
+		success : function(deleteResult){
+		/*성공시 처리해야될 코드 작성*/
+			
+			if(deleteResult == 1){
+				location.href="folder?playlistNo="+playlistNo+"&userNo="+userNo+"&crtPage=1";
+				alert('서평이 삭제되었습니다! :-)');
+			}else{
+				alert('다시 시도해 주세요! :-/');
+			}
+		
+		},
+		error : function(XHR, status, error) {
+		console.error(status + " : " + error);
+		}
 	});
 	
 }
@@ -410,6 +441,14 @@ $('#platlistLike').on('click','#likeview', function(){
 		playlistUnlike();
 	}
 	
+})
+
+//서평 삭제 버튼
+$('#reviewDelete').on('click', function(){
+	
+	console.log('서평 삭제 클릭');
+	
+	reviewDelete();
 })
 
 

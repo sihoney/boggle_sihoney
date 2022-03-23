@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.BookdetailVo;
-import com.javaex.vo.BookreviewVo;
 
 @Repository
 public class BookdetailDao {
@@ -18,15 +17,25 @@ public class BookdetailDao {
 	private SqlSession sqlSession;
 	
 
-	/* 해당 책 리뷰 리스트 가져오기 */
-	public List<BookreviewVo> getReviewList(String bookNo) {
+	/* 서평 리스트 (최신순) */
+	public List<BookdetailVo> getReviewList(String bookNo) {
 
 		System.out.println("Dao.getReviewList");
-		List<BookreviewVo> reviewList = sqlSession.selectList("bookdetail.reviewListLatest",bookNo);
+		List<BookdetailVo> reviewList = sqlSession.selectList("bookdetail.reviewListLatest",bookNo);
 		System.out.println(reviewList);
 
 		return reviewList;
 
+	}
+	
+	/* 서평 리스트 (인기순) */
+	public List<BookdetailVo> getReviewBest(String bookNo) {
+		
+		System.out.println("Dao.getReviewBest");
+		List<BookdetailVo> reviewBest = sqlSession.selectList("bookdetail.reviewListBest",bookNo);
+		System.out.println("dao.인기순리스트:"+reviewBest);
+		
+		return reviewBest;
 	}
 	
 	
@@ -101,5 +110,17 @@ public class BookdetailDao {
 		return deleteCount;
 		
 	}
+	
+	
+	/* 서평 삭제 */
+	public int reviewDelete(int reviewNo) {
+		System.out.println("Dao.reviewDelete");
+		
+		int deleteResult = sqlSession.delete("bookdetail.reviewDelete",reviewNo);		
+		System.out.println("책상세 서평 삭제 결과:"+deleteResult);
+		
+		return deleteResult;
+	}
+	
 
 }

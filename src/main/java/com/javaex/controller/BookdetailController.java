@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.BookdetailService;
 import com.javaex.vo.BookdetailVo;
-import com.javaex.vo.BookreviewVo;
 
 @Controller
 @RequestMapping("/bookdetail")
@@ -39,15 +38,11 @@ public class BookdetailController {
 		//해당 책 서평 총 수 
 		int bookReviewCount = bookdetailService.getCount(bookNo);
 		System.out.println(bookReviewCount);
-		
-		//로딩시 북마크 체크(세션넘버, 북넘버)
-		//String bookmarkCheck = bookdetailService.bookmarkCheck(bookNo,userNo);
 
 		//데이터 보내기
 		Map<String, Object> bookMap = new HashMap<String, Object>();
 		bookMap.put("bookVo", bookVo);
 		bookMap.put("bookReviewCount", bookReviewCount);
-		//bookMap.put("bookmarkCheck", bookmarkCheck);
 
 		//데이터 보내기
 		model.addAttribute("bookMap",bookMap);
@@ -55,16 +50,16 @@ public class BookdetailController {
 		return "book_detail/book_detail";
 	}
 	
-	/* 최신순 정렬 */
+	/* 서평 리스트 (최신순)*/
 	@ResponseBody
 	@RequestMapping("/reviewLatest")
-	public List<BookreviewVo> reviewListing(@RequestParam("bookNo") String bookNo,
+	public List<BookdetailVo> reviewListing(@RequestParam("bookNo") String bookNo,
 								Model model) {
 		
 		System.out.println("Controller.reviewListing");
 		
 		//서평 리스트
-		List<BookreviewVo> reviewList = bookdetailService.getReviewList(bookNo);
+		List<BookdetailVo> reviewList = bookdetailService.getReviewList(bookNo);
 		System.out.println(reviewList);
 		
 		model.addAttribute("reviewList",reviewList);
@@ -73,15 +68,18 @@ public class BookdetailController {
 		
 	}
 	
-	/* 인기순 정렬 */
+	/* 서평 리스트 (인기순) */
 	@ResponseBody
 	@RequestMapping("/reviewBest")
-	public String reviewBest(@RequestParam("bookNo") int bookNo,
+	public List<BookdetailVo> reviewBest(@RequestParam("bookNo") String bookNo,
 											Model model) {
 							
 		System.out.println("Controller.reviewBest");
+		System.out.println(bookNo);
+		List<BookdetailVo> reviewBest = bookdetailService.getReviewBest(bookNo);
+		System.out.println(reviewBest);
 		
-		return "";
+		return reviewBest;
 	}
 	
 	/* 로딩시 이전 북마크 데이터 확인 */
@@ -124,6 +122,19 @@ public class BookdetailController {
 
 		}
 	}
+	
+	/* 서평 삭제 */
+	@ResponseBody
+	@RequestMapping("/delete")
+	public int reviewRemove(@RequestParam("reviewNo") int reviewNo) {
+		
+		System.out.println("Controller.reviewRemove");
+		int deleteResult = bookdetailService.reviewDelete(reviewNo);
+		
+		return deleteResult;
+		
+	}
+	
 	
 	
 	

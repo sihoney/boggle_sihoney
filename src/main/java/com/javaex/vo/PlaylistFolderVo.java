@@ -21,6 +21,7 @@ public class PlaylistFolderVo {
 	private String emoName;
 	
 	private int rn;
+	private int likecnt;
 
 	
 	//생성자
@@ -128,6 +129,26 @@ public class PlaylistFolderVo {
 		this.rn = rn;
 	}
 
+	public PlaylistFolderVo(int playlistNo, String playlistName, String playlistDate, int reviewNo,
+			String reviewContent, String reviewDate, String nickname, int userNo, String bookNo, String bookTitle,
+			int styleNo, String emoName, int rn, int likecnt) {
+		super();
+		this.playlistNo = playlistNo;
+		this.playlistName = playlistName;
+		this.playlistDate = playlistDate;
+		this.reviewNo = reviewNo;
+		this.reviewContent = reviewContent;
+		this.reviewDate = reviewDate;
+		this.nickname = nickname;
+		this.userNo = userNo;
+		this.bookNo = bookNo;
+		this.bookTitle = bookTitle;
+		this.styleNo = styleNo;
+		this.emoName = emoName;
+		this.rn = rn;
+		this.likecnt = likecnt;
+	}
+
 	//메소드 g,s
 	public int getPlaylistNo() {
 		return playlistNo;
@@ -232,7 +253,22 @@ public class PlaylistFolderVo {
 	public void setPlaylistDate(String playlistDate) {
 		this.playlistDate = playlistDate;
 	}
+	
+	public int getRn() {
+		return rn;
+	}
 
+	public void setRn(int rn) {
+		this.rn = rn;
+	}
+
+	public int getLikecnt() {
+		return likecnt;
+	}
+
+	public void setLikecnt(int likecnt) {
+		this.likecnt = likecnt;
+	}
 
 	//메소드 일반
 	@Override
@@ -240,6 +276,7 @@ public class PlaylistFolderVo {
 		return "PlaylistFolderVo [playlistNo=" + playlistNo + ", playlistName=" + playlistName + ", playlistDate="
 				+ playlistDate + ", reviewNo=" + reviewNo + ", reviewContent=" + reviewContent + ", reviewDate="
 				+ reviewDate + ", nickname=" + nickname + ", userNo=" + userNo + ", bookNo=" + bookNo + ", bookTitle="
-				+ bookTitle + ", styleNo=" + styleNo + ", emoName=" + emoName + ", rn=" + rn + "]";
+				+ bookTitle + ", styleNo=" + styleNo + ", emoName=" + emoName + ", rn=" + rn + ", likecnt=" + likecnt
+				+ "]";
 	}
 }
