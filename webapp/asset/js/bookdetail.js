@@ -1,3 +1,9 @@
+//=====[변수 선언]===============================================================
+//로그인한 유저넘버
+var loginUserNo = $('#listing').data('userno');
+//해당 책 번호
+var bookNo = $('#listing').data('bookno');
+//===========================================================================
 //로딩시 최신순으로 리스트 출력
 $(document).ready(function(){
 	console.log('로딩 성공');
@@ -36,8 +42,7 @@ $('#best-order').on('click',function(){
 function fetchLatest(){
 	
 	console.log('최신순 데이터 요청');
-	
-	var bookNo = $('#listing').data('bookno');
+	console.log(bookNo);
 	
     $.ajax({
         url :"bookdetail/reviewLatest",
@@ -68,12 +73,11 @@ function fetchLatest(){
 function fetchBest(){
 	
 	console.log('인기순 데이터 요청');
-	
-	var bookNo = $('#listing').data('bookno');
+	console.log(bookNo);
 	
     $.ajax({
         url :"bookdetail/reviewBest",
-        type : "post",
+        type : "get",
 		contentType : "application/json",
         data : {bookNo: bookNo},
 
@@ -97,26 +101,26 @@ function fetchBest(){
 }
 
 //render
-function rendering(latestList){
+function rendering(reviewList){
 	
-	console.log(latestList.bookTitle);
-	var loginUserNo = $('#listing').data('userno');
+	console.log(reviewList);
+	console.log(loginUserNo);
 
 	var str = '';
 	str += ' <div class="jumbotron"> ';
 	str += ' 	<div id="review_first"> ';
-	str += ' 		<h3>'+ latestList.bookTitle +'</h3> ';
-	if(latestList.userNo == loginUserNo){
-		str += ' 			<a href="" class="review_modify">삭제</a> ';
-		str += ' 			<a href="" class="review_modify">수정</a> ';
+	str += ' 		<h3>'+ reviewList.bookTitle +'</h3> ';
+	if(reviewList.userNo == loginUserNo){
+		str += ' 			<a id="reviewDelete" class="review_modify" data-reviewno="'+reviewList.reviewNo+'">삭제</a> ';
+		str += ' 			<a href="review/write?reviewNo='+reviewList.reviewNo+'" class="review_modify">수정</a> ';
 	}
-	str += ' 		<a href="'+latestList.nickName+'" class="review_nick">'+ latestList.nickName +'<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a> ';
-	str += ' 		<div class="multiline-ellipsis">'+latestList.reviewContent+'</div> ';
+	str += ' 		<a href="'+reviewList.nickName+'" class="review_nick">'+ reviewList.nickname +'<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a> ';
+	str += ' 		<div class="multiline-ellipsis">'+reviewList.reviewContent+'</div> ';
 	str += ' 	</div> ';
 	str += ' 	<div id="review_second"> ';
 	str += ' 		<span id="btn_like" class="glyphicon glyphicon-heart icon-success" aria-hidden="true"></span> ';
-	str += ' 		<span class="review_like">16.2k</span><span class="review_like">'+latestList.reviewDate+'</span> ';
-	str += ' 		<span id="tag_btn">#'+latestList.emoName+'</span> ';
+	str += ' 		<span class="review_like">'+reviewList.likecnt+'</span><span class="review_like">'+reviewList.reviewDate+'</span> ';
+	str += ' 		<span id="tag_btn">#'+reviewList.emoName+'</span> ';
 	str += ' 		<div class="dropup float-r"> ';
 	str += ' 			<a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+ 더보기</a> ';
 	str += ' 			<ul class="dropdown-menu radius-15" role="menu" aria-labelledby="dropdownMenu2"> ';
@@ -236,7 +240,6 @@ $('#bookmark').on('click','#addMark', function(){
 			
 			if(addResult == false){
 				
-				console.log("하이");
 				$("#bookmark").empty();
 				deleteRender();
 			}
@@ -250,8 +253,39 @@ $('#bookmark').on('click','#addMark', function(){
     
 });
 
+//서평 삭제 요청
+function reviewDelete(reviewNo){
+	
+	console.log('책 상세 서평 삭제 요청');
+	console.log(reviewNo);
+	
+	$.ajax({
+		url : "bookdetail/delete",
+		type : "post",
+		data : {reviewNo: reviewNo},
+		dataType : "json",
+		success : function(deleteResult){
+		/*성공시 처리해야될 코드 작성*/
+			
+			console.log('책 상세 서평 삭제 성공');
+		
+			if(deleteResult == 1){
+				location.href="bookdetail?bookNo="+bookNo+"&userNo="+loginUserNo;
+				alert('서평이 삭제되었습니다! :-)');
+			}else{
+				alert('다시 시도해 주세요! :-/');
+			}
+		
+		},
+		error : function(XHR, status, error) {
+		console.error(status + " : " + error);
+		}
+	});
+	
+	
+}
 
-
+//------------------------------------------------------------------------
 //+버튼 그리기
 function addRender(){
 	
@@ -271,6 +305,18 @@ function deleteRender(){
 	$('#bookmark').html(str);
 	
 }
+
+//서평 삭제 요청
+$('#reviewlistVo').on('click','#reviewDelete', function(){
+	
+	console.log('책 상세 서평 삭제 클릭');
+	
+	var reviewNo = $(this).data('reviewno');
+	console.log(reviewNo);
+	
+	reviewDelete(reviewNo);
+	
+})
 
 //============================================================================
 

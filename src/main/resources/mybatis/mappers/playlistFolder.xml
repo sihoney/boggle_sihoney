@@ -17,7 +17,7 @@
 			select lst.rn rn,
 			       lst.playlistName playlistName,
 			       lst.playlistNo playlistNo,
-			       lst.reivewNo reivewNo,
+			       lst.reviewNo reviewNo,
 			       lst.nickname nickname,
 			       lst.userNo userNo,
 			       lst.bookNo bookNo,
@@ -26,11 +26,12 @@
 			       lst.styleNo styleNo,
 			       lst.bookTitle bookTitle,
 			       lst.emoName emoName,
-			       lst.playlistDate playlistDate
+			       lst.playlistDate playlistDate,
+			       NVL(lst.likecnt,0) likecnt
 			from(select rownum rn,
 			            rnt.playlistName playlistName,
 			            rnt.playlistNo playlistNo,
-			            rnt.reivewNo reivewNo,
+			            rnt.reviewNo reviewNo,
 			            rnt.nickname nickname,
 			            rnt.userNo userNo,
 			            rnt.bookNo bookNo,
@@ -39,10 +40,11 @@
 			            rnt.styleNo styleNo,
 			            rnt.bookTitle bookTitle,
 			            rnt.emoName emoName,
-			            rnt.playlistDate playlistDate
+			            rnt.playlistDate playlistDate,
+			            rnt.likecnt likecnt
 			    from (select  nt.playlistName playlistName,
 			                  nt.playlistNo playlistNo,
-			                  nt.reivewNo reivewNo,
+			                  nt.reviewNo reviewNo,
 			                  nt.nickname nickname,
 			                  nt.userNo userNo,
 			                  nt.bookNo bookNo,
@@ -51,10 +53,11 @@
 			                  nt.styleNo styleNo,
 			                  nt.bookTitle bookTitle,
 			                  nt.emoName emoName,
-			                  nt.playlistDate playlistDate
+			                  nt.playlistDate playlistDate,
+			                  nt.likecnt likecnt
 			            from (select r.playlist_name playlistName,
 			                         r.playlist_no playlistNo,
-			                         r.review_no reivewNo,
+			                         r.review_no reviewNo,
 			                         r.nickname nickname,
 			                         r.user_no userNo,
 			                         r.book_no bookNo,
@@ -63,7 +66,8 @@
 			                         r.style_no styleNo,
 			                         b.book_title bookTitle,
 			                         e.emo_name emoName,
-			                         r.playlist_review_date playlistDate
+			                         r.playlist_review_date playlistDate,
+			                         lc.likecnt likecnt
 			                    from (select p.playlist_name,
 			                                 p.playlist_no,
 			                                 r.review_no,
@@ -77,10 +81,14 @@
 			                            from playlist p, playlist_review pr, review r, users u
 			                            where p.playlist_no = pr.playlist_no
 			                            and pr.review_no = r.review_no
-			                            and u.user_no = r.user_no) r, books b,style s, emotion e
+			                            and u.user_no = r.user_no) r, books b,style s, emotion e, (select  review_no,
+			                                                                                                count(review_no) likecnt
+			                                                                                        from review_user
+			                                                                                        group by review_no) lc
 			                    where b.book_no = r.book_no
 			                    and r.style_no = s.style_no
 			                    and s.emo_no = e.emo_no
+			                    and lc.review_no = r.review_no
 			                    and r.playlist_no = #{playlistNo}
 			                    order by r.playlist_review_date desc) nt) rnt) lst
 			where rn >= #{startRnum}
@@ -194,15 +202,6 @@
 										 sysdate)
 		]]>
 	</select>
-
-
-	<!-- 서평 삭제 -->
-	<!-- <delete id="reviewDelete" parameterType="">
-	 	<![CDATA[
-	
-		]]>
-	</delete>
-	 -->
 	
 	<!-- 플레이리스트 로딩시 좋아요 체크 -->
 	<select id="checkLike" parameterType="PlaylistFolderVo" resultType="int">
@@ -232,6 +231,14 @@
 								  #{playlistNo})
 		]]>
 	</insert>
+	
+	<!-- 서평 삭제 -->
+	<delete id="reviewDelete" parameterType="int">
+	 	<![CDATA[
+			delete from review
+			where review_no = #{reviewNo}
+		]]>
+	</delete>
 	
 	
 </mapper>

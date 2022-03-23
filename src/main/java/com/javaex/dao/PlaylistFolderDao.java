@@ -111,8 +111,9 @@ public class PlaylistFolderDao {
 		
 		System.out.println("Dao.reviewDelete");
 		
-		sqlSession.delete("playlistFolder.reviewDelete",reviewNo);
-		return 0;
+		int deleteResult = sqlSession.delete("playlistFolder.reviewDelete",reviewNo);
+		System.out.println("삭제 성공 여부:"+deleteResult);
+		return deleteResult;
 		
 	}
 	

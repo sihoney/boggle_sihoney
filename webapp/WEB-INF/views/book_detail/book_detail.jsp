@@ -51,7 +51,7 @@
 							
                         </div>
                     </div>
-                    <button id="btn_write" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/reviewWrite?bookNo=';">이 책 서평 쓰기</button>
+                    <button id="btn_write" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/review/write?bookTilte=${requestScope.bookMap.bookVo.bookTitle}';">이 책 서평 쓰기</button>
                 </div>
             </div>
 
@@ -80,7 +80,7 @@
                             <h4 class="modal-title">공유하기</h4>
                         </div>
                         <div class="modal-body">
-                            <p>playbook의 서평을 SNS에 공유해 보세요 :)</p>
+                            <p>BOGGLE의 서평을 SNS에 공유해 보세요 :)</p>
                             <a id="kakao-link-btn" href="javascript:kakaoShare()">
                                 <img src="${pageContext.request.contextPath}/asset/img/share/kakao.jpg" />
                             </a>

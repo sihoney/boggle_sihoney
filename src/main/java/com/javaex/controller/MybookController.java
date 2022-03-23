@@ -274,7 +274,7 @@ public class MybookController {
    //삭제 버튼을 눌렀을때의 기능
    @ResponseBody
    @RequestMapping("/delete")
-   public MybookVo delete(HttpSession session,
+   public int delete(HttpSession session,
 		   		   @RequestBody MybookVo clickReview) {
       
       //세션아이디의 유저넘버
@@ -285,13 +285,13 @@ public class MybookController {
       System.out.println("로그인한 유저 넘버 : " + userNo);
       System.out.println("클릭한 서평 넘버 : " + clickNo);
       
-      MybookVo checklike = new MybookVo(clickNo, userNo);
+      MybookVo wannadelete = new MybookVo(clickNo, userNo);
 
       //해당 유저의 서평일 경우에만 삭제가 가능하게 하기
+      int checkuser = mybookService.delete(wannadelete);
       
-      
-      
-      return checklike;
+      //값이 1일때는 삭제하려는 리뷰의 작성자와 로그인사용자가 같음을 의미 
+      return checkuser;
    }
   
 }

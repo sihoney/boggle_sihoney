@@ -91,13 +91,16 @@ public class PlaylistFolderController {
 	}
 	
 	/* 서평 삭제 */
+	@ResponseBody
 	@RequestMapping("/reviewDelete")
 	public int reviewRemove(@RequestParam("reviewNo") int reviewNo) {
 		
 		System.out.println("Controller.reviewDelete");
-		playlistfolderService.reviewDelete(reviewNo);
+		System.out.println(reviewNo);
 		
-		return 0;
+		int deleteResult = playlistfolderService.reviewDelete(reviewNo);
+		
+		return deleteResult;
 		
 	}
 	

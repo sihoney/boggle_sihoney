@@ -244,4 +244,11 @@
     height: 60px;
 }
 
+.btn-active {
+    background-color: #2699fb !important;
+    color: #ffffff !important;
+}
 
+.txt-center {
+	text-align: center;
+}

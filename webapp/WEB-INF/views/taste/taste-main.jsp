@@ -81,7 +81,7 @@
 							<div class="right">
 								<c:if test="${result eq 'sameUser'}">
 									<a href="${pageContext.request.contextPath}/review/write?reviewNo=${vo.reviewNo}">수정</a>
-									<a href="${pageContext.request.contextPath}/delete?reviewNo=${vo.reviewNo}">삭제</a>
+									<a class="delete" data-reviewno="${vo.reviewNo }">삭제</a>
 								</c:if>
 							</div>
 						</div>
@@ -292,6 +292,56 @@
 		});
 
 	});
+	
+	
+	//삭제 버튼을 눌렀을때
+	$("#content1").on("click", ".delete", function() {
+
+		//데이터수집
+		var $this = $(this);
+		var no = $this.data("reviewno");
+		
+		//출력
+		console.log("삭제하려는서평 : "+no);
+		
+		var clickReviewVo = {
+				reviewNo : no
+			};
+		
+		
+		//요청 : json 방식
+		$.ajax({
+			//url로 요청할게!    
+			url : "${pageContext.request.contextPath }/delete",
+			type : "post",
+			contentType : "application/json", //보낼때 json으로 보낼게
+			data : JSON.stringify(clickReviewVo),
+			//주소뒤에 갈 데이터 전송방식, //자바 스크립트 객체를 json형식으로 변경
+			dataType : "json", //json> javascript
+			
+			success : function(checkuser) {
+				if(checkuser == 1){
+					//해당 서평 삭제(화면변화)
+					$("#r"+no).remove();	
+					//삭제알림  
+					console.log("리뷰삭제")
+					alert('서평이 삭제되었습니다! :-)');
+					window.location.reload()
+		
+				}else{
+					//삭제실패알림  
+					console.log("리뷰삭제실패")
+					alert('잘못된 접근입니다! :-/');
+					window.location.reload()
+				}
+			},
+			//로그인하지 않은경우(모달창띄워주기)
+			error : function(XHR, status, error) {
+			   console.error(status + " : " + error);
+			}
+		});		
+	});
+	
 </script>
 <script src="${pageContext.request.contextPath}/asset/js/more.js"></script>
 </html>
