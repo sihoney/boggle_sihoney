@@ -25,8 +25,7 @@
     <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-pen.css" rel="stylesheet">
 	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-pen.css" rel="stylesheet">
 	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic-eco.css" rel="stylesheet">
-	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-myeongjo.css" rel="stylesheet">
-	
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-myeongjo.css" rel="stylesheet">	
 </head>
 <body>
 
@@ -387,6 +386,7 @@
 					
 					$("#review_box").css("background-color", backgroundColor)
 					$("#review_box>textarea").css("font-family", fontFamily)
+					$("#review_box").css("background", background)
 					
 					// 5. 진행바
 					$(".progressbar li:nth-child(1)").addClass("active")
@@ -445,14 +445,6 @@
 						console.log(location.href.substring(0, 34) + data.redirect)
 						
 						location.href = location.href.substring(0, 34) + data.redirect
-						/*
-						if(data.redirect === "user/loginForm") {
-							 
-							location.href = location.href.substring(0, 35) + data.redirect
-						} else {
-							location.href = location.href.substring(0, 35) + data.redirect
-						}
-						*/
 						
 					},
 					error:  function(XHR, status, error){
@@ -622,15 +614,17 @@
 								}
 							}
 						}
-						
+						/* 텍스트아리아 스타일 변경 */
 						var background = $(this).css("background")
 						var backgroundColor = $(this).css("background-color")
 						var fontFamily = $(this).css("font-family")
 						styleNo = $(this).data("styleno")
+
+						console.log(fontFamily)
 						
 						$("#review_box").css("background-color", backgroundColor)
 						$("#review_box").css("background", background)
-						$("#review_box>textarea").css("font-family", fontFamily)
+						$("#review_textarea").css("font-family", fontFamily)
 					}
 				}
 			},
@@ -643,11 +637,10 @@
 	function renderStyleBtn(item) {
 
 		var arr = item.styleName.split(",")
-		
 
 		var background = arr[0]
 		var font = arr[1]
-		
+
 		if(item.imgurl == null){
 			var str = '<button data-styleNo="'+ item.styleNo +'"class="btn_style btn-outline-secondary" style="background: '+background+' "; font-family: '+ font +'"></button>'	
 		}else{
