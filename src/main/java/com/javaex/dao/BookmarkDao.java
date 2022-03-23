@@ -26,6 +26,16 @@ public class BookmarkDao {
 		return bookmarkList;
 	}
 	
+	/*5개 북마크 리스트 */
+	public List<BookmarkVo> get5book(int userNo){
+		System.out.println("BookmarkDao.get5book()");
+		
+		List<BookmarkVo>get5book = sqlSession.selectList("bookmark.List5", userNo);
+		System.out.println(get5book);
+		
+		return get5book;
+	}
+	
 	/*책 수 가져오기*/
 //	public int countotal() {
 //		System.out.println("Dao.countTotal");

@@ -28,14 +28,19 @@ public class MybookController {
    private MybookService mybookService;   
    @Autowired
    private UserService userService;
-   
-   
+      
    //내서재
    @RequestMapping("/{nickname}")
    public String myreview(@PathVariable(value="nickname") String nickname,
                      HttpSession session, Model model) {
 	   
       System.out.println("mybook");
+      
+      if (session == null || session.getAttribute("authUser") == null || session.getAttribute("authUser").equals("")) {
+		   System.out.println("세션만료 혹은 잘못된 접근");
+		   
+		   return "user/loginForm";
+	   }
       
       //세션의 닉네임
       String yours = ((UserVo)session.getAttribute("authUser")).getNickname();
@@ -67,6 +72,11 @@ public class MybookController {
          //result 값 보내주기
          model.addAttribute("result", result);
          
+         if (userService.getUser(nickname) == null) {
+		   System.out.println("잘못된 접근입니다");
+		   
+		   return "/main/main";
+	    }
          
          //지금 서재 닉네임을 주면 유저넘버, 닉네임, 프로필이미지를 주는 메소드 사용
          UserVo otherUser = userService.getUser(nickname);
@@ -258,6 +268,30 @@ public class MybookController {
     	 
     	 return likeok;
       }
+   }
+   
+   
+   //삭제 버튼을 눌렀을때의 기능
+   @ResponseBody
+   @RequestMapping("/delete")
+   public MybookVo delete(HttpSession session,
+		   		   @RequestBody MybookVo clickReview) {
+      
+      //세션아이디의 유저넘버
+      int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
+      //클릭한 서평 넘버
+      int clickNo = clickReview.getReviewNo();
+      
+      System.out.println("로그인한 유저 넘버 : " + userNo);
+      System.out.println("클릭한 서평 넘버 : " + clickNo);
+      
+      MybookVo checklike = new MybookVo(clickNo, userNo);
+
+      //해당 유저의 서평일 경우에만 삭제가 가능하게 하기
+      
+      
+      
+      return checklike;
    }
   
 }
