@@ -383,7 +383,10 @@
 		});
 
 	});
-
+	
+	//$("r"+no).remove();
+	//삭제 버튼을 눌렀을때
+	
 	 
 	function render(mybookVo, updown) {
 		

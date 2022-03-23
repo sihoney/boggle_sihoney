@@ -42,7 +42,7 @@
         			where r.review_no = ru.review_no(+)) r, books b
 			where   r.book_no = b.book_no
 			and r.user_no = #{userNo}
-			ORDER BY reviewDate asc
+			ORDER BY reviewDate desc
 		]]>
 
 	</select>
@@ -303,6 +303,17 @@ from (select    ru.review_like_date reviewLikeDate,
 	</select>
 	
 	<!-- 유저 n번의 서평 총 갯수 : likecheck는 그냥 임의로 갖다 씀 -->
+	<!-- reviewcnt -->
+	<select id="reviewcnt" resultType="MybookVo" parameterType="int">
+		<![CDATA[
+			select count(review_no) likecheck
+			from review
+			where user_no = #{userNo}
+		]]>
+	</select>
+	
+	
+	<!-- n번서평 삭제하기 -->
 	<!-- reviewcnt -->
 	<select id="reviewcnt" resultType="MybookVo" parameterType="int">
 		<![CDATA[

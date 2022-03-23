@@ -85,7 +85,13 @@ public class TasteController {
 
 			// result 값 보내주기
 			model.addAttribute("result", result);
-
+			
+			if (userService.getUser(nickname) == null) {
+			   System.out.println("잘못된 접근입니다");
+			   
+			   return "/main";
+		    }
+			
 			// 지금 서재 닉네임을 주면 유저넘버, 닉네임, 프로필이미지를 주는 메소드 사용
 			UserVo otherUser = userService.getUser(nickname);
 			int userNo = otherUser.getUserNo();
