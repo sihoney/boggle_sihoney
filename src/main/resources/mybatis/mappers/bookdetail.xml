@@ -17,7 +17,7 @@
 			        r.review_no reviewNo,
 			        r.emo_name emoName,
 			        b.book_title bookTitle,
-			        r.nickname nickname,
+			        r.nickname nickName,
 			        to_char(r.review_date, 'yyyy/mm/dd') reviewDate,
 			        r.review_content reviewContent,
 			        r.user_no userNo,
@@ -39,7 +39,7 @@
 			                                                    from review_user 
 			                                                    group by review_no)lt
 			where   r.book_no = b.book_no 
-			and     lt.review_no = r.review_no
+			and     lt.review_no = r.review_no(+)
 			and     b.book_no = #{bookNo}
 			order by reviewDate desc
 		]]>
