@@ -15,6 +15,7 @@
 		<typeAlias alias="HelpVo" type="com.javaex.vo.HelpVo"/>
 		<typeAlias alias="StyleVo" type="com.javaex.vo.StyleVo"/>
 		<typeAlias alias="BookmarkVo" type="com.javaex.vo.BookmarkVo"/>
+		<typeAlias alias="PlaylistClickVo" type="com.javaex.vo.PlaylistClickVo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
@@ -27,5 +28,6 @@
 		<mapper resource="mybatis/mappers/playlist.xml"/>
 		<mapper resource="mybatis/mappers/help.xml"/>
 		<mapper resource="mybatis/mappers/bookmark.xml"/>
+		<mapper resource="mybatis/mappers/playlistclick.xml"/>
 	</mappers>
 </configuration>

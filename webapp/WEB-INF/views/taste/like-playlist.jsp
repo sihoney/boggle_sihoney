@@ -86,8 +86,13 @@
 						<p>인기순 플레이리스트</p>
 					</div>
 				</div>
+				<div class="right" id="more">
+					<p>
+						<a href="${pageContext.request.contextPath}/hot_playlist">더보기<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+					</p>
+				</div>
 				<div>
-					<p class="index">오늘의 플레이리스트를 확인해보세요!</p>
+					<p class="index">보글이 끓인 오늘의 플레이리스트를 확인해보세요!</p>
 				</div>
 				<div id="playlist">
 					<c:forEach items="${popularlist}" var="vo">
@@ -119,7 +124,7 @@
 					</div>
 				</div>
 				<div>
-					<p class="index">오늘의 플레이리스트를 확인해보세요!</p>
+					<p class="index">내가 작성한 플레이리스트를 확인해보세요!</p>
 				</div>
 				<div id="playlist">
 					
