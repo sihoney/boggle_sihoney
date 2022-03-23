@@ -7,13 +7,14 @@
 		<typeAlias alias="ReviewVo" type="com.javaex.vo.ReviewVo"/>
 		<typeAlias alias="MusicVo" type="com.javaex.vo.MusicVo"/>
 		<typeAlias alias="PlaylistVo" type="com.javaex.vo.PlaylistVo"/>
-		<typeAlias alias="lrVo" type="com.javaex.vo.LikeReviewVo"/>
+		<typeAlias alias="LikeReviewVo" type="com.javaex.vo.LikeReviewVo"/>
 		<typeAlias alias="BookreviewVo" type="com.javaex.vo.BookreviewVo"/>
 		<typeAlias alias="BookdetailVo" type="com.javaex.vo.BookdetailVo"/>
 		<typeAlias alias="PlaylistFolderVo" type="com.javaex.vo.PlaylistFolderVo"/>
 		<typeAlias alias="PlaylistVo" type="com.javaex.vo.PlaylistVo"/>
 		<typeAlias alias="HelpVo" type="com.javaex.vo.HelpVo"/>
 		<typeAlias alias="StyleVo" type="com.javaex.vo.StyleVo"/>
+		<typeAlias alias="BookmarkVo" type="com.javaex.vo.BookmarkVo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
@@ -25,5 +26,6 @@
 		<mapper resource="mybatis/mappers/playlistFolder.xml"/>
 		<mapper resource="mybatis/mappers/playlist.xml"/>
 		<mapper resource="mybatis/mappers/help.xml"/>
+		<mapper resource="mybatis/mappers/bookmark.xml"/>
 	</mappers>
 </configuration>

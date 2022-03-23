@@ -18,6 +18,7 @@ public class PlaylistDao {
 	public List<PlaylistVo> likelist(int userNo){
 		
 		List<PlaylistVo> likeplay = sqlSession.selectList("playlist.likelist", userNo);
+		System.out.println(likeplay);
 		
 		return likeplay;
 	}

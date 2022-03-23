@@ -10,9 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.javaex.service.BookmarkService;
 import com.javaex.service.MybookService;
 import com.javaex.service.PlaylistService;
 import com.javaex.service.UserService;
+import com.javaex.vo.BookmarkVo;
 import com.javaex.vo.MybookVo;
 import com.javaex.vo.PlaylistVo;
 import com.javaex.vo.UserVo;
@@ -28,13 +30,21 @@ public class TasteController {
 	private UserService userService;
 	@Autowired
 	private PlaylistService playlistService;
+	@Autowired
+	private BookmarkService bookmarkService;
 
 	// 취향저격(main페이지)
 	@RequestMapping("/{nickname}/tastemain")
 	public String tastemain(@PathVariable(value = "nickname") String nickname, HttpSession session, Model model) {
 
 		System.out.println("tastemain");
-
+		
+		if (session == null || session.getAttribute("authUser") == null || session.getAttribute("authUser").equals("")) {
+		   System.out.println("세션만료 혹은 잘못된 접근");
+		   
+		   return "user/loginForm";
+	   }
+		
 		// 세션의 닉네임
 		String yours = ((UserVo) session.getAttribute("authUser")).getNickname();
 		System.out.println("로그인사람의 닉네임 : " + yours);
@@ -63,7 +73,11 @@ public class TasteController {
 			//해당유저 넘버를 주면 좋아요한 플레이리스트를 출력하는 메소드
 			List<PlaylistVo> likeplay = playlistService.likelist(userNo);
 			model.addAttribute("likeplay", likeplay);
-
+			
+			//해당유저넘버를 주면 좋아요한 책 목록을 출력하는 메소드
+			List<BookmarkVo> get5book = bookmarkService.get5book(userNo);
+			model.addAttribute("get5book", get5book);
+			
 		} else {
 
 			String result = nickname;
@@ -71,7 +85,13 @@ public class TasteController {
 
 			// result 값 보내주기
 			model.addAttribute("result", result);
-
+			
+			if (userService.getUser(nickname) == null) {
+			   System.out.println("잘못된 접근입니다");
+			   
+			   return "/main";
+		    }
+			
 			// 지금 서재 닉네임을 주면 유저넘버, 닉네임, 프로필이미지를 주는 메소드 사용
 			UserVo otherUser = userService.getUser(nickname);
 			int userNo = otherUser.getUserNo();
@@ -89,6 +109,9 @@ public class TasteController {
 			List<PlaylistVo> likeplay = playlistService.likelist(userNo);
 			model.addAttribute("likeplay", likeplay);
 			
+			//해당유저넘버를 주면 좋아요한 책 목록을 출력하는 메소드
+			List<BookmarkVo> get5book = bookmarkService.get5book(userNo);
+			model.addAttribute("get5book", get5book);
 		}
 
 		return "taste/taste-main";

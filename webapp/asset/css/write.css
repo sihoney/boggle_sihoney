@@ -113,12 +113,13 @@ font-family: 'Nanum Myeongjo';
     flex-direction: column;
     justify-content: center;
 	padding: 30px;
-	height: 650px;
+	height: 600px;
     width: 1030px;
     border-radius: 16px;
     background-color: #2E8B57;
     color:#ffffff;
     margin: auto;
+    vertical-align: middle;
    /* background-image: url(/static/imagefarm/101074948/7jq08lxPGuzxsz0f1zZAJIH4xmwITUMM) */
 }
 #limit-text{
@@ -130,7 +131,7 @@ font-family: 'Nanum Myeongjo';
     color: #2E8B57;
     padding: 0px;
     margin: 10px 50px 0px 0px;
-    font-family: 'Nanum Myeongjo'; 
+    font-family: 'Nanum Myeongjo';
    /* background-image: url(/static/imagefarm/101074948/7jq08lxPGuzxsz0f1zZAJIH4xmwITUMM) */
 }
 
@@ -151,9 +152,10 @@ font-family: 'Nanum Myeongjo';
     text-align: center;
     resize: none;
     border: none;
-    line-height: 3rem;
-    height: 10rem;
+    line-height: 3rem;   
 }
+
+textarea:focus {outline: none;}
 
 #review_box textarea::placeholder {
 	color: #ffffff;

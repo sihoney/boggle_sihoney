@@ -3,10 +3,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="likeReview">
+<mapper namespace="likereview">
 
 	<!-- n번 유저가 좋아요한 서평 출력 -->
-	<select id="likeReviewList" parameterType="lrVo" resultType="com.javaex.vo.LikeReviewVo">
+	<select id="likeReviewList" parameterType="int" resultType="LikeReviewVo">
 	<![CDATA[
 		select  ru.user_no,
 		        ru.review_like_date,
@@ -57,7 +57,7 @@
 		      ORDER BY reviewDate asc) r, review_user ru
 		where ru.review_no = r.reviewNo
 		and r.reviewcontent is not null
-		and user_no = 1
+		and user_no = 2
 	
 	]]>
 	</select>

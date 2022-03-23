@@ -207,3 +207,44 @@ insert into style
 values(seq_style_no.nextval, 12, '#d82249,NanumBarunPen');
 insert into style
 values(seq_style_no.nextval, 12, '#6fbf8b,NanumGothicEco');
+
+
+
+
+ALTER TABLE style
+ADD imgurl varchar2(1000);
+
+ALTER TABLE style
+ADD videourl varchar2(1000);
+
+UPDATE style
+SET imgurl='rainywindow.png'
+where style_no = 1;
+UPDATE style
+SET imgurl='rainyday.png'
+where style_no = 2;
+UPDATE style
+SET imgurl='puppy1.png'
+where style_no = 3;
+UPDATE style
+SET imgurl='puppy2.png'
+where style_no = 4;
+UPDATE style
+SET imgurl='moon.png'
+where style_no = 5;
+
+UPDATE style
+SET videourl='rainywindow.mp4'
+where style_no = 1;
+UPDATE style
+SET videourl='rainyday.mp4'
+where style_no = 2;
+UPDATE style
+SET videourl='puppy1.mp4'
+where style_no = 3;
+UPDATE style
+SET videourl='puppy2.mp4'
+where style_no = 4;
+UPDATE style
+SET videourl='moon.mp4'
+where style_no = 5;

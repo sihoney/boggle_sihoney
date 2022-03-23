@@ -129,11 +129,11 @@
                     </p>
                     -->
                     
-                    <textarea id="review_textarea" placeholder="글자를 입력하세요" spellcheck="false"></textarea>
+                    <textarea id="review_textarea" rows="1" placeholder="글자를 입력하세요" spellcheck="false"></textarea>
 				</div>
 			</div>
             <p id="limit-text" >
-                0/100
+                0/200
             </p>
             <!-- /서평 쓰기 -->
 
@@ -273,6 +273,9 @@
 
 							dataType: "json",
 							success: function(data){
+								
+								console.log(data)
+								
 								/* 스타일 버튼 화면 렌더 */
 								for(let item of data) {
 									renderStyleBtn(item)	
@@ -287,11 +290,13 @@
 										/* 진행 바 */
 										$(".progressbar li:nth-child(3)").addClass("active")
 										
+										var background = $(this).css("background")
 										var backgroundColor = $(this).css("background-color")
 										var fontFamily = $(this).css("font-family")
 										styleNo = $(this).data("styleno")
-										
+									
 										$("#review_box").css("background-color", backgroundColor)
+										$("#review_box").css("background", background)
 										$("#review_box>textarea").css("font-family", fontFamily)
 									}
 								}
@@ -362,14 +367,14 @@
 	$("#review_textarea").on("keyup", function(){
 		var length = $(this).val().length
 		
-		if(length > 100) {
-			$(this).val($(this).val().substring(0, 100))
+		if(length > 200) {
+			$(this).val($(this).val().substring(0, 200))
 		}
 		else if(length > 0) {
 			/* 진행 바 */
 			$(".progressbar li:nth-child(4)").addClass("active")
 			
-			$("#limit-text").text(length + "/100")	
+			$("#limit-text").text(length + "/200")	
 		}
 		else if(length == 0) {
 			/* 진행 바 */
@@ -378,6 +383,13 @@
 		
 		reviewContent = $(this).val()
 	})
+	
+	
+	/* textarea 자동높이조절 */
+	$("#review_textarea").on("propertychange change keyup paste input",function(){
+       $(this)[0].style.height='auto';
+       $(this).height( $(this).prop('scrollHeight'));     
+    });
 	
 	/* 책 검색 API */
 	$("#query-form").on("submit", function(e){
@@ -475,7 +487,12 @@
 		var background = arr[0]
 		var font = arr[1]
 		
-		var str = '<button data-styleNo="'+ item.styleNo +'"class="btn_style btn-outline-secondary" style="background-color: '+ background +'; font-family: '+ font +'">폰트</button>'
+		if(item.imgurl == null){
+			var str = '<button data-styleNo="'+ item.styleNo +'"class="btn_style btn-outline-secondary" style="background: '+background+' "; font-family: '+ font +'"></button>'	
+		}else{
+			var str = '<button data-styleNo="'+ item.styleNo +'"class="btn_style btn-outline-secondary" style="background: url(${pageContext.request.contextPath}/asset/img/review_card/'+item.imgurl+') no-repeat; background-size: cover;" font-family: '+ font +'"></button>'
+		}
+		
 		
 		$(".btn-group").append(str)
 		

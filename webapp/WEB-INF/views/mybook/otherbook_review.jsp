@@ -52,7 +52,7 @@
 							<h1>서평 기록하기</h1>
 							<p>'${authUser.nickname}'님, 오늘은 어떤 책을 읽으셨나요?</p>
 							<p>
-								<a class="btn btn-primary btn-md" href="${pageContext.request.contextPath}/review_write" role="button">기록하기</a>
+								<a class="btn btn-primary btn-md" href="${pageContext.request.contextPath}/review/write" role="button">기록하기</a>
 							</p>
 						</div>
 					</c:if>
@@ -97,7 +97,7 @@
 						</div>
 						<div class="panel-body">
 							<div id="profile">
-								<img class="img-circle" id="profile-image" src="${Userinfo.userProfile }">
+								<img class="img-circle" id="profile-image" src="${Userinfo.userProfile }" onerror="this.src='${pageContext.request.contextPath}/asset/img/profile.png'">
 							</div>
 							<c:choose>
 								<c:when test="${result eq 'sameUser'}">
@@ -109,7 +109,7 @@
 							</c:choose>
 							<p id="level">Lv.0</p>
 							<div id="info">
-								<a href="${pageContext.request.contextPath}/user/user_modify">회원정보수정</a> <a>로그아웃</a>
+								<a href="${pageContext.request.contextPath}/user/user_modify">회원정보수정</a> <a href="${pageContext.request.contextPath}/user/logout">로그아웃</a>
 							</div>
 						</div>
 					</div>
@@ -312,7 +312,7 @@
 		str += '	<div class="reviews" id=r'+mybookVo.reviewNo+'> ';
 		str += '		<div class="reviews-header"> ';
 		str += ' 			<div class="left"> ';
-		str += ' 				<p><a href="${pageContext.request.contextPath}/bookdetail?bookNo='+ mybookVo.bookNo + '">' + mybookVo.bookTitle + '</a></p> ';
+		str += ' 			<p><a href="${pageContext.request.contextPath}/bookdetail?bookNo='+ mybookVo.bookNo + '&userNo='+mybookVo.userNo+'">' + mybookVo.bookTitle + '</a></p> ';
 		str += ' 			</div> ';
 		str += ' 		</div> ';
 		str += ' 		<div id="reviewer">	 ';
