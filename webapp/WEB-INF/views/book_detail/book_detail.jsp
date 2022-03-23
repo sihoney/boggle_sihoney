@@ -51,7 +51,7 @@
 							
                         </div>
                     </div>
-                    <button id="btn_write" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/review/write?bookTilte=${requestScope.bookMap.bookVo.bookTitle}';">이 책 서평 쓰기</button>
+                    <button id="btn_write" type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/review/write?bookTitle=${requestScope.bookMap.bookVo.bookTitle}';">이 책 서평 쓰기</button>
                 </div>
             </div>
 

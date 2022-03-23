@@ -1879,6 +1879,26 @@ address {
   border-top: 1px solid #e6e8eb;
 }
 
+#helpListBox .article-list{
+width: 1115px;
+height: 220px;
+overflow: auto;
+margin-bottom: 60px;
+}
+
+#helpListBox_list .article-list{
+width: 820px;
+height: 290px;
+overflow: auto;
+}
+
+#moreBtn{
+font-size: small;
+margin-left: 1010px;
+color:#e6e8eb;
+	
+}
+
 .article-list-item {
   border-bottom: 1px solid #e6e8eb;
   font-size: 16px;
@@ -3991,7 +4011,7 @@ th.requests-table-date,
 }
 
 .request-form textarea {
-  min-height: 120px;
+  min-height: 200px;
 }
 
 .request-follow-up {
@@ -5833,7 +5853,33 @@ th.requests-table-date,
     align-items: flex-start;
     text-align: center;
     cursor: default;
+    margin-top: 30px;
 }
+
+#btn_submit_modifyForm{
+	background-color: #1f8ce6;
+    border: 0;
+    border-radius: 4px;
+    color: #f7fafc;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 2.72;
+    min-width: 190px;
+    padding: 0 1.9286em;
+    width: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    transition: border .2s;
+    appearance: auto;
+    user-select: none;
+    white-space: pre;
+    align-items: flex-start;
+    text-align: center;
+    cursor: default;
+    margin-top: 30px;
+}
+
 #btn_delete_modifyForm{
 	background-color: #1f8ce6;
     border: 0;

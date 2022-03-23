@@ -83,7 +83,7 @@ public class HelpController {
 		return "help/read";
 	}
 	
-	//글 수정폼 
+	// 글 수정폼 
 	@RequestMapping("/modifyForm")
 	public String modifyForm(@RequestParam ("no") int no, Model model) {
 		System.out.println("helpController/modifyForm");
@@ -91,7 +91,6 @@ public class HelpController {
 		HelpVo boardVo = helpService.helpSelect2(no);
 		model.addAttribute("boardVo",boardVo);
 		System.out.println(boardVo);
-		
 		
 		return "help/modifyForm";
 	}
@@ -122,7 +121,16 @@ public class HelpController {
 	
 	
 	
-	/////////////////////////
+	///////////  how to use ///////////////
+	@RequestMapping("/howtouse")
+	public String howtouse() {
+		System.out.println("howtouse");
+		
+		return "help/howtouse";
+	}
+	
+	
+	///////////  footer에 들어가는 정보 ///////////////
 	@RequestMapping("/legal")
 	public String legal() {
 		System.out.println("legal");
