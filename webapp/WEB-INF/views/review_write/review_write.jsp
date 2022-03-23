@@ -21,7 +21,12 @@
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-
+    <!-- font(수정 전) -->
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-pen.css" rel="stylesheet">
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-pen.css" rel="stylesheet">
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic-eco.css" rel="stylesheet">
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-myeongjo.css" rel="stylesheet">
+	
 </head>
 <body>
 
@@ -35,7 +40,7 @@
             <input class="userNo" type="hidden" name="userNo" value="${sessionScope.authUser.userNo }">
 
 			<!-- progress bar -->
-			<div id="" class="clearfix">
+			<div id="progress_bar" class="clearfix">
                 <div class="progressbar-wrapper">
                     <ul class="progressbar">
                         <li>책 선택</li>
@@ -216,11 +221,13 @@
 	var query
 	var pageNo = 1
 	
+	var btnToggle = false
+	var reviewNoQuery
+	
 	var userNo = $(".userNo").val()
 	var bookNo
 	var styleNo
 	var reviewContent
-	
 	var bookTitle
 	var author
 	var bookURL
@@ -231,6 +238,56 @@
 	/* 화면 로드되기 전, 감정태그 출력 */
 	$("document").ready(function(){
 		
+		const urlObj = new URL(location.href)
+		const urlParams = urlObj.searchParams
+		const bookTitleQuery = urlParams.get("bookTitle")
+		reviewNoQuery = urlParams.get("reviewNo")
+
+		///////////////////////////////////
+		// bookTitle > 책 상세 페이지 넘어올 때 
+		///////////////////////////////////
+		if(bookTitleQuery !== null) {
+			/* bookNo로 db에서 책 정보불러와서 선택된 책 구역에 렌더 & 진행바*/
+			//let url = urlObj.pathname.substring(0, 20) + "/getBookInfo?bookTitle="+bookTitleQuery
+			let url = urlObj.pathname.substring(0, 19) + "/getBookInfo?bookTitle="+bookTitleQuery
+		
+			$.ajax({
+				url: url,
+				type: "post",
+				contentType: "json",
+				success: function(data){
+					let item = data[0]
+
+					console.log(item)
+					
+					/* 선택 섹션 화면에서 안보이게 & modal 닫기 */
+					$(".jumbotron").css("display", "none")
+					
+					/* 화면 렌더 */
+					renderSelectedBook(item.isbn13, item.cover, item.title, item.author, item.totalCnt)	
+					
+					/* 진행 바 */
+					$(".progressbar li:nth-child(1)").addClass("active")
+					
+					/* 저장할 때 필요한 정보 저장*/
+					bookNo = item.isbn13
+					bookTitle = item.title
+					author = item.author
+					bookURL = item.link
+					coverURL = item.cover
+					genreNo = item.categoryId
+					genreName = item.categoryName
+				},
+				error:  function(XHR, status, error){
+					console.log(status + " : " + error);
+				}
+			})
+
+		}
+		
+		//////////////////////////////
+		// 감정버튼, 스타일 버튼 
+		//////////////////////////////
 		var url = location.href.substring(0, 34) + "/main/getemotion"
 		
 		$.ajax({
@@ -258,53 +315,16 @@
 						$(this).addClass("active")
 						
 						/* 진행 바 */
-						$(".progressbar li:nth-child(2)").addClass("active")
+						if($(".progressbar li:nth-child(1)").hasClass("active")) {
+							$(".progressbar li:nth-child(2)").addClass("active")
+						}
 						
 						/* 스타일 옵션 출력 */
 						$(".btn-group").children().remove()
 						
 						var emoNo = this.id
 						
-						var url = "${pageContext.request.contextPath}/review/getStyle?emoNo=" + emoNo
-						
-						$.ajax({
-							url: url,
-							type: "post",
-
-							dataType: "json",
-							success: function(data){
-								
-								console.log(data)
-								
-								/* 스타일 버튼 화면 렌더 */
-								for(let item of data) {
-									renderStyleBtn(item)	
-								}
-								
-								/* 이벤트 추가 */
-								var btnList = $(".btn_style")
-								
-								for(let btn of btnList) {
-									
-									btn.onclick =  function(){
-										/* 진행 바 */
-										$(".progressbar li:nth-child(3)").addClass("active")
-										
-										var background = $(this).css("background")
-										var backgroundColor = $(this).css("background-color")
-										var fontFamily = $(this).css("font-family")
-										styleNo = $(this).data("styleno")
-									
-										$("#review_box").css("background-color", backgroundColor)
-										$("#review_box").css("background", background)
-										$("#review_box>textarea").css("font-family", fontFamily)
-									}
-								}
-							},
-							error:  function(XHR, status, error){
-								console.log(status + " : " + error);
-							}
-						})
+						renderAndEventStyleBtn(emoNo)
 					}
 				}
 						
@@ -315,23 +335,89 @@
 			}
 			
 		})
+		
+		//////////////////////////////////////////////
+		// reviewNo > 서평 수정 페이지 넘어올 때 (수정하기)
+		//////////////////////////////////////////////	
+		if(reviewNoQuery !== null) {
+			$("#btn_admit").text("수정하기")
+			
+			//let url = urlObj.pathname.substring(0, 20) + "/getPrevReviewInfo?reviewNo=" + reviewNoQuery
+			let url = urlObj.pathname.substring(0, 19) + "/getPrevReviewInfo?reviewNo=" + reviewNoQuery
+			
+			$.ajax({
+				url, url,
+				type: "post",
+				contentType: "json",
+				success: function(data) {
+					console.log(data)
+					
+					reviewContent = data["reviewContent"]
+					author = data["author"]
+					genreNo = data["categoryId"]
+					genreName = data["categoryName"]
+					emoNo = data["emoNo"]
+					bookNo = data["isbn13"]
+					bookURL = data["link"]
+					coverURL = data["cover"]
+					let styleName = data["styleName"]
+					styleNo = data["styleNo"]
+					bookTitle = data["title"]
+					let totalCnt = data["totalCnt"]
+					
+					// 1. 책 선택 
+					renderSelectedBook(bookNo, coverURL, bookTitle, author, totalCnt)
+					
+					/* 선택 섹션 화면에서 안보이게 & modal 닫기 */
+					$(".jumbotron").css("display", "none")
+					
+					// 2. 감정 버튼 선택 (emoNo)
+					$("#"+emoNo).addClass("active")
+					
+					// 3. 스타일 버튼 나열
+					renderAndEventStyleBtn(emoNo)
+
+					// 4. textarea 글, 스타일 적용 (reviewContent)
+					$("#review_textarea").val(reviewContent)
+					$("#limit-text").text(reviewContent.length + "/200")	
+					
+					let arr = styleName.split(",")
+					let backgroundColor = arr[0]
+					let fontFamily = arr[1]
+					
+					$("#review_box").css("background-color", backgroundColor)
+					$("#review_box>textarea").css("font-family", fontFamily)
+					
+					// 5. 진행바
+					$(".progressbar li:nth-child(1)").addClass("active")
+					
+				},
+				error:  function(XHR, status, error){
+					console.log(status + " : " + error);
+				}
+			})
+		}
 	})
 	
 	/* 기록하기 */
 	$("#btn_admit").on("click", function(){
 
 		var obj = {
-			bookURL: bookURL,
-			userNo: userNo,
-			styleNo: styleNo,
-			reviewContent: reviewContent,
-			bookNo: bookNo,
-			bookTitle: bookTitle,
-			author: author,
-			genreName: genreName,
-			coverURL: coverURL,
-			genreNo: genreNo
-		}
+				bookNo: bookNo,
+				bookTitle: bookTitle,
+				author: author,
+				bookURL: bookURL,
+				genreNo: genreNo,
+				coverURL: coverURL,
+				
+				userNo: userNo,
+				styleNo: styleNo,
+				reviewContent: reviewContent,
+				
+				genreName: genreName,
+				
+				reviewNo: reviewNoQuery
+			}
 
 		if(userNo == null || userNo == 0) {
 			alert("로그인 후 이용해 주세요")
@@ -347,7 +433,11 @@
 
 					dataType: "json",
 					success: function(data){
-						console.log(data)
+
+						console.log(location.href.substring(0, 34) + data.redirect)
+						
+						location.href = location.href.substring(0, 34) + data.redirect
+
 						/*
 						if(data === "user/loginForm") {
 							location.href = location.href.substring(0, 35) + data
@@ -372,9 +462,14 @@
 		}
 		else if(length > 0) {
 			/* 진행 바 */
-			$(".progressbar li:nth-child(4)").addClass("active")
+			if($(".progressbar li:nth-child(1)").hasClass("active") && 
+					$(".progressbar li:nth-child(2)").hasClass("active") &&
+					$(".progressbar li:nth-child(3)").hasClass("active")) {
+
+				$(".progressbar li:nth-child(4)").addClass("active")
+			}
 			
-			$("#limit-text").text(length + "/200")	
+			$("#limit-text").text(length + "/200")
 		}
 		else if(length == 0) {
 			/* 진행 바 */
@@ -440,10 +535,7 @@
 	/* 모달 > 책 선택시 */
 	$("#modal-playlist").on("click", ".list", function() {
 		var $this = $(this)
-		/*
-		var genreNo
-		var coverURL
-		*/
+
 		/* isbn, title, author, imgURL, link, category */
 		bookNo = $this.data("isbn")
 		coverURL = $this[0].children[0].children[0].currentSrc
@@ -477,7 +569,67 @@
 		/* 진행 바 */
 		$(".progressbar li:nth-child(1)").addClass("active")
 
+		if(btnToggle === true) {
+			$(".progressbar li:nth-child(2)").addClass("active")
+		}
+		if(styleNo != null) {
+			$(".progressbar li:nth-child(3)").addClass("active")
+		}
+		if(reviewContent != null) {
+			if(reviewContent.length > 0) {
+				$(".progressbar li:nth-child(4)").addClass("active")
+			}
+		}
 	})
+	
+	function renderAndEventStyleBtn(emoNo) {
+		var url = "${pageContext.request.contextPath}/review/getStyle?emoNo=" + emoNo
+		
+		$.ajax({
+			url: url,
+			type: "post",
+
+			dataType: "json",
+			success: function(data){
+				/* 스타일 버튼 > 화면 렌더 */
+				for(let item of data) {
+					renderStyleBtn(item)	
+				}
+				
+				/* 스타일 옵션 > 이벤트 추가 */
+				var btnList = $(".btn_style")
+				
+				for(let btn of btnList) {
+					
+					btn.onclick =  function(){
+						/* 진행 바 */
+						if($(".progressbar li:nth-child(1)").hasClass("active") 
+								&& $(".progressbar li:nth-child(2)").hasClass("active")) {
+							$(".progressbar li:nth-child(3)").addClass("active")
+							
+							if(reviewContent != null) {
+								if(reviewContent.length > 0) {
+									$(".progressbar li:nth-child(4)").addClass("active")
+								}
+							}
+						}
+						
+						var background = $(this).css("background")
+						var backgroundColor = $(this).css("background-color")
+						var fontFamily = $(this).css("font-family")
+						styleNo = $(this).data("styleno")
+						
+						$("#review_box").css("background-color", backgroundColor)
+						$("#review_box").css("background", background)
+						$("#review_box>textarea").css("font-family", fontFamily)
+					}
+				}
+			},
+			error:  function(XHR, status, error){
+				console.log(status + " : " + error);
+			}
+		})
+	}
 	
 	function renderStyleBtn(item) {
 

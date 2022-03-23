@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javaex.dao.ReviewWriteDao;
 import com.javaex.service.ReviewWriteService;
 import com.javaex.util.HttpUtil;
 import com.javaex.vo.StyleVo;
@@ -30,6 +33,8 @@ public class ReviewWriteController {
 
 	@Autowired
 	ReviewWriteService reviewWriteService;
+	@Autowired
+	ReviewWriteDao reviewWriteDao;
 	
 	@RequestMapping("/write")
    public String review_write() {
@@ -108,7 +113,7 @@ public class ReviewWriteController {
 		
 		return str;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/getStyle")
 	public List<StyleVo> getStyle(@RequestParam(value="emoNo") int emoNo) {
@@ -125,7 +130,7 @@ public class ReviewWriteController {
 	
 		System.out.println(map);
 		//{userNo=6, styleNo=5, reviewContent=심심ㅅ밋밋ㅁ, bookNo=9791156937050, bookTitle=2023 행선집 : 로이어스 행정법 선택형 집중 - 변시 11회와 변모 최근 3년치 선택형 해설 수록, author=김태성 지음, genreName=국내도서>수험서/자격증>인문/사회/법(고등고시)>변호사시험>행정법, coverURL=https://image.aladin.co.kr/product/29104/81/coversum/k452837162_1.jpg, genreNo=34791}
-
+		// 
 		reviewWriteService.addReview(map);
 		
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
@@ -135,13 +140,62 @@ public class ReviewWriteController {
 		if(authUser == null) {
 			redirect = "user/loginForm";
 		} else {
-			ObjectMapper objectMapper = new ObjectMapper();
-			String nickname = objectMapper.writeValueAsString(authUser.getNickname());
-			
-			redirect = nickname;
+			redirect = authUser.getNickname();
 		}
+
+		Map<String, String> resultMap = new HashMap<String, String>();
+		resultMap.put("redirect", redirect);
 		
-		System.out.println(redirect);
+		return resultMap;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getBookInfo")
+	public List<Map<String, Object>> getBookInfo(@RequestParam(value="bookTitle") String bookTitle) throws JsonParseException, JsonMappingException, IOException {
+		System.out.println("ReviewWriteController > getBookInfo");
+		
+		System.out.println("bookTitle: "+bookTitle);
+		
+		return reviewWriteService.getBookInfo(bookTitle);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getPrevReviewInfo")
+	public Map<String, Object> getPrevReviewInfo(@RequestParam(value="reviewNo") int reviewNo) {
+		System.out.println("ReviewWriteController > getPrevReviewInfo");
+		
+		System.out.println("reviewNo: " + reviewNo);
+		
+		return reviewWriteService.getPrevReviewInfo(reviewNo);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/modifyReview")
+	public Map<String, String> modifyReview(@RequestBody Map<String, Object> map,
+											HttpSession session) {
+		System.out.println("ReviewWriteController > modifyReview");
+		
+		System.out.println("요청에서 받은 값: " + map);
+		//{bookNo=9791166686603, bookTitle=다섯 번째 감각, author=김보영, bookURL=https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=287367114, genreNo=1, coverURL=https://image.aladin.co.kr/product/28736/71/cover500/k442836780_1.jpg, userNo=6, styleNo=5, reviewContent=세상은 원래부터 기괴하고 무섭고 아름답고 당황스러웠다. 그동안 우리는 두꺼운 습관의 담요를 뒤집어 쓰고 이를 무시하고 있었을 뿐이다. 그리고 김보영의 단편들을 읽는 것은 그 담요를 은근슬적 떨구는 과정이다. , genreName=소설/시/희곡, reviewNo=3}
+
+		int result = reviewWriteDao.checkReviewWriter(map);
+		
+		System.out.println("수정한 review를 userNo가 작성했는지: " + result);
+		
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		
+		String redirect = null;
+		
+		if(result == 0) { // 작성자가 남의 서평을 수정하려고 할 경우
+			redirect =  "user/loginForm";
+		}
+		else { // 수정
+			int result2 = reviewWriteService.modifyReview(map);
+			
+			if(result2 == 1) {
+				redirect = authUser.getNickname();
+			}
+		}
 		
 		Map<String, String> resultMap = new HashMap<String, String>();
 		resultMap.put("redirect", redirect);
