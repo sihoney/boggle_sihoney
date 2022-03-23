@@ -48,9 +48,9 @@
 		<ul id="nav2" class="nav nav-pills">
 			<!-- 세션아이디와 비교, 다를경우 '이름님의 취향' -->
 			<!-- <li role="presentation" class="active"><a href="">'유저이름'님의 취향</a></li> -->
-			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/${nickname}/tastemain">my 취향</a></li>
+			<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/tastemain">my 취향</a></li>
 			<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/tastereview">좋아요한 서평</a></li>
-			<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/main_book">관심가는 책</a></li>
+			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/${nickname}/main_book">관심가는 책</a></li>
 		</ul>
 		</div>
 		<!-- ------nav------ -->
@@ -64,14 +64,14 @@
 
 
 		<div>
-			<p id="thumb-text">"${authUser.nickname }"가 북마크한 책</p>
+			<p id="thumb-text">"${authUser.nickname}"가 북마크한 책</p>
 		</div>
 
 		<div class="gradient">
 
 			<div class="gallery">
 
-				<c:forEach items="${bmList }" var="vo">
+				<c:forEach items="${bmList}" var="vo">
 					<article>
 						<div class="img">
 							<img src="${vo.cover_url}" class="cover">

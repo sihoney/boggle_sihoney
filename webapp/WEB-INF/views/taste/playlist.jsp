@@ -57,46 +57,54 @@
 		</div>
 		<!-- ------nav-------->
 		<div>
-			<div class="contents">
+			<div class="contents" class="clearfix">
 				<div class="index">
 					<c:choose>
 						<c:when test="${result eq 'sameUser'}">
-							<div><p id="lll">'${nickname}'님이 좋아하는<br>플레이리스트</p></div>
+							<div>
+								<p>
+									'${nickname}'님이 좋아하는<br>플레이리스트
+								</p>
+							</div>
 						</c:when>
 						<c:otherwise>
-							<p>'${otherUser.nickname}'님이 좋아하는<br> 플레이리스트</p>
+							<p>
+								'${otherUser.nickname}'님이 좋아하는<br> 플레이리스트
+							</p>
 						</c:otherwise>
 					</c:choose>
 				</div>
 
-				<div class="columns">
-					<c:forEach items="${likeplayclick}" var="vo">
-						<div id="columns_first" class="clearfix">
-							<div class="text-name">
-								<p id="name"><!-- 플레이리스트 제목  -->
-									${vo.playlistName}
-								</p>
+			<div class="columns">
+				<c:forEach items="${likeplayclick}" var="vo" varStatus ="status">
+					<c:set var="no" value="${status.index %3 }" />
+					
+					<div class="clearfix columns_${no }">
+						<div class="text-name">
+							<div onclick="location.href='${pageContext.request.contextPath}/main/playlist?playlistNo=${vo.playlistNo }'">  
+								<p id="name">${vo.playlistName}<span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span></p>
+								
 							</div>
-
-							<%-- <div>
-								<span class="glyphicon glyphicon-heart" id="desc"
-									aria-hidden="true"></span> <span id="desc">${vo.likecnt}</span> <span
-									class="glyphicon glyphicon-user" id="desc" aria-hidden="true"></span>
-								<span id="desc">${vo.nickname}</span>
-							</div> --%>
-
 						</div>
-					</c:forEach>
-				</div>
+
+						<div>
+							<span class="glyphicon glyphicon-heart" id="desc"
+								aria-hidden="true"></span> <span id="desc">16.2k</span> <span
+								class="glyphicon glyphicon-user" id="desc" aria-hidden="true"></span>
+							<span id="desc">${vo.nickname }</span>
+						</div>
+
+					</div>
+				</c:forEach>
 			</div>
-			</div>
-
-
-
-			<!-- footer -->
-			<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
-
 		</div>
+
+
+
+		<!-- footer -->
+		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
+
+	</div>
 </body>
 
 </html>

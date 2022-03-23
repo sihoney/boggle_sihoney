@@ -1,125 +1,95 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <title>hot playlist</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/hot-playlist.css">
+<meta charset="UTF-8">
+<title>playlist</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/asset/css/all_css.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/asset/css/playlist.css">
 
-    <script type="text/javascript" src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
-    <script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
+<script
+	src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
 </head>
 <!--header-->
 
 <body>
-    <div id="wrap">
-        <!-- 헤더 -->
+	<div id="wrap">
+		<!-- 헤더 -->
 		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
-		
+		<!-- ------nav------ -->
+		<div id="nav" class="clearfix">
+			<c:choose>
+				<c:when test="${result eq 'sameUser'}">
+					<ul class="nav nav-tabs">
+						<li role="presentation"><a
+							href="${pageContext.request.contextPath}/${nickname}">내 서평</a></li>
+						<li role="presentation"><a
+							href="${pageContext.request.contextPath}/${nickname}/tastemain">취향저격</a></li>
+						<li role="presentation" class="active"><a
+							href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
+						<!--세션 아이디와 사이트아이디 같을때-->
+						<li role="presentation"><a
+							href="${pageContext.request.contextPath}/analyze">통계</a></li>
+					</ul>
+				</c:when>
+				<c:otherwise>
+					<!-- 세션아이디랑 다를때는 사이트주소의 아이디와 같은 유저의 데이터들 불러오기-->
+					<ul class="nav nav-tabs">
+						<li role="presentation"><a
+							href="${pageContext.request.contextPath}/${nickname}">남 서평</a></li>
+						<li role="presentation"><a
+							href="${pageContext.request.contextPath}/${nickname}/tastemain">취향저격</a></li>
+						<li role="presentation" class="active"><a
+							href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
+					</ul>
+				</c:otherwise>
+			</c:choose>
+		</div>
 
-        <!-- ------nav------ -->
-        <div id="nav" class="clearfix">
-		      <ul class="nav nav-tabs">
-		          <li role="presentation"><a href="${pageContext.request.contextPath}/mybook">내 서평</a></li>
-		          <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
-		          <!--세션 아이디와 사이트아이디 같을때-->
-		          <li role="presentation"><a href="${pageContext.request.contextPath}/analyze">통계</a></li>
-		      </ul>
-		      <!-- 세션아이디랑 다를때는
-		      <ul class="nav nav-tabs">
-		          <li role="presentation"><a href="">'유저이름'님의 서평</a></li>
-		          <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
-		      </ul>	       
-		       -->
- 		</div>
-       <!-- ------nav------ -->
+		<div class="contents" class="clearfix">
+			<div class="index">
+				<p>
+					내가 작성한<br> 플레이리스트&#x1F601;
+				</p>
+			</div>
 
+			<div class="columns">
+				<c:forEach items="${makelistclick}" var="vo" varStatus ="status">
+				<c:set var="no" value="${status.index %3 }" />
+					<div class="clearfix columns_${no }">
+						<div class="text-name">
+						<div onclick="location.href='${pageContext.request.contextPath}/main/playlist?playlistNo=${vo.playlistNo }'"> 
+							<p id="name">${vo.playlistName}<span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span></p>
+						</div>
+						</div>
 
-        <!-- ------nav2------ -->
-		<ul id="nav2" class="nav nav-pills">
-			<!-- 세션아이디와 비교, 다를경우 '이름님의 취향' -->
-			<!-- <li role="presentation" class="active"><a href="">'유저이름'님의 취향</a></li> -->
-			<li role="presentation"><a href="${pageContext.request.contextPath}/taste_main">my 취향</a></li>
-			<li role="presentation"><a href="${pageContext.request.contextPath}/review">좋아요한 서평</a></li>
-			<li role="presentation"><a href="${pageContext.request.contextPath}/main_book">관심가는 책</a></li>
-			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/like_playlist">플레이리스트</a></li>
-		</ul>
-		
-		<ul id="nav3" class="nav nav-pills">
-			<li role="presentation" class="active"><a href="">두근두근하는</a></li>
-			<li role="presentation"><a href="">스팩타클한</a></li>
-			<li role="presentation"><a href="">감동적인</a></li>
-			<li role="presentation"><a href="">섬뜩한</a></li>
-			<li role="presentation"><a href="">잔잔한</a></li>
-			<li role="presentation"><a href="">용기를 북돋는</a></li>
-			<li role="presentation"><a href="">눈물나는</a></li>
-			<li role="presentation"><a href="">환상적인</a></li>
-		</ul>
+						<div>
+							<span class="glyphicon glyphicon-heart" id="desc"
+								aria-hidden="true"></span> <span id="desc">16.2k</span> <span
+								class="glyphicon glyphicon-user" id="desc" aria-hidden="true"></span>
+							<span id="desc">${vo.nickname }</span>
+						</div>
+						</div>
+						</c:forEach>
 
-        <div class="contents" class="clearfix">
-            <div class="index">
-                <p>내가 작성한<br> 플레이리스트&#x1F601;</p>
-            </div>
-
-            <div class="columns">
-                <div id="columns_first" class="clearfix">
-                    <div class="text-name">
-                        <p id="name">출근할 때 즐기는 <br>에너지 충전 플레이리스트</p>
-                    </div>
-
-                    <div>
-                        <span class="glyphicon glyphicon-heart" id="desc" aria-hidden="true"></span>
-                        <span id="desc">16.2k</span>
-                        <span class="glyphicon glyphicon-user" id="desc" aria-hidden="true"></span>
-                        <span id="desc">책책책책을 읽읍시다</span>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="columns">
-                <div id="columns_sec" class="clearfix">
-                    <div class="text-name">
-                        <p id="name">그래 가보자고<br>의욕 뿜뿜 플레이리스트</p>
-                    </div>
-
-                    <div>
-                        <span class="glyphicon glyphicon-heart" id="desc" aria-hidden="true"></span>
-                        <span id="desc">16.2k</span>
-                        <span class="glyphicon glyphicon-user" id="desc" aria-hidden="true"></span>
-                        <span id="desc">책책책책을 읽읍시다</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="columns">
-            <div id="columns_thrd" class="clearfix">
-                <div class="text-name">
-                    <p id="name">나만 이런 게 아니었어<br>공감 꾹꾹 플레이리스트</p>
-                </div>
-
-                <div>
-                    <span class="glyphicon glyphicon-heart" id="desc" aria-hidden="true"></span>
-                    <span id="desc">16.2k</span>
-                    <span class="glyphicon glyphicon-user" id="desc" aria-hidden="true"></span>
-                    <span id="desc">하루에한권이라도</span>
-                </div>
-
-            </div>
-        </div>
+					</div>
+			</div>
 
 
-        <!-- footer -->
-		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
+			<!-- footer -->
+			<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 
-    </div>
-
+		</div>
 </body>
 
 </html>
