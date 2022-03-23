@@ -310,18 +310,6 @@ from (select    ru.review_like_date reviewLikeDate,
 			from review
 			where user_no = #{userNo}
 		]]>
-	</select>
-	
-	
-	<!-- n번서평 삭제하기 -->
-	<!-- reviewcnt -->
-	<select id="reviewcnt" resultType="MybookVo" parameterType="int">
-		<![CDATA[
-			select count(review_no) likecheck
-			from review
-			where user_no = #{userNo}
-		]]>
 	</select>	
-	
 	
 </mapper>
