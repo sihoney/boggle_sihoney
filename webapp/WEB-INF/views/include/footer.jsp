@@ -4,7 +4,7 @@
 <!-- footer -->
 <div id="footer">
 	<div>
-		copyright ⓒ 2022 Randombook Player. All right reserved<br> 4조 Randombook ｜ 황희원 이영림 황인경 김지연 장서윤
+		copyright ⓒ 2022 Boggle Books. All right reserved<br> 4조 Randombook ｜ 황희원 이영림 황인경 김지연 장서윤
 	</div>
 	<a href="">FAQ</a><a href="${pageContext.request.contextPath}/help">고객센터</a>
 </div>
