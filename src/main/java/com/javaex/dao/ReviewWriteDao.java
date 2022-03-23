@@ -19,6 +19,7 @@ public class ReviewWriteDao {
 		return sqlSession.selectOne("reviewwrite.getReviewTotalCnt", isbn);
 	}
 	
+	
 	public List<StyleVo> getStyle(int emoNo) {
 		List<StyleVo> list = sqlSession.selectList("reviewwrite.getStyle", emoNo);
 		
@@ -53,5 +54,43 @@ public class ReviewWriteDao {
 	
 	public int checkBook(Map<String, Object> map) {
 		return sqlSession.selectOne("reviewwrite.checkBook", map);
+	}
+	
+	public int checkBook(String bookTitle) {
+		int result = sqlSession.selectOne("reviewwrite.checkBookStr", bookTitle);
+		
+		System.out.println(result + "건 | db에 있는 책 정보");
+		
+		return result;
+	}
+	
+	public Map<String, Object> getBookInfo(String bookTitle) {
+		Map<String, Object> result = sqlSession.selectOne("reviewwrite.getBookInfo", bookTitle);
+		
+		System.out.println("책 정보: "+result);
+		
+		return result;
+	}
+	
+	public Map<String, Object> getPrevReviewInfo(int reviewNo) {
+		Map<String, Object> result = sqlSession.selectOne("reviewwrite.getPrevReviewInfo", reviewNo);
+		
+		return result;
+	}
+	
+	public int checkReviewWriter(Map<String, Object> map) {
+		return sqlSession.selectOne("reviewwrite.checkReviewWriter", map);
+	}
+	
+	public int checkBookUpdate(Map<String, Object> map) {
+		return sqlSession.selectOne("reviewwrite.checkBookUpdate", map);
+	}
+
+	public int modifyReview(Map<String, Object> map) {
+		int result = sqlSession.update("reviewwrite.modifyReview", map);
+		
+		System.out.println(result + "건 | 서평 수정 완료");
+		
+		return result;
 	}
 }

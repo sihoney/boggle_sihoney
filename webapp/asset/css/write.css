@@ -16,6 +16,14 @@
 }
 */
 /* ----- progress bar ----- */
+#progress_bar {
+	position: sticky;
+    top: 0;
+    background-color: rgb(255 255 255 / 80%);
+    z-index: 10;
+}
+
+
 .progress-bar-contents span {
     margin-left: 210px;
     float: center;

@@ -2,13 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="reviewwrite">
 
-	<!-- ResultMap -->
-	<!-- 
-	<resultMap id="emotionMap" type="map">
-        <result property="emoName" column="emo_name" />
-        <result property="emoNo" column="emo_no" />
+	<!-- ResultMap --> 
+	<resultMap id="Rmap" type="map">
+        <result property="isbn13" column="BOOK_NO" />
+        <result property="totalCnt" column="REVIEWCNT" />
+        <result property="cover" column="COVER_URL" />
+        <result property="author" column="AUTHOR" />
+        <result property="title" column="BOOK_TITLE" />
+        <result property="categoryId" column="GENRE_NO" />
+        <result property="categoryName" column="GENRE_NAME" />
+        <result property="link" column="BOOK_URL" />
+        
+        <result property="styleNo" column="STYLE_NO" />
+        <result property="styleName" column="STYLE_NAME" />
+        <result property="emoNo" column="EMO_NO" />
+        <result property="reviewContent" column="REVIEW_CONTENT" />
     </resultMap> 
-	-->
+    
 	<select id="getReviewTotalCnt" parameterType="long" resultType="int">
 		<![CDATA[
 			select count(review_no)
@@ -77,4 +87,94 @@
 			where book_no = #{bookNo}
 		]]>
 	</select>
+
+	<select id="checkBookStr" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(book_no)
+			from books
+			where book_title = #{bookTitle}
+		]]>
+	</select>
+	
+		<select id="getBookInfo" parameterType="String" resultMap="Rmap">
+		<![CDATA[
+			select book_no,
+			       cover_url,
+			       book_title,
+			       author, 
+			       book_title,
+			       book_url,
+			       books.genre_no,
+			       genre_name,
+			       genre.genre_no,
+			       (select count(books.book_no)
+			        from books, (select count(review_no), book_no
+			                     from review
+			                     group by book_no) ct
+			        where books.book_no = ct.book_no
+			        and books.book_title = #{bookTitle}) reviewCnt
+			from books, genre
+			where books.genre_no = genre.genre_no
+			and book_title = #{bookTitle}
+		]]>
+	</select>
+	
+	<select id="getPrevReviewInfo" parameterType="int" resultMap="Rmap">
+		<![CDATA[
+			select review_content,
+			       review.book_no,
+			       style.style_no,
+			       style_name,
+			       book_url,
+			       cover_url,
+			       book_title,
+			       author,
+			       genre.genre_no,
+			       genre_name,
+			       emotion.emo_no,
+			       (select totalCnt
+			        from review, (select count(review_no) totalCnt, 
+			                            books.book_no
+			                        from review, books
+			                        where review.book_no = books.book_no
+			                        group by books.book_no) ot
+			        where review.book_no = ot.book_no
+			        and review_no = #{reviewNo}) reviewCnt
+			from review, books, style, emotion, genre
+			where review.book_no = books.book_no
+			and review.style_no = style.style_no
+			and style.emo_no = emotion.emo_no
+			and books.genre_no = genre.genre_no
+			and review_no = #{reviewNo}
+		]]>
+	</select>
+	
+	<select id="checkReviewWriter" parameterType="map" resultType="int">
+		<![CDATA[
+			select count(review_no)
+			from review
+			where review_no = #{reviewNo}
+			and user_no = #{userNo}
+		]]>
+	</select>
+	
+	<select id="checkBookUpdate" parameterType="map" resultType="int">
+		<![CDATA[
+			select count(review_no)
+			from review
+			where review_no = #{reviewNo}
+			and book_no = #{bookNo}
+		]]>
+	</select>
+
+	<update id="modifyReview" parameterType="map">
+		<![CDATA[
+			update review
+			set review_content = #{reviewContent},
+			    style_no = #{styleNo},
+			    book_no = #{bookNo}
+			where review_no = #{reviewNo} 
+			and user_no = #{userNo}
+		]]>
+	</update>
 </mapper>

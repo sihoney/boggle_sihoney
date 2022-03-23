@@ -483,6 +483,8 @@ randomBtn.onclick = function() {
 	/* 적용 안됨 */
 	randomBtn.blur()
 	window.focus()
+	
+	window.addEventListener("keydown", enterEventHandler)
 }
 
 /* 서평, 음악 리스트 로드 */
