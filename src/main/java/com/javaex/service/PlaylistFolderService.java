@@ -173,9 +173,8 @@ public class PlaylistFolderService {
 	/* 서평 삭제 */
 	public int reviewDelete(int reviewNo) {
 		System.out.println("Service.reviewDelete");
-		
-		
-		return 0;
+		int deleteResult = playlistfolderDao.reviewDelete(reviewNo);		
+		return deleteResult;
 	}
 	
 	/* 로딩시 좋아요 체크 */

@@ -12,6 +12,7 @@ public class BookdetailVo {
 		private String coverUrl;
 		
 		private int reviewNo;
+		private String reviewContent;
 		private String reviewDate;
 		private int styleNo;
 		private String emoName;
@@ -49,6 +50,35 @@ public class BookdetailVo {
 			this.bookReviewCount = bookReviewCount;
 		}
 
+		public BookdetailVo(String bookNo, String bookTitle, int reviewNo, String reviewContent, String reviewDate,
+				String emoName, int userNo, String nickname, int likecnt) {
+			super();
+			this.bookNo = bookNo;
+			this.bookTitle = bookTitle;
+			this.reviewNo = reviewNo;
+			this.reviewContent = reviewContent;
+			this.reviewDate = reviewDate;
+			this.emoName = emoName;
+			this.userNo = userNo;
+			this.nickname = nickname;
+			this.likecnt = likecnt;
+		}
+
+		public BookdetailVo(int rn, String bookTitle, int reviewNo, String reviewContent, String reviewDate,
+				int styleNo, String emoName, int userNo, String nickname, int likecnt) {
+			super();
+			this.rn = rn;
+			this.bookTitle = bookTitle;
+			this.reviewNo = reviewNo;
+			this.reviewContent = reviewContent;
+			this.reviewDate = reviewDate;
+			this.styleNo = styleNo;
+			this.emoName = emoName;
+			this.userNo = userNo;
+			this.nickname = nickname;
+			this.likecnt = likecnt;
+		}
+
 		public BookdetailVo(int rn, String bookNo, String bookTitle, String author, String bookUrl, String coverUrl,
 				int reviewNo, String reviewDate, int styleNo, String emoName, int userNo, String nickname, int likecnt,
 				int bookReviewCount) {
@@ -60,6 +90,27 @@ public class BookdetailVo {
 			this.bookUrl = bookUrl;
 			this.coverUrl = coverUrl;
 			this.reviewNo = reviewNo;
+			this.reviewDate = reviewDate;
+			this.styleNo = styleNo;
+			this.emoName = emoName;
+			this.userNo = userNo;
+			this.nickname = nickname;
+			this.likecnt = likecnt;
+			this.bookReviewCount = bookReviewCount;
+		}
+		
+		public BookdetailVo(int rn, String bookNo, String bookTitle, String author, String bookUrl, String coverUrl,
+				int reviewNo, String reviewContent, String reviewDate, int styleNo, String emoName, int userNo,
+				String nickname, int likecnt, int bookReviewCount) {
+			super();
+			this.rn = rn;
+			this.bookNo = bookNo;
+			this.bookTitle = bookTitle;
+			this.author = author;
+			this.bookUrl = bookUrl;
+			this.coverUrl = coverUrl;
+			this.reviewNo = reviewNo;
+			this.reviewContent = reviewContent;
 			this.reviewDate = reviewDate;
 			this.styleNo = styleNo;
 			this.emoName = emoName;
@@ -182,17 +233,25 @@ public class BookdetailVo {
 		public void setLikecnt(int likecnt) {
 			this.likecnt = likecnt;
 		}
+		
+		public String getReviewContent() {
+			return reviewContent;
+		}
 
-		
-		
+		public void setReviewContent(String reviewContent) {
+			this.reviewContent = reviewContent;
+		}
 
 		//메소드 일반
-
 		@Override
 		public String toString() {
-			return "BookVo [bookNo=" + bookNo + ", bookTitle=" + bookTitle + ", author=" + author + ", bookUrl=" + bookUrl
-					+ ", coverUrl=" + coverUrl + ", bookReviewCount=" + bookReviewCount + "]";
+			return "BookdetailVo [rn=" + rn + ", bookNo=" + bookNo + ", bookTitle=" + bookTitle + ", author=" + author
+					+ ", bookUrl=" + bookUrl + ", coverUrl=" + coverUrl + ", reviewNo=" + reviewNo + ", reviewContent="
+					+ reviewContent + ", reviewDate=" + reviewDate + ", styleNo=" + styleNo + ", emoName=" + emoName
+					+ ", userNo=" + userNo + ", nickname=" + nickname + ", likecnt=" + likecnt + ", bookReviewCount="
+					+ bookReviewCount + "]";
 		}
+		
 	
 	
 	

@@ -31,8 +31,8 @@
 	
 	
 				<div class="form">
-					<form action="write" method="get">
-						<input name="userNo" type="text" value="${authUser.userNo}" />
+					<form action="write" class="request-form" method="get">
+						<input name="userNo" type="hidden" value="${authUser.userNo}" />
 					
 						<div class="form-field string  required  request_subject">
 							<label id="request_subject_label" for="request_subject">제목</label>
@@ -41,11 +41,11 @@
 	
 						<div class="form-field text  required  request_description">
 							<label id="request_description_label" for="request_description">상세 설명</label>
-							<textarea name="content" id="request_description" ></textarea>
+							<textarea name="content" id="request_description"></textarea>
 						</div>
 	
 				
-						<button id="btn_delete_modifyForm" type="submit">제출</button>
+						<button id="btn_submit_modifyForm" type="submit">제출</button>
 						<a id="btn_delete_modifyForm" href="${pageContext.request.contextPath}/help/#">취소</a>
 					
 					</form>

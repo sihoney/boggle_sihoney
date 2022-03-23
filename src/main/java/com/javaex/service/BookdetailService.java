@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.javaex.dao.BookdetailDao;
 import com.javaex.vo.BookdetailVo;
-import com.javaex.vo.BookreviewVo;
 
 @Service
 public class BookdetailService {
@@ -16,11 +15,21 @@ public class BookdetailService {
 	private BookdetailDao bookdetailDao;
 
 	/* 해당 책 서평 리스트 */
-	public List<BookreviewVo> getReviewList(String bookNo) {
+	public List<BookdetailVo> getReviewList(String bookNo) {
 
 		System.out.println("Service.getReviewList");
 		return bookdetailDao.getReviewList(bookNo);
 
+	}
+	
+	/* 서평 인기순 리스트 */
+	public List<BookdetailVo> getReviewBest(String bookNo) {
+		
+		System.out.println("Service.getReviewBest");
+		List<BookdetailVo> reviewBest = bookdetailDao.getReviewBest(bookNo);
+		
+		return reviewBest;
+		
 	}
 	
 	/* 해당 책 정보 */
@@ -87,6 +96,13 @@ public class BookdetailService {
 		
 		return deleteResult;
 		
+	}
+	
+	/* 서평 삭제 */
+	public int reviewDelete(int reviewNo) {
+		System.out.println("Service.reviewDelete");
+		int deleteResult = bookdetailDao.reviewDelete(reviewNo);		
+		return deleteResult;
 	}
 	
 	

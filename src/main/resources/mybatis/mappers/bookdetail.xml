@@ -11,29 +11,35 @@
 </select> -->
 
 	<!-- 해당 책 서평 리스트 출력(최신순) -->
-	<select id="reviewListLatest" parameterType="int" resultType="BookreviewVo">
+	<select id="reviewListLatest" parameterType="int" resultType="BookdetailVo">
 	 	<![CDATA[
 			select  r.book_no bookNo,
 			        r.review_no reviewNo,
 			        r.emo_name emoName,
 			        b.book_title bookTitle,
-			        r.nickname nickName,
+			        r.nickname nickname,
 			        to_char(r.review_date, 'yyyy/mm/dd') reviewDate,
 			        r.review_content reviewContent,
-			        r.user_no userNo
+			        r.user_no userNo,
+			        NVL(lt.likecnt, 0) likecnt
 			from   (select  r.review_no,
 			                r.book_no,
 			                e.emo_no,
 			                e.emo_name,
 			                r.user_no,
 			                u.nickname,
+			                u.email,
 			                r.review_date,
 			                r.review_content
 			        from   review r, style s, emotion e, users u
 			        where  e.emo_no = s.emo_no
 			        and    r.style_no = s.style_no
-			        and    r.user_no = u.user_no) r, books b
+			        and    r.user_no = u.user_no) r, books b, (select  review_no,
+			                                                            count(review_no) likecnt
+			                                                    from review_user 
+			                                                    group by review_no)lt
 			where   r.book_no = b.book_no 
+			and     lt.review_no = r.review_no
 			and     b.book_no = #{bookNo}
 			order by reviewDate desc
 		]]>
@@ -98,14 +104,14 @@
 	</delete>
 	
 	<!-- 해당 책 서평 리스트 출력(인기순) -->
-	<select id="reviewListBest" parameterType="int" resultType="BookdetailVo">
+	<select id="reviewListBest" parameterType="String" resultType="BookdetailVo">
 	 	<![CDATA[
 			select rownum rn,
 			       ot.book_no bookNo,
 			       ot.book_title bookTitle,
 			       ot.review_no reviewNo,
 			       ot.review_content reviewContent,
-			       ot.review_date reviewDate,
+			       to_char(ot.review_date, 'yyyy-mm-dd') reviewDate,
 			       ot.style_no styleNo,
 			       ot.emo_name emoName,
 			       ot.user_no userNo,
@@ -154,6 +160,13 @@
 		]]>
 	</select>
 	
+	<!-- 서평 삭제 -->
+	<delete id="reviewDelete" parameterType="int">
+	 	<![CDATA[
+			delete from review
+			where review_no = #{reviewNo}
+		]]>
+	</delete>
 	
 	
 	

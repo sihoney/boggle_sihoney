@@ -107,4 +107,30 @@ public class MybookService {
 		return likelist;
 	}
 	
+	//해당 유저의 넘버와 리뷰넘버를 주면 삭제하는 메소드
+	public int delete(MybookVo wannadelete) {
+		
+		//리뷰넘버정보를 주면 해당 리뷰를 쓴 유저 정보를 줌
+		int reviewNo = wannadelete.getReviewNo();
+		MybookVo checkuser = mybookDao.checkuser(reviewNo);
+		
+		int reviewerNo = checkuser.getUserNo();
+		int userNo = wannadelete.getUserNo();
+		
+		System.out.println("리뷰쓴유저넘버 : "+reviewerNo);
+		System.out.println("세션유저넘버 : "+userNo);
+		
+		//그 유저넘버가 지금 세션 유저넘버(받아온값)와 같을때 삭제
+		if(reviewerNo == userNo) {
+			//삭제, 1은 로그인사용자와 삭제하려는 리뷰작성자가 같음을 의미
+			mybookDao.delete(reviewNo);
+			
+			return 1;
+		}else {
+			//삭제불가, 0은 로그인사용자와 삭제하려는 리뷰작성자가 다름을 의미
+			 return 0;
+		}
+	}
+	
+	
 }

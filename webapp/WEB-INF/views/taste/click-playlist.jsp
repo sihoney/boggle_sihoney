@@ -26,31 +26,28 @@
 		<!-- ------header------ -->
 		
 		<!-- ------nav------ -->
-        <div id="nav" class="clearfix">
-		      <ul class="nav nav-tabs">
-		          <li role="presentation"><a href="${pageContext.request.contextPath}/mybook">내 서평</a></li>
-		          <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
-		          <!--세션 아이디와 사이트아이디 같을때-->
-		          <li role="presentation"><a href="${pageContext.request.contextPath}/analyze">통계</a></li>
-		      </ul>
-		      <!-- 세션아이디랑 다를때는
-		      <ul class="nav nav-tabs">
-		          <li role="presentation"><a href="">'유저이름'님의 서평</a></li>
-		          <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">취향저격</a></li>
-		      </ul>	       
-		       -->
- 		</div>
-        <!-- ------nav------ -->
-
-        <!-- ------nav2------ -->
-		<ul id="nav2" class="nav nav-pills">
-			<!-- 세션아이디와 비교, 다를경우 '이름님의 취향' -->
-			<!-- <li role="presentation" class="active"><a href="">'유저이름'님의 취향</a></li> -->
-			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/taste_main">my 취향</a></li>
-			<li role="presentation"><a href="${pageContext.request.contextPath}/review">좋아요한 서평</a></li>
-			<li role="presentation"><a href="${pageContext.request.contextPath}/main_book">관심가는 책</a></li>
-			<li role="presentation"><a href="${pageContext.request.contextPath}/like_playlist">플레이리스트</a></li>
-		</ul>
+		<div id="nav" class="clearfix">
+         <c:choose>
+            <c:when test="${param.nickname == authUser.nickname}">
+               <ul class="nav nav-tabs">
+                  <li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}">내 서평</a></li>
+                  <li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/tastemain">취향저격</a></li>
+                  <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/like_playlist">플레이리스트</a></li>
+                  <!--세션 아이디와 사이트아이디 같을때-->
+                  <li role="presentation"><a href="${pageContext.request.contextPath}/analyze">통계</a></li>
+               </ul>
+            </c:when>
+            <c:otherwise>
+               <!-- 세션아이디랑 다를때는 사이트주소의 아이디와 같은 유저의 데이터들 불러오기-->
+               <ul class="nav nav-tabs">
+                  <li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}">남 서평</a></li>
+                  <li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/tastemain">취향저격</a></li>
+                  <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
+               </ul>
+            </c:otherwise>
+         </c:choose>
+      </div>
+      <!-- ------nav------ -->
 
 		<!--cover-->
 		<div id="playlist-cover" class="clearfix">
@@ -67,6 +64,7 @@
 		<!--cover-->
 		
 		<div id="middle-content">
+			<!-- 플레이리스트 생성한 유저만 수정가능 -->
 			<c:if test="${authUser.userNo == param.userNo}">
 				<div id="playlist-add" data-keyboard="false" data-backdrop="static">
 					<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
@@ -92,7 +90,8 @@
 		
 							<!-- 자기글에만 수정 삭제 노출 -->
 							<c:if test="${authUser.userNo == playlistVo.userNo}">
-								<a href="" class="review_modify">삭제</a><a href="" class="review_modify">수정</a>
+								<a id="reviewDelete" class="review_modify" data-reviewno="${playlistVo.reviewNo}">삭제</a>
+								<a href="${pageContext.request.contextPath}/review/write?reviewNo=${playlistVo.reviewNo}" class="review_modify">수정</a>
 							</c:if>
 		
 							<a href="${pageContext.request.contextPath}/${playlistVo.nickname}" class="review_nick">${playlistVo.nickname}<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
@@ -108,7 +107,7 @@
 							<!-- 좋아요 비활성화
 							<span id="btn_like" class="glyphicon glyphicon-heart-empty icon-success" aria-hidden="true"></span> -->
 		
-							<span class="review_like">16.2k</span><span class="review_like">${playlistVo.reviewDate}</span>
+							<span class="review_like">${playlistVo.likecnt}</span><span class="review_like">${playlistVo.reviewDate}</span>
 							<span id="tag_btn">#${playlistVo.emoName}</span>
 							<!-- 더보기 클릭시 모달창 오픈 -->
 							<!-- <button type="button" class="btn btn-default btn-sm">+더보기</button> -->
@@ -150,8 +149,8 @@
 					<c:forEach begin="${requestScope.foldermainMap.startPageBtnNo}" end="${requestScope.foldermainMap.endPageBtnNo}" step="1" var="i">
 						<c:choose>
 							<c:when test="${param.crtPage == i}">
-								<li class="active">
-									<a href="${pageContext.request.contextPath}/playlist/folder?playlistNo=${foldermainMap.playlistCover.playlistNo}&userNo=${foldermainMap.playlistCover.userNo}&crtPage=${i}">${i}</a>
+								<li class="">
+									<a class="btn-active" href="${pageContext.request.contextPath}/playlist/folder?playlistNo=${foldermainMap.playlistCover.playlistNo}&userNo=${foldermainMap.playlistCover.userNo}&crtPage=${i}">${i}</a>
 								</li>
 							</c:when>
 							<c:otherwise>
