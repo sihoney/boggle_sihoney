@@ -44,6 +44,8 @@ function fetchLatest(){
 	console.log('최신순 데이터 요청');
 	console.log(bookNo);
 	
+	$('#latest-order').attr('class','txt-b');
+	
     $.ajax({
         url :"bookdetail/reviewLatest",
         type : "get",

@@ -34,7 +34,7 @@
                   <li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/tastemain">취향저격</a></li>
                   <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/like_playlist">플레이리스트</a></li>
                   <!--세션 아이디와 사이트아이디 같을때-->
-                  <li role="presentation"><a href="${pageContext.request.contextPath}/analyze">통계</a></li>
+                  <%-- <li role="presentation"><a href="${pageContext.request.contextPath}/analyze">통계</a></li> --%>
                </ul>
             </c:when>
             <c:otherwise>
@@ -57,7 +57,7 @@
 			</div>
 			
 			<div id="btn-cover" class="float-r">
-				<button id="platlistLike" type="button" class="btn btn-default float-r" data-playlistno="${param.playlistNo}" data-userno="${authUser.userNo}">좋아요<span id="likeview" class="" aria-hidden="true"></span></button>	
+				<button id="playlistLike" type="button" class="btn btn-default float-r" data-playlistno="${param.playlistNo}" data-userno="${authUser.userNo}">좋아요<span id="likeview" class="" aria-hidden="true"></span></button>	
 				<button type="button" class="btn btn-default float-r" onclick="location.href = '${pageContext.request.contextPath}/main/playlist?playlistNo=${requestScope.foldermainMap.playlistCover.playlistNo}';">전체재생</button>
 			</div>
 		</div>
