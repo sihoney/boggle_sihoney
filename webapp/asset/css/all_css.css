@@ -14,6 +14,7 @@ td, tr, textarea, button, form {
 #wrap {
     width: 1130px;
     margin: 0px auto;
+    font-family: 'MaruBuri';
 }
 
 /* 책 제목 (큰 글씨)*/
