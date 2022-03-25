@@ -22,13 +22,21 @@
 	<resultMap id="emotionMap" type="map">
         <result property="emoName" column="emo_name" />
         <result property="emoNo" column="emo_no" />
+        <result property="totalReviewCnt" column="totalReviewCnt" />
     </resultMap> 
 
 	<select id="getEmotion" resultMap="emotionMap">
 		<![CDATA[
-			select emo_name,
-				   emo_no
-			from emotion
+			select et.emo_name,
+			       emo_no,
+			       totalReviewCnt
+			from emotion et, (select count(review_no) totalReviewCnt,
+			                       emo_name
+			                from review, emotion, style
+			                where review.style_no = style.style_no
+			                and style.emo_no = emotion.emo_no
+			                group by emo_name) ct
+			where et.emo_name = ct.emo_name
 		]]>
 	</select>
 
@@ -126,23 +134,51 @@
 	
 	<select id="getTotalEmoTagCnt" resultType="int">
 		<![CDATA[
-			select count(*)
-			from emotion
+			select emo_no
+			from(select totalCnt, 
+			            emo_no
+			    from (select count(review_no) totalCnt,
+			               emotion.emo_no
+			        from review, emotion, style
+			        where review.style_no = style.style_no
+			        and style.emo_no = emotion.emo_no
+			        group by emotion.emo_no)
+			    where totalCnt > 3
+			    order by dbms_random.value)
+			where rownum = 1
 		]]>
 	</select>
 	
-	<select id="getMyPlaylist" parameterType="int" resultType="PlaylistVo">
+	<!--************** 플레이리스트 목록 가져오기 ****************-->
+	<!-- (1) 내가 만든 플리 -->
+	<select id="getMyPlaylist-1" parameterType="int" resultType="PlaylistVo">
+		<![CDATA[
+			select playlist_name playlistName,
+			       playlist_no playlistNo,
+			       emo_name emoName,
+			       nickname,
+			       playlist.user_no userNo
+			from playlist, emotion, users
+			where playlist.user_no = users.user_no
+			and emotion.emo_no = playlist.emo_no
+			and users.user_no = #{userNo}
+		]]>
+	</select>
+	
+	<!-- (2) 좋아요한 플리 -->
+	<select id="getMyPlaylist-2" parameterType="int" resultType="PlaylistVo">
 		<![CDATA[
 			select playlist_name playlistName,
 			       playlist.playlist_no playlistNo,
 			       emo_name emoName,
-			       nickname
+			       nickname,
+			       playlist.user_no userNo
 			from user_playlist, playlist, emotion, users
 			where user_playlist.playlist_no = playlist.playlist_no
 			and playlist.emo_no = emotion.emo_no
 			and playlist.user_no = users.user_no
 			and user_playlist.user_no = #{userNo}
-			order by playlist_date desc
+			and playlist.user_no not in(#{userNo})
 		]]>
 	</select>
 	

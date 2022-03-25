@@ -47,17 +47,17 @@ public class MainService {
 			
 			int totalEmotagCnt = emoDao.getTotalEmotagCnt();
 			
-			int randomEmoNo = (int) Math.ceil(Math.random() * totalEmotagCnt);
+			//int randomEmoNo = (int) Math.ceil(Math.random() * totalEmotagCnt);
 			
-			System.out.println("random emotion number: " + randomEmoNo);
+			System.out.println("***random emotion number: " + totalEmotagCnt);
 			
-			reviewList = emoDao.getReviewListByEmo(randomEmoNo);
-			musicList = emoDao.getMusicListByEmo(randomEmoNo);
+			reviewList = emoDao.getReviewListByEmo(totalEmotagCnt);
+			musicList = emoDao.getMusicListByEmo(totalEmotagCnt);
 		}
 
 		if(userNo != null) { // 로그인 상태라면 하트 카운트 값 받기
 			
-			System.out.println("reviewList.size(): " + reviewList.size());
+			System.out.println("서평 총 수: " + reviewList.size());
 
 			if(reviewList.size() != 0) {
 				for(Map<String, Object> reviewVo : reviewList) { // reviewVo, userNo
@@ -66,7 +66,7 @@ public class MainService {
 				
 					int result = emoDao.alreadyLiked(reviewVo);
 					
-					System.out.println("alreadyLikedCnt: " + result);
+					System.out.println("좋아요 개수: " + result);
 					
 					reviewVo.put("alreadyLikedCnt", result);
 				}
@@ -83,8 +83,15 @@ public class MainService {
 	public List<PlaylistVo> getMyPlaylist(int userNo) {
 		System.out.println("MainService.getMyPlaylist()");
 		
-		List<PlaylistVo> myPlaylist = emoDao.getMyPlaylist(userNo);
+		//List<PlaylistVo> myPlaylist = emoDao.getMyPlaylist(userNo);
 
+		List<PlaylistVo> myPlaylist1 = emoDao.getMyPlaylist(userNo); // playlistNo, playlistName
+		List<PlaylistVo> myPlaylist2 = emoDao.getMyPlaylistTwo(userNo);
+		
+		List<PlaylistVo> myPlaylist = new ArrayList<>();
+		myPlaylist.addAll(myPlaylist1);
+		myPlaylist.addAll(myPlaylist2);
+		
 		return myPlaylist;
 	}
 	
@@ -92,9 +99,14 @@ public class MainService {
 		System.out.println("MainService.getMyPlaylistModal()");
 		
 		// 리스트 받기
-		List<PlaylistVo> myPlaylist = emoDao.getMyPlaylist(reviewVo.getUserNo()); // playlistNo, playlistName
+		List<PlaylistVo> myPlaylist1 = emoDao.getMyPlaylist(reviewVo.getUserNo()); // playlistNo, playlistName
+		List<PlaylistVo> myPlaylist2 = emoDao.getMyPlaylistTwo(reviewVo.getUserNo());
 		
-		System.out.println("myPlaylist: " + myPlaylist);
+		List<PlaylistVo> myPlaylist = new ArrayList<>();
+		myPlaylist.addAll(myPlaylist1);
+		myPlaylist.addAll(myPlaylist2);
+		
+		System.out.println("모달 > 플레이리스트: " + myPlaylist);
 		
 		List<Map<String, Object>> modalPlaylist = new ArrayList<Map<String, Object>>();
 		
@@ -107,7 +119,7 @@ public class MainService {
 			map.put("playlistName", pvo.getPlaylistName());
 			
 			map.put("reviewNo", reviewVo.getReviewNo());
-			map.put("userNo", reviewVo.getUserNo());
+			map.put("userNo", pvo.getUserNo());
 						
 			int alreadyAdded = emoDao.alreadyAdded(map);
 
@@ -123,11 +135,7 @@ public class MainService {
 	public int addNewPlaylist(PlaylistVo pvo) {
 		System.out.println("MainService > addNewPlaylist");
 		
-		emoDao.addNewPlaylist(pvo);
-		
-		System.out.println(pvo);
-		
-		return emoDao.addNewPlaylistAtUser(pvo);
+		return emoDao.addNewPlaylist(pvo);
 	}
 	
 	public Integer toggleReviewToPly(Map<String, Object> map) {
@@ -137,11 +145,11 @@ public class MainService {
 		String btnIcon = String.valueOf( map.get("icon"));
 		
 		if(btnIcon.equals("fa-plus")) {
-			System.out.println("추가");
+			System.out.println("리뷰 추가");
 			
 			result = emoDao.addReviewToPly(map);
 		} else if(btnIcon.equals("fa-check")){
-			System.out.println("삭제");
+			System.out.println("리뷰 삭제");
 			
 			result = emoDao.deleteReviewFromPly(map);
 		}

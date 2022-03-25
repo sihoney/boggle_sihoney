@@ -65,25 +65,35 @@ public class MainDao {
 	public int getTotalEmotagCnt() {
 		int result = sqlSession.selectOne("emotion.getTotalEmoTagCnt");
 		
-		System.out.println("total emotag count: " + result);
+		System.out.println("***total emotag count: " + result);
 		
 		return result;
 	}
 	
 	public List<PlaylistVo> getMyPlaylist(int userNo) {
-		List<PlaylistVo> list = sqlSession.selectList("emotion.getMyPlaylist", userNo);
+		List<PlaylistVo> list = sqlSession.selectList("emotion.getMyPlaylist-1", userNo);
+		
+		System.out.println("내가 작성한 플리: " + list);
 		
 		return list;
 	}
 	
-	public void addNewPlaylist(PlaylistVo pvo) {
-		sqlSession.insert("emotion.addNewPlaylist", pvo);
+	public List<PlaylistVo> getMyPlaylistTwo(int userNo) {
+		List<PlaylistVo> list = sqlSession.selectList("emotion.getMyPlaylist-2", userNo);
+		
+		System.out.println("내가 좋아요한 플리: " + list);
+		
+		return list;
 	}
 	
+	public int addNewPlaylist(PlaylistVo pvo) {
+		return sqlSession.insert("emotion.addNewPlaylist", pvo);
+	}
+	/*
 	public int addNewPlaylistAtUser(PlaylistVo pvo) {
 		return sqlSession.insert("emotion.addNewPlaylistAtUser", pvo);
 	}
-	
+	*/
 	public int addReviewToPly(Map<String, Object> map) {
 		int result = sqlSession.insert("emotion.addReviewToPly", map);
 		System.out.println(result + "건 : 리뷰를 플리에 저장");

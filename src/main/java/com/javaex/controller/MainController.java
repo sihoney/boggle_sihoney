@@ -43,9 +43,9 @@ public class MainController {
 												  @RequestParam(value="userNo", required=false) String userNo) {
 		System.out.println("MainController > getReviewList()");
 
-		System.out.println("userNo: " + userNo);
-		System.out.println("emoNo: " + emoNo);
-		System.out.println("plyNo: " + playlistNo);
+		System.out.println("--userNo: " + userNo);
+		System.out.println("--emoNo: " + emoNo);
+		System.out.println("--plyNo: " + playlistNo);
 
 		if(emoNo == null) {
 			emoNo = "null";
@@ -53,13 +53,13 @@ public class MainController {
 		
 		Integer emoNoInt = null;
 		if( !"null".equals(emoNo) ) {
-			System.out.println("emoNo은 null이 아닙니다.");
+			System.out.println("감정 분류 리스트 불러오겠습니다.");
 			emoNoInt = Integer.parseInt(emoNo);
 		}
 
 		Integer userNoInt = null;
 		if( !userNo.equals("undefined") && !userNo.equals("null") ) {
-			System.out.println("userNo는 null 또는 undefined 이 아닙니다");
+			System.out.println("로그인 상태");
 			userNoInt = Integer.parseInt(userNo);
 		} 
 

@@ -13,8 +13,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
     
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
+    
     <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-pen.css" rel="stylesheet">
-	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-pen.css" rel="stylesheet">
 	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic-eco.css" rel="stylesheet">
 	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-myeongjo.css" rel="stylesheet">
 </head>
@@ -96,7 +97,9 @@
     <aside class="sidebar">
         <div class="sidebar-header">
             <div class="nav-header">
-                <h1 class="sidebar-logo">BOGGLE</h1>
+                <div class="sidebar-logo logo">
+                	<img src="${pageContext.request.contextPath}/asset/img/logo/logo2.png">
+                </div>
             </div>
             <button type="button" class="close-btn">
                 <i class="fa-solid fa-xmark"></i>
@@ -141,9 +144,11 @@
                 <h2 class="subheading">
                     My 플레이리스트
                 </h2>
-                <button class="playlistBtn">
-                    <i class="fa-solid fa-arrow-right-long"></i>
-                </button>
+                <a href="${pageContext.request.contextPath}/${authUser.nickname}/like_playlist">
+	           	    <button class="playlistBtn">
+	                    <i class="fa-solid fa-arrow-right-long"></i>
+	                </button>                
+                </a>
             </div>
             <div class="playlist-container">
             	<!-- 

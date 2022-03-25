@@ -388,11 +388,13 @@ function renderPlaylist(list, loca) {
 			
 			p.innerText = item.playlistName
 			
-			if(item.cnt == 0) { // 지금 서평 플레이리스트에 추가 안했음
-				btn.innerHTML = '<i class="fa-solid fa-plus"></i>'
-			} else { // 추가했음
-				btn.innerHTML = '<i class="fa-solid fa-check"></i>'
-				li.classList.add("selected")
+			if(item.userNo == userNo) {
+				if(item.cnt == 0) { // 지금 서평 플레이리스트에 추가 안했음
+					btn.innerHTML = '<i class="fa-solid fa-plus"></i>'
+				} else { // 추가했음
+					btn.innerHTML = '<i class="fa-solid fa-check"></i>'
+					li.classList.add("selected")
+				}	
 			}
 			
 			li.setAttribute("data-playlistNo", item.playlistNo)
@@ -563,13 +565,16 @@ function afterLoadAutoMode(){
 
 /* 감정태그 목록 렌더(모달) */
 function renderEmoTag(arr) {
-	for(let item of arr) {
-		let btn = document.createElement("button")
-		btn.classList.add("emoTag")
-		btn.id = item.emoNo
-		btn.textContent = item.emoName
-		
-		document.querySelector(".tag-box").append(btn)
+
+	for(let item of arr) { /* 서평 개수가 3개 이상인 경우만 렌더 */
+		if(item.totalReviewCnt > 2) {
+			let btn = document.createElement("button")
+			btn.classList.add("emoTag")
+			btn.id = item.emoNo
+			btn.textContent = item.emoName
+			
+			document.querySelector(".tag-box").append(btn)	
+		}
 	}
 }
 
@@ -738,8 +743,8 @@ function renderMsg(){
 }
 
 function audioPlay(){
+	console.log("canplaythrough event trigger...")
 	audioEle.play()
-	console.log("music playing...")
 }
 
 function changeMode(){
@@ -752,10 +757,7 @@ function changeMode(){
 		if(musicupdated === true) { // 새로운 음악 파일이 로드됐다면 기다렸다가 재생
 			console.log("music updated:" + musicupdated)
 		
-			audioEle.addEventListener("canplaythrough", function(){
-				console.log("audio can play!")
-				audioEle.play()
-			})
+			audioEle.addEventListener("canplaythrough", audioPlay)
 
 		}
 		else {
