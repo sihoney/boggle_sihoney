@@ -56,7 +56,7 @@
 					</div>
 					<div class="right" id="more">
 						<p>
-							<a href="${pageContext.request.contextPath}/like_playlist">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+							<a href="${pageContext.request.contextPath}/${nickname}/playlist">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
 						</p>
 					</div>
 				</div>
@@ -88,7 +88,7 @@
 				</div>
 				<div class="right" id="more">
 					<p>
-						<a href="${pageContext.request.contextPath}/hot_playlist">더보기<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+						<a href="${pageContext.request.contextPath}/hotplaylist">더보기<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
 					</p>
 				</div>
 				<div>
@@ -119,7 +119,7 @@
 					</div>
 					<div class="right" id="more">
 						<p>
-							<a href="${pageContext.request.contextPath}/like_playlist">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+							<a href="${pageContext.request.contextPath}/${nickname}/writeplaylist">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
 						</p>
 					</div>
 				</div>

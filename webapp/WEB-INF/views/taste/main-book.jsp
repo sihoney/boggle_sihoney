@@ -89,7 +89,7 @@
 						<c:forEach items="${bmList}" var="vo">
 					<article>
 						<div class="img">
-							<a class="a" href="${pageContext.request.contextPath}/bookdetail?bookNo=${vo.bookNo}&userNo=${vo.userNo}"> <img class="cover" src="${vo.cover_url }" alt="image" />
+							<a class="a" href="${pageContext.request.contextPath}/bookdetail?bookNo=${vo.bookNo}&userNo=${vo.userNo}"> <img class="cover" src="${vo.cover_url}" alt="image" />
 							</a>
 						</div>
 						<div class="book-detail">
@@ -105,11 +105,11 @@
 			</div>
 			<!-- gradient -->
 			<!--gallery-->
+			<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 		
 	</div>
 	<%-- 		</c:forEach>
  --%>
 	<!-- footer -->
-	<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 </body>
 </html>
