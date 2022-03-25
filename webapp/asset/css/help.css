@@ -1895,14 +1895,13 @@ margin-bottom: 60px;
 
 #helpListBox_list .article-list{
 width: 820px;
-height: 290px;
+height: 500px;
 overflow: auto;
 }
 
-#moreBtn{
+#moreBtn {
 font-size: small;
-margin-left: 1010px;
-color:#e6e8eb;
+text-align: right;
 	
 }
 

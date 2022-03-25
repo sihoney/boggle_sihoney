@@ -22,8 +22,6 @@
 						<li title="보글 고객센터"><a href="${pageContext.request.contextPath}/help">보글 고객센터</a></li>
 						<li title="문의 등록">고객 문의</li>
 					</ol>
-					
-					<form role="search" class="search" data-search="" action="" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="" /><input type="search" name="query" id="query" placeholder="검색" aria-label="검색" /></form>
 				</nav>
 	
 				<div class="section-container">
@@ -53,8 +51,6 @@
 					<div class="footer-ridi-header">
 						<ul class="info_contact">
 							 <li class="request"><a href="${pageContext.request.contextPath}/help/writeForm">1:1 문의</a></li>
-							 <li class="request"><a href="">로그아웃</a></li>
-		
 						</ul>
 					</div>
 					<div class="footer-ridi-info-contents">
@@ -72,7 +68,7 @@
 								<li><a class="link_youth" href="${pageContext.request.contextPath}/help/youth" target="_blank">청소년보호정책</a></li>
 							</ul>
 							<p class="info_copyright">
-								<a href="">&copy;2022 BOGGLE</a>
+								<a href="">&copy;2022 BOGGLE BOOKS</a>
 							</p>
 						</div>
 					</div>

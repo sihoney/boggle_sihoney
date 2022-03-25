@@ -20,13 +20,13 @@
 		
 			<header class="header">
 				<nav class="nav-wrapper">
-				<div class="left_nav">
-					<a class="boggle" title="main" href="${pageContext.request.contextPath}/main">
-						<img src="${pageContext.request.contextPath}/asset/img/logo/logo2.png">
-					</a>
-				</div>
-			</nav>
-		</header>
+					<div class="left_nav">
+						<a class="boggle" title="main" href="${pageContext.request.contextPath}/main">
+							<img src="${pageContext.request.contextPath}/asset/img/logo/logo2.png">
+						</a>
+					</div>
+				</nav>
+			</header>
 		
 		
 		<main role="main">
@@ -42,7 +42,8 @@
 				<section class="section categories blocks">
 						
 						<h3 class="board-title">
-							<a href="${pageContext.request.contextPath}/help/list">고객 문의</a><a id="moreBtn" href="${pageContext.request.contextPath}/help/list">더보기</a>
+							<a href="${pageContext.request.contextPath}/help/list">고객 문의</a>
+							<div id="moreBtn"><a href="${pageContext.request.contextPath}/help/list">more >></a></div>
 						</h3>
 				
 						<div id="helpListBox">

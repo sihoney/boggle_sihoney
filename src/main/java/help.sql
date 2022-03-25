@@ -22,7 +22,7 @@ START WITH 1;
 
 --insert
 insert into help
-values(seq_help_no.nextval, '제목111', '내용111', sysdate, 1);
+values(seq_help_no.nextval, '이 페이지 어찌 쓰는건가요?', '페이지가 조금 생소한데 이쁘군요. 활용 방법 문의드립니돠.', sysdate, 1);
 insert into help
 values(seq_help_no.nextval, '제목222', '내용222', sysdate, 2);
 insert into help
