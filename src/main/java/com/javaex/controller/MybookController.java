@@ -293,5 +293,41 @@ public class MybookController {
       //값이 1일때는 삭제하려는 리뷰의 작성자와 로그인사용자가 같음을 의미 
       return checkuser;
    }
+   
+   //카테고리 선택시 기능
+   @ResponseBody
+   @RequestMapping("/select")
+   public List<MybookVo> select(HttpSession session,
+		   		   @RequestBody MybookVo clicked) {
+      
+      //세션아이디의 유저넘버, 선택한 감정태그
+      int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
+      String emoName = clicked.getEmoName();
+            
+      System.out.println("로그인한 유저 넘버 : " + userNo);
+      System.out.println("선택한 감정태그 : " + emoName);
+      
+      MybookVo emo = new MybookVo(userNo, emoName);
+      
+      //유저넘버, 감정태그 주면 해당유저의 서평 중 그 감정태그를 가진것만 출력해주기
+      List<MybookVo> emoList = mybookService.emoList(emo);
+      
+      //좋아요 체크된 상태로 내보내주기
+      //중복체크 및 값 set해서 List 업데이트
+      for(int i=0; i<emoList.size(); i++) {
+     	 
+     	 int reviewNo = emoList.get(i).getReviewNo();
+     	 
+     	 //0일시 좋아요 안 한 상태, 1일시 좋아요 한 상태
+     	 MybookVo checklike = new MybookVo(reviewNo, userNo);
+	         int likecheck = mybookService.likeok(checklike);
+	         
+	         emoList.get(i).setLikecheck(likecheck);
+      }
+      
+      return emoList;
+   }
+   
+   
   
 }

@@ -23,7 +23,6 @@
 		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 		<!-- ------nav------ -->
 		<div id="nav" class="clearfix">
-
 			<c:choose>
 				<c:when test="${result eq 'sameUser'}">
 					<ul class="nav nav-tabs">
@@ -48,51 +47,65 @@
 						<li role="presentation"><a
 							href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
 					</ul>
-					
-					<ul id="nav2" class="nav nav-pills">
-						<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/taste_main">my 취향</a></li>
-						<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/${nickname}/tastereview">좋아요한 서평</a></li>
-						<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/main_book">관심가는 책</a></li>
-						<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
-					</ul>
 				</c:otherwise>
 			</c:choose>
 		</div>
 		<!-- ------nav------ -->
 		<!-- ------nav2------ -->
+		<ul id="nav2" class="nav nav-pills">
+			<!-- 세션아이디와 비교, 다를경우 '이름님의 취향' -->
+			<!-- <li role="presentation" class="active"><a href="">'유저이름'님의 취향</a></li> -->
+			<li role="presentation"><a
+				href="${pageContext.request.contextPath}/${nickname}/tastemain">my
+					취향</a></li>
+			<li role="presentation"><a
+				href="${pageContext.request.contextPath}/${nickname}/tastereview">좋아요한
+					서평</a></li>
+			<li role="presentation" class="active"><a
+				href="${pageContext.request.contextPath}/${nickname}/main_book">관심가는
+					책</a></li>
+		</ul>
+	</div>
+	<!-- ------nav------ -->
+	<!-- ------nav2------ -->
 	<!--tag nav-->
 
 	<!--/tag nav-->
 	<%-- 		<c:forEach items="${bList}" var="bList">
  --%>
 	<div class="container">
-
-
-		<div>
-			<p id="thumb-text">"${authUser.nickname }"가 북마크한 책</p>
-		</div>
-
-		<div class="gradient">
-
-			<div class="gallery">
-
-				<c:forEach items="${bmList }" var="vo">
+<%-- 		<div class="minicontent">
+			<c:choose>
+				<c:when test="${result eq 'sameUser'}">
+					<p>'${nickname}'님이 북마크한 책</p>
+				</c:when>
+				<c:otherwise>
+					<p>'${otherUser.nickname}'님이 북마크한 책</p>
+				</c:otherwise>
+			</c:choose>
+		</div> --%>
+			<div class="gradient">
+				<div class="gallery">
+						<c:forEach items="${bmList}" var="vo">
 					<article>
 						<div class="img">
-							<img src="${vo.cover_url }" class="cover">
+							<a class="a" href="${pageContext.request.contextPath}/bookdetail?bookNo=${vo.bookNo}&userNo=${vo.userNo}"> <img class="cover" src="${vo.cover_url }" alt="image" />
+							</a>
 						</div>
 						<div class="book-detail">
-							<p>${vo.book_title }</p>
-							<p class="sub">${vo.author}</p>
+							<p>${vo.book_title}</p>
+							<p>${vo.author}</p>
 						</div>
 					</article>
-				</c:forEach>
+					</c:forEach>
 
+
+				</div>
+				<!-- gallery -->
 			</div>
-			<!-- gallery -->
-		</div>
-		<!-- gradient -->
-		<!--gallery-->
+			<!-- gradient -->
+			<!--gallery-->
+		
 	</div>
 	<%-- 		</c:forEach>
  --%>

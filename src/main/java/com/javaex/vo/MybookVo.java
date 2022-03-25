@@ -24,6 +24,11 @@ public class MybookVo {
 		this.reviewNo = reviewNo;
 		this.userNo = userNo;
 	}
+	public MybookVo(int userNo, String emoName) {
+		super();
+		this.userNo = userNo;
+		this.emoName = emoName;
+	}
 	public MybookVo(int reviewNo, String bookTitle, String bookNo, String nickname, int userNo, String reviewContent,
 			String emoName, int emoNo, String reviewDate, int styleNo, int likecnt, int likecheck) {
 		super();

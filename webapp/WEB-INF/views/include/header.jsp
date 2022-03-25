@@ -3,7 +3,7 @@
 <!-- ------헤더------ -->
 <div id="header">
 	<a href="${pageContext.request.contextPath}/main"> 
-		<img src="${pageContext.request.contextPath}/asset/img/logo/1_logo.png">
+		<img src="${pageContext.request.contextPath}/asset/img/logo/logo2.png">
 	</a>
 
 	<c:choose>

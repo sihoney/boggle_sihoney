@@ -22,6 +22,12 @@ public class BookmarkVo {
 		this.userNo=userNo;
 	}
 	
+	public BookmarkVo(int userNo, String bookNo, String author, String cover_url) {
+		super();
+		this.bookNo = bookNo;
+		this.userNo=userNo;
+	}
+	
 	public BookmarkVo(int userNo, int book_user_no, String bookNo, String bookmark_date, String nickname,
 			String book_title, String author, String book_url, int genre_no, String cover_url) {
 		super();

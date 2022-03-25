@@ -9,6 +9,7 @@
         				bu.user_no userNo,
         				b.book_url,
         				b.cover_url,
+        				b.author,
         				bu.bookmark_date
 				from book_user bu, books b
 				where bu.book_no = b.book_no

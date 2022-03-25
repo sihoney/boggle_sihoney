@@ -132,5 +132,15 @@ public class MybookService {
 		}
 	}
 	
+	//해당 유저넘버, 감정태그 받으면 그 리스트만 출력
+	public List<MybookVo> emoList(MybookVo emo){
+		System.out.println("mybookService.emoList");
+		
+		List<MybookVo> emoList = mybookDao.emoList(emo);
+		
+		return emoList;	
+	}
+	
+	
 	
 }
