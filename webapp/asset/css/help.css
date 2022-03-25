@@ -79,6 +79,13 @@ a:hover, a:active, a:focus {
   color: #1f8ce6;
 }
 
+.left_nav>a>img {
+   	float: left;
+    width: 110px;
+    margin: 20px 0px 0px 0px;
+    cursor: pointer;
+}
+
 .text_link_button {
   color: #636c73;
   font-weight: bold;

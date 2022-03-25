@@ -21,8 +21,9 @@
 			<header class="header">
 				<nav class="nav-wrapper">
 				<div class="left_nav">
-					<a class="boggle" title="main" href="${pageContext.request.contextPath}/main">BOGGLE</a>
-					<a class="home" title="홈" href="${pageContext.request.contextPath}/help">고객센터</a>
+					<a class="boggle" title="main" href="${pageContext.request.contextPath}/main">
+						<img src="${pageContext.request.contextPath}/asset/img/logo/logo2.png">
+					</a>
 				</div>
 			</nav>
 		</header>
