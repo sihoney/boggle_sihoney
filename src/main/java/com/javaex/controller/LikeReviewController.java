@@ -120,7 +120,7 @@ public class LikeReviewController {
 
 	@ResponseBody
 	@RequestMapping("/like1")
-	public LikeReviewVo like(HttpSession session, @RequestBody LikeReviewVo clickReview) {
+	public LikeReviewVo like1(HttpSession session, @RequestBody LikeReviewVo clickReview) {
 
 		// 세션아이디의 유저넘버
 		int userNo = ((UserVo) session.getAttribute("authUser")).getUserNo();

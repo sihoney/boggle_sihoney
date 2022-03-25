@@ -80,21 +80,24 @@
 						<c:set var="no" value="${status.index %3 }" />
 
 						<div class="clearfix columns_${no }">
-							<div class="text-name">
-								<div
-									onclick="location.href='${pageContext.request.contextPath}/main/playlist?playlistNo=${vo.playlistNo }'">
-									<p id="name">${vo.playlistName}<span
-											class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
-									</p>
+							<div class="text-name"
+								onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&userNo=${vo.userNo }'">
+								<!-- 1~14까지 감정으로색깔 -->
+
+
+								<div onclick="location.href='${pageContext.request.contextPath}/main/playlist?playlistNo=${vo.playlistNo }">
+									<p id="name">${vo.playlistName}</p>
 
 								</div>
 							</div>
 
 							<div>
-								<span class="glyphicon glyphicon-heart" id="desc"
+								<!-- <span class="glyphicon glyphicon-heart" id="desc"
 									aria-hidden="true"></span> <span id="desc">16.2k</span> <span
-									class="glyphicon glyphicon-user" id="desc" aria-hidden="true"></span>
-								<span id="desc">${vo.nickname }</span>
+									class="glyphicon glyphicon-user" id="desc" aria-hidden="true"></span> -->
+								<div id="desc">
+									<a href="${pageContext.request.contextPath}/${vo.nickname }">${vo.nickname}</a>
+								</div>
 							</div>
 
 						</div>
@@ -106,8 +109,8 @@
 
 			<!-- footer -->
 			<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
-
 		</div>
+	</div>
 </body>
 
 </html>
