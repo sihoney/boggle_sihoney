@@ -4,16 +4,17 @@
 <html dir="ltr" lang="ko">
 
 <head>
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Boggle 고객센터</title>
-
-<script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
-
-<link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/asset/css/help.css">
-
+	<meta charset="UTF-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>Boggle 고객센터</title>
+	
+	<script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
+	
+	<link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/asset/css/help.css">
+	
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet"> 
 </head>
 <body class="">
 

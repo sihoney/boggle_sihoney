@@ -11,6 +11,7 @@
 		
 		<link rel="stylesheet" type="text/css" media="all" href="${pageContext.request.contextPath}/asset/css/help.css">
 	
+		<link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet"> 
 	</head>
 	<body class="">
 	
