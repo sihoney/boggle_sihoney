@@ -88,7 +88,7 @@
 				</div>
 				<div class="right" id="more">
 					<p>
-						<a href="${pageContext.request.contextPath}/hotplaylist">더보기<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+						<a href="${pageContext.request.contextPath}/${nickname}/hotplaylist">더보기<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
 					</p>
 				</div>
 				<div>
@@ -115,7 +115,7 @@
 			<div id="content4">
 				<div class="minicontent">
 					<div class="left">
-						<p>내가 작성한 서평 플레이리스트</p>
+						<p>내가 만든 서평 플레이리스트</p>
 					</div>
 					<div class="right" id="more">
 						<p>
@@ -124,7 +124,7 @@
 					</div>
 				</div>
 				<div>
-					<p class="index">내가 작성한 플레이리스트를 확인해보세요!</p>
+					<p class="index">내가 만든 플레이리스트를 확인해보세요!</p>
 				</div>
 				<div id="playlist">
 					

@@ -57,7 +57,7 @@
 		<div class="contents" class="clearfix">
 			<div class="index">
 				<p>
-					내가 작성한<br> 플레이리스트&#x1F601;
+					내가 만든<br> 플레이리스트&#x1F601;
 				</p>
 			</div>
 

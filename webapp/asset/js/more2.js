@@ -1,3 +1,5 @@
+
+
 // 더보기, 서평 공유하기
 $('.shr_review').on('click',function(){
     console.log('클릭');

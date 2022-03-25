@@ -1,16 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>taste-main</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/main-review.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/asset/css/all_css.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/asset/css/main-review.css">
 <link rel="stylesheet" href="/bookproject/asset/css/modal.css">
-<script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
-<script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
+<script
+	src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
+<script
+	src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
 </head>
 <!--header-->
 <body>
@@ -22,9 +28,12 @@
 			<c:choose>
 				<c:when test="${result eq 'sameUser'}">
 					<ul class="nav nav-tabs">
-						<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}">내 서평</a></li>
-						<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/${nickname}/tastemain">취향저격</a></li>
-						<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
+						<li role="presentation"><a
+							href="${pageContext.request.contextPath}/${nickname}">내 서평</a></li>
+						<li role="presentation" class="active"><a
+							href="${pageContext.request.contextPath}/${nickname}/tastemain">취향저격</a></li>
+						<li role="presentation"><a
+							href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
 						<!--세션 아이디와 사이트아이디 같을때
 						<li role="presentation"><a href="${pageContext.request.contextPath}/analyze">통계</a></li>
 						-->
@@ -33,9 +42,12 @@
 				<c:otherwise>
 					<!-- 세션아이디랑 다를때는 사이트주소의 아이디와 같은 유저의 데이터들 불러오기-->
 					<ul class="nav nav-tabs">
-						<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}">남 서평</a></li>
-						<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/${nickname}/tastemain">취향저격</a></li>
-						<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
+						<li role="presentation"><a
+							href="${pageContext.request.contextPath}/${nickname}">남 서평</a></li>
+						<li role="presentation" class="active"><a
+							href="${pageContext.request.contextPath}/${nickname}/tastemain">취향저격</a></li>
+						<li role="presentation"><a
+							href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
 					</ul>
 				</c:otherwise>
 			</c:choose>
@@ -45,9 +57,15 @@
 		<ul id="nav2" class="nav nav-pills">
 			<!-- 세션아이디와 비교, 다를경우 '이름님의 취향' -->
 			<!-- <li role="presentation" class="active"><a href="">'유저이름'님의 취향</a></li> -->
-			<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/tastemain">my 취향</a></li>
-			<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/${nickname}/tastereview">좋아요한 서평</a></li>
-			<li role="presentation"><a href="${pageContext.request.contextPath}/${nickname}/main_book">관심가는 책</a></li>
+			<li role="presentation"><a
+				href="${pageContext.request.contextPath}/${nickname}/tastemain">my
+					취향</a></li>
+			<li role="presentation" class="active"><a
+				href="${pageContext.request.contextPath}/${nickname}/tastereview">좋아요한
+					서평</a></li>
+			<li role="presentation"><a
+				href="${pageContext.request.contextPath}/${nickname}/main_book">관심가는
+					책</a></li>
 		</ul>
 
 		<!-- 서평 리스트 -->
@@ -94,8 +112,8 @@
 									</a>
 									<ul class="dropdown-menu" role="menu"
 										aria-labelledby="dropdownMenu2">
-										<li role="presentation"><a class="add_pli" role="menuitem"
-											tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
+										<li role="presentation"><a class="add_pli"
+											role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
 										<li role="presentation" class="divider"></li>
 										<li role="presentation"><a class="shr_review"
 											role="menuitem" tabindex="-1">서평 공유하기<span
@@ -103,11 +121,14 @@
 										<li role="presentation" class="divider"></li>
 										<li role="presentation">
 										<li role="presentation"><a role="menuitem" tabindex="-1"
-									target="_blank" href="/bookproject/view/${vo.reviewNo}">이미지
-										미리보기<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
-								</a></li>
+											target="_blank" href="/bookproject/view/${vo.reviewNo}">이미지
+												미리보기<span class="glyphicon glyphicon-save"
+												aria-hidden="true"></span>
+										</a></li>
 									</ul>
 								</div>
+
+
 							</div>
 						</div>
 					</div>

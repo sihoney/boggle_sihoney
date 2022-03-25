@@ -32,6 +32,7 @@
 							href="${pageContext.request.contextPath}/${nickname}/tastemain">취향저격</a></li>
 						<li role="presentation"><a
 							href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
+						</ul>
 						<!--세션 아이디와 사이트아이디 같을때-->
 				</c:when>
 				<c:otherwise>
