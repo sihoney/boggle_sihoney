@@ -29,9 +29,8 @@ box-shadow: 4px 4px 10px gray; */
   z-index: 2;
 }
 
-.logo {
-  line-height: 100%;
-  color: #fff;
+.logo img{
+  width: 6rem;
 }
 /**************** header > button ****************/
 header .sidebarBtn {

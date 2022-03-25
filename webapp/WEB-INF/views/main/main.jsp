@@ -24,7 +24,7 @@
         <!-- nav -->
         <nav>
             <div class="nav-header">
-                <h1 class="logo">BOGGLE</h1>
+                <div class="logo"><img src="${pageContext.request.contextPath}/asset/img/logo/logo2.png"></div>
             </div>
             
             <div class="links-container">
