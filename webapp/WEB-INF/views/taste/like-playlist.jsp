@@ -88,7 +88,7 @@
 				</div>
 				<div class="right" id="more">
 					<p>
-						<a href="${pageContext.request.contextPath}/${nickname}/hotplaylist?nickname=${nickname}">더보기<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+						<a href="${pageContext.request.contextPath}/${nickname}/hotplaylist">더보기<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
 					</p>
 				</div>
 				<div>
@@ -96,7 +96,7 @@
 				</div>
 				<div id="playlist">
 					<c:forEach items="${popularlist}" var="vo">
-						<div class="nail green" onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&userNo=${vo.userNo }'">
+						<div class="nail green" onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&userNo=${vo.userNo }&nickname=${vo.nickname }'">
 							<!-- 1~14까지 감정으로색깔 -->
 							<div class="nail-desc">
 								<p>${vo.playlistName }</p>
@@ -119,7 +119,7 @@
 					</div>
 					<div class="right" id="more">
 						<p>
-							<a href="${pageContext.request.contextPath}/${nickname}/writeplaylist?nickname=${nickname}">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+							<a href="${pageContext.request.contextPath}/${nickname}/writeplaylist">더보기</a><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
 						</p>
 					</div>
 				</div>
@@ -129,7 +129,7 @@
 				<div id="playlist">
 					
 					<c:forEach items="${makelist}" var="vo">						
-						<div class="nail deeppurple" onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&userNo=${vo.userNo }'"> <!-- 1~14까지 감정으로색깔 -->
+						<div class="nail deeppurple" onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&userNo=${vo.userNo }&nickname=${vo.nickname }'"> <!-- 1~14까지 감정으로색깔 -->
 							<div class="nail-desc">
 								<p>${vo.playlistName }</p>
 							</div>
