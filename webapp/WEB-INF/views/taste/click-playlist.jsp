@@ -140,7 +140,7 @@
 
 					<c:if test="${foldermainMap.prev == true}">
 					  <li>
-						<a href="${pageContext.request.contextPath}/playlist/folder?playlistNo=${foldermainMap.playlistCover.playlistNo}&userNo=${foldermainMap.playlistCover.userNo}&crtPage=${foldermainMap.startPageBtnNo-1}" aria-label="Previous">
+						<a href="${pageContext.request.contextPath}/playlist/folder?playlistNo=${foldermainMap.playlistCover.playlistNo}&userNo=${foldermainMap.playlistCover.userNo}&nickname=${param.nickname}&crtPage=${foldermainMap.startPageBtnNo-1}" aria-label="Previous">
 						  <span aria-hidden="true">&laquo;</span>
 						</a>
 					  </li>
@@ -150,12 +150,12 @@
 						<c:choose>
 							<c:when test="${param.crtPage == i}">
 								<li class="">
-									<a class="btn-active" href="${pageContext.request.contextPath}/playlist/folder?playlistNo=${foldermainMap.playlistCover.playlistNo}&userNo=${foldermainMap.playlistCover.userNo}&crtPage=${i}">${i}</a>
+									<a class="btn-active" href="${pageContext.request.contextPath}/playlist/folder?playlistNo=${foldermainMap.playlistCover.playlistNo}&userNo=${foldermainMap.playlistCover.userNo}&nickname=${param.nickname}&crtPage=${i}">${i}</a>
 								</li>
 							</c:when>
 							<c:otherwise>
 								<li>
-									<a href="${pageContext.request.contextPath}/playlist/folder?playlistNo=${foldermainMap.playlistCover.playlistNo}&userNo=${foldermainMap.playlistCover.userNo}&crtPage=${i}">${i}</a>
+									<a href="${pageContext.request.contextPath}/playlist/folder?playlistNo=${foldermainMap.playlistCover.playlistNo}&userNo=${foldermainMap.playlistCover.userNo}&nickname=${param.nickname}&crtPage=${i}">${i}</a>
 								</li>
 							</c:otherwise>
 						</c:choose>
@@ -163,7 +163,7 @@
 		  	
 					<c:if test="${foldermainMap.next == true}">
 						<li>
-							<a href="${pageContext.request.contextPath}/playlist/folder?playlistNo=${foldermainMap.playlistCover.playlistNo}&userNo=${foldermainMap.playlistCover.userNo}&crtPage=${foldermainMap.endPageBtnNo+1}" aria-label="Next">
+							<a href="${pageContext.request.contextPath}/playlist/folder?playlistNo=${foldermainMap.playlistCover.playlistNo}&userNo=${foldermainMap.playlistCover.userNo}&nickname=${param.nickname}&crtPage=${foldermainMap.endPageBtnNo+1}" aria-label="Next">
 								<span aria-hidden="true">&raquo;</span>
 							</a>
 						</li>
