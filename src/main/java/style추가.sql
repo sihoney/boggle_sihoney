@@ -46,9 +46,6 @@ UPDATE style
 SET imgurl='People.png'
 where style_no = 7;
 UPDATE style
-SET imgurl='Bike.png'
-where style_no = 8;
-UPDATE style
 SET imgurl='Record.png'
 where style_no = 9;
 UPDATE style
@@ -67,9 +64,6 @@ where style_no = 6;
 UPDATE style
 SET videourl='People.mp4'
 where style_no = 7;
-UPDATE style
-SET videourl='Bike.mp4'
-where style_no = 8;
 UPDATE style
 SET videourl='Record.mp4'
 where style_no = 9;
