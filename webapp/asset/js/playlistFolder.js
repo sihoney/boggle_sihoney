@@ -7,7 +7,7 @@ var reviewChkBoxArr = [];
 
 var playlistNo = $('#playlistLike').data('playlistno');
 var userNo = $('#playlistLike').data('userno');
-
+var nickname = $('#playlistLike').data('nickname');
 //===============[플레이리스트 모달 ready/close]==========================
 /*모달 ready*/
 $('#playlist-add').on('click', function(){
@@ -165,7 +165,7 @@ function addCheck(reviewChkBoxArr){
 			console.log(result);
 			
 			if(result == 1){
-				location.href="folder?playlistNo="+playlistNo+"&userNo="+userNo+"&crtPage=1";
+				location.href="folder?playlistNo="+playlistNo+"&userNo="+userNo+"&nickname="+nickname+"&crtPage=1";
 			}else{
 				alert('앗! 다시 시도해주세요! :-)')
 			}

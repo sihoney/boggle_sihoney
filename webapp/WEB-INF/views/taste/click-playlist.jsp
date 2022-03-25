@@ -57,7 +57,7 @@
 			</div>
 			
 			<div id="btn-cover" class="float-r">
-				<button id="playlistLike" type="button" class="btn btn-default float-r" data-playlistno="${param.playlistNo}" data-userno="${authUser.userNo}">좋아요<span id="likeview" class="" aria-hidden="true"></span></button>	
+				<button id="playlistLike" type="button" class="btn btn-default float-r" data-playlistno="${param.playlistNo}" data-userno="${authUser.userNo}" data-nickname="${param.nickname}">좋아요<span id="likeview" class="" aria-hidden="true"></span></button>	
 				<button type="button" class="btn btn-default float-r" onclick="location.href = '${pageContext.request.contextPath}/main/playlist?playlistNo=${requestScope.foldermainMap.playlistCover.playlistNo}';">전체재생</button>
 			</div>
 		</div>
