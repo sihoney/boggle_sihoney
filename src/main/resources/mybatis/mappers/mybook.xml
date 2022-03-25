@@ -331,4 +331,44 @@ from (select    ru.review_like_date reviewLikeDate,
 		]]>
 	</delete>
 	
+	<!-- 유저번호, 감정태그 주면은 해당 감정태그 서평만 출력 -->
+	<!-- emoList -->
+	<select id="emoList" resultType="MybookVo" parameterType="int">
+		<![CDATA[
+			select  r.review_no reviewNo, 
+        			NVL(ru.likecnt,0) likecnt,
+        			r.style_no styleNo,
+        			r.emo_no emoNo,
+        			r.emo_name emoName,
+        			r.book_no bookNo,
+        			r.book_title bookTitle,
+        			r.user_no userNo,
+        			r.nickname,
+        			r.review_content reviewContent,
+        			r.review_date reviewDate
+			from (select    r.review_no,        
+                			s.style_no,
+                			e.emo_no,
+                			e.emo_name,
+                			r.book_no,
+                			b.book_title,
+                			u.user_no,
+                			u.nickname,
+                			r.review_content,
+                			r.review_date
+        			from    review r, style s, emotion e, users u, books b
+        			where   e.emo_no = s.emo_no
+        			and     r.style_no = s.style_no
+        			and     r.user_no = u.user_no
+        			and     b.book_no = r.book_no
+        			order by r.review_date desc ) r, (select review_no, count(review_no) likecnt
+                                            			from review_user
+                                            			group by review_no) ru
+			where r.review_no = ru.review_no(+)
+			and r.user_no= #{userNo}
+			and emo_name = #{emoName}		
+		]]>
+	</select>
+	
+	
 </mapper>
