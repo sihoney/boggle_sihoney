@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/source.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/loginForm.css" type="text/css">
+   	<link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
 </head>
 
 <body>
@@ -28,7 +29,7 @@
             <div id="login_header">
                
                 <h1 class="login_h1">책, 더이상 억지로 읽지 마세요 </h1>
-                <h2 class="login_h2">playbook으로 가볍게 떠먹어요</h2>
+                <h2 class="login_h2">'보글'로 가볍게 떠먹어요</h2>
             </div>
 			
 			<form action="${pageContext.request.contextPath}/user/login" method="post">
