@@ -81,13 +81,13 @@
 								</p>
 							</div>
 							<!-- 작성자아이디와 세션아이디가 동일할 시에만 보이게 -->
-							<%-- 	<div class="right">
-						<c:if test="${result eq 'sameUser'}">
-							<a
-								href="${pageContext.request.contextPath}/review/write?reviewNo=${vo.reviewNo}">수정</a>
-							<a class="delete" data-reviewno="${vo.reviewNo }">삭제</a>
-						</c:if>
-					</div> --%>
+							<div class="right">
+								<c:if test="${result eq 'sameUser'}">
+									<a
+										href="${pageContext.request.contextPath}/review/write?reviewNo=${vo.reviewNo}">수정</a>
+									<a class="delete" data-reviewno="${vo.reviewNo }">삭제</a>
+								</c:if>
+							</div>
 						</div>
 						<!-- 작성자아이디와 세션아이디가 동일할 경우에는 안보이게 -->
 						<div id="reviewer">
@@ -232,7 +232,7 @@
 		//요청 : json 방식
 		$.ajax({
 			//url로 요청할게!    
-			url : "${pageContext.request.contextPath }/delete",
+			url : "${pageContext.request.contextPath }/delete1",
 			type : "post",
 			contentType : "application/json", //보낼때 json으로 보낼게
 			data : JSON.stringify(clickReviewVo),

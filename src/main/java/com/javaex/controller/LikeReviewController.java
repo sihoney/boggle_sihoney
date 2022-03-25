@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.javaex.service.LikeReviewService;
 import com.javaex.service.UserService;
 import com.javaex.vo.LikeReviewVo;
-import com.javaex.vo.MybookVo;
 import com.javaex.vo.UserVo;
 
 @Controller
@@ -117,6 +116,30 @@ public class LikeReviewController {
 
 		}
 	}
+	
+	   //삭제 버튼을 눌렀을때의 기능
+	   @ResponseBody
+	   @RequestMapping("/delete1")
+	   public int delete1(HttpSession session,
+			   		   @RequestBody LikeReviewVo clickReview) {
+	      
+	      //세션아이디의 유저넘버
+	      int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
+	      //클릭한 서평 넘버
+	      int clickNo = clickReview.getReviewNo();
+	      
+	      System.out.println("로그인한 유저 넘버 : " + userNo);
+	      System.out.println("클릭한 서평 넘버 : " + clickNo);
+	      
+	      LikeReviewVo delete = new LikeReviewVo(clickNo, userNo);
+
+	      //해당 유저의 서평일 경우에만 삭제가 가능하게 하기
+	      int checkuser = likeReviewService.delete(delete);
+	      
+	      //값이 1일때는 삭제하려는 리뷰의 작성자와 로그인사용자가 같음을 의미 
+	      return checkuser;
+	   }
+	   
 
 	@ResponseBody
 	@RequestMapping("/like1")
