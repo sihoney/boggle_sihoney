@@ -21,9 +21,12 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javaex.dao.MainDao;
 import com.javaex.dao.ReviewWriteDao;
+import com.javaex.service.MainService;
 import com.javaex.service.ReviewWriteService;
 import com.javaex.util.HttpUtil;
+import com.javaex.vo.PlaylistVo;
 import com.javaex.vo.StyleVo;
 import com.javaex.vo.UserVo;
 
@@ -35,6 +38,10 @@ public class ReviewWriteController {
 	ReviewWriteService reviewWriteService;
 	@Autowired
 	ReviewWriteDao reviewWriteDao;
+	@Autowired
+	MainService mainService;
+	@Autowired
+	MainDao mainDao;
 	
 	@RequestMapping("/write")
    public String review_write() {
@@ -129,10 +136,9 @@ public class ReviewWriteController {
 		System.out.println("ReviewWriteController > addReview");
 	
 		System.out.println(map);
-		//{userNo=6, styleNo=5, reviewContent=심심ㅅ밋밋ㅁ, bookNo=9791156937050, bookTitle=2023 행선집 : 로이어스 행정법 선택형 집중 - 변시 11회와 변모 최근 3년치 선택형 해설 수록, author=김태성 지음, genreName=국내도서>수험서/자격증>인문/사회/법(고등고시)>변호사시험>행정법, coverURL=https://image.aladin.co.kr/product/29104/81/coversum/k452837162_1.jpg, genreNo=34791}
-		// 
+ 
 		reviewWriteService.addReview(map);
-		
+
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		
 		String redirect;
@@ -145,6 +151,7 @@ public class ReviewWriteController {
 
 		Map<String, String> resultMap = new HashMap<String, String>();
 		resultMap.put("redirect", redirect);
+		resultMap.put("reviewNo", String.valueOf(map.get("reviewNo")) );
 		
 		return resultMap;
 	}
@@ -201,5 +208,26 @@ public class ReviewWriteController {
 		resultMap.put("redirect", redirect);
 		
 		return resultMap;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getMyPlaylist")
+	public List<PlaylistVo> getMyPlaylist(@RequestParam(value="userNo")int userNo) {
+		System.out.println("ReviewWriterController > getMyPlaylist");
+
+		return mainService.getMyPlaylist(userNo);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/addReviewToPly")
+	public int addReviewToPly(@RequestParam(value="playlistNo")int playlistNo, 
+			                   @RequestParam(value="reviewNo") int reviewNo) {
+		System.out.println("ReviewWriterController > addReviewToPly");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("playlistNo", playlistNo);
+		map.put("reviewNo", reviewNo);
+		
+		return mainDao.addReviewToPly(map);
 	}
 }

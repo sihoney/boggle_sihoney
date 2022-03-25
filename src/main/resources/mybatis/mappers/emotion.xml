@@ -134,9 +134,13 @@
 	<select id="getMyPlaylist" parameterType="int" resultType="PlaylistVo">
 		<![CDATA[
 			select playlist_name playlistName,
-			       playlist.playlist_no playlistNo
-			from user_playlist, playlist
+			       playlist.playlist_no playlistNo,
+			       emo_name emoName,
+			       nickname
+			from user_playlist, playlist, emotion, users
 			where user_playlist.playlist_no = playlist.playlist_no
+			and playlist.emo_no = emotion.emo_no
+			and playlist.user_no = users.user_no
 			and user_playlist.user_no = #{userNo}
 			order by playlist_date desc
 		]]>

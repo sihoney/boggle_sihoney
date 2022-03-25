@@ -32,7 +32,7 @@ public class ReviewWriteDao {
 		int result = sqlSession.insert("reviewwrite.addReview", map);
 		
 		System.out.println(result + "건 | 리뷰가 저장됨");
-		
+
 		return result;
 	}
 	

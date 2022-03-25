@@ -777,6 +777,12 @@ i.fa-solid에 position: absolute 을 줘서
 	.review {
 		font-size: 20px;
     	line-height: 2rem;
+    	
+    	margin-top: 1rem;
+	}
+	
+	.username {
+		margin: 1.5rem 0 2rem 0;
 	}
 	
 	.slideBtnContainer button {
