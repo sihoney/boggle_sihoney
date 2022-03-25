@@ -81,7 +81,7 @@
 						</div>
 						<div id="reviews-footer">
 							<div class="left">
-								<span class="like" data-reviewno="${vo.reviewNo }" id="heart"
+								<span class="heart" data-reviewno="${vo.reviewNo }"
 									class="glyphicon glyphicon-heart" aria-hidden="true"></span> <span
 									class="likecnt" data-likecnt="${vo.likecnt}">${vo.likecnt }</span>
 								<span>${vo.reviewDate }</span>
@@ -94,10 +94,10 @@
 									</a>
 									<ul class="dropdown-menu" role="menu"
 										aria-labelledby="dropdownMenu2">
-										<li role="presentation"><a id="add_pli" role="menuitem"
+										<li role="presentation"><a class="add_pli" role="menuitem"
 											tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
 										<li role="presentation" class="divider"></li>
-										<li role="presentation"><a id="shr_review"
+										<li role="presentation"><a class="shr_review"
 											role="menuitem" tabindex="-1">서평 공유하기<span
 												class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
 										<li role="presentation" class="divider"></li>
@@ -126,7 +126,7 @@
 <script type="text/javascript">
 	//로딩되기전에 하트모양 요청
 	$(document).ready(function() {
-		$('#heart').attr('class', 'like glyphicon glyphicon-heart');
+		$('.heart').attr('class', 'like glyphicon glyphicon-heart');
 
 	});
 
@@ -153,7 +153,7 @@
 				//요청 : json 방식
 				$.ajax({
 					//url로 요청할게!    
-					url : "${pageContext.request.contextPath }/like",
+					url : "${pageContext.request.contextPath }/like1",
 					type : "post",
 					contentType : "application/json", //보낼때 json으로 보낼게
 					data : JSON.stringify(clickReviewVo),
@@ -241,5 +241,5 @@
 		});
 	});
 </script>
-<script src="${pageContext.request.contextPath}/asset/js/more.js"></script>
+<script src="${pageContext.request.contextPath}/asset/js/more2.js"></script>
 </html>

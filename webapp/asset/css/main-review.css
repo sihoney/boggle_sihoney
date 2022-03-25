@@ -108,7 +108,8 @@
 #reviews-footer span{
     margin-right : 5px;
 }
-#reviews-footer #heart{
+
+#reviews-footer .glyphicon-heart{
     color: #309BF8;
     padding: 2px 0px 0px 5px;
 }
