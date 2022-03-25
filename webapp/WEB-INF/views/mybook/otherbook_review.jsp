@@ -83,18 +83,23 @@
 						<div id="category" class="dropdown">
 							<button class="btn btn-default dropdown-toggle" type="button"
 								id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-								카테고리 <span class="caret"></span>
+								감정태그 <span class="caret"></span>
 							</button>
-							<ul class="dropdown-menu" role="menu"
-								aria-labelledby="dropdownMenu1">
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="">즐거운</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="">우울한</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="">화난</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="">감성적인</a></li>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+								<li role="presentation"><a role="menuitem" tabindex="-1">외로운</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1">심심한</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1">슬픈</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1">충만한</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1">편안한</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1">즐거운</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1">희망찬</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1">황홀한</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1">용감한</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1">불안한</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1">무력한</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1">화난</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1">상처입은</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1">회의적인</a></li>
 							</ul>
 						</div>
 					</div>
@@ -244,26 +249,50 @@
 				});
 	};
 
-	//특정 서평 그리기
-	function print(no) {
+	//감정태그(카테고리)메뉴를 클릭했을시 이벤트
+	$(".dropdown-menu").on("click", "li", function() {
 
-		$
-				.ajax({
-					url : "${pageContext.request.contextPath }/${nickname}/list?sort=latest", ///<<<파라미터로 인기순 최신순 나눠보기
-					type : "get",
-
-					dataType : "json",
-					success : function(mbList) {
-
-						//객체 리스트 돌리기(화면 출력)
-						render(mbList[no], "down");
-
-					},
-					error : function(XHR, status, error) {
-						console.error(status + " : " + error);
-					}
-				});
-	};
+		//데이터수집
+		var emoName = $(this).text();
+						
+		//출력
+		console.log("선택한 감정태그 : "+ emoName);
+		
+		var clicked = {
+			emoName : emoName	
+			};
+		
+		
+		//요청 : json 방식
+		$.ajax({
+			//url로 요청할게!    
+			url : "${pageContext.request.contextPath }/${nickname}/select",
+			type : "post",
+			contentType : "application/json", //보낼때 json으로 보낼게
+			data : JSON.stringify(clicked),
+			//주소뒤에 갈 데이터 전송방식, //자바 스크립트 객체를 json형식으로 변경
+			dataType : "json", //json> javascript
+			success : function(emoList) {
+				/*성공시 처리해야될 코드 작성*/
+				console.log(emoList);
+				
+				//초기화
+				$("#rvlist").empty();
+				
+				//객체 리스트 돌리기(화면 출력)
+				for (var i = 0; i < emoList.length; i++) {
+					//그리기
+					render(emoList[i], "down");
+				}
+				
+			},
+			//로그인하지 않은경우(모달창띄워주기)
+			error : function(XHR, status, error) {
+			   console.error(status + " : " + error);
+			}
+		});	
+	
+	});
 
 	//좋아요 버튼을 클릭했을때(이벤트)
 	$("#rvlist").on("click",".like",function() {

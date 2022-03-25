@@ -296,36 +296,75 @@ public class MybookController {
    
    //카테고리 선택시 기능
    @ResponseBody
-   @RequestMapping("/select")
-   public List<MybookVo> select(HttpSession session,
-		   		   @RequestBody MybookVo clicked) {
+   @RequestMapping("/{nickname}/select")
+   public List<MybookVo> select(@PathVariable(value="nickname") String nickname,
+		   						HttpSession session,
+		   						@RequestBody MybookVo clicked) {
       
-      //세션아이디의 유저넘버, 선택한 감정태그
-      int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
-      String emoName = clicked.getEmoName();
-            
-      System.out.println("로그인한 유저 넘버 : " + userNo);
-      System.out.println("선택한 감정태그 : " + emoName);
-      
-      MybookVo emo = new MybookVo(userNo, emoName);
-      
-      //유저넘버, 감정태그 주면 해당유저의 서평 중 그 감정태그를 가진것만 출력해주기
-      List<MybookVo> emoList = mybookService.emoList(emo);
-      
-      //좋아요 체크된 상태로 내보내주기
-      //중복체크 및 값 set해서 List 업데이트
-      for(int i=0; i<emoList.size(); i++) {
-     	 
-     	 int reviewNo = emoList.get(i).getReviewNo();
-     	 
-     	 //0일시 좋아요 안 한 상태, 1일시 좋아요 한 상태
-     	 MybookVo checklike = new MybookVo(reviewNo, userNo);
-	         int likecheck = mybookService.likeok(checklike);
-	         
-	         emoList.get(i).setLikecheck(likecheck);
+	  //세션의 닉네임
+	  String yours = ((UserVo)session.getAttribute("authUser")).getNickname(); 
+	   
+	  //세션아이디랑 지금 블로그닉네임이 같니?
+      if(nickname.equals(yours)) {
+         
+    	  //세션아이디의 유저넘버, 선택한 감정태그
+          int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
+          String emoName = clicked.getEmoName();
+                
+          System.out.println("지금 서재 유저 넘버 : " + userNo);
+          System.out.println("선택한 감정태그 : " + emoName);
+          
+          MybookVo emo = new MybookVo(userNo, emoName);
+
+          //유저넘버, 감정태그 주면 해당유저의 서평 중 그 감정태그를 가진것만 출력해주기
+          List<MybookVo> emoList = mybookService.emoList(emo);
+          
+          //좋아요 체크된 상태로 내보내주기
+          //중복체크 및 값 set해서 List 업데이트
+          for(int i=0; i<emoList.size(); i++) {
+         	 
+         	 int reviewNo = emoList.get(i).getReviewNo();
+         	 
+         	 //0일시 좋아요 안 한 상태, 1일시 좋아요 한 상태
+         	 MybookVo checklike = new MybookVo(reviewNo, userNo);
+    	         int likecheck = mybookService.likeok(checklike);
+    	         
+    	         emoList.get(i).setLikecheck(likecheck);
+          }
+          
+          return emoList;      
+         
+      }else {
+             	  
+         //지금 서재 닉네임을 주면 유저넘버, 닉네임, 프로필이미지를 주는 메소드 사용
+         UserVo otherUser = userService.getUser(nickname);
+         int userNo = otherUser.getUserNo();
+         String emoName = clicked.getEmoName();
+         
+         System.out.println("지금 서재 유저 넘버 : " + userNo);
+         System.out.println("선택한 감정태그 : " + emoName);
+         
+         MybookVo emo = new MybookVo(userNo, emoName);
+
+         //유저넘버, 감정태그 주면 해당유저의 서평 중 그 감정태그를 가진것만 출력해주기
+         List<MybookVo> emoList = mybookService.emoList(emo);
+         
+         //좋아요 체크된 상태로 내보내주기
+         //중복체크 및 값 set해서 List 업데이트
+         for(int i=0; i<emoList.size(); i++) {
+        	 
+        	 int reviewNo = emoList.get(i).getReviewNo();
+        	 
+        	 //0일시 좋아요 안 한 상태, 1일시 좋아요 한 상태
+        	 MybookVo checklike = new MybookVo(reviewNo, userNo);
+   	         int likecheck = mybookService.likeok(checklike);
+   	         
+   	         emoList.get(i).setLikecheck(likecheck);
+         }
+         
+         return emoList; 
       }
       
-      return emoList;
    }
    
    

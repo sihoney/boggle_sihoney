@@ -288,7 +288,7 @@
 		//요청 : json 방식
 		$.ajax({
 			//url로 요청할게!    
-			url : "${pageContext.request.contextPath }/select",
+			url : "${pageContext.request.contextPath }/${nickname}/select",
 			type : "post",
 			contentType : "application/json", //보낼때 json으로 보낼게
 			data : JSON.stringify(clicked),
