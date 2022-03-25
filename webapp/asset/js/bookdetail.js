@@ -124,7 +124,7 @@ function rendering(reviewList){
 		str += ' 			<a id="reviewDelete" class="review_modify" data-reviewno="'+reviewList.reviewNo+'">삭제</a> ';
 		str += ' 			<a href="review/write?reviewNo='+reviewList.reviewNo+'" class="review_modify">수정</a> ';
 	}
-	str += ' 		<a href="'+reviewList.nickName+'" class="review_nick">'+ reviewList.nickname +'<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a> ';
+	str += ' 		<a href="'+reviewList.nickname+'" class="review_nick">'+ reviewList.nickname +'<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a> ';
 	str += ' 		<div class="multiline-ellipsis">'+reviewList.reviewContent+'</div> ';
 	str += ' 	</div> ';
 	str += ' 	<div id="review_second"> ';

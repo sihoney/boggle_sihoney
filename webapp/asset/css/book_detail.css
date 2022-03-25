@@ -15,7 +15,7 @@
 
 /* 책 제목 */
 #book_detail>h1 {
-    font-family: 'KOHIBaeumOTF';
+    font-family: 'MaruBuri';
     font-size: 25px;
     color: #707070;
     margin: 10px 0px 20px 0px;
@@ -24,7 +24,7 @@
 
 /* 책 저자 */
 #book_detail>h3 {
-    font-family: 'MinSans-Medium';
+    font-family: 'MaruBuri';
     font-size: 20px;
     color: #B4B4B4;
     margin: 0px 0px 20px 0px;
@@ -36,14 +36,14 @@
 }
 
 .review_count {
-    font-family: 'MinSans-Medium';
+    font-family: 'MaruBuri';
     font-size: 20px;
     color: #adaaaa;
     margin-right: 10px;
 }
 
 .review_num {
-    font-family: 'MinSans-Medium';
+    font-family: 'MaruBuri';
     font-size: 20px;
     font-weight: bold;
     color: #666666;

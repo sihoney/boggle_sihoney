@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/playlist-click.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/style.css">
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
 </head>
 
 <!--header-->

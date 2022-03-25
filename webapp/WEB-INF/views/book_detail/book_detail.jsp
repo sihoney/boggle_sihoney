@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>책 상세페이지</title>
-
+		
         <script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
         <script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
@@ -19,7 +19,8 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/book_detail.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/modal.css">
-
+		<link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
+		
         <!-- kakao sdk 호출 -->
         <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     </head>

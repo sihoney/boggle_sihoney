@@ -1,21 +1,11 @@
 @charset "UTF-8";
 
 @font-face {
-  font-family: 'museo_sans';
+  font-family: 'MaruBuri';
   font-style: normal;
   font-weight: normal;
-  src: url('https://static.ridibooks.com/books/dist/fonts/museo_sans_500.woff2') format('woff2'),
-    url('https://static.ridibooks.com/books/dist/fonts/museo_sans_500.woff') format('woff'),
-    url('https://static.ridibooks.com/books/dist/fonts/museo_sans_500.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'museo_sans';
-  font-style: normal;
-  font-weight: bold;
-  src: url('https://static.ridibooks.com/books/dist/fonts/museo_sans_700.woff2') format('woff2'),
-    url('https://static.ridibooks.com/books/dist/fonts/museo_sans_700.woff') format('woff'),
-    url('https://static.ridibooks.com/books/dist/fonts/museo_sans_700.ttf') format('truetype');
+  src:  url('https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css')
+ 
 }
 
 /***** Base *****/
@@ -26,7 +16,7 @@
 body {
   background-color: #ffffff;
   color: #303538;
-  font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'MaruBuri', Arial, Helvetica, sans-serif;
   font-size: px;
   font-weight: 400;
   line-height: 1.5;
@@ -45,7 +35,7 @@ body > main {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'MaruBuri', Arial, Helvetica, sans-serif;
   font-weight: 400;
   margin-top: 0;
 }
