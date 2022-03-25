@@ -38,8 +38,7 @@
 						<li role="presentation" class="active"><a
 							href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
 						<!--세션 아이디와 사이트아이디 같을때-->
-						<li role="presentation"><a
-							href="${pageContext.request.contextPath}/analyze">통계</a></li>
+						
 					</ul>
 				</c:when>
 				<c:otherwise>
@@ -85,7 +84,7 @@
 								<!-- 1~14까지 감정으로색깔 -->
 
 
-								<div onclick="location.href='${pageContext.request.contextPath}/main/playlist?playlistNo=${vo.playlistNo }">
+								<div onclick="location.href='${pageContext.request.contextPath}/main/playlist?playlistNo=${vo.playlistNo }';"style="cursor:pointer;">
 									<p id="name">${vo.playlistName}</p>
 
 								</div>

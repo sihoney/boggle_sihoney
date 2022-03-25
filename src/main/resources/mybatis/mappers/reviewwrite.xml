@@ -18,6 +18,7 @@
         <result property="emoNo" column="EMO_NO" />
         <result property="reviewContent" column="REVIEW_CONTENT" />
         <result property="imgURL" column="IMGURL" />
+        <result property="reviewNo" column="REVIEWNO" />
     </resultMap> 
     
 	<select id="getReviewTotalCnt" parameterType="long" resultType="int">
@@ -41,9 +42,12 @@
 	</select>
 	
 	<insert id="addReview" parameterType="map">
+		<selectKey keyProperty="reviewNo" resultType="int" order="BEFORE">
+			select seq_review_no.nextval from dual
+		</selectKey>
 		<![CDATA[
 			insert into review
-			values(seq_review_no.nextval, 
+			values(#{reviewNo}, 
 			       #{userNo}, 
 			       #{bookNo},
 			       #{styleNo},

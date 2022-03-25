@@ -114,10 +114,6 @@
 				<div class="btn-group" role="group" aria-label="...">
 					<!-- 
 					<button class="btn_style btn-outline-secondary">폰트</button>
-					<button class="btn_style btn-outline-secondary">폰트</button>
-					<button class="btn_style btn-outline-secondary">폰트</button>
-					<button class="btn_style btn-outline-secondary">폰트</button>
-					<button class="btn_style btn-outline-secondary">폰트</button>
 					-->
 				</div>
 			</div>
@@ -155,11 +151,32 @@
 					</div>
 					<p>플레이리스트</p>
 				</div>
-			</div>
+			</div>			 
 			-->
 			<!-- 모달창 -->
 			<c:import url="/WEB-INF/views/include/modal.jsp"></c:import>
 
+			<!-- 플리 추가 질문 모달 -->
+			<div class="modal_question unstaged">
+				<p>저장되었습니다. 플레이리스트에 추가하시겠습니까?</p>
+				<button class="yes mqBtn">예</button>
+				<button class="no mqBtn">아니오</button>
+			</div>
+			
+			<div class="msg_modal unstaged">
+				<p>저장됏습니다.</p>
+			</div>
+			
+			<div class="modal_myply unstaged">
+				<div class="modal_ply_header">
+					<p>My 플레이리스트</p>
+					<button class="modal_myply_btn">내 서평 보러가기</button>
+				</div>
+				<div class="modal_ply_content">
+					<ul class="modal_ply_ul">
+					</ul>
+				</div>
+			</div>
 
 		</div>
         <!-- /container -->
@@ -396,9 +413,46 @@
 		history.back(-1)
 	})
 	
-	/* 기록하기 */
-	$("#btn_admit").on("click", function(){
+	/* modal_add_playlist - closeBtn */
+	$(".modal_myply_btn").on("click", function(){
+		/*
+		$(".modal_myply").removeClass("opaque")
+		
+		$(".modal_myply").one("transitionend", function(){
 
+			$(".modal_myply").addClass("unstaged")
+		})
+		*/
+		location.href = location.href.substring(0, 34) + nickname
+	})
+	
+	let nickname
+	let reviewNo
+	
+	/* 저장하시겠습니까 모달 - 예, 아니오 버튼 클릭 */
+	$(".mqBtn").on("click", function(){
+		$(".modal_question").removeClass("opaque")
+		
+		$(".modal_question").one("transitionend", function(){
+			$(".modal_question").addClass("unstaged")
+		})
+		
+		let answer = $(this).attr("class").split(/\s+/)[0]
+		
+		if(answer == "yes") {
+			fetchMyPlaylist(userNo)
+					
+			$(".modal_myply").removeClass("unstaged")
+			$(".modal_myply").addClass("opaque")
+			
+		} else {
+			location.href = location.href.substring(0, 34) + nickname
+		}
+	})
+
+	/* 기록하기 & 수정하기 */
+	$("#btn_admit").on("click", function(){
+		
 		var obj = {
 				bookNo: bookNo,
 				bookTitle: bookTitle,
@@ -424,7 +478,9 @@
 		}
 		else {
 			
-			if($(this).text() == "수정하기") {
+			let mode = $(this).text()
+			
+			if(mode == "수정하기") {
 				console.log("수정하기")
 				var url = "${pageContext.request.contextPath}/review/modifyReview"	
 			} else {
@@ -432,24 +488,34 @@
 				var url = "${pageContext.request.contextPath}/review/addReview"	
 			}
 				
-				$.ajax({
-					url: url,
-					type: "post",
-					contentType: 'application/json; charset=UTF-8',
-					data: JSON.stringify(obj),
+			$.ajax({
+				url: url,
+				type: "post",
+				contentType: 'application/json; charset=UTF-8',
+				data: JSON.stringify(obj),
 
-					dataType: "json",
-					success: function(data){
-
-						console.log(location.href.substring(0, 34) + data.redirect)
-
+				dataType: "json",
+				success: function(data){
+					console.log(data)
+					//console.log(location.href.substring(0, 34) + data.redirect)
+					
+					if(mode == "수정하기") {
 						location.href = location.href.substring(0, 34) + data.redirect
+					} else { // 저장하기
 						
-					},
-					error:  function(XHR, status, error){
-						console.log(status + " : " + error);
+						nickname = data.redirect
+						reviewNo = data.reviewNo
+						
+						/* 플리에 저장할거냐고 질문 모달 */
+						$(".modal_question").removeClass("unstaged")
+						$(".modal_question").addClass("opaque")	
 					}
-				})			
+
+				},
+				error:  function(XHR, status, error){
+					console.log(status + " : " + error);
+				}
+			})			
 		}
 	})
 	
@@ -581,6 +647,89 @@
 			}
 		}
 	})
+	
+/* 			<li class="list">
+				<div class="img-container">
+					<img src="" alt="">
+				</div>
+				<div class="info-container">
+					<button class="tagBtn">힘이 되는</button>
+					<div class="playlist-title">별밤에 볼륨을 높이고 싶은가요</div>
+					<div class="username">김지연</div>
+				</div>
+			</li>	 */
+	
+			
+	function addReviewToPly(playlistno, reviewNo) {
+		console.log(playlistno + ", " + reviewNo)
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/review/addReviewToPly?playlistNo=" + playlistno + "&reviewNo=" + reviewNo,
+			method: "post",
+			dataType: "json",
+			success: function(){
+				console.log("플리에 저장했습니다.")
+
+				$(".msg_modal").removeClass("unstaged")
+				$(".msg_modal").addClass("opaque")
+				
+				setTimeout(function(){
+					$(".msg_modal").removeClass("opaque")
+					
+					$(".msg_modal").one("transitionend", function(){
+						$(".msg_modal").addClass("unstaged")
+					})
+				}, 2000)
+				
+
+			},
+			error:  function(XHR, status, error){
+				console.log(status + " : " + error);
+			}
+		})
+	}
+	
+	function renderMyPlaylist(list) {
+
+		for(let item of list) {
+			str = ""
+			str += '<li class="list" data-playlistNo="'+ item.playlistNo +'">'
+			str += '	<div class="info-container">'
+			str += '		<button class="tagBtn">'+ item.emoName +'</button>'
+			str += '		<div class="playlist-title">' + item.playlistName + '</div>'
+			str += '		<div class="username">' + item.nickname + '</div>'
+			str += '	</div>'
+			str += '</li>'
+			
+			$(".modal_ply_ul").append(str)
+		}
+		
+		$(".modal_ply_ul").on("click", ".list", function(){
+			let playlistno = $(this).data("playlistno")
+			
+			addReviewToPly(playlistno, reviewNo)
+			
+			$(this).addClass("selected")
+		})
+	}
+	
+	function fetchMyPlaylist(userNo) {
+		let url = "${pageContext.request.contextPath}/review/getMyPlaylist?userNo=" + userNo
+		
+		$.ajax({
+			url: url,
+			type: "post",
+			dataType: "json",
+			success: function(data){
+				console.log(data)
+				
+				renderMyPlaylist(data)
+			},
+			error:  function(XHR, status, error){
+				console.log(status + " : " + error);
+			}
+		})
+	}
 	
 	function renderAndEventStyleBtn(emoNo) {
 		var url = "${pageContext.request.contextPath}/review/getStyle?emoNo=" + emoNo

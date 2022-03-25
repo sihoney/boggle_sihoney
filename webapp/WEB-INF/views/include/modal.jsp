@@ -61,6 +61,34 @@
 	</div>
 </div>
 <!-- /플레이리스트에 추가 -->
+
+<!-- 플레이리스트 모달창 (bootstrap X) -->
+<!-- 
+<div class="modal_add_playlist">
+	<div class="modal_header">
+		<div class="title">내 플레이리스트</div>
+		<button type="button" class="closeBtn" aria-label="Close">닫기</button>
+	</div>
+	<div class="modal-playlist">
+		<ul>
+			 
+			<li class="list">
+				<div class="img-container">
+					<img src="" alt="">
+				</div>
+				<div class="info-container">
+					<button class="tagBtn">힘이 되는</button>
+					<div class="playlist-title">별밤에 볼륨을 높이고 싶은가요</div>
+					<div class="username">김지연</div>
+				</div>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+ -->
+<!-- /플레이리스트 모달창 (bootstrap X) -->
+
 <!-- /이미지 저장 모달창 -->
 <div class="modal" id="modal_download_img" tabindex="-1">
 	<div class="modal-dialog">

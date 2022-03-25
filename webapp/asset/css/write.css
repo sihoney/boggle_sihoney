@@ -15,6 +15,143 @@
 	border-color: rgb(159 222 69);
 }
 */
+/*--------------- msg modal --------------------*/
+.msg_modal {
+	position: absolute;
+    top: 165rem;
+    left: 50%;
+    background-color: #cce8ff;
+    width: 20rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    opacity: 0;
+    transition: all 0.3s;
+    transform: translate(-50%, 10px);
+}
+.msg_modal.unstaged {
+	z-index: -1;
+	display: none;
+}
+.msg_modal.opaque {
+	opacity: 1;
+	transform: translate(-50%, 0)
+}
+.msg_modal p {
+	font-size: 1.5rem;
+    text-align: center;
+    line-height: 3rem;
+    font-weight: bold;
+    color: #807f7f;
+}
+/*------------------- 내 플레리리스트 모달 -------------------*/
+.modal_myply {
+	position: absolute;
+    top: 170rem;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: #efefef;
+    width: 50rem;
+    height: 42rem;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    opacity : 0;
+    transition: all 0.3s;
+}
+.modal_myply.unstaged {
+	z-index: -1;
+	display: none;
+}
+.modal_myply.opaque {
+	opacity: 1;
+}
+.modal_ply_header {
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+    padding: 1rem 0;
+}
+.modal_ply_header button {
+	border: none;
+    background: transparent;
+    cursor: pointer;
+}
+.modal_ply_ul {
+	background-color: #fff;
+    height: 35rem;
+    overflow: auto;
+    list-style:none;
+}
+/* 스크롤바 설정*/
+.modal_ply_ul::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* 스크롤바 막대 설정*/
+.modal_ply_ul::-webkit-scrollbar-thumb {
+  height: 17%;
+  background-color: rgba(255, 255, 255, 1);
+  /* 스크롤바 둥글게 설정    */
+  border-radius: 10px;
+}
+
+/* 스크롤바 뒷 배경 설정*/
+.modal_ply_ul::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.modal_ply_ul .list {
+    border-bottom: 1px solid gray;
+    padding: 2rem 1rem;
+    transition: all 0.3s;
+}
+.modal_ply_ul .list.selected {
+	background-color: #337ab7cf;
+}
+.modal_ply_ul .list:hover {
+	background-color: #cce8ff;
+}
+.modal_ply_ul .list .tagBtn {
+	background-color: #cce8ff;
+    border: 2px solid #337ab7;
+    border-radius: 0.5rem;
+    padding: 0.2rem 0.4rem;
+}
+.modal_ply_ul .list .playlist-title {
+	padding: 0.5rem;
+    font-size: 1.5rem;
+}
+/*------------------ modal_question --------------------*/
+.modal_question {
+	position: absolute;
+    top: 185rem;
+    left: 50%;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    transition: all 0.3s;
+    opacity: 0;
+    transform: translate(-50%, 30px);
+    width: 45rem;
+    text-align: center;
+}
+.modal_question.unstaged {
+	display: none;
+	z-index: -1;
+}
+.modal_question.opaque {
+	opacity: 1;
+	transform: translate(-50%, 0);
+}
+.modal_question p {
+	font-size: 1.7rem;
+    margin-bottom: 3rem;
+}
+.modal_question .mqBtn {
+    font-size: 1.5rem;
+    width: 5rem;
+    margin: 0 1rem;
+}
 /* ----- progress bar ----- */
 #progress_bar {
 	height: 100px;
@@ -129,7 +266,7 @@ font-family: 'Nanum Myeongjo';
     color:#ffffff;
     margin: auto;
     vertical-align: middle;
-   /* background-image: url(/static/imagefarm/101074948/7jq08lxPGuzxsz0f1zZAJIH4xmwITUMM) */
+   opacity: 0.8;
 }
 #limit-text{
     display: block;
@@ -253,6 +390,7 @@ textarea:focus {outline: none;}
 	margin-right:20px; 
 	background: #addddd; /* 여기 이미지 버튼으로 바꾸기  */
 	color: #fff;
+	opacity: 0.8;
 }
 /* ----- /스타일 선택하기 ----- */
 
