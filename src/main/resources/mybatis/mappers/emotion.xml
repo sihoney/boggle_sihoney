@@ -9,6 +9,8 @@
 		<result column="review_content" property="reviewContent" />
 		<result column="nickname" property="nickname" />
 		<result column="style_name" property="styleName" />
+		<result column="imgurl" property="imgurl" />
+		<result column="videourl" property="videourl" />
 		<result column="emo_no" property="emoNo" />
 		
 		<result column="user_no" property="userNo" />
@@ -37,12 +39,16 @@
 			       nickname,
 			       book_no,
 			       style_name, 
+			       imgurl,
+			       videourl,
 			       emo_no
 			from(select review_content,
 			           review_no,
 			           nickname,
 			           review.book_no,
 			           style_name, 
+			           imgurl,
+			           videourl,
 			           emotion.emo_no
 			    from review, users, style, emotion
 			    where users.user_no = review.user_no
@@ -209,7 +215,9 @@
 		<![CDATA[
 			select review_content,
 			       style_name,
-			       nickname
+			       nickname,
+			       imgurl,
+			       videourl
 			from review, users, style
 			where review.user_no = users.user_no
 			and review.style_no = style.style_no

@@ -39,7 +39,7 @@
             <input class="userNo" type="hidden" name="userNo" value="${sessionScope.authUser.userNo }">
 
 			<!-- progress bar -->
-			<div id="progress_bar" class="clearfix">
+			<div id="progress_bar">
                 <div class="progressbar-wrapper">
                     <ul class="progressbar">
                         <li>책 선택</li>
@@ -141,27 +141,8 @@
             </p>
             <!-- /서평 쓰기 -->
 
-
-            <!-- 이미지 저장 & 공유하기 -->
-            <!-- 
-			<div id="contents" class="clearfix">
-				<div id="download_img">
-					<h1>이미지 저장 / 공유하기 </h1>
-				</div>
-			</div>
-
-            <div class="jumbotron2" data-toggle="modal" data-target="#modal_download_img">
-                <p>저장하기</p>
-            </div>
-            <div class="jumbotron2" data-toggle="modal" data-target="#modal_share_img">
-                <p>공유하기</p>
-            </div>
-            -->
-            <!-- /이미지 저장 & 공유하기 -->
-
-
 			<!-- 플레이리스트에 추가 -->
-			<!-- 
+			<!--  
             <div id="contents" class="clearfix">
 				<div id="add_playlist">
 					<h1>플레이리스트에 추가</h1>
@@ -307,6 +288,9 @@
 				for(var btn of btnlist) {
 					btn.onclick = function(){
 						
+						/* 감정태그 토글 */
+						btnToggle = true
+						
 						/* 하나만 선택 가능 */
 						for(var tag of btnlist) {
 							tag.classList.remove("active")
@@ -363,7 +347,8 @@
 					styleNo = data["styleNo"]
 					bookTitle = data["title"]
 					let totalCnt = data["totalCnt"]
-					
+					let background = data["imgURL"]
+
 					// 1. 책 선택 
 					renderSelectedBook(bookNo, coverURL, bookTitle, author, totalCnt)
 					
@@ -384,10 +369,16 @@
 					let backgroundColor = arr[0]
 					let fontFamily = arr[1]
 					
+					if(background != null) {
+						background = "url(" + urlObj.pathname.substring(0, 12) + "/asset/img/review_card/" + background + ") no-repeat"
+						$("#review_box").css("background", background)						
+					}
+					
+
 					$("#review_box").css("background-color", backgroundColor)
 					$("#review_box>textarea").css("font-family", fontFamily)
-					$("#review_box").css("background", background)
-					
+					$("#review_box").css("background-size", "cover")
+
 					// 5. 진행바
 					$(".progressbar li:nth-child(1)").addClass("active")
 					
@@ -397,6 +388,12 @@
 				}
 			})
 		}
+	})
+	
+	/* 작성 취소 */
+	$("#btn_cancle").on("click", function(){
+		console.log("cancel btn")
+		history.back(-1)
 	})
 	
 	/* 기록하기 */
@@ -422,7 +419,10 @@
 		if(userNo == null || userNo == 0) {
 			alert("로그인 후 이용해 주세요")
 		} 
-		else if($(".progressbar li:nth-child(4)").hasClass("active")) {
+		else if($(".progressbar li:nth-child(4)").hasClass("active") == false) {
+			alert("입력하지 않은 부분이 있습니다")
+		}
+		else {
 			
 			if($(this).text() == "수정하기") {
 				console.log("수정하기")
@@ -440,10 +440,9 @@
 
 					dataType: "json",
 					success: function(data){
-						
-						//location.href.substring(0, 34)
+
 						console.log(location.href.substring(0, 34) + data.redirect)
-						
+
 						location.href = location.href.substring(0, 34) + data.redirect
 						
 					},
@@ -592,6 +591,7 @@
 
 			dataType: "json",
 			success: function(data){
+
 				/* 스타일 버튼 > 화면 렌더 */
 				for(let item of data) {
 					renderStyleBtn(item)	
@@ -620,8 +620,6 @@
 						var fontFamily = $(this).css("font-family")
 						styleNo = $(this).data("styleno")
 
-						console.log(fontFamily)
-						
 						$("#review_box").css("background-color", backgroundColor)
 						$("#review_box").css("background", background)
 						$("#review_textarea").css("font-family", fontFamily)
@@ -642,9 +640,9 @@
 		var font = arr[1]
 
 		if(item.imgurl == null){
-			var str = '<button data-styleNo="'+ item.styleNo +'"class="btn_style btn-outline-secondary" style="background: '+background+' "; font-family: '+ font +'"></button>'	
+			var str = '<button data-styleNo="'+ item.styleNo +'"class="btn_style btn-outline-secondary" style="background: '+background+'; font-family: '+ font +'">폰트</button>'	
 		}else{
-			var str = '<button data-styleNo="'+ item.styleNo +'"class="btn_style btn-outline-secondary" style="background: url(${pageContext.request.contextPath}/asset/img/review_card/'+item.imgurl+') no-repeat; background-size: cover;" font-family: '+ font +'"></button>'
+			var str = '<button data-styleNo="'+ item.styleNo +'"class="btn_style btn-outline-secondary" style="background: url(${pageContext.request.contextPath}/asset/img/review_card/'+item.imgurl+') no-repeat; background-size: cover; font-family: '+ font +'">폰트</button>'
 		}
 		
 		
@@ -652,13 +650,13 @@
 		
 	}
 	
-	function renderEmotionBtn(item) {
+	function renderEmotionBtn(item) { 
 		var str = '<button type="button" class="btn btn-primary" id="'+ item.emoNo +'">'+ item.emoName +'</button>'
 		
 		$("#btn_mood").append(str)
 	}
 	
-	function renderSelectedBook(isbn, imgURL, title, author, totalCnt) { // isbn 넘겨줘야 할 것 같다...?
+	function renderSelectedBook(isbn, imgURL, title, author, totalCnt) {
 		
 		var str = ''
 		str += '<div id="contents" class="clearfix selected-book" data-isbn="'+ isbn +'">'

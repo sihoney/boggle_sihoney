@@ -89,7 +89,7 @@ container
   height: 100vh;
   overflow: hidden;
   position: relative;
-  min-width: 900px;
+  /*min-width: 900px;*/
 }
 
 .slide-container {
@@ -115,6 +115,8 @@ container
   background-repeat: no-repeat;
   /***********************/
   transition: all 0.5s ease-in-out;
+  /***************************/
+  object-fit: cover;
 }
 .dim {
   width: 100vw;
@@ -165,6 +167,16 @@ message modal
 }
 
 /****************** container > slide > review, username, button ****************/
+.video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	opacity: 0.8;
+}
+.contentBox {
+	position: absolute;
+	width: 70%;
+}
 .reviewLink {
 	text-decoration: none;
 	width: 70%;
@@ -175,7 +187,8 @@ message modal
   color: #fff;
   transition: all 0.3s;
   border-radius: 0.3rem;
-  padding: 1rem;
+  padding: 0.5rem;
+  margin-top: 4rem; 
 }
 
 .reviewLink:hover .review{
@@ -183,7 +196,7 @@ message modal
 }
 
 .username {
-  padding: 1.5rem 0;
+  margin: 1.5rem 0 5rem 0;
   color: white;
   cursor: pointer;
 }
@@ -193,7 +206,7 @@ message modal
   padding: 0.5rem;
   border-radius: 0.3rem;
   cursor: pointer;
-  margin: 0 1.5rem;
+  margin: 0.5rem 1.5rem;
   width: 12rem;
   background: #dddddd39;
   color: white;
@@ -656,7 +669,7 @@ i.fa-solid에 position: absolute 을 줘서
 }
 
 .addReviewModal.move {
-	transform: translate(-50%, -70%);
+	transform: translate(-50%, -66%);
 }
 .emotion-select-box.show {
 	transform: translate(-50%, 61%);
@@ -702,7 +715,8 @@ i.fa-solid에 position: absolute 을 줘서
 	color: white;
 }
 .tag:hover {
-	background-color: darkblue;
+	background-color: #2699fb;
+	color:#fff;
 }
 .emotion-select-box .plySubmitBtn {
 	height: 2.5rem;
@@ -723,4 +737,66 @@ i.fa-solid에 position: absolute 을 줘서
 }
 .emotion-select-box ul::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
+}
+
+@media (max-width: 495px) {
+	.mobile_delete {
+		display: none;
+	}	
+	.reviewLink {
+		width: 90%;
+	}
+	.review {
+		font-size: 20px;
+		line-height: 2rem;
+	}
+	.sidebar {
+		width: 100%;
+	}
+	.heartBtn {
+		margin-bottom: 1rem;
+	}
+	.messageModal {
+		width: 90%;
+	}
+	.addReviewModal {
+		width: 90%;
+	}
+	.emotion-select-box {
+		width: 90%;
+	}
+	.addReviewModal .addPly-input {
+		width: 100%;
+	}
+}
+
+@media (max-height: 420px) {
+	.sidebar {
+		overflow: auto;
+	}
+	
+	.review {
+		font-size: 20px;
+    	line-height: 2rem;
+	}
+	
+	.slideBtnContainer button {
+		padding: 0.3rem;
+	}
+	
+	.upDown-container .upBtn {
+		top: 1rem;
+	}
+	
+	.upDown-container .downBtn {
+		bottom: 1rem;
+	}
+	
+	.review-modal-background {
+		overflow: auto;
+	}
+	
+	.addReviewModal .playlist-box {
+		height: 13rem;
+	}
 }

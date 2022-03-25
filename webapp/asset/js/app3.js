@@ -8,14 +8,12 @@ const sideBar = document.querySelector(".sidebar");
 const sidebarToggle = document.querySelector(".fa-bars");
 let navLinks = document.querySelector(".links")
 let sidebarBtn = document.querySelector(".sidebarBtn")
-
 let bgmPrevBtn = document.querySelector(".prevArrow")
 let bgmNextBtn = document.querySelector(".nextArrow")
 let singer = document.querySelector(".singer")
 let songTitle = document.querySelector(".song-title")
 const playBtn = document.querySelector(".playBtn")
 const audioEle = document.querySelector(".audioEle")
-
 let bgmPagination = document.querySelector(".bgm-pagination")
 let randomBtn = document.querySelector(".randomBtn")
 let dim = document.querySelector(".dim")
@@ -24,7 +22,6 @@ const reviewModalBackground = document.querySelector(".review-modal-background")
 const modalCloseBtn = document.querySelector(".modal-closeBtn")
 const addReviewModal = document.querySelector(".addReviewModal")
 const modal = document.querySelector(".messageModal")
-
 const addPlaylistForm = document.querySelector(".addPlaylist")
 const addPlyInput = addPlaylistForm.querySelector(".addPly-input")
 const emotionSelectBox = document.querySelector(".emotion-select-box")
@@ -220,41 +217,18 @@ plySubmitBtn.addEventListener("click", function(e){
 	///////////////////////////
 	let playlistTitle = addPlyInput.value
 	
-	let obj = {
-		userNo : userNo,
-		playlistName : playlistTitle,
-		emoNo: plyEmoNo
+	if(playlistTitle == "") {
+		alert("제목을 입력해주세요")
 	}
-	
-	url = urlPath + "/addNewPlaylist"
-	
-	fetch(url, {
-		method: "POST",
-		headers: {
-			"Content-Type" : "application/json"
-		},
-		body : JSON.stringify(obj)
-	}).then(response => response.json())
-	.then(data => {
+	else {
 		
-		/////////////////////
-		// 화면 업데이트
-		/////////////////////
-
-		/* 화면 플레이리스트 초기화 */
-		document.querySelector(".playlist-box").querySelector("ul").innerHTML = ""
-		document.querySelector(".playlist-list").innerHTML = ""
-		
-		/* 새 플레이리스트 불러오기 */
-		userNo = document.querySelector(".login").getAttribute("data-userNo")
-		reviewNo = slides[slideIndex].getAttribute("data-reviewno")
-		
-		url = urlPath + "/getMyPlaylistModal"
-		
-		let obj = { // userNo, reviewNo
-			userNo: userNo,
-			reviewNo: reviewNo
+		let obj = {
+			userNo : userNo,
+			playlistName : playlistTitle,
+			emoNo: plyEmoNo
 		}
+		
+		url = urlPath + "/addNewPlaylist"
 		
 		fetch(url, {
 			method: "POST",
@@ -262,26 +236,55 @@ plySubmitBtn.addEventListener("click", function(e){
 				"Content-Type" : "application/json"
 			},
 			body : JSON.stringify(obj)
-		})
-		.then(response => response.json())
+		}).then(response => response.json())
 		.then(data => {
 			
-			renderPlaylist(data, "modal")
-			renderPlaylist(data, "sidebar")
+			/////////////////////
+			// 화면 업데이트
+			/////////////////////
+	
+			/* 화면 플레이리스트 초기화 */
+			document.querySelector(".playlist-box").querySelector("ul").innerHTML = ""
+			document.querySelector(".playlist-list").innerHTML = ""
+			
+			/* 새 플레이리스트 불러오기 */
+			userNo = document.querySelector(".login").getAttribute("data-userNo")
+			reviewNo = slides[slideIndex].getAttribute("data-reviewno")
+			
+			url = urlPath + "/getMyPlaylistModal"
+			
+			let obj = { // userNo, reviewNo
+				userNo: userNo,
+				reviewNo: reviewNo
+			}
+			
+			fetch(url, {
+				method: "POST",
+				headers: {
+					"Content-Type" : "application/json"
+				},
+				body : JSON.stringify(obj)
+			})
+			.then(response => response.json())
+			.then(data => {
+				
+				renderPlaylist(data, "modal")
+				renderPlaylist(data, "sidebar")
+			})
+			
+			/* 플리 추가 섹션 안보이도록 */
+			emotionSelectBox.classList.remove("show")
+			addReviewModal.classList.remove("move")
+			
+			/* 감정 태그 초기화 */
+			for(let tag of modalEmoTags) {
+				tag.classList.remove("selected")
+			}
+			
 		})
 		
-		/* 플리 추가 섹션 안보이도록 */
-		emotionSelectBox.classList.remove("show")
-		addReviewModal.classList.remove("move")
-		
-		/* 감정 태그 초기화 */
-		for(let tag of modalEmoTags) {
-			tag.classList.remove("selected")
-		}
-		
-	})
-	
-	addPlyInput.value = null
+		addPlyInput.value = null
+	}
 })
 
 /* 모달 > 감정 태그 버큰 렌더 */
@@ -333,16 +336,15 @@ function renderPlaylist(list, loca) {
 		for(let plybtn of playlistBtns) {
 			
 			plybtn.onclick = function(e){
-				/* 클릭시 색 스타일 */
+
+				// 클릭시 색 스타일 
 				for(let plyBtn of playlistBtns) {
-					playBtn.classList.remove("selected")
+					plyBtn.classList.remove("selected")
 				}
 				this.classList.add("selected")
 				
-				let playlistNo = e.path[1].getAttribute("data-playlistno")
+				let playlistNo = this.getAttribute("data-playlistno")
 
-				console.log("sidebar > playlistNo: " + playlistNo)
-				
 				// 현재 서평 + 음악 초기화
 				slideIndex = 0
 				
@@ -510,6 +512,7 @@ function loadReviewMusicList(no, sort) {
 		
 		reviewList = data.reviewList
 		musicList = data.musicList
+		
 		let musicTotalCnt = musicList.length // 이거 왜 가져오지? musiclist length 하면 될텐데?
 
 		// 먼저 현재 있던 슬라이드들 삭제
@@ -753,32 +756,18 @@ function changeMode(){
 				console.log("audio can play!")
 				audioEle.play()
 			})
-			
-			//musicupdated != musicupdated
+
 		}
 		else {
 			audioEle.play()
 		}
-		
-		/*
-		audioEle.addEventListener("canplaythrough", function(){
-			console.log("audio can play!")
-			audioEle.play()
-		})
-		*/
-		//audioEle.addEventListener("canplay", audioPlay)
-		/*
-		if(canplayToggle == true) {
-			console.log("canplayToggle: " + canplayToggle)
-			audioEle.play()	
-		}
-		*/
+
 		playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>'
-		play = !play;
+		play = true;
 
         autoCarousel()
 
-        autoMode = !autoMode
+        autoMode = true;
     } else {                // 수동 전환 모드
         console.log("auto false")
 
@@ -793,7 +782,7 @@ function changeMode(){
 
 		audioEle.pause()
 		playBtn.innerHTML = '<i class="fa-solid fa-play"></i>'
-		play = !play;
+		play = false;
 
         clearInterval(interval)
 
@@ -801,7 +790,7 @@ function changeMode(){
         sidebarBtn.style.visibility = 'visible'
         autoModeBtn.style.display = 'block'
 
-        autoMode = !autoMode
+        autoMode = false
 
         carousel()
     }
@@ -812,7 +801,12 @@ function autoCarousel(){
     upBtn.style.display = "none";
     downBtn.style.display = "none";
 
-    autoModeBtn.style.display = 'none';
+	if(window.innerWidth < 495 || window.innerHeight < 420) {
+		autoModeBtn.style.display = 'block';
+	} else {
+		autoModeBtn.style.display = 'none';	
+	}
+
     navLinks.style.visibility = 'hidden'
     sidebarBtn.style.visibility = 'hidden'
 
@@ -936,6 +930,26 @@ function render(item) {
     const addBtn = document.createElement("button");
 	const a = document.createElement("a")
 	
+	let contentBox
+	let video
+	
+	if(item.videourl != null) {
+		console.log("video background")
+		
+		video = document.createElement("video")
+		contentBox = document.createElement("div")
+
+		video.classList.add("video")
+		contentBox.classList.add("contentBox")
+		
+		video.src = urlPath.substring(0, 12) + "/asset/img/review_card/" + item.videourl
+		video.setAttribute("muted", "muted")
+		video.setAttribute("autoplay", "autoplay")		
+		video.setAttribute("loop", "loop")
+	} else {
+		slide.style.backgroundColor = color
+	}
+	
 	if(logStatus === "login") {
 
 		a.setAttribute("href", urlPath.substring(0, 12) + "/bookdetail?bookNo=" + item.bookNo + "&userNo=" + userNo)		
@@ -953,7 +967,6 @@ function render(item) {
 
     review.textContent = item.reviewContent;
     username.textContent = item.nickname;
-    slide.style.backgroundColor = color
 	review.style.fontFamily = fontFamily;
     addBtn.innerHTML = '플레이리스트<i class="fa-solid fa-plus"></i>';
 	slide.setAttribute("data-reviewNo", item.reviewNo)
@@ -1066,10 +1079,14 @@ function render(item) {
 	}
 	
     btnContainer.append(heartBtn, addBtn);
-	
 	a.append(review)
-    slide.append(a, username, btnContainer);
-    
+	
+	if(item.videourl != null) {
+		contentBox.append(a, username, btnContainer)
+		slide.append(video, contentBox)
+	} else {
+		slide.append(a, username, btnContainer);
+	}	
     slideContainer.append(slide)
     container.append(slideContainer);
 }

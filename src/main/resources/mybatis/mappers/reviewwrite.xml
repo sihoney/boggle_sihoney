@@ -17,6 +17,7 @@
         <result property="styleName" column="STYLE_NAME" />
         <result property="emoNo" column="EMO_NO" />
         <result property="reviewContent" column="REVIEW_CONTENT" />
+        <result property="imgURL" column="IMGURL" />
     </resultMap> 
     
 	<select id="getReviewTotalCnt" parameterType="long" resultType="int">
@@ -125,6 +126,7 @@
 			       review.book_no,
 			       style.style_no,
 			       style_name,
+			       imgurl,
 			       book_url,
 			       cover_url,
 			       book_title,

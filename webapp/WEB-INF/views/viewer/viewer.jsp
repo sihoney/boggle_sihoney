@@ -21,6 +21,21 @@
 			box-sizing: border-box;
 		}
 		
+		body {
+			margin: 0;
+		}
+		
+		video {
+			opacity: 0.8;
+			width: 100vw;
+			height: 100vh;
+			object-fit: cover;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: -1;
+		}
+		
 		.container {
 			height: 100vh;
 		    width: 100vw;
@@ -28,6 +43,16 @@
 		    flex-direction: column;
 		    justify-content: center;
 		    align-items: center;
+		}
+		
+		.container_after {
+			  width: 100%;
+			  height: 100%;
+			  position: absolute;
+			  top: 0;
+			  left: 0;
+			  z-index: -1;
+			  opacity: 0.5;
 		}
 		
 		.reviewContent {
@@ -45,14 +70,25 @@
 	</style>
 </head>
 <body>
-	<div class="container" style="background-color: ${fn:split(info.styleName, ',')[0]}">
-		<p class="reviewContent" style="font-family: ${fn:split(info.styleName, ',')[1]}">
-			${info.reviewContent }
-		<p>
-		<p class="nickname">${info.nickname }</p>
-	</div>
+	<c:choose>
+		<c:when test="${not empty info.videourl}">
+			<div class="container">
+				<p class="reviewContent" style="font-family: ${fn:split(info.styleName, ',')[1]}">
+					${info.reviewContent }
+				</p>
+				<p class="nickname">${info.nickname }</p>
+			</div>
+			<video src="${pageContext.request.contextPath }/asset/img/review_card/${info.videourl }" autoplay loop muted></video>
+		</c:when>
+		
+		<c:when test="${info.imgurl eq null}">
+			<div class="container" style="background-color: ${fn:split(info.styleName, ',')[0]}">
+				<p class="reviewContent" style="font-family: ${fn:split(info.styleName, ',')[1]}">
+					${info.reviewContent }
+				</p>
+				<p class="nickname">${info.nickname }</p>
+			</div>		
+		</c:when>
+	</c:choose>
 </body>
-<script>
-	
-</script>
 </html>

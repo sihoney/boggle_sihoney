@@ -111,9 +111,7 @@ public class MainController {
 	@RequestMapping("/playlist")
 	public String playlist(@RequestParam(value="playlistNo") int playlistNo) {
 		System.out.println("MainController > playlist");
-		
-		//model.addAttribute("playlistNo", playlistNo);
-		
+
 		return "main/main";
 	}
 }

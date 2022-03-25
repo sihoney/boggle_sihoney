@@ -32,7 +32,7 @@
                 
                 	<c:choose>
                 		<c:when test="${sessionScope.authUser eq null}">
-                			<li>
+                			<li class="mobile_delete">
                 				<a href="${pageContext.request.contextPath}/user/joinForm">회원가입</a>
                 			</li>
                    			<li class="login" data-logStatus="logout">
@@ -44,7 +44,7 @@
                 		</c:when>
                 		<c:otherwise>
                 			<!-- 로그인 됐을때 화면 -->
-		                    <li><a href="${pageContext.request.contextPath}/review/write">기록하기</a></li>
+		                    <li class="mobile_delete"><a href="${pageContext.request.contextPath}/review/write">기록하기</a></li>
 		                    <li class="login" data-logStatus="login" data-userNo="${sessionScope.authUser.userNo }">
 		                    	<a href="${pageContext.request.contextPath}/${authUser.nickname}">
 		                    		<div class="userImg">
@@ -197,7 +197,7 @@
             </div>
             
             <form class="addPlaylist">
-            	<input class="addPly-input" type="text" placeholder="새 플레이리스트 추가" name="playlistTitle" required>
+            	<input autocomplete='off' class="addPly-input" type="text" placeholder="새 플레이리스트 추가" name="playlistTitle" required>
             </form>
         </div>
         <div class="emotion-select-box">

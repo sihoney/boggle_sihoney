@@ -17,6 +17,7 @@
 */
 /* ----- progress bar ----- */
 #progress_bar {
+	height: 100px;
 	position: sticky;
     top: 0;
     background-color: rgb(255 255 255 / 80%);
@@ -251,6 +252,7 @@ textarea:focus {outline: none;}
 	line-height:30px;
 	margin-right:20px; 
 	background: #addddd; /* 여기 이미지 버튼으로 바꾸기  */
+	color: #fff;
 }
 /* ----- /스타일 선택하기 ----- */
 
@@ -367,11 +369,10 @@ textarea:focus {outline: none;}
 
 /* -------progress bar 연습-------- */
 .progressbar-wrapper {
-    background: #fff;
     width: 100%;
     padding-top: 10px;
     padding-bottom: 5px;
-    float: center;
+/*    float: center;*/
 }
 
 .progressbar li {
@@ -441,6 +442,8 @@ textarea:focus {outline: none;}
 
 .progressbar {
     counter-reset: step;
+    width: 135rem;
+    margin: 0 auto;
 }
 
 .progressbar li:before {

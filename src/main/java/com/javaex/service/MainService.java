@@ -58,9 +58,7 @@ public class MainService {
 		if(userNo != null) { // 로그인 상태라면 하트 카운트 값 받기
 			
 			System.out.println("reviewList.size(): " + reviewList.size());
-			
-			System.out.println( reviewList.size() != 0);
-			
+
 			if(reviewList.size() != 0) {
 				for(Map<String, Object> reviewVo : reviewList) { // reviewVo, userNo
 

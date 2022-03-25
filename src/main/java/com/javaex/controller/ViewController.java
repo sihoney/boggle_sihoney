@@ -23,7 +23,7 @@ public class ViewController {
 		System.out.println("ViewController > viewer()");
 		
 		Map<String, Object> info = viewService.getReviewInfo(reviewNo);
-		
+
 		model.addAttribute("info", info);
 		
 		return "viewer/viewer";
