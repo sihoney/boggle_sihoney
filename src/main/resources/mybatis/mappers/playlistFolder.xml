@@ -88,7 +88,7 @@
 			                    where b.book_no = r.book_no
 			                    and r.style_no = s.style_no
 			                    and s.emo_no = e.emo_no
-			                    and lc.review_no = r.review_no
+			                    and lc.review_no(+) = r.review_no
 			                    and r.playlist_no = #{playlistNo}
 			                    order by r.playlist_review_date desc) nt) rnt) lst
 			where rn >= #{startRnum}

@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.UserService;
 import com.javaex.vo.UserVo;
@@ -80,6 +84,29 @@ public class UserController {
 		
 		return "user/joinForm";
 	}
+	
+	/*가입*/
+	@RequestMapping(value="/join", method={RequestMethod.GET, RequestMethod.POST})
+	public String join(@ModelAttribute UserVo userVo) {
+		System.out.println("UserController > join");
+		
+		System.out.println(userVo);
+		//파라미터값 넣은 userVo 넣어주는 insert 메소드 이용
+		userService.insert(userVo);	
+		
+		return "user/loginForm";
+	}
+	
+	//닉네임 체크
+	@RequestMapping(value="/nicknameCheck")
+    @ResponseBody
+    public int nicknameCheck(@RequestParam("nickname") String nickname){
+        
+    	System.out.println("사용하고싶은 닉네임 : "+nickname);
+        int cnt = userService.nickcheck(nickname);
+        
+        return cnt;
+    }
 	
 	
 	/* 회원정보수정 */

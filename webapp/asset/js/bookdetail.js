@@ -44,6 +44,8 @@ function fetchLatest(){
 	console.log('최신순 데이터 요청');
 	console.log(bookNo);
 	
+	$('#latest-order').attr('class','txt-b');
+	
     $.ajax({
         url :"bookdetail/reviewLatest",
         type : "get",
@@ -55,9 +57,13 @@ function fetchLatest(){
         /*성공시 처리해야될 코드 작성*/
 			console.log(latestList);
 			
-			//객체 리스트
-			for(var i = 0; i<latestList.length; i++){
-				rendering(latestList[i]);
+			if(latestList.length == 0){
+				emptyReview();
+			}else{
+				//객체 리스트
+				for(var i = 0; i<latestList.length; i++){
+					rendering(latestList[i]);
+				}
 			}
 
         },
@@ -86,9 +92,13 @@ function fetchBest(){
         /*성공시 처리해야될 코드 작성*/
 			console.log(bestList);
 			
-			//객체 리스트
-			for(var i = 0; i<bestList.length; i++){
-				rendering(bestList[i]);
+			if(bestList.length == 0){
+				emptyReview();
+			}else{
+				//객체 리스트
+				for(var i = 0; i<bestList.length; i++){
+					rendering(bestList[i]);
+				}
 			}
 
         },
@@ -132,6 +142,20 @@ function rendering(reviewList){
 	str += ' 			</ul> ';
 	str += ' 		</div> ';	
 	str += '	</div> ';
+	
+	
+	$('#reviewlistVo').append(str);
+	
+}
+
+function emptyReview(){
+	
+	console.log('등록된 서평이 없습니다');
+	
+	var str = '';
+	
+	str += ' <div class="jumbotron"> ';
+	str += ' 	<h3>등록된 서평이 없습니다 &#128531; </h3> ';
 	str += ' </div> ';
 	
 	$('#reviewlistVo').append(str);

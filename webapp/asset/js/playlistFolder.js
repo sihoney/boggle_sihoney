@@ -5,8 +5,8 @@
 var crtPage = 1;
 var reviewChkBoxArr = [];
 
-var playlistNo = $('#platlistLike').data('playlistno');
-var userNo = $('#platlistLike').data('userno');
+var playlistNo = $('#playlistLike').data('playlistno');
+var userNo = $('#playlistLike').data('userno');
 
 //===============[플레이리스트 모달 ready/close]==========================
 /*모달 ready*/
@@ -65,7 +65,7 @@ function fetchList(){
 	
 	$.ajax({
 		url : "modalListPage",
-		type : "post",
+		type : "get",
 		data : {crtPage: crtPage},
 		
 		dataType : "json",
@@ -184,15 +184,15 @@ function playlistLike(){
 	
 	console.log('로딩시 좋아요 체크');
 	
-	var playlistNo = $('#platlistLike').data('playlistno');
-	var userNo = $('#platlistLike').data('userno');
+	var playlistNo = $('#playlistLike').data('playlistno');
+	var userNo = $('#playlistLike').data('userno');
 	
 	console.log('플리'+playlistNo);
 	console.log('유저'+userNo);
 	
 	$.ajax({
 		url : "checkLike",
-		type : "post",
+		type : "get",
 		data : {playlistNo: playlistNo,
 				userNo: userNo
 				},
@@ -223,8 +223,8 @@ function playlistUnlike(){
 	
 	console.log('좋아요 취소');
 	
-	var playlistNo = $('#platlistLike').data('playlistno');
-	var userNo = $('#platlistLike').data('userno');
+	var playlistNo = $('#playlistLike').data('playlistno');
+	var userNo = $('#playlistLike').data('userno');
 	
 	console.log('플리'+playlistNo);
 	console.log('유저'+userNo);
@@ -243,9 +243,9 @@ function playlistUnlike(){
 
 			//좋아요(화면 출력)
 			if(unlike == 1){
-				$('#playlistLike').attr('class','glyphicon glyphicon-heart');
+				$('#likeview').attr('class','glyphicon glyphicon-heart-empty');
 			}else{
-				$('#playlistLike').attr('class','glyphicon glyphicon-heart-empty');
+				$('#likeview').attr('class','glyphicon glyphicon-heart')
 			}
 		
 		},
@@ -280,10 +280,10 @@ function addplaylistLike(){
 			console.log(typeof like);
 
 			//좋아요(화면 출력)
-			if(like == 0){
-				$('#playlistLike').attr('class','glyphicon glyphicon-heart');
+			if(like == 1){
+				$('#likeview').attr('class','glyphicon glyphicon-heart')
 			}else{
-				$('#playlistLike').attr('class','glyphicon glyphicon-heart-empty');
+				$('#likeview').attr('class','glyphicon glyphicon-heart-empty');
 			}
 		
 		},
@@ -431,17 +431,16 @@ $('#reviewSearch').keydown(function(keyNum){
 })
 
 //플리 좋아요 버튼
-$('#platlistLike').on('click','#likeview', function(){
-	
-	console.log('플레이리스트 좋아요 클릭');
-	
-	if(($('.glyphicon-heart'))){
-		addplaylistLike();
-	}else{
-		playlistUnlike();
-	}
-	
+
+$('#playlistLike').on('click','.glyphicon-heart',function(){
+	console.log('플레이리스트 좋아요-> 취소 클릭');
+	playlistUnlike();
 })
+
+$('#playlistLike').on('click','.glyphicon-heart-empty',function(){
+	console.log('플레이리스트 좋아요-> 추가 클릭');
+	addplaylistLike();
+})	
 
 //서평 삭제 버튼
 $('#reviewDelete').on('click', function(){

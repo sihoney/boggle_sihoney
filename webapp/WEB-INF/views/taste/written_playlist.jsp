@@ -38,9 +38,7 @@
 						<li role="presentation" class="active"><a
 							href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
 						<!--세션 아이디와 사이트아이디 같을때-->
-						<li role="presentation"><a
-							href="${pageContext.request.contextPath}/analyze">통계</a></li>
-					</ul>
+						</ul>
 				</c:when>
 				<c:otherwise>
 					<!-- 세션아이디랑 다를때는 사이트주소의 아이디와 같은 유저의 데이터들 불러오기-->
@@ -66,24 +64,32 @@
 			<div class="columns">
 				<c:forEach items="${makelistclick}" var="vo" varStatus ="status">
 				<c:set var="no" value="${status.index %3 }" />
-					<div class="clearfix columns_${no }">
-						<div class="text-name">
-						<div onclick="location.href='${pageContext.request.contextPath}/main/playlist?playlistNo=${vo.playlistNo }'"> 
-							<p id="name">${vo.playlistName}<span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span></p>
-						</div>
-						</div>
+			<div class="clearfix columns_${no }">
+							<div class="text-name"
+								onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&userNo=${vo.userNo }'">
+								<!-- 1~14까지 감정으로색깔 -->
 
-						<div>
-							<span class="glyphicon glyphicon-heart" id="desc"
+
+								
+								<div onclick="location.href='${pageContext.request.contextPath}/main/playlist?playlistNo=${vo.playlistNo }';"style="cursor:pointer;">
+									<p id="name">${vo.playlistName}</p>
+
+								</div>
+							</div>
+
+							<div>
+							<!-- <span class="glyphicon glyphicon-heart" id="desc"
 								aria-hidden="true"></span> <span id="desc">16.2k</span> <span
-								class="glyphicon glyphicon-user" id="desc" aria-hidden="true"></span>
-							<span id="desc">${vo.nickname }</span>
+								class="glyphicon glyphicon-user" id="desc" aria-hidden="true"></span> -->
+							<div id="desc">
+									<a href="${pageContext.request.contextPath}/${vo.nickname }">${vo.nickname}</a>
+								</div>
 						</div>
-						</div>
-						</c:forEach>
 
 					</div>
+				</c:forEach>
 			</div>
+		</div>
 
 
 			<!-- footer -->

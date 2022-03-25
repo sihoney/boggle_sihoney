@@ -65,8 +65,6 @@
 					<div class="footer-ridi-header">
 						<ul class="info_contact">
 							 <li class="request"><a href="${pageContext.request.contextPath}/help/writeForm">1:1 문의</a></li>
-							 <li class="request"><a href="">로그아웃</a></li>
-		
 						</ul>
 					</div>
 					<div class="footer-ridi-info-contents">
@@ -84,7 +82,7 @@
 								<li><a class="link_youth" href="${pageContext.request.contextPath}/help/youth" target="_blank">청소년보호정책</a></li>
 							</ul>
 							<p class="info_copyright">
-								<a href="">&copy;2022 BOGGLE</a>
+								<a href="">&copy;2022 BOGGLE BOOKS</a>
 							</p>
 						</div>
 					</div>

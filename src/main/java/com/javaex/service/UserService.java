@@ -31,5 +31,20 @@ public class UserService {
 		
 		return otherUser;
 	}
-
+	
+	//파라미터값 넣은 userVo 인서트
+	public void insert(UserVo userVo) {
+		System.out.println("UserService.insert()");
+		
+		userDao.insert(userVo);
+	}
+	
+	//닉네임체크
+	public int nickcheck(String nickname) {
+		System.out.println("UserService.nickcheck()");
+		
+		int cnt = userDao.nickcheck(nickname);
+		
+		return cnt;
+	}
 }

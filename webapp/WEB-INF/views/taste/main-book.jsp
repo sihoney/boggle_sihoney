@@ -33,9 +33,6 @@
 						<li role="presentation"><a
 							href="${pageContext.request.contextPath}/${nickname}/like_playlist">플레이리스트</a></li>
 						<!--세션 아이디와 사이트아이디 같을때-->
-						<li role="presentation"><a
-							href="${pageContext.request.contextPath}/analyze">통계</a></li>
-					</ul>
 				</c:when>
 				<c:otherwise>
 					<!-- 세션아이디랑 다를때는 사이트주소의 아이디와 같은 유저의 데이터들 불러오기-->
@@ -89,7 +86,7 @@
 						<c:forEach items="${bmList}" var="vo">
 					<article>
 						<div class="img">
-							<a class="a" href="${pageContext.request.contextPath}/bookdetail?bookNo=${vo.bookNo}&userNo=${vo.userNo}"> <img class="cover" src="${vo.cover_url }" alt="image" />
+							<a class="a" href="${pageContext.request.contextPath}/bookdetail?bookNo=${vo.bookNo}&userNo=${vo.userNo}"> <img class="cover" src="${vo.cover_url}" alt="image" />
 							</a>
 						</div>
 						<div class="book-detail">
@@ -105,11 +102,11 @@
 			</div>
 			<!-- gradient -->
 			<!--gallery-->
+			<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 		
 	</div>
 	<%-- 		</c:forEach>
  --%>
 	<!-- footer -->
-	<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 </body>
 </html>

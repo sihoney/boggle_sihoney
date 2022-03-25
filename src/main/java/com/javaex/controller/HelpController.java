@@ -120,16 +120,6 @@ public class HelpController {
 	}
 	
 	
-	
-	///////////  how to use ///////////////
-	@RequestMapping("/howtouse")
-	public String howtouse() {
-		System.out.println("howtouse");
-		
-		return "help/howtouse";
-	}
-	
-	
 	///////////  footer에 들어가는 정보 ///////////////
 	@RequestMapping("/legal")
 	public String legal() {

@@ -38,5 +38,22 @@
 			]]>
 
 	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="join">
+		<![CDATA[
+			insert into users
+			values(SEQ_USER_NO.nextval, #{userName}, #{nickname}, #{email}, #{password}, null, sysdate)
+		]]>
+	</insert>
+	
+	<!-- nickcheck -->
+	<select id="nickcheck" resultType="int" parameterType="String">
+		<![CDATA[
+			SELECT COUNT(nickname) FROM users WHERE nickname = #{nickname}
+			]]>
+	</select>
+	
+	
 
 </mapper>
