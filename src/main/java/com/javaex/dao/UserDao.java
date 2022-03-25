@@ -32,5 +32,22 @@ public class UserDao {
 		
 		return otherUser;
 	}
+	
+	
+	//파라미터값 넣은 userVo 인서트
+	public void insert(UserVo userVo) {
+		System.out.println("UserDao.insert()");
+		
+		sqlSession.insert("user.join", userVo);
+	}
+	
+	//닉네임체크
+	public int nickcheck(String nickname) {
+		System.out.println("UserService.nickcheck()");
+		
+		int cnt = sqlSession.selectOne("user.nickcheck",nickname);
+		
+		return cnt;
+	}
 
 }

@@ -41,7 +41,15 @@
     vertical-align: top;
     margin-top: 2px;
 }
-
+.nickname_already{
+	display:none;
+}
+.email_already{
+	display:none;
+}
+.email_check{
+	display:none;
+}
 
 /* -------------form--------------- */
 ::placeholder { 
