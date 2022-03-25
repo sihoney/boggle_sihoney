@@ -1,5 +1,6 @@
 package com.javaex.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -102,10 +103,15 @@ public class MainController {
 	
 	@ResponseBody
 	@RequestMapping("/toggleReviewLike")	
-	public int toggleReviewLike(@RequestBody ReviewVo reviewVo) { // reviewNo, userNo
+	public Map<String, String> toggleReviewLike(@RequestBody ReviewVo reviewVo) { // reviewNo, userNo
 		System.out.println("MainController > toggleReviewLike");
 		
-		return mainService.toggleReviewLike(reviewVo);
+		String result = mainService.toggleReviewLike(reviewVo);
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("result", result);
+		
+		return map;
 	}
 
 	@RequestMapping("/playlist")

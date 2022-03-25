@@ -232,6 +232,8 @@
 	var coverURL
 	var genreNo
 
+	let nickname
+	
 	/* 화면 로드되기 전, 감정태그 출력 */
 	$("document").ready(function(){
 		
@@ -398,6 +400,9 @@
 
 					// 5. 진행바
 					$(".progressbar li:nth-child(1)").addClass("active")
+					$(".progressbar li:nth-child(2)").addClass("active")
+					$(".progressbar li:nth-child(3)").addClass("active")
+					$(".progressbar li:nth-child(4)").addClass("active")
 					
 				},
 				error:  function(XHR, status, error){
@@ -426,8 +431,6 @@
 		location.href = location.href.substring(0, 34) + nickname
 	})
 	
-	let nickname
-	let reviewNo
 	
 	/* 저장하시겠습니까 모달 - 예, 아니오 버튼 클릭 */
 	$(".mqBtn").on("click", function(){
@@ -500,17 +503,20 @@
 					//console.log(location.href.substring(0, 34) + data.redirect)
 					
 					if(mode == "수정하기") {
-						location.href = location.href.substring(0, 34) + data.redirect
-					} else { // 저장하기
-						
+						//location.href = location.href.substring(0, 34) + data.redirect
 						nickname = data.redirect
-						reviewNo = data.reviewNo
+						reviewNo = reviewNoQuery
 						
-						/* 플리에 저장할거냐고 질문 모달 */
-						$(".modal_question").removeClass("unstaged")
-						$(".modal_question").addClass("opaque")	
+						$(".modal_question>p").text("수정되었습니다. 플레이리스트에 추가하시겠습니까?")
+						
+					} else { // 저장하기
+						nickname = data.redirect
+						reviewNo = data.reviewNo // 저장한 서평 넘버
 					}
-
+					
+					// 플리에 저장할거냐고 질문 모달 
+					$(".modal_question").removeClass("unstaged")
+					$(".modal_question").addClass("opaque")	
 				},
 				error:  function(XHR, status, error){
 					console.log(status + " : " + error);

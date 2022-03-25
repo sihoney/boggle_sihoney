@@ -158,9 +158,9 @@ public class MainService {
 		
 	}
 	
-	public int toggleReviewLike(ReviewVo reviewVo) {
+	public String toggleReviewLike(ReviewVo reviewVo) {
 		
-		int result = 0;
+		String result;
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("reviewNo", reviewVo.getReviewNo());
@@ -169,9 +169,11 @@ public class MainService {
 		int alreadyLiked = emoDao.alreadyLiked(map);
 		
 		if(alreadyLiked == 0) { // 좋아요
-			result = emoDao.likeReview(reviewVo);
+			emoDao.likeReview(reviewVo);
+			result = "좋아요";
 		} else { // 좋아요 취소
-			result = emoDao.cancelLike(reviewVo);
+			emoDao.cancelLike(reviewVo);
+			result = "좋아요 취소";
 		}
 		
 		return result;

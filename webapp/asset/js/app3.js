@@ -41,7 +41,6 @@ let play = false
 let clickCnt = 0
 
 let autoMode = false
-let heartToggle = false
 
 let musicList
 let emoTags
@@ -459,7 +458,7 @@ randomBtn.onclick = function() {
 	slideIndex = 0
 	
 	/* random number 생성 --> random emoNo 생성 */
-	let randomEmoNo = Math.ceil(Math.random() * emoTags.length)
+	//let randomEmoNo = Math.ceil(Math.random() * emoTags.length)
 	
 	// 감정 태그 checked 다 제거
 	for(let tag of emoTags) {
@@ -475,7 +474,7 @@ randomBtn.onclick = function() {
         this.removeEventListener("transitionend", arguments.callee)
     })
 	
-	loadReviewMusicList(randomEmoNo, "emotion")
+	loadReviewMusicList(null, "emotion")
 	//afterLoadAutoMode()
 	
 	// 자동 전환 carousel, 음악 재생
@@ -1002,8 +1001,12 @@ function render(item) {
 			heartBtn.innerHTML = '좋아요<i class="fa-solid fa-heart"></i>';
 		}
 		
-	    heartBtn.onclick = function(e){
-		
+	    heartBtn.onclick = function(){
+			
+			console.log("좋아요 클릭")
+			////////////////////
+			// db
+			////////////////////
 			reviewNo = slides[slideIndex].getAttribute("data-reviewNo")
 			userNo = document.querySelector(".login").getAttribute("data-userNo")
 
@@ -1022,17 +1025,15 @@ function render(item) {
 				body: JSON.stringify(obj)
 			}).then(response => response.json())
 			.then(data => {
-				console.log(data + "건 | 좋아요 토글 성공")
+				////////////////////
+				// 화면 
+				////////////////////
+		        if(data.result == "좋아요") {
+		            heartBtn.innerHTML = '좋아요<i class="fa-solid fa-heart"></i>'
+		        } else {
+		            heartBtn.innerHTML = '좋아요<i class="fa-regular fa-heart"></i>'
+		        }
 			})
-			
-	        if(heartToggle === false) {
-	            heartBtn.innerHTML = '좋아요<i class="fa-solid fa-heart"></i>'
-	        } else {
-	            heartBtn.innerHTML = '좋아요<i class="fa-regular fa-heart"></i>'
-	        }
-	
-	        heartToggle = !heartToggle
-			
 	    }
 		
 		/* 서평 플리에 추가 모달 버튼 (reviewNo, playlistNo, userNo)*/
