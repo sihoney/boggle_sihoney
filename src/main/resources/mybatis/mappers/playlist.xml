@@ -77,7 +77,8 @@
                 			u.nickname
         			from users u, playlist p
         			where u.user_no = p.user_no
-        			and p.user_no = #{userNo}) p
+        			and p.user_no = #{userNo}
+        			ORDER BY p.playlist_no desc) p
 			where rownum <= 5
 		]]>
 
