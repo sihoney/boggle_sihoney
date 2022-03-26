@@ -111,7 +111,7 @@
 			       ot.book_title bookTitle,
 			       ot.review_no reviewNo,
 			       ot.review_content reviewContent,
-			       to_char(ot.review_date, 'yyyy-mm-dd') reviewDate,
+			       to_char(ot.review_date, 'yyyy/mm/dd') reviewDate,
 			       ot.style_no styleNo,
 			       ot.emo_name emoName,
 			       ot.user_no userNo,
