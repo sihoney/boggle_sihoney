@@ -114,7 +114,7 @@ function getSearch(){
 			$('#addModal-pagination').html('');
 			
 			if(searchResult == ''){
-				$('#reviewAll').html('<li class="txt-center">[검색 결과가 없습니다] </li>')
+				emptyResult();
 			}else{
 				//검색 결과 리스팅
 				for(var i =0; i<searchResult.length; i++){
@@ -377,6 +377,23 @@ function renderPaging(playlistMap,crtPage){
 	}
 	
 	$('#addModal-pagination').html(str);
+	
+}
+
+//검색 결과 없음
+function emptyResult(){
+	
+	console.log('검색된 서평이 없습니다');
+	
+	var str = '';
+	
+	str += ' <li> ';
+	str += ' 	<div class="review-card"> ';
+	str += ' 		<h3 class="empty-box">검색된 서평이 없습니다 &#128531; </h3> ';
+	str += ' 	</div> ';
+	str += ' </li> ';
+	
+	$('#reviewAll').append(str);
 	
 }
 
