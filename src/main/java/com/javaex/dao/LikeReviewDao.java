@@ -83,9 +83,9 @@ public class LikeReviewDao {
 
 	// 서평 삭제
 	// 리뷰넘버정보를 주면 해당 리뷰 삭제
-	public void delete(int reviewNo) {
+	public void delete(LikeReviewVo delete) {
 
-		sqlSession.delete("likereview.delete", reviewNo);
+		sqlSession.delete("likereview.delete", delete);
 	}
 
 	// 유저넘버 입력시 해당 유저의 총 서평갯수
