@@ -39,7 +39,7 @@
 		                	<!-- 로그인 버튼 눌렀을 때 일치하지 않을 경우 -->
 		                	<p class="font_blue_2 txt_ms">*이메일 주소와 비밀번호를 확인해주세요</p>
 		                	<input id="email"  class="login_input" type="text" name="email" value="" placeholder="이메일 주소를 입력해 주세요">
-	                		<input id="password" class="login_input" type="text" name="password" value="" placeholder="비밀번호를 입력해 주세요">
+	                		<input id="password" class="login_input" type="password" name="password" value="" placeholder="비밀번호를 입력해 주세요">
 		                </c:when>
 		                <c:otherwise>
 		                	<input id="email"  class="login_input" type="text" name="email" value="" placeholder="이메일 주소를 입력해 주세요">
