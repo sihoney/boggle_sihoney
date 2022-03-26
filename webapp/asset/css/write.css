@@ -22,9 +22,9 @@
 /*--------------- msg modal --------------------*/
 .msg_modal {
 	position: absolute;
-    top: 165rem;
+    top: 25rem;
     left: 50%;
-    background-color: #cce8ff;
+    background-color: #5993c5;
     width: 20rem;
     height: 3rem;
     border-radius: 0.5rem;
@@ -45,14 +45,14 @@
     text-align: center;
     line-height: 3rem;
     font-weight: bold;
-    color: #807f7f;
+    color: #fff;
 }
 /*------------------- 내 플레리리스트 모달 -------------------*/
 .modal_myply {
-	position: absolute;
-    top: 170rem;
+	position: fixed;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, -50%);
     background-color: #efefef;
     width: 50rem;
     height: 42rem;

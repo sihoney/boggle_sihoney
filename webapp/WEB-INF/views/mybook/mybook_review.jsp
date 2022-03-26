@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/mybook_review.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/modal.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/source.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/write.css">
 <script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
 <script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
 </head>
@@ -169,11 +170,27 @@
 			</div>
 		</div>
 		<!--content-->
+		
 		<!-- footer -->
 		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 		<!-- modal창 -->
 		<c:import url="/WEB-INF/views/include/modal.jsp"></c:import>
 				
+	</div>
+	
+	<div class="msg_modal unstaged">
+		<p>저장되었습니다</p>
+	</div>
+	
+	<div class="modal_myply unstaged">
+		<div class="modal_ply_header">
+			<p>My 플레이리스트</p>
+			<button class="modal_myply_btn">내 서평 보러가기</button>
+		</div>
+		<div class="modal_ply_content">
+			<ul class="modal_ply_ul">
+			</ul>
+		</div>
 	</div>
 </body>
 <script type="text/javascript">
@@ -219,6 +236,7 @@
 		popularList();
 	});
 	
+	let reviewNo
 	
 	//리스트 그리기(최신순)
 	function fetchList() {
@@ -239,12 +257,108 @@
 					
 					//중복체크 후 
 				}
+				
+				/* 더보기 플리추가 클릭했을 때 이벤트 */
+				$(".add_pli").on("click", function(){
+					reviewNo = $(this).data("reviewno")
+					let userNo = $(this).data("userno")
+
+					// 내 플리 불러오기 
+					fetchMyPli(reviewNo, userNo)
+					
+					// 모달 보임 
+					$(".modal_myply").removeClass("unstaged")
+					$(".modal_myply").addClass("opaque")
+				})
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
 			}
 		});
 	};
+	
+	/* modal_add_playlist - closeBtn */
+	$(".modal_myply_btn").on("click", function(){
+		
+		$(".modal_myply").removeClass("opaque")
+		
+		$(".modal_myply").one("transitionend", function(){
+
+			$(".modal_myply").addClass("unstaged")
+		})
+
+	})
+	
+	function addReviewToPly(playlistNo, reviewNo) {
+		$.ajax({
+			url: "${pageContext.request.contextPath}/review/addReviewToPly?playlistNo=" + playlistNo + "&reviewNo=" + reviewNo,
+			method: "post",
+			dataType: "json",
+			success: function(){
+				console.log("플리에 저장했습니다.")
+
+				$(".msg_modal").removeClass("unstaged")
+				$(".msg_modal").addClass("opaque")
+				
+				setTimeout(function(){
+					$(".msg_modal").removeClass("opaque")
+					
+					$(".msg_modal").one("transitionend", function(){
+						$(".msg_modal").addClass("unstaged")
+					})
+				}, 2000)
+				
+
+			},
+			error:  function(XHR, status, error){
+				console.log(status + " : " + error);
+			}
+		})
+	}
+	
+	function renderMyPli(list) {
+
+		for(let item of list) {
+			str = ""
+			str += '<li class="list" data-playlistNo="'+ item.playlistNo +'">'
+			str += '	<div class="info-container">'
+			str += '		<button class="tagBtn">'+ item.emoName +'</button>'
+			str += '		<div class="playlist-title">' + item.playlistName + '</div>'
+			str += '		<div class="username">' + item.nickname + '</div>'
+			str += '	</div>'
+			str += '</li>'
+			
+			$(".modal_ply_ul").append(str)
+		}
+		
+		$(".modal_ply_ul").on("click", ".list", function(){
+			let playlistno = $(this).data("playlistno")
+
+			addReviewToPly(playlistno, reviewNo)
+			
+			$(this).addClass("selected")
+		})		
+	}
+	
+	function fetchMyPli(reviewNo, userNo){
+		let url = "${pageContext.request.contextPath}/review/getMyPlaylist?userNo=" + userNo
+		
+		$.ajax({
+			url: url,
+			type: "post",
+			dataType: "json",
+			success: function(data){
+				console.log(data)
+				
+				renderMyPli(data)
+				
+			},
+			error:  function(XHR, status, error){
+				console.log(status + " : " + error);
+			}
+		})	
+		
+	}	
 	
 	
 	//리스트 그리기(인기순)
@@ -497,7 +611,7 @@
 		str += ' 			<div class="dropup"> ';
 		str += ' 				<a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 더보기 <span class="caret"></span></a> ';
 		str += ' 				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2"> ';
-		str += ' 					<li role="presentation"><a id="add_pli" role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li> ';
+		str += ' 					<li role="presentation"><a class="add_pli" data-userno="'+ mybookVo.userNo +'" data-reviewno="'+ mybookVo.reviewNo +'" id="add_pli" role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li> ';
 		str += ' 					<li role="presentation" class="divider"></li> ';
 		str += ' 					<li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li> ';
 		str += ' 					<li role="presentation" class="divider"></li> ';
