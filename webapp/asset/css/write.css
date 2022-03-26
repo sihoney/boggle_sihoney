@@ -21,8 +21,8 @@
 */
 /*--------------- msg modal --------------------*/
 .msg_modal {
-	position: absolute;
-    top: 25rem;
+	position: fixed;
+    top: 20%;
     left: 50%;
     background-color: #5993c5;
     width: 20rem;

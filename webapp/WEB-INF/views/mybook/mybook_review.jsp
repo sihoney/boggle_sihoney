@@ -195,6 +195,8 @@
 </body>
 <script type="text/javascript">
 	
+	let reviewNo
+	
 	//리스트(로딩되기전에 요청)
 	$(document).ready(function() {
 		
@@ -236,7 +238,17 @@
 		popularList();
 	});
 	
-	let reviewNo
+	/* modal_add_playlist - closeBtn */
+	$(".modal_myply_btn").on("click", function(){
+		
+		$(".modal_myply").removeClass("opaque")
+		
+		$(".modal_myply").one("transitionend", function(){
+
+			$(".modal_myply").addClass("unstaged")
+		})
+
+	})
 	
 	//리스트 그리기(최신순)
 	function fetchList() {
@@ -277,17 +289,43 @@
 		});
 	};
 	
-	/* modal_add_playlist - closeBtn */
-	$(".modal_myply_btn").on("click", function(){
-		
-		$(".modal_myply").removeClass("opaque")
-		
-		$(".modal_myply").one("transitionend", function(){
+	//리스트 그리기(인기순)
+	function popularList() {
 
-			$(".modal_myply").addClass("unstaged")
-		})
+		$.ajax({
+			url : "${pageContext.request.contextPath }/${nickname}/list?sort=popular",
+			type : "get",
 
-	})
+			dataType : "json",
+			success : function(popularlist) {
+				/*성공시 처리해야될 코드 작성*/
+				console.log(popularlist);
+
+				//객체 리스트 돌리기(화면 출력)
+				for (var i = 0; i < popularlist.length; i++) {
+					//그리기
+					render(popularlist[i], "down");
+				}
+				
+				/* 더보기 플리추가 클릭했을 때 이벤트 */
+				$(".add_pli").on("click", function(){
+					reviewNo = $(this).data("reviewno")
+					let userNo = $(this).data("userno")
+
+					// 내 플리 불러오기 
+					fetchMyPli(reviewNo, userNo)
+					
+					// 모달 보임 
+					$(".modal_myply").removeClass("unstaged")
+					$(".modal_myply").addClass("opaque")
+				})
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	};
+	
 	
 	function addReviewToPly(playlistNo, reviewNo) {
 		$.ajax({
@@ -335,8 +373,6 @@
 			let playlistno = $(this).data("playlistno")
 
 			addReviewToPly(playlistno, reviewNo)
-			
-			$(this).addClass("selected")
 		})		
 	}
 	
@@ -360,30 +396,6 @@
 		
 	}	
 	
-	
-	//리스트 그리기(인기순)
-	function popularList() {
-
-		$.ajax({
-			url : "${pageContext.request.contextPath }/${nickname}/list?sort=popular",
-			type : "get",
-
-			dataType : "json",
-			success : function(popularlist) {
-				/*성공시 처리해야될 코드 작성*/
-				console.log(popularlist);
-
-				//객체 리스트 돌리기(화면 출력)
-				for (var i = 0; i < popularlist.length; i++) {
-					//그리기
-					render(popularlist[i], "down");
-				}
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
-		});
-	};
 	
 	//감정태그(카테고리)메뉴를 클릭했을시 이벤트
 	$(".dropdown-menu").on("click", "li", function() {
@@ -420,6 +432,19 @@
 					//그리기
 					render(emoList[i], "down");
 				}
+				
+				/* 더보기 플리추가 클릭했을 때 이벤트 */
+				$(".add_pli").on("click", function(){
+					reviewNo = $(this).data("reviewno")
+					let userNo = $(this).data("userno")
+
+					// 내 플리 불러오기 
+					fetchMyPli(reviewNo, userNo)
+					
+					// 모달 보임 
+					$(".modal_myply").removeClass("unstaged")
+					$(".modal_myply").addClass("opaque")
+				})
 				
 			},
 			//로그인하지 않은경우(모달창띄워주기)
