@@ -173,5 +173,14 @@
 		]]>
 	</select>
 
-	
+	<update id="modifyReview" parameterType="map">
+		<![CDATA[
+			update review
+			set review_content = #{reviewContent},
+			    style_no = #{styleNo},
+			    book_no = #{bookNo}
+			where review_no = #{reviewNo} 
+			and user_no = #{userNo}
+		]]>
+	</update>
 </mapper>
