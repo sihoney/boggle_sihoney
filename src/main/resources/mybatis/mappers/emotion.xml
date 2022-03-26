@@ -143,7 +143,7 @@
 			        where review.style_no = style.style_no
 			        and style.emo_no = emotion.emo_no
 			        group by emotion.emo_no)
-			    where totalCnt > 3
+			    where totalCnt > 0
 			    order by dbms_random.value)
 			where rownum = 1
 		]]>

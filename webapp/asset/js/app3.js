@@ -566,7 +566,7 @@ function afterLoadAutoMode(){
 function renderEmoTag(arr) {
 
 	for(let item of arr) { /* 서평 개수가 3개 이상인 경우만 렌더 */
-		if(item.totalReviewCnt > 2) {
+		if(item.totalReviewCnt > 0) {
 			let btn = document.createElement("button")
 			btn.classList.add("emoTag")
 			btn.id = item.emoNo

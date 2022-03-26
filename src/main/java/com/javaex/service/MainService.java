@@ -49,7 +49,7 @@ public class MainService {
 			
 			//int randomEmoNo = (int) Math.ceil(Math.random() * totalEmotagCnt);
 			
-			System.out.println("***random emotion number: " + totalEmotagCnt);
+			//System.out.println("***random emotion number: " + totalEmotagCnt);
 			
 			reviewList = emoDao.getReviewListByEmo(totalEmotagCnt);
 			musicList = emoDao.getMusicListByEmo(totalEmotagCnt);

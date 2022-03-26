@@ -65,7 +65,7 @@ public class MainDao {
 	public int getTotalEmotagCnt() {
 		int result = sqlSession.selectOne("emotion.getTotalEmoTagCnt");
 		
-		System.out.println("***total emotag count: " + result);
+		System.out.println("***random emotag number: " + result);
 		
 		return result;
 	}
