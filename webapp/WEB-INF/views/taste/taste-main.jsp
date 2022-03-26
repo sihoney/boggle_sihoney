@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/all_css.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/taste-main.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/write.css">
 <link rel="stylesheet" href="/bookproject/asset/css/modal.css">
 <script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
 <script src="${pageContext.request.contextPath}/asset/bootstrap/js/bootstrap.js"></script>
@@ -103,7 +104,7 @@
 									<a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 더보기 <span class="caret"></span>
 									</a>
 									<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-										<li role="presentation"><a id="add_pli" role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
+										<li role="presentation"><a class="add_pli" data-userno="${vo.userNo }" data-reviewno="${vo.reviewNo }" id="add_pli" role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
 										<li role="presentation" class="divider"></li>
 										<li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
 										<li role="presentation" class="divider"></li>
@@ -223,77 +224,177 @@
 		<c:import url="/WEB-INF/views/include/modal.jsp"></c:import>
 	</div>
 	<!--wrap-->
+	<div class="msg_modal unstaged">
+		<p>저장되었습니다</p>
+	</div>
+	<div class="modal_myply unstaged">
+		<div class="modal_ply_header">
+			<p>My 플레이리스트</p>
+			<button class="modal_myply_btn">내 서평 보러가기</button>
+		</div>
+		<div class="modal_ply_content">
+			<ul class="modal_ply_ul">
+			</ul>
+		</div>
+	</div>
 </body>
 <script type="text/javascript">
 
-	//로딩되기전에 하트모양 요청
-	$(document).ready(function(){
-		
-		$('#heart').attr('class','like glyphicon glyphicon-heart');
-		
-	});
-	
+	let reviewNo
 
+	//로딩되기전에 하트모양 요청
+	$(document).ready(function() {
+
+		$('#heart').attr('class', 'like glyphicon glyphicon-heart');
+
+	});
 
 	//좋아요 버튼을 클릭했을때(이벤트)
-	$("#content1").on("click",".like",function() {
+	$("#content1").on(
+			"click",
+			".like",
+			function() {
 
-		//데이터수집
-		var $this = $(this);
+				//데이터수집
+				var $this = $(this);
 
-		var no = $this.data("reviewno");
-		//var likecnt = parseInt($(this).next().data("likecnt"));
-		var likecnt = $this.next().data("likecnt");
+				var no = $this.data("reviewno");
+				//var likecnt = parseInt($(this).next().data("likecnt"));
+				var likecnt = $this.next().data("likecnt");
 
-		//출력(리뷰넘버찍어보기), json 으로 보내주기
-		console.log("서평넘버 : " + no + ", 좋아요 수 : " + likecnt);
+				//출력(리뷰넘버찍어보기), json 으로 보내주기
+				console.log("서평넘버 : " + no + ", 좋아요 수 : " + likecnt);
 
-		var clickReviewVo = {
-			reviewNo : no
-		};
+				var clickReviewVo = {
+					reviewNo : no
+				};
 
-		//요청 : json 방식
+				//요청 : json 방식
+				$.ajax({
+					//url로 요청할게!    
+					url : "${pageContext.request.contextPath }/like",
+					type : "post",
+					contentType : "application/json", //보낼때 json으로 보낼게
+					data : JSON.stringify(clickReviewVo),
+					//주소뒤에 갈 데이터 전송방식, //자바 스크립트 객체를 json형식으로 변경
+					dataType : "json", //json> javascript
+
+					success : function(likeok) {
+
+						//좋아요인경우
+						if (likeok.likecheck == 0) {
+
+							console.log("좋아요");
+							console.log(likeok.likecnt);
+
+							//하트모양변경
+							$this.attr('class',
+									'like glyphicon glyphicon-heart');
+
+							//카운트 +1
+							$this.next().html(likeok.likecnt + 1);
+
+						} else {
+
+							console.log("좋아요취소");
+
+							$this.attr('class',
+									'like glyphicon glyphicon-heart-empty');
+
+							$this.next().html(likeok.likecnt - 1);
+						}
+
+					},
+					//로그인하지 않은경우(모달창띄워주기)
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				});
+
+			});
+	
+	/* 더보기 플리추가 클릭했을 때 이벤트 */
+	$(".add_pli").on("click", function(){
+		reviewNo = $(this).data("reviewno")
+		let userNo = $(this).data("userno")
+
+		// 내 플리 불러오기 
+		fetchMyPli(reviewNo, userNo)
+		
+		// 모달 보임 
+		$(".modal_myply").removeClass("unstaged")
+		$(".modal_myply").addClass("opaque")
+	})
+
+	
+	function addReviewToPly(playlistNo, reviewNo) {
 		$.ajax({
-			//url로 요청할게!    
-			url : "${pageContext.request.contextPath }/like",
-			type : "post",
-			contentType : "application/json", //보낼때 json으로 보낼게
-			data : JSON.stringify(clickReviewVo),
-			//주소뒤에 갈 데이터 전송방식, //자바 스크립트 객체를 json형식으로 변경
-			dataType : "json", //json> javascript
+			url: "${pageContext.request.contextPath}/review/addReviewToPly?playlistNo=" + playlistNo + "&reviewNo=" + reviewNo,
+			method: "post",
+			dataType: "json",
+			success: function(){
+				console.log("플리에 저장했습니다.")
 
-			success : function(likeok) {
-
-				//좋아요인경우
-				if (likeok.likecheck == 0) {
-
-					console.log("좋아요");
-					console.log(likeok.likecnt);
-
-					//하트모양변경
-					$this.attr('class','like glyphicon glyphicon-heart');
-
-					//카운트 +1
-					$this.next().html(likeok.likecnt + 1);
-
-				} else {
-
-					console.log("좋아요취소");
-
-					$this.attr('class','like glyphicon glyphicon-heart-empty');
-
-					$this.next().html(likeok.likecnt - 1);
-				}
+				$(".msg_modal").removeClass("unstaged")
+				$(".msg_modal").addClass("opaque")
+				
+				setTimeout(function(){
+					$(".msg_modal").removeClass("opaque")
+					
+					$(".msg_modal").one("transitionend", function(){
+						$(".msg_modal").addClass("unstaged")
+					})
+				}, 2000)
+				
 
 			},
-			//로그인하지 않은경우(모달창띄워주기)
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
+			error:  function(XHR, status, error){
+				console.log(status + " : " + error);
 			}
-		});
-
-	});
+		})
+	}
 	
+	function renderMyPli(list) {
+
+		for(let item of list) {
+			str = ""
+			str += '<li class="list" data-playlistNo="'+ item.playlistNo +'">'
+			str += '	<div class="info-container">'
+			str += '		<button class="tagBtn">'+ item.emoName +'</button>'
+			str += '		<div class="playlist-title">' + item.playlistName + '</div>'
+			str += '		<div class="username">' + item.nickname + '</div>'
+			str += '	</div>'
+			str += '</li>'
+			
+			$(".modal_ply_ul").append(str)
+		}
+		
+		$(".modal_ply_ul").on("click", ".list", function(){
+			let playlistno = $(this).data("playlistno")
+
+			addReviewToPly(playlistno, reviewNo)
+		})		
+	}
+	
+	function fetchMyPli(reviewNo, userNo){
+		let url = "${pageContext.request.contextPath}/review/getMyPlaylist?userNo=" + userNo
+		
+		$.ajax({
+			url: url,
+			type: "post",
+			dataType: "json",
+			success: function(data){
+				console.log(data)
+				
+				renderMyPli(data)
+				
+			},
+			error:  function(XHR, status, error){
+				console.log(status + " : " + error);
+			}
+		})	
+		
+	}	
 	
 	//삭제 버튼을 눌렀을때
 	$("#content1").on("click", ".delete", function() {
@@ -301,15 +402,14 @@
 		//데이터수집
 		var $this = $(this);
 		var no = $this.data("reviewno");
-		
+
 		//출력
-		console.log("삭제하려는서평 : "+no);
-		
+		console.log("삭제하려는서평 : " + no);
+
 		var clickReviewVo = {
-				reviewNo : no
-			};
-		
-		
+			reviewNo : no
+		};
+
 		//요청 : json 방식
 		$.ajax({
 			//url로 요청할게!    
@@ -319,17 +419,17 @@
 			data : JSON.stringify(clickReviewVo),
 			//주소뒤에 갈 데이터 전송방식, //자바 스크립트 객체를 json형식으로 변경
 			dataType : "json", //json> javascript
-			
+
 			success : function(checkuser) {
-				if(checkuser == 1){
+				if (checkuser == 1) {
 					//해당 서평 삭제(화면변화)
-					$("#r"+no).remove();	
+					$("#r" + no).remove();
 					//삭제알림  
 					console.log("리뷰삭제")
 					alert('서평이 삭제되었습니다! :-)');
 					window.location.reload()
-		
-				}else{
+
+				} else {
 					//삭제실패알림  
 					console.log("리뷰삭제실패")
 					alert('잘못된 접근입니다! :-/');
@@ -338,11 +438,10 @@
 			},
 			//로그인하지 않은경우(모달창띄워주기)
 			error : function(XHR, status, error) {
-			   console.error(status + " : " + error);
+				console.error(status + " : " + error);
 			}
-		});		
+		});
 	});
-	
 </script>
 <script src="${pageContext.request.contextPath}/asset/js/more.js"></script>
 </html>
