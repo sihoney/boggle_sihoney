@@ -81,7 +81,7 @@
 								</p>
 							</div>
 							<!-- 작성자아이디와 세션아이디가 동일할 시에만 보이게 -->
-							< 	<div class="right">
+							 	<div class="right">
 						<c:if test="${result eq 'sameUser'}">
 							<a
 								href="${pageContext.request.contextPath}/review/write?reviewNo=${vo.reviewNo}">수정</a>
