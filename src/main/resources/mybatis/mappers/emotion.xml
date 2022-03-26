@@ -36,7 +36,7 @@
 			                where review.style_no = style.style_no
 			                and style.emo_no = emotion.emo_no
 			                group by emo_name) ct
-			where et.emo_name = ct.emo_name
+			where et.emo_name = ct.emo_name(+)
 		]]>
 	</select>
 
