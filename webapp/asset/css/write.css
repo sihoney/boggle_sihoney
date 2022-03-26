@@ -127,8 +127,8 @@
 }
 /*------------------ modal_question --------------------*/
 .modal_question {
-	position: absolute;
-    top: 185rem;
+	position: fixed;
+    top: 50%;
     left: 50%;
     background-color: white;
     padding: 2rem;

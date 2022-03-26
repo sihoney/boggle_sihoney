@@ -163,7 +163,7 @@
 				<button class="no mqBtn">아니오</button>
 			</div>
 			
-			<div class="msg_modal unstaged">
+			<div class="msg_modal unstaged" style="top: 15%">
 				<p>저장되었습니다</p>
 			</div>
 			

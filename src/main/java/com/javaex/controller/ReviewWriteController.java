@@ -23,7 +23,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaex.dao.MainDao;
 import com.javaex.dao.ReviewWriteDao;
-import com.javaex.service.MainService;
 import com.javaex.service.ReviewWriteService;
 import com.javaex.util.HttpUtil;
 import com.javaex.vo.PlaylistVo;
@@ -38,8 +37,6 @@ public class ReviewWriteController {
 	ReviewWriteService reviewWriteService;
 	@Autowired
 	ReviewWriteDao reviewWriteDao;
-	@Autowired
-	MainService mainService;
 	@Autowired
 	MainDao mainDao;
 	
@@ -210,12 +207,15 @@ public class ReviewWriteController {
 		return resultMap;
 	}
 	
+	/* 서평쓰기 (서평 플레이리스트에 추가 모달), 내 서재, 남서재, 상세페이지, 취향저격 홈 */
 	@ResponseBody
 	@RequestMapping("/getMyPlaylist")
-	public List<PlaylistVo> getMyPlaylist(@RequestParam(value="userNo")int userNo) {
+	public List<PlaylistVo> getMyPlaylist(HttpSession session) {
 		System.out.println("ReviewWriterController > getMyPlaylist");
 
-		return mainService.getMyPlaylist(userNo);
+		int userNo = ((UserVo) session.getAttribute("authUser")).getUserNo();
+
+		return mainDao.getMyPlaylist(userNo);
 	}
 	
 	@ResponseBody
