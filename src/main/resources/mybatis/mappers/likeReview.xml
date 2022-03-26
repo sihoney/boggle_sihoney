@@ -288,6 +288,8 @@ from (select    ru.review_like_date reviewLikeDate,
 	
 	
 	
+	
+	
 
 	<!-- 서평 정보 -->
 	<!--<select id="getLikeReviewVo" parameterType="int" resultType="com.javaex.vo.ReviewVo"> <![CDATA[ select review_content reviewContent, nickname, review_date reviewDate, style_no styleNo, book_no bookNo, u.user_no userNo from review r , users u where r.user_no = u.user_no and u.user_no = 2 ]]> </select> -->
