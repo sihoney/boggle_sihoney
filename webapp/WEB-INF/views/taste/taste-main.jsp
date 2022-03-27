@@ -220,8 +220,8 @@
 		</div>
 		<!-- footer -->
 		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
-		<!-- modal창 -->
-		<c:import url="/WEB-INF/views/include/modal.jsp"></c:import>
+		<!-- modal창 
+		<c:import url="/WEB-INF/views/include/modal.jsp"></c:import>-->
 	</div>
 	<!--wrap-->
 	<div class="msg_modal unstaged">
