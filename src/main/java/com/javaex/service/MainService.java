@@ -19,54 +19,53 @@ public class MainService {
 	@Autowired
 	MainDao emoDao;
 	
+	// 감정 태그 목록
 	public List<Map<String, Object>> getEmotion(){
-		System.out.println("MainService > getEmotion()");
+		System.out.println("MainService.getEmotion()");
 		
 		return emoDao.getEmotion();
 	}
 	
-	public Map<String, Object> getReviewListByEmo(Integer userNo, Integer emoNo, Integer playlistNo) {
+	//서평+음악 리스트
+	public Map<String, Object> getReviewList(Integer userNo, 
+												  Integer emoNo, 
+												  Integer playlistNo) {
 		System.out.println("MainService.getReviewList()");
 
 		List<Map<String, Object>> reviewList = new ArrayList<Map<String, Object>>();
 		List<MusicVo> musicList = new ArrayList<MusicVo>();
 		
 		if(emoNo != null) {
-			System.out.println("list sort by emotion");
+			System.out.println("리스트 : 감정 태그 분류");
 			
 			reviewList = emoDao.getReviewListByEmo(emoNo);
 			musicList = emoDao.getMusicListByEmo(emoNo);
 		}
 		else if(playlistNo != null) {
-			System.out.println("list sort by playlist");
+			System.out.println("리스트 : 플레이리스트");
 			
 			reviewList = emoDao.getReviewListByPly(playlistNo);
 			musicList = emoDao.getMusicListByPly(playlistNo);
 		} else { 	// emoNo, playlistNo 둘 다 null인 경우 (userNo 존재 여부 상관없이)
-			System.out.println("default list sort by random");
+			System.out.println("리스트 : 랜덤");
 			
 			int totalEmotagCnt = emoDao.getTotalEmotagCnt();
-			
-			//int randomEmoNo = (int) Math.ceil(Math.random() * totalEmotagCnt);
-			
-			//System.out.println("***random emotion number: " + totalEmotagCnt);
 			
 			reviewList = emoDao.getReviewListByEmo(totalEmotagCnt);
 			musicList = emoDao.getMusicListByEmo(totalEmotagCnt);
 		}
 
+		System.out.println("서평 총 수: " + reviewList.size());
+		
 		if(userNo != null) { // 로그인 상태라면 하트 카운트 값 받기
 			
-			System.out.println("서평 총 수: " + reviewList.size());
-
 			if(reviewList.size() != 0) {
+				
 				for(Map<String, Object> reviewVo : reviewList) { // reviewVo, userNo
 
 					reviewVo.put("userNo", userNo);
 				
 					int result = emoDao.alreadyLiked(reviewVo);
-					
-					System.out.println("좋아요 개수: " + result);
 					
 					reviewVo.put("alreadyLikedCnt", result);
 				}
@@ -80,6 +79,7 @@ public class MainService {
 		return map;
 	}
 	
+	//사이드바>내가 만든 플리 + 좋아요한 플리
 	public List<PlaylistVo> getMyPlaylist(int userNo) {
 		System.out.println("MainService.getMyPlaylist()");
 		
@@ -95,24 +95,16 @@ public class MainService {
 		return myPlaylist;
 	}
 	
+	//모달 > 내가 만든 플리 목록
 	public List<Map<String, Object>> getMyPlaylistModal(ReviewVo reviewVo) { // userNo, reviewNo
 		System.out.println("MainService.getMyPlaylistModal()");
 		
 		// 리스트 받기
 		List<PlaylistVo> myPlaylist1 = emoDao.getMyPlaylist(reviewVo.getUserNo()); // playlistNo, playlistName
-		List<PlaylistVo> myPlaylist2 = emoDao.getMyPlaylistTwo(reviewVo.getUserNo());
-		
-		List<PlaylistVo> myPlaylist = new ArrayList<>();
-		myPlaylist.addAll(myPlaylist1);
-		myPlaylist.addAll(myPlaylist2);
-		
-		System.out.println("모달 > 플레이리스트: " + myPlaylist);
 		
 		List<Map<String, Object>> modalPlaylist = new ArrayList<Map<String, Object>>();
 		
-		// 전에 저장했는지 여부 확인
-		for(PlaylistVo pvo : myPlaylist) {
-			
+		for(PlaylistVo pvo : myPlaylist1) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			
 			map.put("playlistNo", pvo.getPlaylistNo());
@@ -124,20 +116,21 @@ public class MainService {
 			int alreadyAdded = emoDao.alreadyAdded(map);
 
 			map.put("cnt", alreadyAdded);
-
-			modalPlaylist.add(map);
 			
+			modalPlaylist.add(map);	
 		}
 		
 		return modalPlaylist;
 	}
 	
+	//모달 > 새 플리 추가
 	public int addNewPlaylist(PlaylistVo pvo) {
 		System.out.println("MainService > addNewPlaylist");
 		
 		return emoDao.addNewPlaylist(pvo);
 	}
 	
+	//모달 > 플리에 서평 추가&취소
 	public Integer toggleReviewToPly(Map<String, Object> map) {
 		
 		Integer result = null;
@@ -158,6 +151,7 @@ public class MainService {
 		
 	}
 	
+	//서평 좋아요&취소
 	public String toggleReviewLike(ReviewVo reviewVo) {
 		
 		String result;

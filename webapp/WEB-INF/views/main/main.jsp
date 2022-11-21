@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>     
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,7 +108,14 @@
         <div class="tags">
             <h2 class="subheading">감정 태그</h2>
             <div class="tag-box">
+            
+            
                 <!-- <button class="emoTag">행복</button> -->
+                <c:forEach var="emoVo" items="${emoList }" varStatus="status">
+                	<button id="${emoVo.emoNo }" class="emoTag">${emoVo.emoName }</button>
+                </c:forEach>
+                
+                
             </div>
         </div>
         <div class="randomBtn">
@@ -164,11 +171,17 @@
                 		</c:when>
                 		<c:otherwise>
 		                    <!-- 
-		                    <li>퇴근길에 보면 힘이 나는 플리</li>
-		                    <li>우울할 때 정신차리고 갓생살기</li>
-		                    <li>남친이 빡치게 하면 보기</li>
-		                    <li>용기뿜뿜 명언 한구절</li> 
-		                    -->         		
+		                    <li data-playlistno="30" class="playlistBtn">
+		                    	<p>나른나른한 요즘 날씨에 틀어놓기 좋은 음악</p>
+		                    </li>
+		                    -->  
+		                    
+		                    <c:forEach var="playlistVo" items="${myPlaylist }">
+		                   		<li data-playlistno="${playlistVo.playlistNo }" class="playlistBtn">
+		                    		<p>${playlistVo.playlistName }</p>
+		                    	</li>
+		                    </c:forEach>  
+		                         		
                 		</c:otherwise>
                 	</c:choose>
                 </ul>
@@ -212,6 +225,13 @@
         			<div class="tag" data-emoNo="">감사한</div>
         		</li>
 				-->
+				
+                <c:forEach var="emoVo" items="${emoList }" varStatus="status">
+                	<li>
+                		<div class="tag" data-emoNo="${emoVo.emoNo }">${emoVo.emoName }</div>
+                	</li>
+                </c:forEach>
+                
         	</ul>
         	<button class="plySubmitBtn" type="submit">등 록</button>
         </div>

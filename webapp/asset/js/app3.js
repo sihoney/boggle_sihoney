@@ -51,112 +51,98 @@ let reviewNo
 let plyEmoNo
 let reviewList
 
-/* 화면 로드 후 첫 화면 (감정버튼, 서평리스트, 음악리스트 + [로그인] 나의 플레이리스트) */
+/* 화면 로드 후 첫 화면 
+- 감정버튼
+- 서평리스트 + 음악리스트 
+- [로그인] 나의 플레이리스트
+*/
+
 window.addEventListener("DOMContentLoaded", function(){
 	
 	/************************************
-	 디폴트 랜덤 리스트 + 음악 리스트 불러와서 출력
+	 "서평 리스트 + 음악 리스트"
 	*************************************/
 	const urlObj = new URL(location.href)
 	const urlParams = urlObj.searchParams
 	const playlistNo = urlParams.get("playlistNo")
 
+	const projectName = urlObj.pathname.split("/")[1]
+	urlPath = "/" + projectName + "/main"
+	
+	
+
 	if(playlistNo !== null) {
-		urlPath = urlObj.pathname.substring(0, 17)
-		
 		loadReviewMusicList(playlistNo, "playlist")
 	}
 	else {
-		urlPath = urlObj.pathname
-
 		loadReviewMusicList(null, "emotion")
 	}
 
-	/****************************************
-	********* 감정 태그 출력 & 이벤트 추가하기 *******
-	*****************************************/
-	url = urlPath + "/getemotion"
+	/**********
+	"감정 태그"
+	***********/
+	
+	// 1. 사이드바 
+	emoTags = document.querySelectorAll(".emoTag")
+	
+	for(let emoTag of emoTags) {
+		
+		emoTag.onclick = function() {
 
-	fetch(url)
-	.then(response => response.json())
-	.then(data => {
-		//////////////////////
-		// modal 감정 태그
-		//////////////////////
-		renderModalEmoTag(data)
-		
-		/* modal 감정 태그 이벤트 추가 */
-		modalEmoTags = document.querySelectorAll(".tag")
-		
-		for(let emoTag of modalEmoTags) {
-			emoTag.onclick = function(){
-				
-				for(let tag of modalEmoTags) {
-					tag.classList.remove("selected")
-				}
-				emoTag.classList.add("selected")
-				
-				//plyEmoNo
-				plyEmoNo = this.getAttribute("data-emono")
+			slideIndex = 0
+
+			for(let tag of emoTags) {
+				tag.classList.remove("checked")
 			}
+			emoTag.classList.add("checked")
+			
+			// 사이드 바 닫힘
+		    sideBar.classList.remove("show-sidebar");
+		    dim.classList.remove("show-dim")
+		
+		    dim.addEventListener("transitionend", function(){
+		        this.classList.toggle("unstaged")
+		        this.removeEventListener("transitionend", arguments.callee)
+		    })
+			// 감정태그에 해당하는 서평, 음악 리스트 불러오기 + 자동 전환 & 음악 재생
+			loadReviewMusicList(emoTag.id, "emotion")
+			afterLoadAutoMode()
+			
+			window.addEventListener("keydown", enterEventHandler)
+			
+			emoTag.blur()
+			slideContainer.click()
 		}
-		
-		//////////////////////
-		// sidebar 감정 태그
-		//////////////////////
-		renderEmoTag(data)
-		
-		/* 감정 태그 이벤트 리스너 추가 */
-		emoTags = document.querySelectorAll(".emoTag")
-		
-		for(let emoTag of emoTags) {
+	}
+	
+	// 2. 모달 
+	modalEmoTags = document.querySelectorAll(".tag")
+	
+	for(let emoTag of modalEmoTags) {
+		emoTag.onclick = function(){
 			
-			emoTag.onclick = function() {
-
-				slideIndex = 0
-
-				for(let tag of emoTags) {
-					tag.classList.remove("checked")
-				}
-				emoTag.classList.add("checked")
-				
-				// 사이드 바 닫힘
-			    sideBar.classList.remove("show-sidebar");
-			    dim.classList.remove("show-dim")
-			
-			    dim.addEventListener("transitionend", function(){
-			        this.classList.toggle("unstaged")
-			        this.removeEventListener("transitionend", arguments.callee)
-			    })
-				// 감정태그에 해당하는 서평, 음악 리스트 불러오기 + 자동 전환 & 음악 재생
-				loadReviewMusicList(emoTag.id, "emotion")
-				afterLoadAutoMode()
-				
-				window.addEventListener("keydown", enterEventHandler)
-				
-				emoTag.blur()
-				slideContainer.click()
+			for(let tag of modalEmoTags) {
+				tag.classList.remove("selected")
 			}
-		}				
-	})
+			emoTag.classList.add("selected")
+			
+			//plyEmoNo
+			plyEmoNo = this.getAttribute("data-emono")
+		}
+	}
+	
 		
 	/***************************
 	 사이드바 > 마이 플레이리스트 출력 
-	****************************/	
+	****************************/
+	
 	if(logStatus === "login") {
 		
-		url = urlPath + "/getMyPlaylist?userNo=" + userNo
-	
-		fetch(url)
-		.then(response => response.json())
-		.then(data => {
-			
-			renderPlaylist(data, "sidebar")
-		})
-	}		
+		renderPlaylist(null, "sidebar")
+	}	
 })
 
-/* 슬라이드 keyup, keydown */
+/* keyup, keydown */
 window.addEventListener("keydown", function(e) {
     if(e.key == 'ArrowUp') {
 		if(slideIndex == 0) {
@@ -176,7 +162,7 @@ window.addEventListener("keydown", function(e) {
 })
 
 
-/* 슬라이드 위아래 버튼 */
+/* 슬라이드 위아래 화살표 버튼 */
 upBtn.addEventListener("click", function(){
 	
 	if(slideIndex == 0) {
@@ -193,7 +179,7 @@ downBtn.addEventListener("click", function(){
     carousel();
 })
 
-/* 슬라이드 Space 이벤트리스너 추가 */
+/* 스페이스 바 이벤터 추가, 슬라이드 재생&중지 */
 window.addEventListener("keydown", enterEventHandler)
 
 function enterEventHandler(e) {
@@ -202,18 +188,16 @@ function enterEventHandler(e) {
     }
 }
 
+// 모달 > 새 플리 생성 인풋 클릭 -> 추가모달 나오게 하기 
 addPlyInput.onclick = function() {
 	emotionSelectBox.classList.add("show")
 	addReviewModal.classList.add("move")
 }
 
-/* 모달 > 새 플레이리스트 submit */
+// 모달 > 새 플리 생성
 plySubmitBtn.addEventListener("click", function(e){
 	e.preventDefault()
-	
-	///////////////////////////
-	// 새 플레이리스트 db 추가
-	///////////////////////////
+
 	let playlistTitle = addPlyInput.value
 	
 	if(playlistTitle == "") {
@@ -227,9 +211,7 @@ plySubmitBtn.addEventListener("click", function(e){
 			emoNo: plyEmoNo
 		}
 		
-		url = urlPath + "/addNewPlaylist"
-		
-		fetch(url, {
+		fetch(urlPath + "/addNewPlaylist", {
 			method: "POST",
 			headers: {
 				"Content-Type" : "application/json"
@@ -237,11 +219,7 @@ plySubmitBtn.addEventListener("click", function(e){
 			body : JSON.stringify(obj)
 		}).then(response => response.json())
 		.then(data => {
-			
-			/////////////////////
-			// 화면 업데이트
-			/////////////////////
-	
+
 			/* 화면 플레이리스트 초기화 */
 			document.querySelector(".playlist-box").querySelector("ul").innerHTML = ""
 			document.querySelector(".playlist-list").innerHTML = ""
@@ -286,47 +264,69 @@ plySubmitBtn.addEventListener("click", function(e){
 	}
 })
 
-/* 모달 > 감정 태그 버큰 렌더 */
-function renderModalEmoTag(data) {
+// 모달 닫기 버튼
+modalCloseBtn.onclick = function(){
+    modalBackground.classList.remove("show-modal")
+
+	/* 모달 하단 집어넣기 */
+	emotionSelectBox.classList.remove("show")
+	addReviewModal.classList.remove("move")
 	
-	for(let emo of data) {
-		const li = document.createElement("li")
-		const div = document.createElement("div")
-		
-		div.classList.add("tag")
-		div.textContent = emo.emoName
-		div.setAttribute("data-emoNo", emo.emoNo)
-		
-		li.append(div)
-		
-		emotionSelectUl.append(li)
+	/* 감정 태그 초기화 */
+	for(let tag of modalEmoTags) {
+		tag.classList.remove("selected")
+	}
+	
+	/* 삭제한 enter key event 리스너 다시 더하기 */
+	window.addEventListener("keydown", enterEventHandler)
+	
+	/* input 값 초기화 */
+	addPlyInput.value = null;
+	
+	/* 다시 자동 재생 */
+	if(autoMode == true) {
+		changeMode()
 	}
 }
 
+/* 랜덤 버튼 */
+randomBtn.onclick = function() {
+	
+	slideIndex = 0
+
+	// 감정 태그 checked 다 제거
+	for(let tag of emoTags) {
+		tag.classList.remove("checked")
+	}
+	
+	// 사이드 바 닫힘
+    sideBar.classList.remove("show-sidebar");
+    dim.classList.remove("show-dim")
+    dim.addEventListener("transitionend", function(){
+        this.classList.toggle("unstaged")
+        this.removeEventListener("transitionend", arguments.callee)
+    })
+	
+	loadReviewMusicList(null, "emotion")
+	
+	// 자동 전환 carousel, 음악 재생
+	interval = null
+	timeout = null
+	
+	changeMode()	
+	
+	/* 적용 안됨 */
+	randomBtn.blur()
+	window.focus()
+	
+	window.addEventListener("keydown", enterEventHandler)
+}
+
+// return playlist
 function renderPlaylist(list, loca) {
 	
-	/****************************
-	****** 사이드바 플레이리스트 ******* 
-	*****************************/
 	if(loca === "sidebar") { 
-		
-		//////////////////
-		// 플레이리스트 렌더 
-		//////////////////
-		for(let item of list) {
-			
-			let li2 = document.createElement("li")
-			let p2 = document.createElement("p")
-			
-			p2.innerText = item.playlistName
-			
-			li2.setAttribute("data-playlistNo", item.playlistNo)
-			li2.classList.add("playlistBtn")
-			
-			li2.append(p2)
-			document.querySelector(".playlist-list").append(li2)
-		}
-		
+
 		//////////////////
 		// 이벤트 리스너 넣기 
 		//////////////////
@@ -334,7 +334,7 @@ function renderPlaylist(list, loca) {
 
 		for(let plybtn of playlistBtns) {
 			
-			plybtn.onclick = function(e){
+			plybtn.onclick = function(){
 
 				// 클릭시 색 스타일 
 				for(let plyBtn of playlistBtns) {
@@ -347,7 +347,7 @@ function renderPlaylist(list, loca) {
 				// 현재 서평 + 음악 초기화
 				slideIndex = 0
 				
-				// 사이드 바 닫힘
+				//  사이드 바 닫힘
 			    sideBar.classList.remove("show-sidebar");
 			    dim.classList.remove("show-dim")
 			
@@ -372,13 +372,10 @@ function renderPlaylist(list, loca) {
 		
 		
 	} else { 
-		/******************************** 
-		********** 모달 플레이리스트 **********
-		*********************************/
-		
 		//////////////////
 		// 플레이리스트 렌더 
 		//////////////////
+		
 		for(let item of list) {
 
 			let li = document.createElement("li")
@@ -388,9 +385,13 @@ function renderPlaylist(list, loca) {
 			p.innerText = item.playlistName
 			
 			if(item.userNo == userNo) {
-				if(item.cnt == 0) { // 지금 서평 플레이리스트에 추가 안했음
+				
+				// 지금 서평 플레이리스트에 추가 안했음
+				if(item.cnt == 0) { 
 					btn.innerHTML = '<i class="fa-solid fa-plus"></i>'
-				} else { // 추가했음
+				} 
+				// 추가했음
+				else { 
 					btn.innerHTML = '<i class="fa-solid fa-check"></i>'
 					li.classList.add("selected")
 				}	
@@ -451,66 +452,24 @@ function renderPlaylist(list, loca) {
 	}
 }
 
-/* 랜덤 버튼 */
-randomBtn.onclick = function() {
-	console.log("random button click!")
-	
-	slideIndex = 0
-	
-	/* random number 생성 --> random emoNo 생성 */
-	//let randomEmoNo = Math.ceil(Math.random() * emoTags.length)
-	
-	// 감정 태그 checked 다 제거
-	for(let tag of emoTags) {
-		tag.classList.remove("checked")
-	}
-	
-	// 사이드 바 닫힘
-    sideBar.classList.remove("show-sidebar");
-    dim.classList.remove("show-dim")
-
-    dim.addEventListener("transitionend", function(){
-        this.classList.toggle("unstaged")
-        this.removeEventListener("transitionend", arguments.callee)
-    })
-	
-	loadReviewMusicList(null, "emotion")
-	//afterLoadAutoMode()
-	
-	// 자동 전환 carousel, 음악 재생
-	interval = null
-	timeout = null
-	
-	changeMode()	
-	
-	/* 적용 안됨 */
-	randomBtn.blur()
-	window.focus()
-	
-	window.addEventListener("keydown", enterEventHandler)
-}
-
-/* 서평, 음악 리스트 로드 */
-function loadReviewMusicList(no, sort) {
+// return review + music list
+function loadReviewMusicList(emoNo, sort) {
 	
 	userNo = document.querySelector(".login").getAttribute("data-userNo")
 
 	if("emotion" === sort) {
-		console.log("loadReviewMusicList > list sort by emotion")
-		
-		url = urlPath + "/reviewmusiclist?userNo="+ userNo +"&emoNo=" + no
-			
+		url = urlPath + "/reviewmusiclist?userNo="+ userNo +"&emoNo=" + emoNo
 	}
 	else if("playlist" === sort) {
-		console.log("loadReviewMusicList > sort by playlistNo")
-		
-		url = urlPath + "/reviewmusiclist?userNo="+ userNo +"&playlistNo=" + no
+		url = urlPath + "/reviewmusiclist?userNo="+ userNo +"&playlistNo=" + emoNo
 	}
 	
 	fetch(url)
 	.then(response => response.json())
 	.then(data => {
-		
+
+		console.log(data)
+
 		reviewList = data.reviewList
 		musicList = data.musicList
 		
@@ -526,6 +485,8 @@ function loadReviewMusicList(no, sort) {
 			modal.innerHTML = "<p>저장된 서평이 없습니다</p>"
 			
 			renderMsg()
+			
+			changeMode()
 		} else {
 			// 위 화살표 아이콘 안보이게
 			upBtn.style.display = "none";
@@ -559,13 +520,13 @@ function afterLoadAutoMode(){
 	timeout = null
 	
 	changeMode()
-
 }
 
 /* 감정태그 목록 렌더(모달) */
+/*
 function renderEmoTag(arr) {
 
-	for(let item of arr) { /* 서평 개수가 3개 이상인 경우만 렌더 */
+	for(let item of arr) { // 서평 개수가 3개 이상인 경우만 렌더
 		if(item.totalReviewCnt > 0) {
 			let btn = document.createElement("button")
 			btn.classList.add("emoTag")
@@ -576,6 +537,7 @@ function renderEmoTag(arr) {
 		}
 	}
 }
+*/
 
 // 노래 끝났을 때 자동으로 다음 노래로 넘어감
 audioEle.addEventListener("ended", function(){
@@ -584,7 +546,7 @@ audioEle.addEventListener("ended", function(){
     moveNextBgm()
 })
 
-// audio play & pause
+// play 버튼 토글, 노래 재생&중지
 playBtn.onclick = function(){
 
     if(play === false) { // 음악 재생
@@ -656,31 +618,7 @@ function moveNextBgm(){
     }
 }
 
-modalCloseBtn.onclick = function(){
-    modalBackground.classList.remove("show-modal")
-
-	/* 모달 하단 집어넣기 */
-	emotionSelectBox.classList.remove("show")
-	addReviewModal.classList.remove("move")
-	
-	/* 감정 태그 초기화 */
-	for(let tag of modalEmoTags) {
-		tag.classList.remove("selected")
-	}
-	
-	/* 삭제한 enter key event 리스너 다시 더하기 */
-	window.addEventListener("keydown", enterEventHandler)
-	
-	/* input 값 초기화 */
-	addPlyInput.value = null;
-	
-	/* 다시 자동 재생 */
-	if(autoMode == true) {
-		changeMode()
-	}
-}
-
-/* 사이드 바 열기, 닫기 */
+// 사이드 바 열기, 닫기
 sidebarToggle.addEventListener("click", function() {
     sideBar.classList.add("show-sidebar");
 
@@ -716,7 +654,7 @@ dim.onclick = function(){
 	window.addEventListener("keydown", enterEventHandler)
 }
 
-/* 전체 화면 버튼(자동 전환) > 슬라이드 전환 방식 변경 */
+// 전체 화면 버튼 > 슬라이드 전환 방식 변경
 autoModeBtn.onclick = function(){
     changeMode()
 }
@@ -751,7 +689,7 @@ function changeMode(){
     renderMsg()
 
     if(autoMode === false) { // 자동 전환 모드
-        console.log("auto true")
+        console.log("자동 전환")
 		
 		if(musicupdated === true) { // 새로운 음악 파일이 로드됐다면 기다렸다가 재생
 			console.log("music updated:" + musicupdated)
@@ -770,7 +708,7 @@ function changeMode(){
 
         autoMode = true;
     } else {                // 수동 전환 모드
-        console.log("auto false")
+        console.log("수동 전환")
 
 		if(musicupdated === true) {
 			audioEle.removeEventListener("canplaythrough", audioPlay)
@@ -911,75 +849,67 @@ function renderNewArray(array) {
 
     slides = document.querySelectorAll(".slide")
 	
-	/* 새로운 서평 슬라이드 추가하는 방식 바꾸기! */
-    slides.forEach((slide, index) => {
+	
+    slides.forEach((slide, index) => { 			// 새로운 서평 슬라이드 추가하는 방식 바꾸기! 
         slide.style.top = `${index * 100}%`;
     })
 }
+
+let heartBtn
 
 function render(item) {
 	
 	let styles = item.styleName.split(",")
 	let color = styles[0]
 	let fontFamily = styles[1]
-	
+			
     const slide = document.createElement("div");
     const review = document.createElement("p");
     const username = document.createElement("p");
     const btnContainer = document.createElement("div");
-    const heartBtn = document.createElement("button");
-    const addBtn = document.createElement("button");
+    heartBtn = document.createElement("button");
+    const addBtn = document.createElement("button"); 
 	const a = document.createElement("a")
 	
+	// 배경화면 비디오 vs 이미지
 	let contentBox
 	let video
-	
 	if(item.videourl != null) {
-		console.log("video background")
-		
 		video = document.createElement("video")
-		contentBox = document.createElement("div")
-
 		video.classList.add("video")
-		contentBox.classList.add("contentBox")
-		
 		video.src = urlPath.substring(0, 12) + "/asset/img/review_card/" + item.videourl
 		video.setAttribute("muted", "muted")
 		video.setAttribute("autoplay", "autoplay")		
 		video.setAttribute("loop", "loop")
+		
+		contentBox = document.createElement("div")
+		contentBox.classList.add("contentBox")
 	} else {
 		slide.style.backgroundColor = color
 	}
 	
-	if(logStatus === "login") {
-
-		a.setAttribute("href", urlPath.substring(0, 12) + "/bookdetail?bookNo=" + item.bookNo + "&userNo=" + userNo)		
-	}
-	
 	a.classList.add("reviewLink")
-	
     slide.classList.add("slide");
-    btnContainer.classList.add("btn-container");
 	review.classList.add("review");
     username.classList.add("username");
+	btnContainer.classList.add("btn-container");
     btnContainer.classList.add("slideBtnContainer");
     heartBtn.classList.add("heartBtn");
     addBtn.classList.add("addBtn");
-
-    review.textContent = item.reviewContent;
-    username.textContent = item.nickname;
-	review.style.fontFamily = fontFamily;
-    addBtn.innerHTML = '플레이리스트<i class="fa-solid fa-plus"></i>';
+	
 	slide.setAttribute("data-reviewNo", item.reviewNo)
+    review.textContent = item.reviewContent;
+	review.style.fontFamily = fontFamily;
+    username.textContent = item.nickname;
+	heartBtn.innerHTML = '좋아요<i class="fa-regular fa-heart"></i>';
+    addBtn.innerHTML = '플레이리스트<i class="fa-solid fa-plus"></i>';
 
-	/* 로그아웃 상태인 경우, 클릭시 로그인 페이지로 이동 */
-	if(logStatus === "logout") { 
-		heartBtn.innerHTML = '좋아요<i class="fa-regular fa-heart"></i>';
-
+	 
+	// 로드아웃 & 로그인
+	if(logStatus === "logout") { // 로그아웃
 		heartBtn.onclick = function() {
 			location.href = urlPath.substring(0, 12) + '/user/loginForm'
 		}
-		
 		addBtn.onclick = function() {
 			location.href = urlPath.substring(0, 12) + '/user/loginForm'
 		}
@@ -987,103 +917,27 @@ function render(item) {
 		review.setAttribute("title", "로그인 후 이용 가능합니다.")
 		heartBtn.setAttribute("title", "로그인 후 이용 가능합니다.")
 		addBtn.setAttribute("title", "로그인 후 이용 가능합니다.")
-	} else {
+	} 	
+	else { // 로그인
+		a.setAttribute("href", urlPath.substring(0, 12) + "/bookdetail?bookNo=" + item.bookNo + "&userNo=" + userNo)		
+	
 		
 		username.onclick = function(){
 			location.href = urlPath.substring(0, 12) + "/" + item.nickname
 		}
 		
-		console.log("item.alreadyLikedCnt: " + item.alreadyLikedCnt)
-
 		if(item.alreadyLikedCnt == 0) {
 			heartBtn.innerHTML = '좋아요<i class="fa-regular fa-heart"></i>';
 		} else {
 			heartBtn.innerHTML = '좋아요<i class="fa-solid fa-heart"></i>';
 		}
 		
-	    heartBtn.onclick = function(){
-			
-			console.log("좋아요 클릭")
-			////////////////////
-			// db
-			////////////////////
-			reviewNo = slides[slideIndex].getAttribute("data-reviewNo")
-			userNo = document.querySelector(".login").getAttribute("data-userNo")
-
-			let obj = {
-				userNo : userNo,
-				reviewNo : reviewNo
-			}
-			
-			url = urlPath + "/toggleReviewLike"
-			
-			fetch(url, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify(obj)
-			}).then(response => response.json())
-			.then(data => {
-				////////////////////
-				// 화면 
-				////////////////////
-		        if(data.result == "좋아요") {
-		            heartBtn.innerHTML = '좋아요<i class="fa-solid fa-heart"></i>'
-		        } else {
-		            heartBtn.innerHTML = '좋아요<i class="fa-regular fa-heart"></i>'
-		        }
-			})
-	    }
-		
-		/* 서평 플리에 추가 모달 버튼 (reviewNo, playlistNo, userNo)*/
-	    addBtn.onclick = function(){
-	
-			if(autoMode == true) { 
-				console.log("auto mode stop...")
-				changeMode()
-				/*
-				autoMode = !autoMode
-				play = !play	
-				*/
-			}
-
-			userNo = document.querySelector(".login").getAttribute("data-userNo")
-			reviewNo = slides[slideIndex].getAttribute("data-reviewno")
-
-			url = urlPath + "/getMyPlaylistModal"
-		
-			let obj = {
-				userNo: userNo,
-				reviewNo: reviewNo
-			}
-
-			fetch(url, {
-				method: "POST", 
-				headers: {
-					"Content-Type" : "application/json"
-				},
-				body : JSON.stringify(obj)})
-			.then(response => response.json())
-			.then(data => {
-				
-				/* 초기화 */
-				document.querySelector(".playlist-box").querySelector("ul").innerHTML = ""
-				
-				renderPlaylist(data, "modal")
-				
-		        reviewModalBackground.classList.toggle("show-modal")
-
-				/* 모달이 나오면 window가 Enter event 못 감지하도록 */
-				window.removeEventListener("keydown", enterEventHandler)
-			})
-	    
-		}
+	    heartBtn.onclick = toggleLikeReview
+	    addBtn.onclick = toggleAddReviewToPly // 서평 플리에 추가 모달 버튼 (reviewNo, playlistNo, userNo)
 	}
 	
     btnContainer.append(heartBtn, addBtn);
 	a.append(review)
-	
 	if(item.videourl != null) {
 		contentBox.append(a, username, btnContainer)
 		slide.append(video, contentBox)
@@ -1092,4 +946,72 @@ function render(item) {
 	}	
     slideContainer.append(slide)
     container.append(slideContainer);
+}
+
+//서평을 플리에 추가/취소(모달)
+function toggleAddReviewToPly() {
+	
+	if(autoMode == true) { 
+		changeMode()
+	}
+	
+	userNo = document.querySelector(".login").getAttribute("data-userNo")
+	reviewNo = slides[slideIndex].getAttribute("data-reviewno")
+	
+	let obj = {
+		userNo: userNo,
+		reviewNo: reviewNo
+	}
+
+	fetch(urlPath + "/getMyPlaylistModal", {
+		method: "POST", 
+		headers: {
+			"Content-Type" : "application/json"},
+		body : JSON.stringify(obj)
+	}).then(response => response.json())
+	  .then(data => {
+		
+		// 초기화
+		document.querySelector(".playlist-box").querySelector("ul").innerHTML = ""
+		
+		// 렌더
+		renderPlaylist(data, "modal")
+		
+		// 모달 보임
+        reviewModalBackground.classList.toggle("show-modal")
+
+		// 모달이 보이면 window가 Enter event 못 감지하도록 (재생 못하도록)
+		window.removeEventListener("keydown", enterEventHandler)
+	})	
+}
+
+// 서평 좋아요 버튼
+function toggleLikeReview() {
+	console.log("좋아요 클릭")
+
+	reviewNo = slides[slideIndex].getAttribute("data-reviewNo")
+	userNo = document.querySelector(".login").getAttribute("data-userNo")
+
+	let obj = {
+		userNo : userNo,
+		reviewNo : reviewNo
+	}
+
+	fetch(
+		urlPath + "/toggleReviewLike", 
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"},
+			body: JSON.stringify(obj)
+		}
+	).then(response => response.json())
+	 .then(data => {
+		
+        if(data.result == "좋아요") {
+            heartBtn.innerHTML = '좋아요<i class="fa-solid fa-heart"></i>'
+        } else {
+            heartBtn.innerHTML = '좋아요<i class="fa-regular fa-heart"></i>'
+        }
+	})
 }
