@@ -167,14 +167,16 @@
 }
 
 .icon-success {
-    font-size: 13px;
-}
-
-#btn_like {
     cursor: pointer;
     color: #2699FB;
     font-size: 15px;
 }
+/* 
+#btn_like {
+    cursor: pointer;
+    color: #2699FB;
+    font-size: 15px;
+} */
 
 .latest-order {
     font-weight: bold;

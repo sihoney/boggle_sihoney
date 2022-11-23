@@ -88,50 +88,10 @@
 						</div>
 					</div>
 					<c:if test="${result eq 'sameUser'}">
+						<!-- 서평 리스트 -->
 						<div id="rvlist"></div>
 					</c:if>
-					
-					<!-- 서평 리스트 -->
-					<!-- 
-               
-	               <c:forEach items="${mbList }" var="vo">
-	                  <div id="reviews">
-	                     <div id="reviews-header">
-	                        <div class="left">
-	                           <p>
-	                              <a href="${pageContext.request.contextPath}/bookdetail?bookNo=${vo.bookNo}">${vo.bookTitle }</a>
-	                           </p>
-	                        </div>                                                
-	                        <div class="right">
-	                           <a>수정</a> <a>삭제</a>
-	                        </div>                      
-	                     </div>
-	                     	
-	                     <div id="reviews-content">
-	                        <p>${vo.reviewContent }</p>
-	                     </div>
-	                     <div id="reviews-footer">
-	                        <div class="left">
-	                           <span id="heart" data-reviewno="${vo.reviewNo }" class="like glyphicon glyphicon-heart-empty" aria-hidden="true"></span> <span>${vo.likecnt }</span> <span>${vo.reviewDate }</span>
-	                        </div>
-	                        <div class="right">
-	                           <div class="dropup">
-	                              <a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 더보기 <span class="caret"></span>
-	                              </a>
-	                              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-	                                 <li role="presentation"><a id="add_pli" role="menuitem" tabindex="-1">플레이리스트에 추가<span id="plus">+</span></a></li>
-	                                 <li role="presentation" class="divider"></li>
-	                                 <li role="presentation"><a id="shr_review" role="menuitem" tabindex="-1">서평 공유하기<span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></li>
-	                                 <li role="presentation" class="divider"></li>
-	                                 <li role="presentation"><a role="menuitem" tabindex="-1" target="_blank" href="${pageContext.request.contextPath}/imgpreview">이미지 저장하기<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
-	                                 </a></li>
-	                              </ul>
-	                           </div>
-	                        </div>
-	                     </div>
-	                  </div>
-	               </c:forEach> -->
-					<!-- 서평리스트 -->
+					<!-- paging -->
 				</div>
 				<!-- //col-xs-8 -->
 				<!-- col-xs-4:프로필 -->
@@ -192,10 +152,18 @@
 			</ul>
 		</div>
 	</div>
+	
+	<input id="sort_value" type="hidden" name="sort" value="${sort }"/>
+	<input id="crtPage_value" type="hidden" name="crtPage" value="${crtPage }"/>
+	<input id="emoName_value" type="hidden" name="emoName" value="${emoName }"/>
 </body>
 <script type="text/javascript">
 	
 	let reviewNo
+	
+	let sort
+	let crtPage
+	let emoName
 	
 	//리스트(로딩되기전에 요청)
 	$(document).ready(function() {
@@ -207,8 +175,26 @@
     	$('#best-order').attr('class','');
     	
 		//리스트그리기
-		fetchList();
-	
+		sort = $('#sort_value').val()
+		crtPage = $('#crtPage_value').val()
+		emoName = $('#emoName_value').val()
+		
+		if(sort == 'latest' || sort == 'popular') {
+			fetchRender(crtPage)
+		} 
+		else {
+			emotionList(crtPage, emoName)
+		}
+		
+		// 최신순 / 인기순 마크 색변화
+		if(sort == 'latest') {
+			$('#latest-order').attr('class','txt-b');
+	    	$('#best-order').attr('class','');
+		} 
+		else if(sort == 'popular'){
+			$('#best-order').attr('class','txt-b');
+	    	$('#latest-order').attr('class','');
+		}
 	});
 	
 	// 최신순 인기순 버튼 클릭
@@ -216,27 +202,42 @@
 	$('#latest-order').on('click', function() {
 		console.log('최신순');
 		
+		sort = 'latest'
+		
 		//색깔변화
 		$('#latest-order').attr('class','txt-b');
     	$('#best-order').attr('class','');
 		
-		//초기화 후 그리기
-		$("#rvlist").empty();
-		fetchList();
+		fetchRender(1);
 	});
 
 	// 인기순
 	$('#best-order').on('click', function() {
 		console.log('인기순');
 		
+		sort = 'popular'
+		
 		//색깔변화
 		$('#best-order').attr('class','txt-b');
     	$('#latest-order').attr('class','');
 		
-		//초기화 후 그리기
-		$("#rvlist").empty();
-		popularList();
+		fetchRender(1);
 	});
+	
+	// 감정태그
+	$(".dropdown-menu").on("click", "li", function() {
+
+		sort = 'emotion'
+		
+		//데이터수집
+		emoName = $(this).text();
+						
+		//출력
+		console.log("선택한 감정태그 : "+ emoName);
+
+		emotionList(1, emoName)
+	});
+	
 	
 	/* modal_add_playlist - closeBtn */
 	$(".modal_myply_btn").on("click", function(){
@@ -250,26 +251,37 @@
 
 	})
 	
-	//리스트 그리기(최신순)
-	function fetchList() {
+	// 최신순 + 인기순 서평 fetch&render 함수
+	function fetchRender(crtPage) {
 
+		let url = "${pageContext.request.contextPath }/${nickname}/list?sort=" + sort + "&crtPage=" + crtPage
+		
 		$.ajax({
-			url : "${pageContext.request.contextPath }/${nickname}/list?sort=latest", ///<<<파라미터로 인기순 최신순 나눠보기
+			url : url, 
 			type : "get",
 
 			dataType : "json",
-			success : function(mbList) {
+			success : function(data) {
 				/*성공시 처리해야될 코드 작성*/
-				console.log(mbList);
-
+				let mbList = data.mybookList
+				let prev = data.prev
+				let next = data.next
+				let startPageBtnNo = data.startPageBtnNo
+				let endPageBtnNo = data.endPageBtnNo
+				
+				//초기화 후 그리기
+				$("#rvlist").empty();
+				$(".mybook_paging").remove();
+				
 				//객체 리스트 돌리기(화면 출력)
 				for (var i = 0; i < mbList.length; i++) {
 					//그리기
 					render(mbList[i], "down");
-					
-					//중복체크 후 
 				}
 				
+				// 페이징 렌더
+				renderPaging(prev, next, startPageBtnNo, endPageBtnNo)
+								
 				/* 더보기 플리추가 클릭했을 때 이벤트 */
 				$(".add_pli").on("click", function(){
 					reviewNo = $(this).data("reviewno")
@@ -286,152 +298,45 @@
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
 			}
-		});
-	};
-	
-	//리스트 그리기(인기순)
-	function popularList() {
-
-		$.ajax({
-			url : "${pageContext.request.contextPath }/${nickname}/list?sort=popular",
-			type : "get",
-
-			dataType : "json",
-			success : function(popularlist) {
-				/*성공시 처리해야될 코드 작성*/
-				console.log(popularlist);
-
-				//객체 리스트 돌리기(화면 출력)
-				for (var i = 0; i < popularlist.length; i++) {
-					//그리기
-					render(popularlist[i], "down");
-				}
-				
-				/* 더보기 플리추가 클릭했을 때 이벤트 */
-				$(".add_pli").on("click", function(){
-					reviewNo = $(this).data("reviewno")
-					let userNo = $(this).data("userno")
-
-					// 내 플리 불러오기 
-					fetchMyPli(reviewNo, userNo)
-					
-					// 모달 보임 
-					$(".modal_myply").removeClass("unstaged")
-					$(".modal_myply").addClass("opaque")
-				})
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
-		});
-	};
-	
-	
-	function addReviewToPly(playlistNo, reviewNo) {
-		$.ajax({
-			url: "${pageContext.request.contextPath}/review/addReviewToPly?playlistNo=" + playlistNo + "&reviewNo=" + reviewNo,
-			method: "post",
-			dataType: "json",
-			success: function(){
-				console.log("플리에 저장했습니다.")
-
-				$(".msg_modal").removeClass("unstaged")
-				$(".msg_modal").addClass("opaque")
-				
-				setTimeout(function(){
-					$(".msg_modal").removeClass("opaque")
-					
-					$(".msg_modal").one("transitionend", function(){
-						$(".msg_modal").addClass("unstaged")
-					})
-				}, 2000)
-				
-
-			},
-			error:  function(XHR, status, error){
-				console.log(status + " : " + error);
-			}
-		})
+		});		
 	}
 	
-	function renderMyPli(list) {
-
-		for(let item of list) {
-			str = ""
-			str += '<li class="list" data-playlistNo="'+ item.playlistNo +'">'
-			str += '	<div class="info-container">'
-			str += '		<button class="tagBtn">'+ item.emoName +'</button>'
-			str += '		<div class="playlist-title">' + item.playlistName + '</div>'
-			str += '		<div class="username">' + item.nickname + '</div>'
-			str += '	</div>'
-			str += '</li>'
-			
-			$(".modal_ply_ul").append(str)
-		}
-		
-		$(".modal_ply_ul").on("click", ".list", function(){
-			let playlistno = $(this).data("playlistno")
-
-			addReviewToPly(playlistno, reviewNo)
-		})		
-	}
-	
-	function fetchMyPli(reviewNo, userNo){
-		let url = "${pageContext.request.contextPath}/review/getMyPlaylist?userNo=" + userNo
-		
-		$.ajax({
-			url: url,
-			type: "post",
-			dataType: "json",
-			success: function(data){
-				console.log(data)
-				
-				renderMyPli(data)
-				
-			},
-			error:  function(XHR, status, error){
-				console.log(status + " : " + error);
-			}
-		})	
-		
-	}	
-	
-	
-	//감정태그(카테고리)메뉴를 클릭했을시 이벤트
-	$(".dropdown-menu").on("click", "li", function() {
-
-		//데이터수집
-		var emoName = $(this).text();
-						
-		//출력
-		console.log("선택한 감정태그 : "+ emoName);
+	// 감정 리스트
+	function emotionList(crtPage, emoName) {
 		
 		var clicked = {
 			emoName : emoName	
-			};
-		
+		};
 		
 		//요청 : json 방식
 		$.ajax({
 			//url로 요청할게!    
-			url : "${pageContext.request.contextPath }/${nickname}/select",
+			url : "${pageContext.request.contextPath }/${nickname}/list?sort=emotion&crtPage=" + crtPage,
 			type : "post",
 			contentType : "application/json", //보낼때 json으로 보낼게
 			data : JSON.stringify(clicked),
 			//주소뒤에 갈 데이터 전송방식, //자바 스크립트 객체를 json형식으로 변경
 			dataType : "json", //json> javascript
-			success : function(emoList) {
+			success : function(data) {
+				
 				/*성공시 처리해야될 코드 작성*/
-				console.log(emoList);
+				let emoList = data.mybookList
+				let prev = data.prev
+				let next = data.next
+				let startPageBtnNo = data.startPageBtnNo
+				let endPageBtnNo = data.endPageBtnNo
 				
 				//초기화
 				$("#rvlist").empty();
+				$(".mybook_paging").remove();
 				
 				//객체 리스트 돌리기(화면 출력)
 				for (var i = 0; i < emoList.length; i++) {
 					//그리기
 					render(emoList[i], "down");
 				}
+				
+				renderPaging(prev, next, startPageBtnNo, endPageBtnNo)
 				
 				/* 더보기 플리추가 클릭했을 때 이벤트 */
 				$(".add_pli").on("click", function(){
@@ -451,10 +356,32 @@
 			error : function(XHR, status, error) {
 			   console.error(status + " : " + error);
 			}
-		});	
+		});			
+	}
 	
-	});
-	
+	//페이징 렌더
+	function renderPaging(prev, next, startPageBtnNo, endPageBtnNo) {
+		
+		let str = '<div class="mybook_paging">'
+			str += '<ul>'
+			
+			if(prev == true) {
+				str += '<li><a href="${pageContext.request.contextPath}/${authUser.nickname}?crtPage=' + (startPageBtnNo - 1) + '&sort=' + sort + '&emoName=' + emoName + '">◀</a></li>'
+			}
+
+			for(var i = startPageBtnNo; i <= endPageBtnNo; i++) {
+				str += '<li><a  href="${pageContext.request.contextPath}/${authUser.nickname}?crtPage=' + i + '&sort=' + sort + '&emoName=' + emoName + '">'+ i +'</a></li>'
+			}
+						
+			if(next == true) {
+				str += '<li><a href="${pageContext.request.contextPath}/${authUser.nickname}?crtPage=' + (endPageBtnNo + 1) + '&sort=' + sort + '&emoName=' + emoName + '">▶</a></li>'
+			}
+
+			str += '</ul>'
+			str += '</div>'		 	
+		
+		$("#content").append(str)
+	}	
 	
 	//좋아요 버튼을 클릭했을때(이벤트)
 	$("#rvlist").on("click", ".like", function() {
@@ -512,46 +439,6 @@
 			       
 			       $this.next().html(likeok.likecnt-1);
 			   }
-			   
-			    
-			    /*
-			   	//좋아요인경우
-			   	if (likeok == 0) {	
-			   		
-				    console.log("좋아요");
-								  
-				  	if(isExist == true){
-				  		
-				  		//$("r"+no).remove();
-				  		//print(no);
-				  		
-				  		
-				  		//초기화 후 그리기
-						$("#rvlist").empty();
-						fetchList();
-				  		
-				  	}else{
-				  		//초기화 후 그리기
-						$("#rvlist").empty();
-						popularList();
-				  	}	
-			   } else {
-				   
-			       console.log("좋아요취소");
-			      
-			       if(isExist == true){
-				  		//초기화 후 그리기
-						$("#rvlist").empty();
-						fetchList();	
-				  	}else{
-				  		//초기화 후 그리기
-						$("#rvlist").empty();
-						popularList();
-				  	}			       
-			   }
-			   */  
-			    
-
 			},
 			//로그인하지 않은경우(모달창띄워주기)
 			error : function(XHR, status, error) {
@@ -626,11 +513,13 @@
 		str += ' 	</div> ';
 		str += ' 	<div class="reviews-footer"> ';
 		str += ' 		<div class="left likecontrol"> ';
+		
 		if(mybookVo.likecheck == 0){
-	         str += ' <span id="heart" data-reviewno="'+mybookVo.reviewNo+'" class="like glyphicon glyphicon-heart-empty" aria-hidden="true"></span> <span class="likecnt" data-likecnt="'+mybookVo.likecnt+'">'+ mybookVo.likecnt+ '</span> <span>'+ mybookVo.reviewDate+ '</span> ';
+	         str += ' <span id="heart" data-reviewno="' +mybookVo.reviewNo+'" class="like glyphicon glyphicon-heart-empty" aria-hidden="true"></span> <span class="likecnt" data-likecnt="'+mybookVo.likecnt+'">'+ mybookVo.likecnt+ '</span> <span>'+ mybookVo.reviewDate+ '</span> ';
 	    }else{
 	         str += ' <span id="heart" data-reviewno="'+mybookVo.reviewNo+'" class="like glyphicon glyphicon-heart" aria-hidden="true"></span> <span class="likecnt" data-likecnt="'+mybookVo.likecnt+'">'+ mybookVo.likecnt+ '</span> <span>'+ mybookVo.reviewDate+ '</span> ';
-	    }		
+	    }	
+		
 		str += ' 		</div> ';
 		str += ' 		<div class="right"> ';
 		str += ' 			<div class="dropup"> ';
@@ -656,30 +545,73 @@
 		}
 	}
 	
-	
-	
-	
-	/*
-	//특정 서평 그리기
-	function print(no) {
-
+	function addReviewToPly(playlistNo, reviewNo) {
 		$.ajax({
-			url : "${pageContext.request.contextPath }/${nickname}/list?sort=latest", ///<<<파라미터로 인기순 최신순 나눠보기
-			type : "get",
+			url: "${pageContext.request.contextPath}/review/addReviewToPly?playlistNo=" + playlistNo + "&reviewNo=" + reviewNo,
+			method: "post",
+			dataType: "json",
+			success: function(){
+				console.log("플리에 저장했습니다.")
 
-			dataType : "json",
-			success : function(mbList) {
+				$(".msg_modal").removeClass("unstaged")
+				$(".msg_modal").addClass("opaque")
+				
+				setTimeout(function(){
+					$(".msg_modal").removeClass("opaque")
+					
+					$(".msg_modal").one("transitionend", function(){
+						$(".msg_modal").addClass("unstaged")
+					})
+				}, 2000)
+				
 
-				//객체 리스트 돌리기(화면 출력)
-				render(mbList[no], "down");
-			
 			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
+			error:  function(XHR, status, error){
+				console.log(status + " : " + error);
 			}
-		});
-	};
-	*/
+		})
+	}
+	
+	function renderMyPli(list) {
+
+		for(let item of list) {
+			str = ""
+			str += '<li class="list" data-playlistNo="'+ item.playlistNo +'">'
+			str += '	<div class="info-container">'
+			str += '		<button class="tagBtn">'+ item.emoName +'</button>'
+			str += '		<div class="playlist-title">' + item.playlistName + '</div>'
+			str += '		<div class="username">' + item.nickname + '</div>'
+			str += '	</div>'
+			str += '</li>'
+			
+			$(".modal_ply_ul").append(str)
+		}
+		
+		$(".modal_ply_ul").on("click", ".list", function(){
+			let playlistno = $(this).data("playlistno")
+
+			addReviewToPly(playlistno, reviewNo)
+		})		
+	}
+	
+	function fetchMyPli(reviewNo, userNo){
+		let url = "${pageContext.request.contextPath}/review/getMyPlaylist?userNo=" + userNo
+		
+		$.ajax({
+			url: url,
+			type: "post",
+			dataType: "json",
+			success: function(data){
+				console.log(data)
+				
+				renderMyPli(data)
+				
+			},
+			error:  function(XHR, status, error){
+				console.log(status + " : " + error);
+			}
+		})	
+	}		
 	
 </script>
 <script src="${pageContext.request.contextPath}/asset/js/more.js"></script>

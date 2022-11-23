@@ -22,6 +22,7 @@ public class PlaylistFolderVo {
 	
 	private int rn;
 	private int likecnt;
+	private boolean alreadyLiked;
 
 	
 	//생성자
@@ -40,8 +41,6 @@ public class PlaylistFolderVo {
 		this.nickname = nickname;
 	}
 	
-	
-
 	public PlaylistFolderVo(int playlistNo, String playlistName, String nickname, int userNo) {
 		super();
 		this.playlistNo = playlistNo;
@@ -149,7 +148,36 @@ public class PlaylistFolderVo {
 		this.likecnt = likecnt;
 	}
 
+	public PlaylistFolderVo(int playlistNo, String playlistName, String playlistDate, int reviewNo,
+			String reviewContent, String reviewDate, String nickname, int userNo, String bookNo, String bookTitle,
+			int styleNo, String emoName, int rn, int likecnt, boolean alreadyLiked) {
+		super();
+		this.playlistNo = playlistNo;
+		this.playlistName = playlistName;
+		this.playlistDate = playlistDate;
+		this.reviewNo = reviewNo;
+		this.reviewContent = reviewContent;
+		this.reviewDate = reviewDate;
+		this.nickname = nickname;
+		this.userNo = userNo;
+		this.bookNo = bookNo;
+		this.bookTitle = bookTitle;
+		this.styleNo = styleNo;
+		this.emoName = emoName;
+		this.rn = rn;
+		this.likecnt = likecnt;
+		this.alreadyLiked = alreadyLiked;
+	}
+	
 	//메소드 g,s
+	public boolean getAlreadyLiked() {
+		return alreadyLiked;
+	}
+
+	public void setAlreadyLiked(boolean alreadyLiked) {
+		this.alreadyLiked = alreadyLiked;
+	}	
+	
 	public int getPlaylistNo() {
 		return playlistNo;
 	}

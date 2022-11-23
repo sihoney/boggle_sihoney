@@ -6,8 +6,17 @@ var crtPage = 1;
 var reviewChkBoxArr = [];
 
 var playlistNo = $('#playlistLike').data('playlistno');
-var userNo = $('#playlistLike').data('userno');
-var nickname = $('#playlistLike').data('nickname');
+var userNo = $('#playlistLike').data('userno');			// ply maker's userNo
+var nickname = $('#playlistLike').data('nickname');		// ply maker's nickname
+
+//===============[페이지 로딩]=========================================
+$(document).ready(function(){
+	console.log('페이지 로딩 성공');
+	
+	playlistLike();
+	
+})
+
 //===============[플레이리스트 모달 ready/close]==========================
 /*모달 ready*/
 $('#playlist-add').on('click', function(){
@@ -16,13 +25,13 @@ $('#playlist-add').on('click', function(){
 	
 	$('#review-add').modal({backdrop: 'static', keyboard: false});
 	$('#review-add').modal('show'); 
+	$('#reviewAll').data('playlistno')
 
 	/* 페이지 리스트 요청*/
-	fetchList();
-	console.log('리스트 요청');
-	
-	renderPaging();
-	console.log('페이지 요청');
+	fetchList(crtPage, playlistNo);
+
+/*	renderPaging();
+	console.log('페이지 요청');*/
 
 })
 
@@ -37,53 +46,67 @@ $('.modal-close').on('click', function(){
 
 });
 
-//===============[페이지 로딩]=========================================
-$(document).ready(function(){
-	console.log('페이지 로딩 성공');
-	
-	playlistLike();
-	
-})
-
 //===============[데이터 요청]=========================================
 //페이지 클릭 해당 버튼 리스트 요청
-$('#addModal-pagination').on('click','.page-link',function(){
+$('#addModal-pagination').on('click',  '.page-item',function(e){
+	e.preventDefault()
 	
-	console.log('클릭 페이지');
-	crtPage = $(this).data('crtpage');
-	console.log(crtPage);
+	let dataset = this.children[0].dataset
 	
+	// 초기화
 	$('#reviewAll').empty();
-	fetchList();
+	
+	if(dataset.item != undefined) { // item(prev, next)
+		if(dataset.item == 'prev') {
+			// int로 변환
+			crtPage *= 1
+			crtPage -= 1
+			fetchList(crtPage, playlistNo)
+		}
+		else {
+			// int로 변환
+			crtPage *= 1
+			crtPage += 1
+			fetchList(crtPage, playlistNo)
+		}
+	}
+	else { 							// crtpage
+		crtPage = dataset.crtpage	
+		fetchList(crtPage, playlistNo)
+	}
 })
 	
 
 //데이터 요청(페이지,리스트)
-function fetchList(){
+function fetchList(crtPage, playlistNo){
 
 	console.log("요청:"+crtPage);
 	
 	$.ajax({
 		url : "modalListPage",
 		type : "get",
-		data : {crtPage: crtPage},
-		
+		data : {
+			crtPage: crtPage,
+			playlistNo : playlistNo
+		},
+	
 		dataType : "json",
 		success : function(playlistMap){
 		/*성공시 처리해야될 코드 작성*/
-			console.log(playlistMap.modalList);
+			console.log(playlistMap);
 			
-			renderPaging(playlistMap,crtPage);
+			// 페이징 렌더
+			renderPaging(playlistMap.prev, playlistMap.next, playlistMap.startPageBtnNo, playlistMap.endPageBtnNo, crtPage);
 			
-			//객체 리스트 돌리기(화면 출력)
-			for(var i = 0; i<playlistMap.modalList.length; i++){
+			// 서평 리스트 렌더
+			for(var i = 0; i < playlistMap.modalList.length; i++){
 				//그리기
 				render(playlistMap.modalList[i]);
 			}
 		
 		},
 		error : function(XHR, status, error) {
-		console.error(status + " : " + error);
+			console.error(status + " : " + error);
 		}
 		
 	});
@@ -92,38 +115,49 @@ function fetchList(){
 }
 
 //검색 내용 요청
-function getSearch(){
+function getSearch(searchTxt, playlistNo, crtPage){
 	console.log('검색요청');
 	
-	var inputTxt = $('#reviewSearch').val();
-	console.log('검색:'+inputTxt);
+/*	var inputTxt = $('#reviewSearch').val();
+	console.log('검색:'+inputTxt);*/
 	
 	$.ajax({
 		url : "reviewSearch",
 		type : "post",
-		data : {SearchTxt: inputTxt},
+		data : {
+			SearchTxt: searchTxt,
+			playlistNo : playlistNo,
+			crtPage, crtPage
+		},
 		
 		dataType : "json",
-		success : function(searchResult){
+		success : function(map){
 			/*성공시 처리해야될 코드 작성*/
+			prev = map.prev
+			next = map.next
+			startPageBtnNo = map.startPageBtnNo
+			endPageBtnNo = map.endPageBtnNo
+			searchResult = map.searchResult
 			
-			console.log('검색결과:'+searchResult);
+			console.log(searchResult)
 			
-			//기존 데이터 지워짐(리스트,페이징)
+			//초기화(리스트,페이징)
 			$('#reviewAll').empty();
 			$('#addModal-pagination').html('');
 			
-			if(searchResult == ''){
+			if(searchResult.length == 0){
 				emptyResult();
-			}else{
+			}
+			else{
 				//검색 결과 리스팅
 				for(var i =0; i<searchResult.length; i++){
 					render(searchResult[i]);
 				}
+				
+				renderPaging(prev, next, startPageBtnNo, endPageBtnNo, crtPage)
 			}
 
 			$('#reviewSearch').val('');
-			
 		},
 		error : function(XHR, status, error) {
 		console.error(status + " : " + error);
@@ -133,34 +167,31 @@ function getSearch(){
 	
 }
 
-//체크박스 등록 요청
-function addCheck(reviewChkBoxArr){
-	
-	console.log('체크박스 등록 요청');
-	console.log(reviewChkBoxArr);
+//체크박스 등록 요청 (모달>서평들 플리에 저장)
+function addReviewToPly(reviewChkBoxArr){
 	
 	var playlistNo = $('#reviewAll').data('playlistno');
-	console.log('folder:'+playlistNo);
-	
 	var userNo = $('#reviewAll').data('userno');
-	console.log('userNo:'+userNo);
 
-	console.log('요청전'+reviewChkBoxArr);
-	
+	// 모달 닫기
 	$('#review-add').modal('hide');
+	// 모달 > 리스트 초기화
 	$('#reviewAll').empty();
 	
 	$.ajax({
 		url : "addReviews",
 		type : "post",
 		//contentType : "application/json",
-		data : {reviewChkBoxArr: reviewChkBoxArr,
+		data : {
+				reviewChkBoxArr: reviewChkBoxArr,
 				playlistNo: playlistNo,
-				userNo: userNo},
+				userNo: userNo
+		},
 		
 		dataType : "json",
 		success : function(result){
 		/*성공시 처리해야될 코드 작성*/
+			
 			console.log('데이터 추가 성공');
 			console.log(result);
 			
@@ -169,7 +200,6 @@ function addCheck(reviewChkBoxArr){
 			}else{
 				alert('앗! 다시 시도해주세요! :-)')
 			}
-			
 		},
 		
 		error : function(XHR, status, error) {
@@ -179,7 +209,7 @@ function addCheck(reviewChkBoxArr){
 	
 }
 
-//로딩시 좋아요 데이터 요청
+//로딩시 좋아요 데이터 요청 (배너, 좋아요)
 function playlistLike(){
 	
 	console.log('로딩시 좋아요 체크');
@@ -191,11 +221,12 @@ function playlistLike(){
 	console.log('유저'+userNo);
 	
 	$.ajax({
-		url : "checkLike",
+		url : "checkPlyAlreadyLiked",
 		type : "get",
-		data : {playlistNo: playlistNo,
-				userNo: userNo
-				},
+		data : {
+			playlistNo: playlistNo,
+			userNo: userNo
+		},
 		
 		dataType : "json",
 		success : function(checkLike){
@@ -212,10 +243,8 @@ function playlistLike(){
 		},
 		error : function(XHR, status, error) {
 		console.error(status + " : " + error);
-		}
-		
+		}		
 	});
-
 }
 
 /*좋아요 취소*/
@@ -232,9 +261,10 @@ function playlistUnlike(){
 	$.ajax({
 		url : "playlistUnlike",
 		type : "post",
-		data : {playlistNo: playlistNo,
+		data : {
+				playlistNo: playlistNo,
 				userNo: userNo
-				},
+		},
 		
 		dataType : "json",
 		success : function(unlike){
@@ -250,7 +280,7 @@ function playlistUnlike(){
 		
 		},
 		error : function(XHR, status, error) {
-		console.error(status + " : " + error);
+			console.error(status + " : " + error);
 		}
 		
 	});
@@ -269,9 +299,10 @@ function addplaylistLike(){
 	$.ajax({
 		url : "addplaylistLike",
 		type : "post",
-		data : {playlistNo: playlistNo,
+		data : {
+				playlistNo: playlistNo,
 				userNo: userNo
-				},
+		},
 		
 		dataType : "json",
 		success : function(like){
@@ -296,6 +327,7 @@ function addplaylistLike(){
 }
 
 //서평 삭제
+/*
 function reviewDelete(){
 	
 	console.log('서평삭제 요청');
@@ -309,7 +341,7 @@ function reviewDelete(){
 		
 		dataType : "json",
 		success : function(deleteResult){
-		/*성공시 처리해야될 코드 작성*/
+		// 성공시 처리해야될 코드 작성
 			
 			if(deleteResult == 1){
 				location.href="folder?playlistNo="+playlistNo+"&userNo="+userNo+"&crtPage=1";
@@ -323,45 +355,83 @@ function reviewDelete(){
 		console.error(status + " : " + error);
 		}
 	});
+}
+*/
+
+function toggleLikeReview(reviewNo){
 	
+	$.ajax({
+		url: "toggleLikeReview",
+		type: "post",
+		data: {
+			reviewNo: reviewNo
+		},
+		dataType: "json",
+		success: function(data) {
+			console.log("result: " + data + ", 토글 좋아요 완료")
+		},
+		error : function(XHR, status, error) {
+			console.log(status + " : " + error)
+		}
+	})
 }
 
+function fetchDeleteReview(reviewNo) {
+	
+	$.ajax({
+		url: "deleteReviewFromPly",
+		type: "post",
+		data: {
+			reviewNo: reviewNo,
+			playlistNo : playlistNo
+		},
+		dataType: "json",
+		success: function(data) {
+			console.log(data + "회, 삭제 완료")
+			
+			/*
+			-> location.href 사용하면 session authUser 가 사라짐(서버에서 보내는 거기 때문)
+			-> response body로 서평부분만 업데이트하려고 하면 jsp(html)를 수정해야함(c 태그 foreach를 없애야 함)
+			-> /folder 로 보내기 (화면 업데이트가 안됨)
+			
+			*/
+
+		},
+		error: function(XHR, status, error) {
+			console.log(status + " : " + error)
+		}
+	})
+}
 
 //===============[화면 출력]===================================================
 //해당 페이지 서평 리스트
-function render(modalList){
-	
-	console.log(modalList);
+function render(vo){
 	
 	var str = '';
 	str +='	<li> ';
 	str +='		<div class="review-card"> ';
-	str +=' 		<p class="bookname">'+modalList.bookTitle+'</p> ';
-	str +=' 		<p class="review-content">'+modalList.reviewContent+'</p> ';
-	str +=' 		<span class="tag">#'+modalList.emoName+'</span> ';
-	str +=' 		<span class="glyphicon glyphicon-unchecked btn-check" aria-hidden="true" data-reviewno="'+modalList.reviewNo+'"></span> ';
+	str +=' 		<p class="bookname">'+vo.bookTitle+'</p> ';
+	str +=' 		<p class="review-content">'+vo.reviewContent+'</p> ';
+	str +=' 		<span class="tag">#'+vo.emoName+'</span> ';
+	str +=' 		<span class="glyphicon glyphicon-unchecked btn-check" aria-hidden="true" data-reviewno="'+vo.reviewNo+'"></span> ';
 	str +=' 	</div> ';
 	str +=' </li> ';
 	
 	$('#reviewAll').append(str);
-
 }
 
 //플리 모달 페이징
-function renderPaging(playlistMap,crtPage){
-	
-	console.log(playlistMap);
-	console.log("checkpage:"+crtPage);
+function renderPaging(prev, next, startPageBtnNo, endPageBtnNo, crtPage){
 	
 	var str = '';
-	if(playlistMap.prev == true){
+	if(prev == true){
 		str += ' <li class="page-item"> ';
-		str += ' 	<a class="page-link" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a> ';
+		str += ' 	<a class="page-link" data-item="prev" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a> ';
 		str += ' </li> ';
 	}
 	
-	for(var i = playlistMap.startPageBtnNo; i<=playlistMap.endPageBtnNo; i++){
-		/*현재페이지는 active 버튼데이터(요청한 파라미터) == 받아온 페이지*/
+	for(var i = startPageBtnNo; i <= endPageBtnNo; i++){
+		/* 현재페이지는 active 버튼데이터(요청한 파라미터) == 받아온 페이지 */
 		if(i == crtPage){
 			str += ' <li class="page-item"><a class="page-link b-blue" data-crtpage="'+i+'">'+i+'</a></li> ';
 		}else{
@@ -370,13 +440,14 @@ function renderPaging(playlistMap,crtPage){
 		
 	}
 
-	if(playlistMap.next == true){
+	if(next == true){
 		str += ' <li class="page-item"> ';
-		str += ' 	<a class="page-link" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a> ';
+		str += ' 	<a class="page-link" data-item="next" aria-label="Next"><span aria-hidden="true">&raquo;</span></a> ';
 		str += ' </li> ';
 	}
 	
 	$('#addModal-pagination').html(str);
+	
 	
 }
 
@@ -397,39 +468,53 @@ function emptyResult(){
 	
 }
 
+function toggleHeartIcon(reviewNo) {
+		$('#'+reviewNo).toggleClass('glyphicon-heart-empty')
+		$('#'+reviewNo).toggleClass('glyphicon-heart')
+}
+
+function changeLikeCount(reviewNo) {
+	let crtLikeCnt = $('#'+reviewNo).next().text() * 1
+	
+	if($('#'+reviewNo).hasClass('glyphicon-heart-empty') == true) {
+
+		$('#'+reviewNo).next().text(crtLikeCnt + 1)		
+	} else {
+		$('#'+reviewNo).next().text(crtLikeCnt - 1)
+	}
+}
+
+
 //===============[event]==========================================================
 //-------------------------------------------------------------
-//모달 서평추가 체크박스 선택
+//모달 > 서평추가 체크박스 선택
 $('#reviewAll').on('click','.glyphicon-unchecked', function(){
-	console.log('unchecked 버튼 클릭');
+	console.log('서평 check');
 	
 	$(this).attr('class','glyphicon glyphicon-check btn-check');
 })
 
-//모달 서평 체크박스 취소
+//모달 > 서평 체크박스 취소
 $('#reviewAll').on('click','.glyphicon-check', function(){
-	console.log('check 버튼 클릭');
+	console.log('서평 uncheck');
 	
 	$(this).attr('class','glyphicon glyphicon-unchecked btn-check')
-
 })
 
 
-//선택한 서평 해당 플리에 추가등록
+//선택한 서평 해당 플리에 추가등록 (선택한 서평 담기 버튼)
 $('.addReviewBtn').on('click', function(){
 	
 	console.log('선택 등록 버튼 클릭');
-	var checkNo = $('.glyphicon-check');
-	console.log(checkNo);
+	var checkedReviews = $('.glyphicon-check');
 	
-	for(let item of checkNo){
+	// 서평이 중복된다...?
+	for(let item of checkedReviews){
 		var checkdata = item.dataset;
 		reviewChkBoxArr.push(checkdata.reviewno);
 	}
 	
-	console.log(reviewChkBoxArr);
-	
-	addCheck(reviewChkBoxArr);
+	addReviewToPly(reviewChkBoxArr);
 })
 
 
@@ -439,16 +524,18 @@ $('#reviewSearch').keydown(function(keyNum){
 	if(keyNum.keyCode == 13){
 		
 		console.log('엔터!');
+ 
+		searchTxt = $('#reviewSearch').val();
+		crtPage = 1
 		
 		//검색 내용 요청
-		getSearch();
+		getSearch(searchTxt, playlistNo, crtPage);
 		
 	}
 	
 })
 
 //플리 좋아요 버튼
-
 $('#playlistLike').on('click','.glyphicon-heart',function(){
 	console.log('플레이리스트 좋아요-> 취소 클릭');
 	playlistUnlike();
@@ -460,15 +547,38 @@ $('#playlistLike').on('click','.glyphicon-heart-empty',function(){
 })	
 
 //서평 삭제 버튼
-$('#reviewDelete').on('click', function(){
+/* 
+$('#reviewDelete').on('click', function(){		// 수정: id --> class
 	
 	console.log('서평 삭제 클릭');
 	
 	reviewDelete();
 })
+*/
+$('.btn_delete_review').each(function(index, btn_delete){
+	
+	btn_delete.addEventListener("click", function() {
+		
+		let reviewNo = btn_delete.id
+		
+		fetchDeleteReview(reviewNo) // db에서 삭제
+
+	})
+})
 
 
+// 서평 좋아요 기능 (usere_no, review_no)
+$('.btn_like').each(function(index, btn_like){
+	
+	btn_like.addEventListener("click", function() {
 
+		let reviewNo = btn_like.id
+		
+		toggleLikeReview(reviewNo)
+		changeLikeCount(reviewNo)
+		toggleHeartIcon(reviewNo)		
+	})
+})
 
 
 

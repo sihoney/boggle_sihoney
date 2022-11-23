@@ -17,13 +17,12 @@ public class PlaylistFolderService {
 	private PlaylistFolderDao playlistfolderDao;
 	
 	/* 플레이리스트 폴더 클릭 -> 해당 플레이리스트 서평 리스트 + 페이징 */
-	public Map<String, Object> playlistReviewList(int playlistNo, int userNo, int crtPage) {
+	public Map<String, Object> playlistReviewList(int playlistNo, int makerUserNo, int crtPage, int authUserNo) {
 		
 		System.out.println("Service.playlistReviewList+paging");
 		
 		//★플레이리스트 커버-----------------
-		PlaylistFolderVo playlistCover = playlistfolderDao.playlistCover(playlistNo,userNo);
-		System.out.println("Service.playlistCover");
+		PlaylistFolderVo playlistCover = playlistfolderDao.playlistCover(playlistNo, makerUserNo);
 		
 		// 서평 리스트+페이징
 		// ★리스트 가져오기
@@ -32,17 +31,26 @@ public class PlaylistFolderService {
 		crtPage = (crtPage>0) ? crtPage : (crtPage=1);
 		//페이지 시작글 번호
 		int startRnum = (crtPage-1)*listCnt +1;
-		System.out.println("startRnum"+startRnum);
 		//페이지 마지막글 번호
 		int endRnum = (startRnum + listCnt) -1;
-		System.out.println("endRnum"+endRnum);
 		//rownum 리스트 요청
 		List<PlaylistFolderVo> playList = playlistfolderDao.playlistReviewList(playlistNo,startRnum,endRnum);
-		System.out.println("service:"+playList);
+		
+		// alreadyLiked 여부 체크하기
+		for(PlaylistFolderVo pfvo : playList) { 
+			
+			pfvo.setUserNo(authUserNo); //오류: 작성자가 해당 리뷰를 좋아요했는지 검사 --> 해당 유저가 좋아요했는지 검사해야함
+			
+			boolean alreadyLiked = playlistfolderDao.checkAlreadyLiked(pfvo);
+			
+			System.out.println("alreadyLiked: " + alreadyLiked);
+			
+			pfvo.setAlreadyLiked(alreadyLiked);
+		}
+		
 		//2) ★페이지 카운트 가져오기-----------------
 		//전체 글갯수 가져오기
 		int folderReviewCnt = playlistfolderDao.folderReviewTotal(playlistNo);
-		System.out.println("folderReviewCnt:"+folderReviewCnt);
 		
 		//페이지당 버튼 갯수
 		int pageBtnCount = 5;
@@ -75,15 +83,13 @@ public class PlaylistFolderService {
 		playlistPage.put("next", next);
 		playlistPage.put("playList", playList);
 		playlistPage.put("playlistCover", playlistCover);
-		
-		System.out.println(playlistPage);
 
 		return playlistPage;
 		
 	}
 
 	/* 플리 모달 페이징 */
-	public Map<String,Object> madalListPage(int crtPage) {
+	public Map<String,Object> modalListPage(int crtPage, int playlistNo) {
 		
 		System.out.println("Service.modalListPage");
 		
@@ -100,12 +106,12 @@ public class PlaylistFolderService {
 		//페이지 마지막 글 번호
 		int endRnum = (startRnum + listCnt) -1;
 		//vo로 묶어서 보내주기
-		List<PlaylistFolderVo> modalList = playlistfolderDao.madalListPage(startRnum,endRnum);
+		List<PlaylistFolderVo> modalList = playlistfolderDao.modalListPage(startRnum,endRnum, playlistNo);
 		
 		//2) ★페이지 카운트 가져오기-----------------
 		//전체 글갯수 가져오기
-		int totalCnt = playlistfolderDao.selectTotal();
-		System.out.println("totalCnt:"+totalCnt);
+		int totalCnt = playlistfolderDao.selectTotal(playlistNo);
+		System.out.println("서평 총 수 :"+totalCnt);
 		
 		//페이지당 버튼 갯수
 		int pageBtnCount = 5;
@@ -133,23 +139,74 @@ public class PlaylistFolderService {
 		//3) ★포장---------------------------------
 		Map<String,Object> playlistMap = new HashMap<String,Object>();
 		playlistMap.put("prev", prev);
+		playlistMap.put("next", next);
 		playlistMap.put("startPageBtnNo", startPageBtnNo);
 		playlistMap.put("endPageBtnNo", endPageBtnNo);
-		playlistMap.put("next", next);
 		playlistMap.put("modalList", modalList);
 		
 		return playlistMap;
 
 	}
 	
-	/* 플리 검색 결과 가져오기 */
-	public List<PlaylistFolderVo> getSearchResult(String search) {
+	/* 플리 검색 결과 가져오기 (+ 페이징)*/
+	public Map<String, Object> getSearchResult(String search, int crtPage, int playlistNo) {
 		
 		System.out.println("Service.getSearchResult");
 		
-		List<PlaylistFolderVo> searchResult = playlistfolderDao.getSearchResult(search);
+		//★리스트 가져오기
+		//페이지당 글 개수
+		int listCnt = 5;
 		
-		return searchResult;
+		//현재페이지 처리(0이하 접근 제한)
+		crtPage = (crtPage > 0) ? crtPage : (crtPage = 1);
+		
+		//페이지 시작글 번호
+		int startNum = (crtPage - 1) * listCnt + 1;
+		//페이지 마지막 글 번호
+		int endNum = (startNum + listCnt) - 1;
+		//vo로 묶어서 보내주기
+		//List<PlaylistFolderVo> modalList = playlistfolderDao.modalListPage(startRnum,endRnum, playlistNo);
+		List<PlaylistFolderVo> searchResult = playlistfolderDao.getSearchResult(startNum, endNum, playlistNo, search);
+		
+		//2) ★페이지 카운트 가져오기-----------------
+		//전체 글갯수 가져오기
+		int totalCnt = playlistfolderDao.selectTotalSearchReview(playlistNo, search);
+		System.out.println("검색 결과 총 수 :"+totalCnt);
+		System.out.println("[[searchResult]]: " + searchResult);
+		
+		//페이지당 버튼 갯수
+		int pageBtnCount = 5;
+		
+		//마지막 버튼 번호
+		int endPageBtnNo = (int)(Math.ceil( crtPage/(double)pageBtnCount))*pageBtnCount;
+		
+		//시작 버튼 번호
+		int startPageBtnNo = endPageBtnNo - (pageBtnCount-1);
+		
+		//다음 화살표 유무
+		boolean next = false;
+		if(endPageBtnNo * listCnt < totalCnt) {
+			next = true;
+		}
+		else {//다음 화살표가 안보이면 마지막 버튼값을 다시 계산
+			endPageBtnNo = (int)Math.ceil(totalCnt/(double)listCnt);
+		}
+		
+		//이전 화살표 유무
+		boolean prev = false;
+		if(startPageBtnNo != 1) {
+			prev = true;
+		}
+		
+		//3) ★포장---------------------------------
+		Map<String,Object> playlistMap = new HashMap<String,Object>();
+		playlistMap.put("prev", prev);
+		playlistMap.put("next", next);
+		playlistMap.put("startPageBtnNo", startPageBtnNo);
+		playlistMap.put("endPageBtnNo", endPageBtnNo);
+		playlistMap.put("searchResult", searchResult);
+		
+		return playlistMap;
 	}
 	
 	/* 선택 서평 등록하기 */
@@ -159,12 +216,11 @@ public class PlaylistFolderService {
 		
 		int addList = 0;
 		
-		for(int i=0; i<reviewChkBoxArr.size(); i++) {
+		for(int i = 0; i < reviewChkBoxArr.size(); i++) {
+			
 			playlistFolderVo.setReviewNo(reviewChkBoxArr.get(i));
-			System.out.println(playlistFolderVo);
 			
 			addList = playlistfolderDao.reviewsInsert(playlistFolderVo);
-			System.out.println("service 성공:"+addList);
 		}
 		
 		return addList;
@@ -178,10 +234,10 @@ public class PlaylistFolderService {
 	}
 	
 	/* 로딩시 좋아요 체크 */
-	public int checkLike(PlaylistFolderVo playlistFolderVo) {
+	public int checkPlyAlreadyLiked(PlaylistFolderVo playlistFolderVo) {
 		
-		System.out.println("Service.checkLike");
-		int checkLike = playlistfolderDao.checkLike(playlistFolderVo);
+		System.out.println("Service.checkPlyAlreadyLiked");
+		int checkLike = playlistfolderDao.checkPlyAlreadyLiked(playlistFolderVo);
 		
 		return checkLike;
 	}
@@ -204,4 +260,15 @@ public class PlaylistFolderService {
 		return likeResult;
 	}
 
+	public int toggleLikeReview(Integer userNo, Integer reviewNo) {
+		
+		System.out.println("Service.toggleLikeReview");
+		return playlistfolderDao.toggleLikeReview(userNo, reviewNo);
+	}
+	
+	public int deleteReview(int reviewNo, int playlistNo) {
+		
+		System.out.println("Service.deleteReview");
+		return playlistfolderDao.deleteReview(reviewNo, playlistNo);
+	}
 }

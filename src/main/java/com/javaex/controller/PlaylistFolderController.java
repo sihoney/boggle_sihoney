@@ -3,6 +3,8 @@ package com.javaex.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.PlaylistFolderService;
 import com.javaex.vo.PlaylistFolderVo;
+import com.javaex.vo.UserVo;
 
 @Controller
 @RequestMapping("/playlist")
@@ -24,19 +27,24 @@ public class PlaylistFolderController {
 	/* 플레이리스트 폴더 클릭 -> 해당 플레이리스트 서평 리스트+페이징  */
 	@RequestMapping("/folder")
 	public String playlistFolder(@RequestParam("playlistNo") int playlistNo,
-								 @RequestParam("userNo") int userNo,
+								 @RequestParam("makerUserNo") int makerUserNo,
 								 @RequestParam(value = "crtPage", required = false, defaultValue = "1") int crtPage,
-								 Model model) {
+								 Model model,
+								 HttpSession session) {
 		
 		System.out.println("Controller.playlistFolder+paging");
-		System.out.println(playlistNo);
 		System.out.println("요청 페이지:"+crtPage);
-
+		
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser == null) {
+			return "main/main";
+		}
+		int authUserNo = authUser.getUserNo();
+	
 		//플레이리스트 번호 받기
 		//해당 폴더 서평리스트 가져오기(5개)
-		Map<String, Object> foldermainMap = playlistfolderService.playlistReviewList(playlistNo,userNo,crtPage);
-		System.out.println("controller: "+foldermainMap);
-		
+		Map<String, Object> foldermainMap = playlistfolderService.playlistReviewList(playlistNo, makerUserNo, crtPage, authUserNo);
+
 		//데이터 보내기
 		model.addAttribute("foldermainMap",foldermainMap);
 		
@@ -47,15 +55,15 @@ public class PlaylistFolderController {
 	/* 플리 모달 페이징+리스트 */
 	@ResponseBody
 	@RequestMapping("/modalListPage")
-	public Map<String, Object> modalListPage(@RequestParam(value = "crtPage", required = false, defaultValue = "1") int crtPage) {
+	public Map<String, Object> modalListPage(@RequestParam(value = "crtPage", required = false, defaultValue = "1") int crtPage,
+											 @RequestParam(value = "playlistNo") int playlistNo) {
 		
 		System.out.println("Controller.modalListPage");
-		System.out.println(crtPage);
+		System.out.println(crtPage + "번 페이지 요청, playlistNo: " + playlistNo);
 		
 		//해당페이지의 글 리스트 5개
-		Map<String, Object> playlistMap = playlistfolderService.madalListPage(crtPage);
-		System.out.println(playlistMap);
-
+		Map<String, Object> playlistMap = playlistfolderService.modalListPage(crtPage, playlistNo);
+		
 		return playlistMap;
 	}
 	
@@ -63,27 +71,33 @@ public class PlaylistFolderController {
 	/* 플리 모달 검색창 */
 	@ResponseBody
 	@RequestMapping("/reviewSearch")
-	public List<PlaylistFolderVo> reviewSearch(@RequestParam(value="SearchTxt") String searchTxt ) {
+	public Map<String, Object> reviewSearch(@RequestParam(value="SearchTxt") String searchTxt,
+											@RequestParam(value="crtPage", required=false, defaultValue="1")int crtPage,
+											@RequestParam(value="playlistNo")int playlistNo) {
 		
 		System.out.println("Controller.reviewSearch");
-		System.out.println(searchTxt);
+	
+		Map<String, Object> playlistMap = playlistfolderService.getSearchResult(searchTxt, crtPage, playlistNo);
 		
-		List<PlaylistFolderVo> searchResult = playlistfolderService.getSearchResult(searchTxt);
-		System.out.println("컨트롤러:"+searchResult);
-		
-		return searchResult;
+		return playlistMap;
 	}
 	
 	/* 플리 모달 추가 선택 등록 */
 	@RequestMapping("/addReviews")
 	public @ResponseBody int addReviews(@ModelAttribute PlaylistFolderVo playlistFolderVo, 
-										   @RequestParam("userNo") int userNo,
-										   @RequestParam (value="reviewChkBoxArr[]") List<Integer> reviewChkBoxArr) {
+										@RequestParam("userNo") int userNo,
+										@RequestParam (value="reviewChkBoxArr[]") List<Integer> reviewChkBoxArr) {
 											
-		System.out.println("Controller.배열");
-		System.out.println(playlistFolderVo);
-		System.out.println(reviewChkBoxArr);
-
+		System.out.println("Controller.addReviews");
+		
+		System.out.println("--playlistFolderVo: " + playlistFolderVo);
+		System.out.println("--userNo: " + userNo);
+		System.out.println("--reviewChkBoxArr: " + reviewChkBoxArr);
+		/*
+		--playlistFolderVo: PlaylistFolderVo [playlistNo=52, playlistName=null, playlistDate=null, reviewNo=0, reviewContent=null, reviewDate=null, nickname=null, userNo=6, bookNo=null, bookTitle=null, styleNo=0, emoName=null, rn=0, likecnt=0]
+		--userNo: 6
+		--reviewChkBoxArr: [165, 11]		
+		*/
 		int addResult = playlistfolderService.reviewsInsert(playlistFolderVo, reviewChkBoxArr);
 		
 		return addResult;
@@ -106,13 +120,13 @@ public class PlaylistFolderController {
 	
 	/* 로딩시 플리 좋아요 체크 */
 	@ResponseBody
-	@RequestMapping("/checkLike")
-	public int checkLike(@ModelAttribute PlaylistFolderVo playlistFolderVo) {
+	@RequestMapping("/checkPlyAlreadyLiked")
+	public int checkPlyAlreadyLiked(@ModelAttribute PlaylistFolderVo playlistFolderVo) {
 		
-		System.out.println("Controller.checkLike");
-		System.out.println(playlistFolderVo);
+		System.out.println("Controller.checkPlyAlreadyLiked");
+		System.out.println(playlistFolderVo); // playlistNo, userNo
 		
-		int checkLike = playlistfolderService.checkLike(playlistFolderVo);
+		int checkLike = playlistfolderService.checkPlyAlreadyLiked(playlistFolderVo);
 		
 		return checkLike;
 	}
@@ -139,4 +153,27 @@ public class PlaylistFolderController {
 		return likeResult;
 	}
 
+	@ResponseBody
+	@RequestMapping("/toggleLikeReview")
+	public int toggleLikeReview(@RequestParam("reviewNo")Integer reviewNo,
+								 HttpSession session) {
+		System.out.println("Controller.toggleLikeReview");
+		
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		
+		if(authUser == null) {return -1;} 
+		
+		Integer userNo = authUser.getUserNo();
+		
+		return playlistfolderService.toggleLikeReview(userNo, reviewNo);
+	}
+	
+	@ResponseBody
+	@RequestMapping("deleteReviewFromPly")
+	public int deleteReviewFromPly(@RequestParam("reviewNo")int reviewNo,
+								   @RequestParam("playlistNo")int playlistNo) {
+		System.out.println("Controller.deleteReviewFromPly");
+	
+		return playlistfolderService.deleteReview(reviewNo, playlistNo);
+	}
 }

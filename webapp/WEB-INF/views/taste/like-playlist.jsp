@@ -66,11 +66,11 @@
 				<div id="playlist">
 					<c:forEach items="${likeplay}" var="vo">
 						<div class="nail purple"> <!-- 1~14까지 감정으로색깔 -->
-							<div onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&userNo=${vo.userNo }&nickname=${vo.nickname}'" class="nail-desc">
+							<div onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&makerUserNo=${vo.userNo }&nickname=${vo.nickname}'" class="nail-desc">
 								<p>${vo.playlistName }</p>
 							</div>
 							<div>
-								<div onclick="location.href='${pageContext.request.contextPath}/main/playlist?playlistNo=${vo.playlistNo }'" id="opac">  
+								<div id="opac" onclick="location.href='${pageContext.request.contextPath}/main?playlistNo=${vo.playlistNo }'">  
 									<span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
 								</div>
 							</div>
@@ -96,13 +96,13 @@
 				</div>
 				<div id="playlist">
 					<c:forEach items="${popularlist}" var="vo">
-						<div class="nail green" onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&userNo=${vo.userNo }&nickname=${vo.nickname }'">
+						<div class="nail green">
 							<!-- 1~14까지 감정으로색깔 -->
-							<div class="nail-desc">
+							<div class="nail-desc" onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&makerUserNo=${vo.userNo }&nickname=${vo.nickname }'">
 								<p>${vo.playlistName }</p>
 							</div>
 							<div>
-								<div id="opac">
+								<div id="opac" onclick="location.href='${pageContext.request.contextPath}/main?playlistNo=${vo.playlistNo }'">
 									<span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
 								</div>
 							</div>
@@ -129,12 +129,12 @@
 				<div id="playlist">
 					
 					<c:forEach items="${makelist}" var="vo">						
-						<div class="nail deeppurple" onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&userNo=${vo.userNo }&nickname=${vo.nickname }'"> <!-- 1~14까지 감정으로색깔 -->
-							<div class="nail-desc">
+						<div class="nail deeppurple"> <!-- 1~14까지 감정으로색깔 -->
+							<div class="nail-desc"  onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&makerUserNo=${vo.userNo }&nickname=${vo.nickname }'">
 								<p>${vo.playlistName }</p>
 							</div>
 							<div>
-								<div id="opac">
+								<div id="opac" onclick="location.href='${pageContext.request.contextPath}/main?playlistNo=${vo.playlistNo }'">
 									<span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
 								</div>
 							</div>

@@ -19,7 +19,7 @@ public class PlaylistFolderDao {
 	/* 플레이리스트 폴더 클릭 -> 해당 플레이리스트 서평 리스트  */
 	public List<PlaylistFolderVo> playlistReviewList(int playlistNo,int startRnum, int endRnum) {
 		
-		System.out.println("Dao.playlistReviewList");
+		System.out.println("PlaylistFolderDao.playlistReviewList");
 		
 		//map 
 		Map<String, Object> playlistData = new HashMap<String, Object>();
@@ -28,26 +28,27 @@ public class PlaylistFolderDao {
 		playlistData.put("endRnum", endRnum);
 		
 		//서평리스트
-		List<PlaylistFolderVo> playList = sqlSession.selectList("playlistFolder.reviewList",playlistData);
-		System.out.println("dao:"+playList);
-
+		List<PlaylistFolderVo> playList = sqlSession.selectList("playlistFolder.reviewList2", playlistData);
+		
 		return playList;
 		
 	}
 	
 	/* 해당 플리(folder) 총 서평 수  */
 	public int folderReviewTotal(int playlistNo) {
-		System.out.println("Dao.folderReviewTotal");
+		System.out.println("PlaylistFolderDao.folderReviewTotal");
+		
 		int folderReviewCnt = sqlSession.selectOne("playlistFolder.folderReviewCnt",playlistNo);
-		System.out.println(folderReviewCnt);
+		
+		System.out.println(playlistNo + "번 플리 총 서평 수 : " + folderReviewCnt);
+		
 		return folderReviewCnt;
 	}
 
 	/* 플레이리스트 커버 */
-	
-	  public PlaylistFolderVo playlistCover(int playlistNo, int userNo) {
+	public PlaylistFolderVo playlistCover(int playlistNo, int userNo) {
 	  
-	  System.out.println("Dao.playlistCover");
+	  System.out.println("PlaylistFolderDao.playlistCover");
 	  
 	  Map<String, Integer> playlist = new HashMap<String, Integer>();
 	  playlist.put("playlistNo", playlistNo); 
@@ -55,43 +56,72 @@ public class PlaylistFolderDao {
 	  
 	  //playlistCover 
 	  PlaylistFolderVo playlistCover = sqlSession.selectOne("playlistFolder.playlistCover",playlist);
-	  System.out.println(playlistCover);
+	  //System.out.println(playlistCover);
 
 	  return playlistCover;
 	  
 	  }
+	
+	public boolean checkAlreadyLiked(PlaylistFolderVo pfvo) {
+		int cnt = sqlSession.selectOne("playlistFolder.checkAlreadyLiked", pfvo);
+		
+		if(cnt > 0) {
+			return true;
+		}
+		
+		return false;
+	}
 
 	/* 플리 모달 페이징 */
-	public List<PlaylistFolderVo> madalListPage(int startRnum, int endRnum) {
+	public List<PlaylistFolderVo> modalListPage(int startRnum, int endRnum, int playlistNo) {
 		
-		System.out.println("Dao.modalPage");
-		System.out.println(startRnum+","+endRnum);
+		System.out.println("PlaylistFolderDao.modalPage");
 		
 		Map<String,Integer> map = new HashMap<String,Integer>();
 		map.put("startRnum", startRnum);
 		map.put("endRnum", endRnum);
+		map.put("playlistNo", playlistNo);
 		
-		List<PlaylistFolderVo> playlistPage = sqlSession.selectList("playlistFolder.modalPage",map);
-		System.out.println(playlistPage);
+		System.out.println("startRnum: " + startRnum + ", endRnum: " + endRnum + ", playlistNo: " + playlistNo);
+		
+		List<PlaylistFolderVo> playlistPage = sqlSession.selectList("playlistFolder.modalPage4", map);
+		System.out.println("modalListPage: " + playlistPage);
 		
 		return playlistPage;
 	}
 	
 	/* 전체 글갯수 가져오기 */
-	public int selectTotal() {
-		System.out.println("Dao.selectTotal");
-		int totalCnt = sqlSession.selectOne("playlistFolder.totalCnt");
+	public int selectTotal(int playlistNo) {
+		System.out.println("PlaylistFolderDao.selectTotal");
+		int totalCnt = sqlSession.selectOne("playlistFolder.totalCnt", playlistNo);
 		return totalCnt;
 		
 	}
 	
+	public int selectTotalSearchReview(int playlistNo, String search) {
+		System.out.println("PlaylistFolderDao.selectTotalSearchReview");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("playlistNo", playlistNo);
+		map.put("search", search);
+		
+		return sqlSession.selectOne("playlistFolder.totalCntSearchReview2", map);
+	}
+	
 	/* 플리 검색 결과 가져오기 */
-	public List<PlaylistFolderVo> getSearchResult(String search) {
+	public List<PlaylistFolderVo> getSearchResult(int startNum, int endNum, int playlistNo, String search) {
 		
-		System.out.println("Dao.getSearchResult");
-		List<PlaylistFolderVo> searchResult = sqlSession.selectList("playlistFolder.playlistSearch",search);
+		System.out.println("PlaylistFolderDao.getSearchResult");
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
+		map.put("playlistNo", playlistNo);
+		map.put("search", search);
 		
-		System.out.println("검색 결과 : "+searchResult);
+		List<PlaylistFolderVo> searchResult = sqlSession.selectList("playlistFolder.playlistSearch3", map);
+		
+		//System.out.println("검색 결과 : "+searchResult);
 		
 		return searchResult;
 	}
@@ -99,17 +129,17 @@ public class PlaylistFolderDao {
 	/* 선택 서평 등록하기 */
 	public int reviewsInsert(PlaylistFolderVo playlistFolderVo) {
 		
-		System.out.println("Dao.reviewsInsert");
-		int addVo = sqlSession.insert("playlistFolder.reviewsInsert",playlistFolderVo);
-		System.out.println("등록 성공:"+addVo);
+		System.out.println("PlaylistFolderDao.reviewsInsert");
 		
+		int addVo = sqlSession.insert("playlistFolder.reviewsInsert",playlistFolderVo);
+
 		return addVo;
 	}
 	
 	/* 서평 삭제 */
 	public int reviewDelete(int reviewNo) {
 		
-		System.out.println("Dao.reviewDelete");
+		System.out.println("PlaylistFolderDao.reviewDelete");
 		
 		int deleteResult = sqlSession.delete("playlistFolder.reviewDelete",reviewNo);
 		System.out.println("삭제 성공 여부:"+deleteResult);
@@ -118,10 +148,10 @@ public class PlaylistFolderDao {
 	}
 	
 	/* 로딩시 좋아요 체크 */
-	public int checkLike(PlaylistFolderVo playlistFolderVo) {	
+	public int checkPlyAlreadyLiked(PlaylistFolderVo playlistFolderVo) {	
 		
-		System.out.println("Dao.checkLike");
-		int checkLike = sqlSession.selectOne("playlistFolder.checkLike",playlistFolderVo);
+		System.out.println("PlaylistFolderDao.checkPlyAlreadyLiked");
+		int checkLike = sqlSession.selectOne("playlistFolder.checkPlyAlreadyLiked",playlistFolderVo);
 		System.out.println("좋아요 체크:"+checkLike);
 		
 		return checkLike;
@@ -131,7 +161,7 @@ public class PlaylistFolderDao {
 	/* 해당 플리 좋아요 취소 */
 	public int playlistUnlike(PlaylistFolderVo playlistFolderVo) {
 		
-		System.out.println("Dao.playlistUnlike");
+		System.out.println("PlaylistFolderDao.playlistUnlike");
 		int unlikeResult = sqlSession.delete("playlistFolder.playlistUnlike",playlistFolderVo);
 		System.out.println("좋아요 취소:"+unlikeResult);
 		
@@ -141,13 +171,40 @@ public class PlaylistFolderDao {
 	
 	/* 해당 플리 좋아요 */
 	public int playlistlike(PlaylistFolderVo playlistFolderVo) {
-		System.out.println("Dao.playlistlike");
+		System.out.println("PlaylistFolderDao.playlistlike");
 		int likeResult = sqlSession.insert("playlistFolder.playlistlike",playlistFolderVo);
 		System.out.println("플리 좋아요:"+likeResult);
 		
 		return likeResult;
 	}
 	
+	public int toggleLikeReview(Integer userNo, Integer reviewNo) {
+		System.out.println("PlaylistFolderDao.toggleLikeReview");
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("userNo", userNo);
+		map.put("reviewNo", reviewNo);
+
+		System.out.println(map);
+		
+		int result = sqlSession.insert("playlistFolder.toggleLikeReview", map);
+		
+		System.out.println("좋아요 토글 결과: " + result);
+		
+		return result;
+	}
 	
-	
+	public int deleteReview(int reviewNo, int playlistNo) {
+		System.out.println("PlaylistFolderDao.deleteReview");
+		
+		Map<String, Integer> map = new HashMap<>();
+		map.put("reviewNo", reviewNo);
+		map.put("playlistNo", playlistNo);
+		
+		int result = sqlSession.delete("playlistFolder.deleteReview", map);
+		
+		System.out.println(result + "건 : " + playlistNo + "번 플리에서 " + reviewNo + "번 서평 삭제");
+		
+		return result;
+	}
 }

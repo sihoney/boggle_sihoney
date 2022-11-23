@@ -12,6 +12,7 @@
 	</select> -->
 	
 	<!-- 해당 플리 서평리스트 -->
+	<!--  
 	<select id="reviewList" parameterType="map" resultType="PlaylistFolderVo">
 	 	<![CDATA[
 			select lst.rn rn,
@@ -95,6 +96,68 @@
 			and rn <= #{endRnum}
 		]]>
 	</select>
+	-->
+	
+	<!-- 해당 플리 서평리스트2 -->
+	<select id="reviewList2" parameterType="map" resultType="PlaylistFolderVo">
+	 	<![CDATA[
+			select rn,
+			       review_no reviewNo,
+			       playlist_no playlistNo,
+			       likeCnt likecnt,
+			       nickname nickname,
+			       user_no userNo,
+			       review_content reviewContent,
+			       to_char(review_date,'yyyy-mm-dd') reviewDate,
+			       book_title bookTitle,
+			       book_no bookNo,
+			       style_no styleNo,
+			       emo_name emoName,
+			       playlist_name playlistName,
+			       playlist_date playlistDate  
+			from(select rownum rn,
+			           review_no,
+			           playlist_no,
+			           likeCnt,
+			           nickname,
+			           user_no,
+			           review_content,
+			           review_date,
+			           book_title,
+			           book_no,
+			           style_no,
+			           emo_name,
+			           playlist_name,
+			           playlist_date
+			    from(select r.review_no,
+			               pr.playlist_no,
+			               NVL(lct.likeCtn, 0) likeCnt,
+			               u.nickname,
+			               u.user_no,
+			               r.review_content,
+			               r.review_date,
+			               b.book_title,
+			               b.book_no,
+			               s.style_no,
+			               e.emo_name,
+			               p.playlist_name,
+			               p.playlist_date
+			        from users u, review r, books b, style s, emotion e, playlist_review pr, playlist p, (select review_no,
+			                                                                                                     count(user_no) likeCtn
+			                                                                                              from review_user
+			                                                                                              group by review_no) lct
+			        where u.user_no = r.user_no
+			        and r.book_no = b.book_no
+			        and r.style_no = s.style_no
+			        and s.emo_no = e.emo_no
+			        and pr.review_no = r.review_no
+			        and pr.playlist_no = p.playlist_no
+			        and r.review_no = lct.review_no(+)
+			        and p.playlist_no = #{playlistNo}
+			        order by review_date desc))
+			where rn between #{startRnum} and #{endRnum}	
+		]]>
+	</select>
 	
 	<!-- 해당 플리 서평 카운트 -->
 	<select id="folderReviewCnt" parameterType="int" resultType="int">
@@ -118,10 +181,20 @@
 		]]>
 	</select>
 	
-	<!-- 플리 모달 페이징 -->
-	<select id="modalPage" parameterType="map" resultType="PlaylistFolderVo">
+	<!-- alreadyLiked -->
+	<select id="checkAlreadyLiked" parameterType="PlaylistFolderVo" resultType="int">
 	 	<![CDATA[
-	 	
+			select count(*)
+			from review_user
+			where review_no = #{reviewNo}
+			and user_no = #{userNo}	
+		]]>
+	</select>
+	
+	<!-- 모달>서평 리스트 (오류: 서평이 중복되서 나옴)-->
+	<!-- 
+	<select id="modalPage" parameterType="map" resultType="PlaylistFolderVo">
+	 	<![CDATA[	
 			select se.rn rn,
 			       se.reviewNo reviewNo,
 			       se.userNo userNo,
@@ -162,36 +235,298 @@
 	
 		]]>
 	</select>
+	 -->
 	
-	<!-- 서평 전체 카운트 -->
-	<select id="totalCnt" resultType="int">
-	 	<![CDATA[
-			select count(*)
-			from review
+	<!-- 모달>서평 리스트 (오류: 플리에 추가된 서평이 나옴) -->
+	<!--  
+	<select id="modalPage2" parameterType="map" resultType="PlaylistFolderVo">
+		<![CDATA[
+			select review_no reviewNo,
+			       review_content reviewContent,
+			       book_no bookNo,
+			       review_date reviewDate,
+			       emo_name emoName,
+			       user_no userNo,
+			       style_no styleNo,
+			       book_title bookTitle
+			from(select rownum rn,
+			           review_no,
+			           review_content,
+			           book_no,
+			           review_date,
+			           emo_name,
+			           user_no,
+			           style_no,
+			           book_title
+			    from(select r.review_no,
+			               r.review_content,
+			               r.book_no,
+			               r.review_date,
+			               e.emo_name,
+			               r.user_no,
+			               r.style_no,
+			               b.book_title
+			        from review r, books b, style s, emotion e, users u
+			        where r.book_no = b.book_no
+			        and r.style_no = s.style_no
+			        and s.emo_no = e.emo_no
+			        and r.user_no = u.user_no
+			        order by review_date desc))
+			where rn between #{startRnum} and #{endRnum}		
 		]]>
 	</select>
-
-	<!-- 플리 모달 검색창 -->
-	<select id="playlistSearch" parameterType="String" resultType="PlaylistFolderVo">
+	-->
+	
+	<!-- 모달>서평 리스트 (오류: 플리에 속한 서평 제외가 안됐음) -->
+	<!--  
+	<select id="modalPage3" parameterType="map" resultType="PlaylistFolderVo">
+		<![CDATA[
+			select review_no reviewNo,
+			       review_content reviewContent,
+			       book_no bookNo,
+			       review_date reviewDate,
+			       emo_name emoName,
+			       user_no userNo,
+			       style_no styleNo,
+			       book_title bookTitle
+			from(select rownum rn,
+			           review_no,
+			           review_content,
+			           book_no,
+			           review_date,
+			           emo_name,
+			           user_no,
+			           style_no,
+			           book_title
+			    from(select r.review_no,
+			                   r.review_content,
+			                   r.book_no,
+			                   r.review_date,
+			                   e.emo_name,
+			                   r.user_no,
+			                   r.style_no,
+			                   b.book_title
+			            from review r, books b, style s, emotion e, users u,(select pr.review_no
+			                                                                 from playlist_review pr, playlist p
+			                                                                 where pr.playlist_no = p.playlist_no
+			                                                                 and not pr.playlist_no in #{playlistNo}
+			                                                                 group by pr.review_no) t
+			            where r.book_no = b.book_no
+			            and r.style_no = s.style_no
+			            and s.emo_no = e.emo_no
+			            and r.user_no = u.user_no
+			            and t.review_no = r.review_no
+			            order by r.review_date desc))
+			where rn between #{startRnum} and #{endRnum}		
+		]]>
+	</select>
+	-->
+	
+	<!-- 모달>서평 리스트 -->
+	<select id="modalPage4" parameterType="map" resultType="PlaylistFolderVo">
+		<![CDATA[
+			select review_no reviewNo,
+			       review_content reviewContent,
+			       book_no bookNo,
+			       review_date reviewDate,
+			       emo_name emoName,
+			       user_no userNo,
+			       style_no styleNo,
+			       book_title bookTitle
+			from(select rownum rn,
+			           review_no,
+			           review_content,
+			           book_no,
+			           review_date,
+			           emo_name,
+			           user_no,
+			           style_no,
+			           book_title
+			    from(select r.review_no,
+			                   r.review_content,
+			                   r.book_no,
+			                   r.review_date,
+			                   e.emo_name,
+			                   r.user_no,
+			                   r.style_no,
+			                   b.book_title
+			            from review r, books b, style s, emotion e, users u,(select review_no
+																			from playlist_review
+																			where not review_no in (select review_no
+																			                        from playlist_review
+																			                        where playlist_no in #{playlistNo})
+																			group by review_no) t
+			            where r.book_no = b.book_no
+			            and r.style_no = s.style_no
+			            and s.emo_no = e.emo_no
+			            and r.user_no = u.user_no
+			            and t.review_no = r.review_no
+			            order by r.review_date desc))
+			where rn between #{startRnum} and #{endRnum}		
+		]]>
+	</select>
+	
+	<!-- 서평 전체 카운트 -->
+	<select id="totalCnt" parameterType="int" resultType="int">
 	 	<![CDATA[
-			select  r.review_content reviewContent,
-			        r.review_no reviewNo,
-			        e.emo_name emoName,
-			        b.book_title bookTitle,
-			        b.book_no bookNo,
-			        pr.playlist_no playlistNo
-			from review r, style s, emotion e, books b, playlist_review pr
-			where r.style_no = s.style_no
+			select count(*)
+			from review r, books b, style s, emotion e, users u,(select review_no
+			                                                    from playlist_review
+			                                                    where not review_no in (select review_no
+			                                                                            from playlist_review
+			                                                                            where playlist_no in #{playlistNo})
+			                                                    group by review_no) t
+			where r.book_no = b.book_no
+			and r.style_no = s.style_no
 			and s.emo_no = e.emo_no
-			and b.book_no = r.book_no
-			and r.review_no = pr.review_no
-			and (r.review_content like '%'||#{param}||'%' 
-			     or b.book_title like '%'||#{param}||'%'  
-			     or e.emo_name like '%'||#{param}||'%'
+			and r.user_no = u.user_no
+			and t.review_no = r.review_no
+		]]>
+	</select>
+	
+	<!-- 검색 결과의 총 수 -->
+	<!--  
+	<select id="totalCntSearchReview" parameterType="map" resultType="int">
+		<![CDATA[
+			select count(*)
+			from review r, books b, style s, emotion e, users u,(select pr.review_no
+			                                                     from playlist_review pr, playlist p
+			                                                     where pr.playlist_no = p.playlist_no
+			                                                     and not pr.playlist_no in #{playlistNo}
+			                                                     group by pr.review_no) t
+			where r.book_no = b.book_no
+			and r.style_no = s.style_no
+			and s.emo_no = e.emo_no
+			and r.user_no = u.user_no
+			and t.review_no = r.review_no
+			and (r.review_content like '%'||#{search}||'%' 
+			     or b.book_title like '%'||#{search}||'%'  
+			     or e.emo_name like '%'||#{search}||'%'
 			     )
 		]]>
 	</select>
-
+	-->
+	
+	<select id="totalCntSearchReview2" parameterType="map" resultType="int">
+		<![CDATA[	
+			select count(*)
+			from review r, books b, style s, emotion e, users u,(select review_no
+			                                                    from playlist_review
+			                                                    where not review_no in (select review_no
+			                                                                            from playlist_review
+			                                                                            where playlist_no in #{playlistNo})
+			                                                    group by review_no) t
+			where r.book_no = b.book_no
+			and r.style_no = s.style_no
+			and s.emo_no = e.emo_no
+			and r.user_no = u.user_no
+			and t.review_no = r.review_no
+			and (r.review_content like '%'||#{search}||'%' 
+			     or b.book_title like '%'||#{search}||'%'  
+			     or e.emo_name like '%'||#{search}||'%'
+			     )
+		]]>
+	</select>
+	
+	<!-- search reviews (페이징 + 해당 플리에 속한 서평 제외, 오류: 플리에 속한 서평들 제외 X) -->
+	<!--  
+	<select id="playlistSearch2" parameterType="map" resultType="PlaylistFolderVo">
+		<![CDATA[
+			select review_no reviewNo,
+			       review_content reviewContent,
+			       book_no bookNo,
+			       review_date reviewDate,
+			       emo_name emoName,
+			       user_no userNo,
+			       style_no styleNo,
+			       book_title bookTitle
+			from(select rownum rn,
+			           review_no,
+			           review_content,
+			           book_no,
+			           review_date,
+			           emo_name,
+			           user_no,
+			           style_no,
+			           book_title
+			    from(select r.review_no,
+			                   r.review_content,
+			                   r.book_no,
+			                   r.review_date,
+			                   e.emo_name,
+			                   r.user_no,
+			                   r.style_no,
+			                   b.book_title
+			            from review r, books b, style s, emotion e, users u,(select pr.review_no
+			                                                                 from playlist_review pr, playlist p
+			                                                                 where pr.playlist_no = p.playlist_no
+			                                                                 and not pr.playlist_no in #{playlistNo}
+			                                                                 group by pr.review_no) t
+			            where r.book_no = b.book_no
+			            and r.style_no = s.style_no
+			            and s.emo_no = e.emo_no
+			            and r.user_no = u.user_no
+			            and t.review_no = r.review_no
+			            and (r.review_content like '%'||#{search}||'%' 
+			                 or b.book_title like '%'||#{search}||'%'  
+			                 or e.emo_name like '%'||#{search}||'%'
+			                 )
+			            order by r.review_date desc))
+			where rn between #{startNum} and #{endNum}
+						
+		]]>
+	</select>
+	-->
+	
+	<!-- search reviews -->
+	
+	<select id="playlistSearch3" parameterType="map" resultType="PlaylistFolderVo">
+		<![CDATA[
+			select review_no reviewNo,
+			       review_content reviewContent,
+			       book_no bookNo,
+			       review_date reviewDate,
+			       emo_name emoName,
+			       user_no userNo,
+			       style_no styleNo,
+			       book_title bookTitle
+			from(select rownum rn,
+			           review_no,
+			           review_content,
+			           book_no,
+			           review_date,
+			           emo_name,
+			           user_no,
+			           style_no,
+			           book_title
+			    from(select r.review_no,
+			                   r.review_content,
+			                   r.book_no,
+			                   r.review_date,
+			                   e.emo_name,
+			                   r.user_no,
+			                   r.style_no,
+			                   b.book_title
+			            from review r, books b, style s, emotion e, users u,(select review_no
+			                                                                from playlist_review
+			                                                                where not review_no in (select review_no
+			                                                                                        from playlist_review
+			                                                                                        where playlist_no in #{playlistNo})
+			                                                                group by review_no) t
+			            where r.book_no = b.book_no
+			            and r.style_no = s.style_no
+			            and s.emo_no = e.emo_no
+			            and r.user_no = u.user_no
+			            and t.review_no = r.review_no
+			            and (r.review_content like '%'||#{search}||'%' 
+			                 or b.book_title like '%'||#{search}||'%'  
+			                 or e.emo_name like '%'||#{search}||'%'
+			                 )
+			            order by r.review_date desc))
+			where rn between #{startNum} and #{endNum}			
+		]]>
+	</select>
+	
 	<!-- 선택 서평 추가등록 -->
 	<select id="reviewsInsert" parameterType="PlaylistFolderVo" resultType="PlaylistFolderVo">
 	 	<![CDATA[
@@ -203,8 +538,8 @@
 		]]>
 	</select>
 	
-	<!-- 플레이리스트 로딩시 좋아요 체크 -->
-	<select id="checkLike" parameterType="PlaylistFolderVo" resultType="int">
+	<!-- 커버>플레이리스트 로딩시 좋아요 체크 -->
+	<select id="checkPlyAlreadyLiked" parameterType="PlaylistFolderVo" resultType="int">
 	 	<![CDATA[
 			select count(*)
 			from user_playlist
@@ -213,7 +548,7 @@
 		]]>
 	</select>
 	
-	<!-- 좋아요 취소 -->
+	<!-- 커버>플리 좋아요 취소 -->
 	<delete id="playlistUnlike" parameterType="PlaylistFolderVo">
 	 	<![CDATA[
 			delete from user_playlist
@@ -222,7 +557,7 @@
 		]]>
 	</delete>
 	
-	<!-- 해당 플리 좋아요 -->
+	<!-- 커버>해당 플리 좋아요 -->
 	<insert id="playlistlike" parameterType="PlaylistFolderVo">
 	 	<![CDATA[
 			insert into user_playlist 
@@ -240,5 +575,50 @@
 		]]>
 	</delete>
 	
+	<select id="toggleLikeReview" parameterType="map" resultType="int">
+		<![CDATA[
+			declare
+			cnt number;
+			
+			begin 
+			    select count(*) 
+			    into cnt
+			    from review_user 
+			    where user_no = #{userNo} 
+			    and review_no = #{reviewNo};
+			
+			    if cnt > 0 then
+			        delete from review_user
+			        where user_no = #{userNo}
+			        and review_no = #{reviewNo};
+			        
+			        select count(*)
+			        into cnt
+			        from review_user
+			        where user_no = #{userNo}
+			        and review_no = #{reviewNo};			        
+			    else
+			        insert into review_user
+			        values(seq_playlist_review_no.nextval, 
+			               #{userNo}, 
+			               #{reviewNo}, 
+			               sysdate);
+			               
+			        select count(*)
+			        into cnt
+			        from review_user
+			        where user_no = #{userNo}
+			        and review_no = #{reviewNo};			               
+			    end if;
+			end;			
+		]]>
+	</select>
 	
+	<delete id="deleteReview" parameterType="map">
+		<![CDATA[
+			delete from playlist_review
+			where playlist_no = #{playlistNo}
+			and review_no = #{reviewNo}			
+		]]>
+	</delete>
 </mapper>
