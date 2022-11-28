@@ -23,12 +23,13 @@ public class ReviewWriteDao {
 	public List<StyleVo> getStyle(int emoNo) {
 		List<StyleVo> list = sqlSession.selectList("reviewwrite.getStyle", emoNo);
 		
-		System.out.println("style list: " + list);
-		
 		return list;
 	}
 	
 	public int addReview(Map<String, Object> map) {
+		System.out.println("ReviewWriteDao.addReview");
+		System.out.println(map);
+		
 		int result = sqlSession.insert("reviewwrite.addReview", map);
 		
 		System.out.println(result + "건 | 리뷰가 저장됨");
@@ -49,6 +50,8 @@ public class ReviewWriteDao {
 	}
 	
 	public int checkGenre(Map<String,Object> map) {
+		System.out.println("ReviewWriteDao.checkGenre");
+		
 		return sqlSession.selectOne("reviewwrite.checkGenre", map);
 	}
 	

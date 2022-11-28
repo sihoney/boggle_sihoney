@@ -41,13 +41,13 @@ public class ReviewWriteController {
 	MainDao mainDao;
 	
 	@RequestMapping("/write")
-   public String review_write() {
-      System.out.println("write");
-      
-      return "review_write/review_write";
-   }
+	public String review_write() {
+		System.out.println("ReviewWriteController.write");
+	  
+		return "review_write/review_write";
+	}
 	
-	
+//	알라딘 api
 	@ResponseBody
 	@RequestMapping(value="/searchbook", method = {RequestMethod.GET, RequestMethod.POST}, produces="applicatioin/json;charset=UTF-8")
 	public String searchbook(@RequestParam String query, 
@@ -118,6 +118,7 @@ public class ReviewWriteController {
 		return str;
 	}
 
+//	스타일 정보
 	@ResponseBody
 	@RequestMapping("/getStyle")
 	public List<StyleVo> getStyle(@RequestParam(value="emoNo") int emoNo) {
@@ -126,6 +127,7 @@ public class ReviewWriteController {
 		return reviewWriteService.getStyle(emoNo);
 	}
 	
+//	서평 등록
 	@ResponseBody
 	@RequestMapping("/addReview")
 	public Map<String, String> addReview(@RequestBody Map<String, Object> map,
@@ -133,7 +135,7 @@ public class ReviewWriteController {
 		System.out.println("ReviewWriteController > addReview");
 	
 		System.out.println(map);
- 
+
 		reviewWriteService.addReview(map);
 
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
@@ -153,16 +155,16 @@ public class ReviewWriteController {
 		return resultMap;
 	}
 	
+//	책 정보
 	@ResponseBody
 	@RequestMapping("/getBookInfo")
 	public List<Map<String, Object>> getBookInfo(@RequestParam(value="bookTitle") String bookTitle) throws JsonParseException, JsonMappingException, IOException {
 		System.out.println("ReviewWriteController > getBookInfo");
-		
-		System.out.println("bookTitle: "+bookTitle);
-		
+
 		return reviewWriteService.getBookInfo(bookTitle);
 	}
 	
+//	서평 정보
 	@ResponseBody
 	@RequestMapping("/getPrevReviewInfo")
 	public Map<String, Object> getPrevReviewInfo(@RequestParam(value="reviewNo") int reviewNo) {
@@ -173,6 +175,7 @@ public class ReviewWriteController {
 		return reviewWriteService.getPrevReviewInfo(reviewNo);
 	}
 	
+//	서평 수정
 	@ResponseBody
 	@RequestMapping("/modifyReview")
 	public Map<String, String> modifyReview(@RequestBody Map<String, Object> map,
@@ -207,6 +210,7 @@ public class ReviewWriteController {
 		return resultMap;
 	}
 	
+//	모달>플리 정보
 	/* 서평쓰기 (서평 플레이리스트에 추가 모달), 내 서재, 남서재, 상세페이지, 취향저격 홈 */
 	@ResponseBody
 	@RequestMapping("/getMyPlaylist")
@@ -218,6 +222,7 @@ public class ReviewWriteController {
 		return mainDao.getMyPlaylist(userNo);
 	}
 	
+//	플리에 서평 저장
 	@ResponseBody
 	@RequestMapping("/addReviewToPly")
 	public int addReviewToPly(@RequestParam(value="playlistNo")int playlistNo, 

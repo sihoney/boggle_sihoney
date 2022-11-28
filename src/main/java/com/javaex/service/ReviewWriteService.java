@@ -30,12 +30,8 @@ public class ReviewWriteService {
 		for(int i = 0; i < items.length(); i++) {
 			
 			JSONObject item = items.getJSONObject(i); 
-			
-			System.out.println("item.has(\"isbn13\") : " + item.get("isbn13"));
-			
+
 			if(item.get("isbn13") != "") {
-				System.out.println("item isbn13 isn't null");
-				
 				String isbn = (String) item.get("isbn13");
 				
 				Long isbn13 = Long.parseLong(isbn);
@@ -57,6 +53,8 @@ public class ReviewWriteService {
 	}
 	
 	public int addReview(Map<String, Object> map) {
+		
+		System.out.println("ReviewWriteService.addReview");
 		
 		// 0. 장르 테이블에 이미 저장되어 있는지 확인
 		int result = reviewWriteDao.checkGenre(map);

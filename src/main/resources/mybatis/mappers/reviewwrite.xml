@@ -40,7 +40,7 @@
 			where emo_no = #{emoNo} 
 		]]>
 	</select>
-	
+	 
 	<insert id="addReview" parameterType="map">
 		<selectKey keyProperty="reviewNo" resultType="int" order="BEFORE">
 			select seq_review_no.nextval from dual
@@ -56,6 +56,19 @@
 		]]>
 	</insert>
 	
+	<!-- 
+	<insert id="addReview" parameterType="map">
+		<![CDATA[
+			insert into review
+			values(seq_review_no.nextval, 
+			       #{userNo}, 
+			       #{bookNo},
+			       #{styleNo},
+			       #{reviewContent}, 
+			       sysdate)
+		]]>
+	</insert>
+	 -->	
 	<insert id="addGenre" parameterType="map">
 		<![CDATA[
 			insert into genre
@@ -101,7 +114,7 @@
 		]]>
 	</select>
 	
-		<select id="getBookInfo" parameterType="String" resultMap="Rmap">
+	<select id="getBookInfo" parameterType="String" resultMap="Rmap">
 		<![CDATA[
 			select book_no,
 			       cover_url,
