@@ -358,17 +358,24 @@ function reviewDelete(){
 }
 */
 
-function toggleLikeReview(reviewNo){
+function toggleLikeReview(reviewNo, classname){
 	
+	let like = 1
+	if(classname == 'glyphicon-heart-empty') {
+		like = 0
+	}
+		
 	$.ajax({
 		url: "toggleLikeReview",
 		type: "post",
 		data: {
-			reviewNo: reviewNo
+			reviewNo: reviewNo,
+			like: like
 		},
 		dataType: "json",
 		success: function(data) {
-			console.log("result: " + data + ", 토글 좋아요 완료")
+			
+			console.log(data + "건 좋아요 토글 성공")
 		},
 		error : function(XHR, status, error) {
 			console.log(status + " : " + error)
@@ -383,19 +390,22 @@ function fetchDeleteReview(reviewNo) {
 		type: "post",
 		data: {
 			reviewNo: reviewNo,
-			playlistNo : playlistNo
+			playlistNo : playlistNo,
+			makerUserNo: userNo
 		},
 		dataType: "json",
 		success: function(data) {
+						
 			console.log(data + "회, 삭제 완료")
 			
 			/*
 			-> location.href 사용하면 session authUser 가 사라짐(서버에서 보내는 거기 때문)
 			-> response body로 서평부분만 업데이트하려고 하면 jsp(html)를 수정해야함(c 태그 foreach를 없애야 함)
-			-> /folder 로 보내기 (화면 업데이트가 안됨)
-			
+			-> /folder(서버) 로 보내기 (화면 업데이트가 안됨)
+			-> 서버 쪽에서 삭제하고 click-playlist.jsp 화면으로 보냄 (화면 업데이트가 안됨)
 			*/
-
+			
+			location.reload()
 		},
 		error: function(XHR, status, error) {
 			console.log(status + " : " + error)
@@ -469,18 +479,18 @@ function emptyResult(){
 }
 
 function toggleHeartIcon(reviewNo) {
-		$('#'+reviewNo).toggleClass('glyphicon-heart-empty')
-		$('#'+reviewNo).toggleClass('glyphicon-heart')
+		$('#btn_like_'+reviewNo).toggleClass('glyphicon-heart-empty')
+		$('#btn_like_'+reviewNo).toggleClass('glyphicon-heart')
 }
 
 function changeLikeCount(reviewNo) {
-	let crtLikeCnt = $('#'+reviewNo).next().text() * 1
+	let crtLikeCnt = $('#btn_like_'+reviewNo).next().text() * 1
 	
-	if($('#'+reviewNo).hasClass('glyphicon-heart-empty') == true) {
+	if($('#btn_like_'+reviewNo).hasClass('glyphicon-heart-empty') == true) {
 
-		$('#'+reviewNo).next().text(crtLikeCnt + 1)		
+		$('#btn_like_'+reviewNo).next().text(crtLikeCnt + 1)		
 	} else {
-		$('#'+reviewNo).next().text(crtLikeCnt - 1)
+		$('#btn_like_'+reviewNo).next().text(crtLikeCnt - 1)
 	}
 }
 
@@ -571,12 +581,13 @@ $('.btn_delete_review').each(function(index, btn_delete){
 $('.btn_like').each(function(index, btn_like){
 	
 	btn_like.addEventListener("click", function() {
-
-		let reviewNo = btn_like.id
+	
+		let reviewNo = btn_like.id.slice(9)
+		let classname = btn_like.classList[2]
 		
-		toggleLikeReview(reviewNo)
-		changeLikeCount(reviewNo)
-		toggleHeartIcon(reviewNo)		
+		toggleLikeReview(reviewNo, classname) // db 통신
+		changeLikeCount(reviewNo) // 좋아요 수 변경
+		toggleHeartIcon(reviewNo) // 하트 아이콘 변경
 	})
 })
 

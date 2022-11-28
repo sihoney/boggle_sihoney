@@ -1,6 +1,8 @@
 package com.javaex.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,23 +16,35 @@ public class MybookDao {
 	@Autowired
 	private SqlSession sqlSession;
 
-	
-	public List<MybookVo> getList(int userNo){
-		System.out.println("MybookDao.getList()");
+
+//	paging이 적용된 리스트 가져오기
+	public List<MybookVo> getList2(int startNum, int endNum, int userNo) {
 		
-		List<MybookVo> mbList = sqlSession.selectList("mybook.selectList", userNo);
-		System.out.println(mbList.toString());
+		System.out.println("MybookDao.getList2()");
 		
-		return mbList;
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
+		map.put("userNo", userNo);
+		
+		return sqlSession.selectList("mybook.getList2", map);
+	}
+
+//	페이징 기능 + 인기순 리스트
+	public List<MybookVo> getPopular2(int startNum, int endNum, int userNo) {
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
+		map.put("userNo", userNo);		
+		
+		return sqlSession.selectList("mybook.selectpopular2", map);
 	}
 	
-	public List<MybookVo> getPopular(int userNo){
-		System.out.println("MybookDao.getPopular()");
-		
-		List<MybookVo> mbList = sqlSession.selectList("mybook.selectpopular", userNo);
-		System.out.println(mbList.toString());
-		
-		return mbList;
+	public int totalCnt(int userNo) {
+		return sqlSession.selectOne("mybook.totalCnt", userNo);
 	}
 	
 	public int checklike(MybookVo checklike){
@@ -113,12 +127,17 @@ public class MybookDao {
 	}
 	
 	//해당 유저넘버, 감정태그 받으면 그 리스트만 출력
-	public List<MybookVo> emoList(MybookVo emo){
-		System.out.println("mybookService.emoList");
+	public List<MybookVo> emoList(int startNum, int endNum, int userNo, String emoName){
+		System.out.println("mybookDao.emoList");
 		
-		List<MybookVo> emoList = sqlSession.selectList("mybook.emoList", emo);
+		Map<String, Object> map = new HashMap<>();
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
+		map.put("userNo", userNo);
+		map.put("emoName", emoName);
+		
+		List<MybookVo> emoList = sqlSession.selectList("mybook.emoList2", map);
 		
 		return emoList;	
 	}
-	
 }

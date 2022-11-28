@@ -1,6 +1,8 @@
 package com.javaex.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,29 +17,74 @@ public class MybookService {
 	@Autowired
 	private  MybookDao mybookDao;
 	
-	//유저번호 입력시 해당유저 서평리스트 출력해주는 메소드
-	public List<MybookVo> list(int userNo){
-		System.out.println("mybookService.list()");
+
+	public Map<String, Object> list(String sort, int crtPage, int userNo, String emoName) {
 		
-		List<MybookVo> mbList = mybookDao.getList(userNo);
+		System.out.println("MybookService.list(" + sort + ", " + crtPage + ", " + userNo + ", " + emoName + ")");
 		
-		return mbList;
+		// 페이지 당 글 개수
+		int listCnt = 10;
+		
+		// 시작글 번호
+		int startNum = (crtPage - 1) * listCnt + 1;
+		
+		// 마지막글 번호
+		int endNum = startNum + listCnt - 1;
+		
+		List<MybookVo> mybookList;
+		if(sort.equals("latest")) {
+			mybookList = mybookDao.getList2(startNum, endNum, userNo);
+		}
+		else if(sort.equals("popular")){
+			mybookList = mybookDao.getPopular2(startNum, endNum, userNo);
+		}
+		else {
+			mybookList = mybookDao.emoList(startNum, endNum, userNo, emoName);
+		}
+		
+		/////////////////////
+		//// 페이징 
+		/////////////////////	
+		int totalCnt = mybookDao.totalCnt(userNo);
+		
+		// 페이지당 버튼 갯수
+		int pageBtnCount = 5;
+		
+		// 마지막 버튼 번호
+		int endPageBtnNo = (int) (Math.ceil(crtPage / (double)pageBtnCount)) * pageBtnCount;
+		
+		// 시작 버튼 번호
+		int startPageBtnNo = endPageBtnNo - (pageBtnCount - 1);
+		
+		// 다음 화살표 유무
+		boolean next = false;
+		if(endPageBtnNo * listCnt < totalCnt) {
+			next = true;
+		} else { // 다음 화살표가 안보이면 마지막 버튼 값을 다시 계산
+			endPageBtnNo = (int) Math.ceil(totalCnt / (double)listCnt);
+		}
+		
+		// 이전 화살표 유무
+		boolean prev = false;
+		if(startPageBtnNo != 1) {
+			prev = true;
+		}
+ 		
+		/////////////////////
+		//// 포장 
+		/////////////////////
+		Map<String, Object> pMap = new HashMap<String, Object>();
+		pMap.put("mybookList", mybookList);
+		pMap.put("prev", prev);
+		pMap.put("next", next);
+		pMap.put("startPageBtnNo", startPageBtnNo);
+		pMap.put("endPageBtnNo", endPageBtnNo);
+		
+		return pMap;			
 	}
-	
-	//유저번호 입력시 해당유저 서평리스트 출력해주는 메소드(최신순)
-	public List<MybookVo> popularlist(int userNo){
-		System.out.println("mybookService.popularlist()");
-		
-		List<MybookVo> mbList = mybookDao.getPopular(userNo);
-		
-		return mbList;
-	}
-	
-	
+
 	//좋아요 여부 확인
 	public int likeok(MybookVo checklike) {
-		//System.out.println("mybookService.likeok()");
-
 		int count = mybookDao.checklike(checklike);
 
 		return count;
@@ -131,16 +178,4 @@ public class MybookService {
 			 return 0;
 		}
 	}
-	
-	//해당 유저넘버, 감정태그 받으면 그 리스트만 출력
-	public List<MybookVo> emoList(MybookVo emo){
-		System.out.println("mybookService.emoList");
-		
-		List<MybookVo> emoList = mybookDao.emoList(emo);
-		
-		return emoList;	
-	}
-	
-	
-	
 }

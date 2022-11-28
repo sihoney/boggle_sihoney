@@ -119,11 +119,11 @@
 							<c:choose>
 								<c:when test="${playlistVo.alreadyLiked eq true}">
 									<!-- 좋아요 활성화 -->
-									<span id="${playlistVo.reviewNo }" class="btn_like glyphicon glyphicon-heart icon-success" aria-hidden="true"></span>
+									<span id="btn_like_${playlistVo.reviewNo }" class="btn_like glyphicon glyphicon-heart icon-success" aria-hidden="true"></span>
 								</c:when>
 								<c:otherwise>
 									<!-- 좋아요 비활성화 -->
-									<span id="${playlistVo.reviewNo }" class="btn_like glyphicon glyphicon-heart-empty icon-success" aria-hidden="true"></span> 													
+									<span id="btn_like_${playlistVo.reviewNo }" class="btn_like glyphicon glyphicon-heart-empty icon-success" aria-hidden="true"></span> 													
 								</c:otherwise>
 							</c:choose>
 

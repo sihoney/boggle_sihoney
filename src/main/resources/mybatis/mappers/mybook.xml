@@ -47,6 +47,117 @@
 
 	</select>
 	
+	<!-- paging이 적용된 리스트 가져오기 -->
+	<select id="getList2" parameterType="map" resultType="MybookVo">
+		<![CDATA[
+			select rn,
+			       reviewNo,
+			       bookTitle,
+			       bookNo,
+			       userNo,
+			       nickname,
+			       reviewContent,
+			       styleNo,
+			       emoName,
+			       likecnt,
+			       reviewDate
+			from (select rownum rn,
+			           reviewNo,
+			           bookTitle,
+			           bookNo,
+			           userNo,
+			           nickname,
+			           reviewContent,
+			           styleNo,
+			           emoName,
+			           likecnt,
+			           reviewDate
+			        from (select r.review_no reviewNo,
+			                b.book_title bookTitle,
+			                b.book_no bookNo,
+			                r.user_no userNo,
+			                r.nickname,
+			                r.review_content reviewContent,
+			                r.style_no styleNo,
+			                r.emo_name emoName,
+			                NVL(r.likecnt,0) likecnt,
+			                to_char(r.review_date, 'yyyy/mm/dd') reviewDate
+			        from   (select  r.review_no,
+			                        ru.likecnt,
+			                        r.style_no,
+			                        r.emo_name,
+			                        r.user_no,
+			                        r.book_no,
+			                        r.nickname,
+			                        r.review_content,
+			                        r.review_date
+			                from   (select  r.review_no,
+			                                s.style_no,
+			                                e.emo_no,
+			                                e.emo_name,
+			                                r.book_no,
+			                                u.user_no,
+			                                u.nickname,
+			                                r.review_content,
+			                                r.review_date
+			                        from    review r, style s, emotion e, users u
+			                        where   e.emo_no = s.emo_no
+			                        and     r.style_no = s.style_no
+			                        and     r.user_no = u.user_no) r,(select review_no, count(review_no) likecnt
+			                                                          from review_user
+			                                                          group by review_no) ru
+			                where r.review_no = ru.review_no(+)) r, books b
+			        where   r.book_no = b.book_no
+			        and r.user_no = #{userNo}
+			        ORDER BY reviewDate desc))
+			where rn between #{startNum} and #{endNum}			
+		]]>
+	</select>
+	
+	<select id="totalCnt" parameterType="int" resultType="int">
+		<![CDATA[
+			select count(*)
+			from (select r.review_no reviewNo,
+			        b.book_title bookTitle,
+			        b.book_no bookNo,
+			        r.user_no userNo,
+			        r.nickname,
+			        r.review_content reviewContent,
+			        r.style_no styleNo,
+			        r.emo_name emoName,
+			        NVL(r.likecnt,0) likecnt,
+			        to_char(r.review_date, 'yyyy/mm/dd') reviewDate
+			from   (select  r.review_no,
+			                ru.likecnt,
+			                r.style_no,
+			                r.emo_name,
+			                r.user_no,
+			                r.book_no,
+			                r.nickname,
+			                r.review_content,
+			                r.review_date
+			        from   (select  r.review_no,
+			                        s.style_no,
+			                        e.emo_no,
+			                        e.emo_name,
+			                        r.book_no,
+			                        u.user_no,
+			                        u.nickname,
+			                        r.review_content,
+			                        r.review_date
+			                from    review r, style s, emotion e, users u
+			                where   e.emo_no = s.emo_no
+			                and     r.style_no = s.style_no
+			                and     r.user_no = u.user_no) r,(select review_no, count(review_no) likecnt
+			                                                  from review_user
+			                                                  group by review_no) ru
+			        where r.review_no = ru.review_no(+)) r, books b
+			where   r.book_no = b.book_no
+			and r.user_no = #{userNo}
+			ORDER BY reviewDate desc)			
+		]]>
+	</select>
+	
 	<!-- selectpopular -->
 	<select id="selectpopular" resultType="MybookVo" parameterType="int">
 		<![CDATA[
@@ -90,6 +201,73 @@
 			ORDER BY likecnt desc
 		]]>
 
+	</select>
+	
+	<!-- selectpopular + 페이징 기능 -->
+	<select id="selectpopular2" parameterType="map" resultType="MybookVo">
+		<![CDATA[
+			select rn,
+			       reviewNo,
+			       bookTitle,
+			       bookNo,
+			       userNo,
+			       nickname,
+			       reviewContent,
+			       styleNo,
+			       emoName,
+			       likecnt,
+			       reviewDate 
+			from (select rownum rn,
+			           reviewNo,
+			           bookTitle,
+			           bookNo,
+			           userNo,
+			           nickname,
+			           reviewContent,
+			           styleNo,
+			           emoName,
+			           likecnt,
+			           reviewDate
+			    from(select  r.review_no reviewNo,
+			                b.book_title bookTitle,
+			                b.book_no bookNo,
+			                r.user_no userNo,
+			                r.nickname,
+			                r.review_content reviewContent,
+			                r.style_no styleNo,
+			                r.emo_name emoName,
+			                NVL(r.likecnt,0) likecnt,
+			                to_char(r.review_date, 'yyyy/mm/dd') reviewDate
+			        from   (select  r.review_no,
+			                        ru.likecnt,
+			                        r.style_no,
+			                        r.emo_name,
+			                        r.user_no,
+			                        r.book_no,
+			                        r.nickname,
+			                        r.review_content,
+			                        r.review_date
+			                from   (select  r.review_no,
+			                                s.style_no,
+			                                e.emo_no,
+			                                e.emo_name,
+			                                r.book_no,
+			                                u.user_no,
+			                                u.nickname,
+			                                r.review_content,
+			                                r.review_date
+			                        from    review r, style s, emotion e, users u
+			                        where   e.emo_no = s.emo_no
+			                        and     r.style_no = s.style_no
+			                        and     r.user_no = u.user_no) r,(select review_no, count(review_no) likecnt
+			                                                          from review_user
+			                                                          group by review_no) ru
+			                where r.review_no = ru.review_no(+)) r, books b
+			        where   r.book_no = b.book_no
+			        and r.user_no = #{userNo}
+			        ORDER BY likecnt desc))
+			where rn between #{startNum} and #{endNum}		
+		]]>
 	</select>
 	
 	<!-- checklike -->
@@ -370,5 +548,55 @@ from (select    ru.review_like_date reviewLikeDate,
 		]]>
 	</select>
 	
-	
+	<!-- 페이징 기능 + 감정 분류 서평 리스트 -->
+	<select id="emoList2" parameterType="map" resultType="MybookVo">
+		<![CDATA[
+			select rn, 
+			       reviewNo,
+			       likecnt,
+			       styleNo,
+			       emoNo,
+			       emoName,
+			       bookNo,
+			       bookTitle,
+			       userNo,
+			       nickname,
+			       reviewContent,
+			       reviewDate
+			from (select  rownum rn,
+			            r.review_no reviewNo, 
+			            NVL(ru.likecnt,0) likecnt,
+			            r.style_no styleNo,
+			            r.emo_no emoNo,
+			            r.emo_name emoName,
+			            r.book_no bookNo,
+			            r.book_title bookTitle,
+			            r.user_no userNo,
+			            r.nickname,
+			            r.review_content reviewContent,
+			            r.review_date reviewDate
+			    from (select    r.review_no,        
+			                    s.style_no,
+			                    e.emo_no,
+			                    e.emo_name,
+			                    r.book_no,
+			                    b.book_title,
+			                    u.user_no,
+			                    u.nickname,
+			                    r.review_content,
+			                    r.review_date
+			            from    review r, style s, emotion e, users u, books b
+			            where   e.emo_no = s.emo_no
+			            and     r.style_no = s.style_no
+			            and     r.user_no = u.user_no
+			            and     b.book_no = r.book_no
+			            order by r.review_date desc ) r, (select review_no, count(review_no) likecnt
+			                                                from review_user
+			                                                group by review_no) ru
+			    where r.review_no = ru.review_no(+)
+			    and r.user_no= #{userNo}
+			    and r.emo_name = #{emoName})
+			where rn between #{startNum} and #{endNum}
+		]]>
+	</select>
 </mapper>

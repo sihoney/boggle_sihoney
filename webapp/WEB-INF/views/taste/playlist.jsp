@@ -83,10 +83,8 @@
 								onclick="location.href='${pageContext.request.contextPath}/playlist/folder?playlistNo=${vo.playlistNo }&userNo=${vo.userNo }&nickname=${vo.nickname }'">
 								<!-- 1~14까지 감정으로색깔 -->
 
-
-								<div onclick="location.href='${pageContext.request.contextPath}/main/playlist?playlistNo=${vo.playlistNo }&nickname=${vo.nickname }';"style="cursor:pointer;">
+								<div onclick="location.href='${pageContext.request.contextPath}/main?playlistNo=${vo.playlistNo }&nickname=${vo.nickname }';"style="cursor:pointer;">
 									<p id="name">${vo.playlistName}</p>
-
 								</div>
 							</div>
 

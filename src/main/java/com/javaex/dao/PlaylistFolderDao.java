@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.javaex.vo.LikeReviewVo;
 import com.javaex.vo.PlaylistFolderVo;
 
 @Repository
@@ -151,9 +152,9 @@ public class PlaylistFolderDao {
 	public int checkPlyAlreadyLiked(PlaylistFolderVo playlistFolderVo) {	
 		
 		System.out.println("PlaylistFolderDao.checkPlyAlreadyLiked");
+
 		int checkLike = sqlSession.selectOne("playlistFolder.checkPlyAlreadyLiked",playlistFolderVo);
-		System.out.println("좋아요 체크:"+checkLike);
-		
+
 		return checkLike;
 		
 	}
@@ -178,22 +179,50 @@ public class PlaylistFolderDao {
 		return likeResult;
 	}
 	
-	public int toggleLikeReview(Integer userNo, Integer reviewNo) {
-		System.out.println("PlaylistFolderDao.toggleLikeReview");
-		
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("userNo", userNo);
-		map.put("reviewNo", reviewNo);
+	/* 서평 좋아요 */
+	/*
+	public void toggleLikeReview(LikeReviewVo reviewVo) {
+		System.out.println("Dao.toggleLikeReview");
 
-		System.out.println(map);
+		Map<String, Integer> map = new HashMap<>();
+		map.put("reviewNo", reviewVo.getReviewNo());
+		map.put("userNo", reviewVo.getUserNo());
 		
-		int result = sqlSession.insert("playlistFolder.toggleLikeReview", map);
+		// pl/sql는 return 하는 값이 없다 (query가 아니라 procedure이기 때문)
+		sqlSession.insert("playlistFolder.toggleLikeReview", map);
 		
-		System.out.println("좋아요 토글 결과: " + result);
+		System.out.println("--sqlSession.toggleLikeReview");
+	}
+	
+	public int checkToggleLike(LikeReviewVo reviewVo) {
+		System.out.println("Dao.checkToggleLike");
+		
+		return sqlSession.selectOne("playlistFolder.checkToggleLike", reviewVo);
+	}
+	*/
+	public int likeReview(LikeReviewVo reviewVo) {
+		
+		System.out.println("reviewVo: " + reviewVo);
+				
+		int result = sqlSession.insert("playlistFolder.likeReview", reviewVo);
+		
+		System.out.println(result + "건 | 서평 좋아요");
 		
 		return result;
 	}
 	
+	public int cancelLikeReview(LikeReviewVo reviewVo) {
+		
+		System.out.println("reviewVo: " + reviewVo);
+		
+		int result = sqlSession.delete("playlistFolder.cancelLikeReview", reviewVo);
+		
+		System.out.println(result + "건 |  서평 좋아요 취소");
+		
+		return result;
+	}
+	
+	/* 서평 삭제 */
 	public int deleteReview(int reviewNo, int playlistNo) {
 		System.out.println("PlaylistFolderDao.deleteReview");
 		

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.PlaylistFolderService;
+import com.javaex.vo.LikeReviewVo;
 import com.javaex.vo.PlaylistFolderVo;
 import com.javaex.vo.UserVo;
 
@@ -124,8 +125,7 @@ public class PlaylistFolderController {
 	public int checkPlyAlreadyLiked(@ModelAttribute PlaylistFolderVo playlistFolderVo) {
 		
 		System.out.println("Controller.checkPlyAlreadyLiked");
-		System.out.println(playlistFolderVo); // playlistNo, userNo
-		
+
 		int checkLike = playlistfolderService.checkPlyAlreadyLiked(playlistFolderVo);
 		
 		return checkLike;
@@ -153,27 +153,37 @@ public class PlaylistFolderController {
 		return likeResult;
 	}
 
+//	서평 좋아요 & 좋아요 취소
 	@ResponseBody
 	@RequestMapping("/toggleLikeReview")
 	public int toggleLikeReview(@RequestParam("reviewNo")Integer reviewNo,
-								 HttpSession session) {
+								@RequestParam("like")Integer like,
+								HttpSession session) {
+		
 		System.out.println("Controller.toggleLikeReview");
 		
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		
-		if(authUser == null) {return -1;} 
-		
+		if(authUser == null) {return -2;} 
 		Integer userNo = authUser.getUserNo();
 		
-		return playlistfolderService.toggleLikeReview(userNo, reviewNo);
+		LikeReviewVo reviewVo = new LikeReviewVo();
+		reviewVo.setReviewNo(reviewNo);
+		reviewVo.setUserNo(userNo);
+		
+		return playlistfolderService.toggleLikeReview(reviewVo, like);
 	}
 	
+//	플리에서 서평 삭제 
 	@ResponseBody
 	@RequestMapping("deleteReviewFromPly")
 	public int deleteReviewFromPly(@RequestParam("reviewNo")int reviewNo,
-								   @RequestParam("playlistNo")int playlistNo) {
+								   	  @RequestParam("playlistNo")int playlistNo,
+								   	  @RequestParam("makerUserNo")int makerUserNo,
+								   	  @RequestParam(value = "crtPage", required = false, defaultValue = "1") int crtPage,
+								   	  Model model,
+									  HttpSession session) {
 		System.out.println("Controller.deleteReviewFromPly");
-	
+
 		return playlistfolderService.deleteReview(reviewNo, playlistNo);
 	}
 }

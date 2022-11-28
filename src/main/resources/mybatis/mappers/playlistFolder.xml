@@ -574,8 +574,8 @@
 			where review_no = #{reviewNo}
 		]]>
 	</delete>
-	
-	<select id="toggleLikeReview" parameterType="map" resultType="int">
+
+	<insert id="toggleLikeReview" parameterType="map">
 		<![CDATA[
 			declare
 			cnt number;
@@ -592,28 +592,45 @@
 			        where user_no = #{userNo}
 			        and review_no = #{reviewNo};
 			        
-			        select count(*)
-			        into cnt
-			        from review_user
-			        where user_no = #{userNo}
-			        and review_no = #{reviewNo};			        
 			    else
 			        insert into review_user
 			        values(seq_playlist_review_no.nextval, 
 			               #{userNo}, 
 			               #{reviewNo}, 
 			               sysdate);
-			               
-			        select count(*)
-			        into cnt
-			        from review_user
-			        where user_no = #{userNo}
-			        and review_no = #{reviewNo};			               
+			               			               
 			    end if;
 			end;			
 		]]>
+	</insert>
+	
+	<select id="checkToggleLike" parameterType="LikeReviewVo" resultType="int">
+		<![CDATA[
+			select count(*)
+			from review_user
+			where review_no = #{reviewNo}
+			and user_no = #{userNo}			
+		]]>
 	</select>
 	
+	<insert id="likeReview" parameterType="LikeReviewVo">
+		<![CDATA[
+	        insert into review_user
+	        values(seq_playlist_review_no.nextval, 
+	               #{userNo}, 
+	               #{reviewNo}, 
+	               sysdate)			
+		]]>
+	</insert>
+	
+	<delete id="cancelLikeReview" parameterType="LikeReviewVo">
+		<![CDATA[
+	        delete from review_user
+	        where user_no = #{userNo}
+	        and review_no = #{reviewNo}			
+		]]>
+	</delete>
+
 	<delete id="deleteReview" parameterType="map">
 		<![CDATA[
 			delete from playlist_review

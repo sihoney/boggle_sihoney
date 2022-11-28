@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaex.dao.PlaylistFolderDao;
+import com.javaex.vo.LikeReviewVo;
 import com.javaex.vo.PlaylistFolderVo;
 
 @Service
@@ -42,9 +43,7 @@ public class PlaylistFolderService {
 			pfvo.setUserNo(authUserNo); //오류: 작성자가 해당 리뷰를 좋아요했는지 검사 --> 해당 유저가 좋아요했는지 검사해야함
 			
 			boolean alreadyLiked = playlistfolderDao.checkAlreadyLiked(pfvo);
-			
-			System.out.println("alreadyLiked: " + alreadyLiked);
-			
+
 			pfvo.setAlreadyLiked(alreadyLiked);
 		}
 		
@@ -260,12 +259,24 @@ public class PlaylistFolderService {
 		return likeResult;
 	}
 
-	public int toggleLikeReview(Integer userNo, Integer reviewNo) {
+//	서평 좋아요
+	public int toggleLikeReview(LikeReviewVo reviewVo, Integer like) {
 		
-		System.out.println("Service.toggleLikeReview");
-		return playlistfolderDao.toggleLikeReview(userNo, reviewNo);
+		if(like == 0) {
+			// 좋아요
+			System.out.println("Service.toggleLikeReview | 서평 좋아요 실시");
+						
+			return playlistfolderDao.likeReview(reviewVo);
+		} 
+		else {
+			// 좋아요 취소
+			System.out.println("Service.toggleLikeReview | 서평 좋아요 취소 실시");
+			
+			return playlistfolderDao.cancelLikeReview(reviewVo);
+		}
 	}
-	
+
+//	서평 삭제
 	public int deleteReview(int reviewNo, int playlistNo) {
 		
 		System.out.println("Service.deleteReview");
