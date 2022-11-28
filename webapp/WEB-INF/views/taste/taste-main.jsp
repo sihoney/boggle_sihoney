@@ -208,7 +208,7 @@
 								<p>${vo.playlistName }</p>
 							</div>
 							<div>
-								<div onclick="location.href='${pageContext.request.contextPath}/main/playlist?playlistNo=${vo.playlistNo }'" id="opac">
+								<div onclick="location.href='${pageContext.request.contextPath}/main?playlistNo=${vo.playlistNo }'" id="opac">
 									<span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
 								</div>
 							</div>

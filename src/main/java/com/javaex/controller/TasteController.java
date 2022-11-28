@@ -130,7 +130,7 @@ public class TasteController {
 		System.out.println("지금 서재 닉네임 : " + nickname);
 
 		// 세션아이디랑 지금 블로그닉네임이 같니?
-		if (nickname.equals(yours)) {
+		if (nickname.equals(yours)) { // 내 홈페이지 방문
 
 			String result = "sameUser";
 			System.out.println(result);
@@ -143,17 +143,18 @@ public class TasteController {
 
 			//해당유저 넘버를 주면 좋아요한 플레이리스트를 출력하는 메소드
 			List<PlaylistVo> likeplay = playlistService.likelist(userNo);
-			model.addAttribute("likeplay", likeplay);
 			
 			//인기있는 플레이리스트 출력하는 메소드
 			List<PlaylistVo> popularlist = playlistService.popularlist();
-			model.addAttribute("popularlist", popularlist);
 			
 			//특정 유저 넘버 주면, 해당 유저가 만든 플리 리스트 출력
 			List<PlaylistVo> makelist = playlistService.makelist(userNo);
+			
+			model.addAttribute("likeplay", likeplay);
+			model.addAttribute("popularlist", popularlist);
 			model.addAttribute("makelist", makelist);
 
-		} else {
+		} else { // 다른 유저 홈페이지 방문
 
 			String result = nickname;
 			System.out.println("anotherUser");
