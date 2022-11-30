@@ -30,7 +30,7 @@ public class MainController {
 	// 홈 페이지
 	@RequestMapping("")
 	public String main(Model model,
-						HttpSession session) { // bookDetail --> main
+					   HttpSession session) { // bookDetail --> main
 		System.out.println("MainController.main()");
 		
 		// 감정 태그
@@ -40,7 +40,7 @@ public class MainController {
 		// 로그인 상태 -> 플리 가져오기
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		
-		if(authUser != null) { // 로그인된 상태라면
+		if(authUser != null) { // 로그인된 상태라면 플레이리스트 담기
 			List<PlaylistVo> myPlaylist = mainService.getMyPlaylist(authUser.getUserNo());
 			model.addAttribute("myPlaylist", myPlaylist);
 		}
@@ -48,7 +48,7 @@ public class MainController {
 		return "main/main";
 	}	
 
-	// 서평작성 페이지에서 사용!
+	// 서평작성 페이지에서 사용!(review_write)
 	@ResponseBody
 	@RequestMapping("/getemotion")
 	public List<Map<String, Object>> getEmotion() {
@@ -59,39 +59,35 @@ public class MainController {
 
 	@ResponseBody
 	@RequestMapping("/reviewmusiclist") 
-	public Map<String, Object> getReviewList(@RequestParam(value="emoNo", required=false) String emoNo,
-											 @RequestParam(value="playlistNo", required=false) Integer playlistNo,
-											 @RequestParam(value="userNo", required=false) String userNo) {
+	public Map<String, Object> getReviewList(@RequestParam(value="sort", required=false, defaultValue="emotion") String sort,
+											 @RequestParam(value="no", required=false) Integer no,
+											 HttpSession session) {
 		System.out.println("MainController.getReviewList()");
-
+		
+		Integer userNo = null;
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser != null) {
+			userNo = authUser.getUserNo();
+		}
+		
 		System.out.println("--userNo: " + userNo);
-		System.out.println("--emoNo: " + emoNo);
-		System.out.println("--plyNo: " + playlistNo);
-
-		if(emoNo == null) {
-			emoNo = "null";
-		}
+		System.out.println("--sort: " + sort);
+		System.out.println("--no: " + no);
 		
-		Integer emoNoInt = null;
-		if( !"null".equals(emoNo) ) {
-			System.out.println("감정 분류 리스트 불러오겠습니다.");
-			emoNoInt = Integer.parseInt(emoNo);
-		}
-
-		Integer userNoInt = null;
-		if( !userNo.equals("undefined") && !userNo.equals("null") ) {
-			System.out.println("로그인 상태");
-			userNoInt = Integer.parseInt(userNo);
-		} 
-
-		return mainService.getReviewList(userNoInt, emoNoInt, playlistNo);
-		
+		return mainService.getReviewList(userNo, sort, no);
 	}
 
 	@ResponseBody
 	@RequestMapping("/getMyPlaylistModal")
-	public List<Map<String, Object>> getMyPlaylistModal(@RequestBody ReviewVo reviewVo) { 
+	public List<Map<String, Object>> getMyPlaylistModal(@RequestBody ReviewVo reviewVo,
+													    HttpSession session) { 
 		System.out.println("MainController.getMyPlaylistModal");
+		
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser == null) {
+			return null;
+		}
+		reviewVo.setUserNo(authUser.getUserNo());
 		
 		List<Map<String, Object>> modalPlaylist = mainService.getMyPlaylistModal(reviewVo);
 		return modalPlaylist;
@@ -107,16 +103,30 @@ public class MainController {
 	
 	@ResponseBody
 	@RequestMapping("/addNewPlaylist")
-	public int addNewPlaylist(@RequestBody PlaylistVo pvo) { // userNo, playlistName, emoNo
+	public int addNewPlaylist(@RequestBody PlaylistVo pvo,
+							  HttpSession session) { // playlistName, emoNo
 		System.out.println("MainController.addNewPlaylist" + pvo);
+		
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser == null) {
+			return -1;
+		}
+		pvo.setUserNo(authUser.getUserNo());
 		
 		return mainService.addNewPlaylist(pvo);
 	}
 	
 	@ResponseBody
 	@RequestMapping("/toggleReviewLike")	
-	public Map<String, String> toggleReviewLike(@RequestBody ReviewVo reviewVo) { // reviewNo, userNo
+	public Map<String, String> toggleReviewLike(@RequestBody ReviewVo reviewVo,
+												HttpSession session) { // reviewNo
 		System.out.println("MainController.toggleReviewLike");
+		
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser == null) {
+			return null;
+		}
+		reviewVo.setUserNo(authUser.getUserNo());
 		
 		String result = mainService.toggleReviewLike(reviewVo);
 		

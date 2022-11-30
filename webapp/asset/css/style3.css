@@ -411,7 +411,7 @@ i.fa-solid에 position: absolute 을 줘서
   flex-direction: row;
   align-items: center;
 }
-.playlist .playlist-header .playlistBtn {
+.playlist .playlist-header .arrowMyPlaylist {
   border: none;
   background: transparent;
   margin-left: 1rem;

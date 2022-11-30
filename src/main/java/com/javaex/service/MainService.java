@@ -27,48 +27,47 @@ public class MainService {
 	}
 	
 	//서평+음악 리스트
-	public Map<String, Object> getReviewList(Integer userNo, 
-												  Integer emoNo, 
-												  Integer playlistNo) {
+	public Map<String, Object> getReviewList(Integer userNo, String sort, Integer no) {
 		System.out.println("MainService.getReviewList()");
 
 		List<Map<String, Object>> reviewList = new ArrayList<Map<String, Object>>();
 		List<MusicVo> musicList = new ArrayList<MusicVo>();
 		
-		if(emoNo != null) {
-			System.out.println("리스트 : 감정 태그 분류");
+		if(sort == "playlist") {
+			System.out.println("플레이리스트");
 			
-			reviewList = emoDao.getReviewListByEmo(emoNo);
-			musicList = emoDao.getMusicListByEmo(emoNo);
+			reviewList = emoDao.getReviewListByPly(no);
+			musicList = emoDao.getMusicListByPly(no);			
 		}
-		else if(playlistNo != null) {
-			System.out.println("리스트 : 플레이리스트");
-			
-			reviewList = emoDao.getReviewListByPly(playlistNo);
-			musicList = emoDao.getMusicListByPly(playlistNo);
-		} else { 	// emoNo, playlistNo 둘 다 null인 경우 (userNo 존재 여부 상관없이)
-			System.out.println("리스트 : 랜덤");
+		
+		else if(no == null) {
+			System.out.println("랜덤 감정 태그");
 			
 			int totalEmotagCnt = emoDao.getTotalEmotagCnt();
 			
 			reviewList = emoDao.getReviewListByEmo(totalEmotagCnt);
-			musicList = emoDao.getMusicListByEmo(totalEmotagCnt);
+			musicList = emoDao.getMusicListByEmo(totalEmotagCnt);							
+		}
+		
+		else {
+			System.out.println("리스트 : 감정 태그 분류");
+			
+			reviewList = emoDao.getReviewListByEmo(no);
+			musicList = emoDao.getMusicListByEmo(no);			
 		}
 
 		System.out.println("서평 총 수: " + reviewList.size());
 		
-		if(userNo != null) { // 로그인 상태라면 하트 카운트 값 받기
-			
-			if(reviewList.size() != 0) {
-				
-				for(Map<String, Object> reviewVo : reviewList) { // reviewVo, userNo
+		// 로그인 상태라면 하트 카운트 값 받기
+		if(userNo != null && reviewList.size() > 0) { 
 
-					reviewVo.put("userNo", userNo);
+			for(Map<String, Object> reviewVo : reviewList) { // reviewVo, userNo
+
+				reviewVo.put("userNo", userNo);
+			
+				int result = emoDao.alreadyLiked(reviewVo);
 				
-					int result = emoDao.alreadyLiked(reviewVo);
-					
-					reviewVo.put("alreadyLikedCnt", result);
-				}
+				reviewVo.put("alreadyLikedCnt", result);
 			}
 		}
 		
@@ -109,12 +108,10 @@ public class MainService {
 			
 			map.put("playlistNo", pvo.getPlaylistNo());
 			map.put("playlistName", pvo.getPlaylistName());
-			
 			map.put("reviewNo", reviewVo.getReviewNo());
 			map.put("userNo", pvo.getUserNo());
 						
 			int alreadyAdded = emoDao.alreadyAdded(map);
-
 			map.put("cnt", alreadyAdded);
 			
 			modalPlaylist.add(map);	

@@ -69,6 +69,8 @@ public class MainDao {
 	}
 	
 	public int addNewPlaylist(PlaylistVo pvo) {
+		System.out.println("MainDao.addNewPlaylist");
+		
 		return sqlSession.insert("emotion.addNewPlaylist", pvo);
 	}
 	

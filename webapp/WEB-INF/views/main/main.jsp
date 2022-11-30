@@ -14,7 +14,6 @@
     <script src="${pageContext.request.contextPath}/asset/js/jquery-1.12.4.js"></script>
     
     <link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
-    
     <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-pen.css" rel="stylesheet">
 	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic-eco.css" rel="stylesheet">
 	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-myeongjo.css" rel="stylesheet">
@@ -152,7 +151,7 @@
                     My 플레이리스트
                 </h2>
                 <a href="${pageContext.request.contextPath}/${authUser.nickname}/like_playlist">
-	           	    <button class="playlistBtn">
+	           	    <button class="arrowMyPlaylist">
 	                    <i class="fa-solid fa-arrow-right-long"></i>
 	                </button>                
                 </a>
