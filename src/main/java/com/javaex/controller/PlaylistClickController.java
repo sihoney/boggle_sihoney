@@ -25,11 +25,17 @@ public class PlaylistClickController {
 	private PlaylistClickService playlistClickService;
 	@Autowired
 	private UserService userService;
+	
+	// 좋아요한 플레이리스트
+	@RequestMapping("/{nickname}/playlist") 
+	public String playlist(@PathVariable(value = "nickname") String nickname, 
+						   HttpSession session, 
+						   Model model) {
+		System.out.println("PlaylistClickController.playlist");
 
-	@RequestMapping("/{nickname}/playlist") // 좋아요한 플레이리스트
-	public String playlist(@PathVariable(value = "nickname") String nickname, HttpSession session, Model model) {
-		System.out.println("playlist");
-
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser == null) return "user/loginFormForm";		
+		
 		// 세션의 닉네임
 		String yours = ((UserVo) session.getAttribute("authUser")).getNickname();
 		System.out.println("로그인사람의 닉네임 : " + yours);
@@ -68,14 +74,20 @@ public class PlaylistClickController {
 		return "taste/playlist";
 	}
 
-	@RequestMapping("/{nickname}/hotplaylist") // 인기순 플레이리스트
+	// 인기순 플레이리스트
+	@RequestMapping("/{nickname}/hotplaylist") 
 	public String playlist1(@PathVariable(value = "nickname") String nickname,
-			@ModelAttribute PlaylistClickVo playlistClickVo,
-
+							@ModelAttribute PlaylistClickVo playlistClickVo,
 //							@RequestParam (value="userNo")int userNo, 
 //							@RequestParam(value = "nickname")String nickname,
-			HttpSession session, Model model) {
+							HttpSession session, 
+							Model model) {
 
+		System.out.println("PlaylistClickController.playlist1");
+		
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser == null) return "user/loginForm";
+		
 		String yours = ((UserVo) session.getAttribute("authUser")).getNickname();
 		System.out.println("로그인사람의 닉네임 : " + yours);
 		System.out.println("지금 서재 닉네임 : " + nickname);
@@ -111,12 +123,19 @@ public class PlaylistClickController {
 		}
 		return "taste/hot_playlist";
 	}
-
+	
+	// 작성한 플레이리스트
 	@RequestMapping("/{nickname}/writeplaylist")
 	public String playlist2(@PathVariable(value = "nickname") String nickname,
-			@ModelAttribute PlaylistClickVo playlistClickVo, HttpSession session, Model model) {
-
-		String yours = ((UserVo) session.getAttribute("authUser")).getNickname();
+						    @ModelAttribute PlaylistClickVo playlistClickVo, 
+						    HttpSession session, 
+						    Model model) {
+		System.out.println("PlaylistClickController.playlist2");
+		
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser == null) return "user/loginForm";
+		
+		String yours = authUser.getNickname();
 		System.out.println("로그인사람의 닉네임 : " + yours);
 		System.out.println("지금 서재 닉네임 : " + nickname);
 

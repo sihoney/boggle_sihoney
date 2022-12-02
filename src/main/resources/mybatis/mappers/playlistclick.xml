@@ -6,28 +6,28 @@
 	<select id="likelistclick" resultType="PlaylistClickVo" parameterType="int">
 		<![CDATA[
 			select  p.likeuser,
-        p.playlist_no playlistNo,
-        p.playlist_date playlistDate,
-        p.playlist_name playlistName,
-        p.emo_no emoNo,
-        p.makeuser userNo,
-        p.nickname
-from (select  up.user_no likeuser,
-                up.playlist_no,
-                p.playlist_date,
-                p.playlist_name,
-                p.emo_no,
-                p.user_no makeuser,
-                u.nickname
-        from user_playlist up, playlist p, users u
-        where up.playlist_no = p.playlist_no
-        and p.user_no = u.user_no
-        and up.user_no = #{userNo}) p
+			        p.playlist_no playlistNo,
+			        p.playlist_date playlistDate,
+			        p.playlist_name playlistName,
+			        p.emo_no emoNo,
+			        p.makeuser userNo,
+			        p.nickname
+			from (select  up.user_no likeuser,
+			                up.playlist_no,
+			                p.playlist_date,
+			                p.playlist_name,
+			                p.emo_no,
+			                p.user_no makeuser,
+			                u.nickname
+			        from user_playlist up, playlist p, users u
+			        where up.playlist_no = p.playlist_no
+			        and p.user_no = u.user_no
+			        and up.user_no = #{userNo}) p
 		]]>
 
 	</select>
 	
-		<!-- popularplay -->
+	<!-- popularplay 
 	<select id="popularplayclick" resultType="PlaylistClickVo">
 		<![CDATA[
 			select  p.likeuser,
@@ -53,11 +53,41 @@ from (select  up.user_no likeuser,
 					and p.playlist_no = cnt.playlist_no
 					ORDER BY cnt.likecnt desc) p
 		]]>
-
+	</select>
+	-->
+	<select id="popularplayclick" resultType="PlaylistClickVo">
+		<![CDATA[
+			select playlist_no playlistNo,
+			       playlist_name playlistName,
+			       emo_no emoNo,
+			       user_no userNo,
+			       nickname
+			from (select rownum rn,
+			           playlist_no,
+			           playlist_name,
+			           emo_no,
+			           user_no,
+			           nickname,
+			           likeCnt
+			    from (select p.playlist_no,
+			                   p.playlist_name,
+			                   p.user_no,
+			                   p.emo_no,
+			                   u.nickname,
+			                   up.likeCnt
+			            from playlist p, users u, (select playlist_no,
+			                                               count(user_no) likeCnt
+			                                        from user_playlist
+			                                        group by playlist_no) up
+			            where p.user_no = u.user_no
+			            and up.playlist_no = p.playlist_no
+			            order by likeCnt desc))
+			where rn between 1 and 10		
+		]]>
 	</select>
 	
 	<!-- 특정유저가 만든 플레이리스트 목록 -->
-	<!-- makelist -->
+	<!-- makelist 
 	<select id="makelistclick" resultType="PlaylistClickVo" parameterType="int">
 		<![CDATA[
 			select  p.likeuser,
@@ -84,6 +114,19 @@ from (select  up.user_no likeuser,
 					and p.user_no = #{userNo}) p
 		]]>
 
+	</select>-->
+	
+	<select id="makelistclick" resultType="PlaylistClickVo" parameterType="int">
+		<![CDATA[
+			select p.user_no userNo,
+			       p.playlist_no playlistNo,
+			       p.playlist_name playlistName,
+			       p.emo_no emoNo,
+			       u.nickname
+			from playlist p, users u
+			where p.user_no = u.user_no
+			and p.user_no = #{userNo}
+		]]>
 	</select>
 	
 	

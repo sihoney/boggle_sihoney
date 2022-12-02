@@ -20,8 +20,8 @@ public class MybookService {
 
 	public Map<String, Object> list(String sort, int crtPage, int userNo, String emoName) {
 		
-		System.out.println("MybookService.list(" + sort + ", " + crtPage + ", " + userNo + ", " + emoName + ")");
-		
+		System.out.println("MybookService.list");
+
 		// 페이지 당 글 개수
 		int listCnt = 10;
 		

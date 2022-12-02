@@ -28,11 +28,10 @@ public class PlaylistClickDao {
 	}
 	
 	//특정유저가 만든 리스트 출력
-		public List<PlaylistClickVo> makelistclick(int userNo){
-			
-			List<PlaylistClickVo> makelistclick = sqlSession.selectList("playlistclick.makelistclick", userNo);
-			
-			return makelistclick;
-		}
+	public List<PlaylistClickVo> makelistclick(int userNo){
+		List<PlaylistClickVo> makelistclick = sqlSession.selectList("playlistclick.makelistclick", userNo);
+		
+		return makelistclick;
+	}
 
 }

@@ -33,7 +33,9 @@ public class MainService {
 		List<Map<String, Object>> reviewList = new ArrayList<Map<String, Object>>();
 		List<MusicVo> musicList = new ArrayList<MusicVo>();
 		
-		if(sort == "playlist") {
+		// if(sort == "playlist") 
+		// String은 Object, ==는 주소값 비교!, equal은 object, class의 내용 비교
+		if(("playlist").equals(sort)) {
 			System.out.println("플레이리스트");
 			
 			reviewList = emoDao.getReviewListByPly(no);
