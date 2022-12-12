@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.javaex.service.MybookService;
 import com.javaex.service.UserService;
 import com.javaex.vo.MybookVo;
+import com.javaex.vo.PlaylistVo;
 import com.javaex.vo.UserVo;
 
 @Controller
 @RequestMapping(value="")
 public class MybookController {
-   
    
    //필드
    @Autowired
@@ -291,7 +291,7 @@ public class MybookController {
           
           return mybookMap;      
          
-      }else { // 다른 유저 홈페이지 방문
+      } else { // 다른 유저 홈페이지 방문
              	  
          //지금 서재 닉네임을 주면 유저넘버, 닉네임, 프로필이미지를 주는 메소드 사용
          UserVo otherUser = userService.getUser(nickname);
@@ -323,9 +323,18 @@ public class MybookController {
          
          return mybookMap; 
       }
-      
    }
    
+   @ResponseBody
+   @RequestMapping("/getplaylist")
+   public List<PlaylistVo> getPlaylist(@RequestParam(value="reviewno")int reviewNo,
+		   				   HttpSession session) {
+	   System.out.println("MybookController.playlist >> reviewNo: " + reviewNo);
    
+	   UserVo authUser = (UserVo) session.getAttribute("authUser");
+	   int userNo = authUser.getUserNo();
+	   
+	   return mybookService.getPlaylist(reviewNo, userNo);
+   }
   
 }

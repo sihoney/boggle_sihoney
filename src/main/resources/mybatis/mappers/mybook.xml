@@ -599,4 +599,24 @@ from (select    ru.review_like_date reviewLikeDate,
 			where rn between #{startNum} and #{endNum}
 		]]>
 	</select>
+	
+	<select id="getPlaylist" parameterType="map" resultType="PlaylistVo">
+		<![CDATA[
+			select p.playlist_name playlistName,
+			       p.playlist_no playlistNo,
+			       e.emo_name emoName,
+			       u.nickname,
+			       u.user_no userNo,
+			       NVL(nt.review_no, 0) likeuser
+			from playlist p, emotion e, users u, (select p.playlist_no,
+			                                       pr.review_no
+			                                from playlist p, playlist_review pr
+			                                where p.playlist_no = pr.playlist_no
+			                                and pr.review_no = #{reviewNo}) nt
+			where p.user_no = u.user_no
+			and e.emo_no = p.emo_no
+			and p.playlist_no = nt.playlist_no(+)
+			and u.user_no = #{userNo}			
+		]]>
+	</select>
 </mapper>

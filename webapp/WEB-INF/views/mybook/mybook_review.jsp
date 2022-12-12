@@ -153,6 +153,7 @@
 		</div>
 	</div>
 	
+	<!-- 페이징에서 href로 보내기 때문에 사용(이벤트 리스너를 사용하면 없어도 됨 -->
 	<input id="sort_value" type="hidden" name="sort" value="${sort }"/>
 	<input id="crtPage_value" type="hidden" name="crtPage" value="${crtPage }"/>
 	<input id="emoName_value" type="hidden" name="emoName" value="${emoName }"/>
@@ -195,7 +196,6 @@
 		} 
 		else {
 			reviewListByEmotion(emoName, crtPage)
-			//emotionList(crtPage, emoName)
 		}
 		
 		// 최신순 / 인기순 마크 색변화
@@ -221,7 +221,6 @@
     	$('#best-order').attr('class','');
 		
     	reviewList(sort, 1)
-		//fetchRender(1);
 	});
 
 	// 인기순
@@ -235,7 +234,6 @@
     	$('#latest-order').attr('class','');
 		
     	reviewList(sort, 1)
-		//fetchRender(1);
 	});
 	
 	// 감정태그
@@ -250,7 +248,6 @@
 		console.log("선택한 감정태그 : "+ emoName);
 
 		reviewListByEmotion(emoName, 1)
-		//emotionList(1, emoName)
 	});
 	
 	
@@ -273,7 +270,6 @@
 		var $this = $(this);
 		
 		var no = $this.data("reviewno");
-		//var likecnt = parseInt($(this).next().data("likecnt"));
 		var likecnt = $this.next().data("likecnt");
 		
 		//출력(리뷰넘버찍어보기), json 으로 보내주기

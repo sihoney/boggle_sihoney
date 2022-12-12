@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.MybookVo;
+import com.javaex.vo.PlaylistVo;
 
 @Repository
 public class MybookDao {
@@ -139,5 +140,18 @@ public class MybookDao {
 		List<MybookVo> emoList = sqlSession.selectList("mybook.emoList2", map);
 		
 		return emoList;	
+	}
+	
+	public List<PlaylistVo> getPlaylist(int reviewNo, int userNo) {
+		System.out.println("mybookDao.getPlaylist");
+		
+		Map<String, Integer> map = new HashMap<>();
+		map.put("reviewNo", reviewNo);
+		map.put("userNo", userNo);
+		
+		List<PlaylistVo> pList =  sqlSession.selectList("mybook.getPlaylist", map);
+		System.out.println(pList);
+		
+		return pList;
 	}
 }

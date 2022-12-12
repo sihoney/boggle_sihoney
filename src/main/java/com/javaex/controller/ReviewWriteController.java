@@ -228,11 +228,22 @@ public class ReviewWriteController {
 	public int addReviewToPly(@RequestParam(value="playlistNo")int playlistNo, 
 			                   @RequestParam(value="reviewNo") int reviewNo) {
 		System.out.println("ReviewWriterController > addReviewToPly");
+		System.out.println(">>" + playlistNo + "번 플리에 " + reviewNo + "번 서평 저장합니다");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("playlistNo", playlistNo);
 		map.put("reviewNo", reviewNo);
 		
 		return mainDao.addReviewToPly(map);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/removeReviewAtPly")
+	public int removeReviewAtPly(@RequestParam(value="playlistNo")int playlistNo,
+								 @RequestParam(value="reviewNo")int reviewNo) {
+		System.out.println("ReviewWriterController > removeReviewAtPly");
+		System.out.println(">> " + playlistNo + "번 플레에서 " + reviewNo + "번 서평 삭제합니다");
+		
+		return 0;
 	}
 }

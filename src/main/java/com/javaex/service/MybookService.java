@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.javaex.dao.MybookDao;
 import com.javaex.vo.MybookVo;
+import com.javaex.vo.PlaylistVo;
 
 @Repository
 public class MybookService {
@@ -177,5 +178,11 @@ public class MybookService {
 			//삭제불가, 0은 로그인사용자와 삭제하려는 리뷰작성자가 다름을 의미
 			 return 0;
 		}
+	}
+	
+	public List<PlaylistVo> getPlaylist(int reviewNo, int userNo) {
+		System.out.println("MybookService.getPlaylist");
+		
+		return mybookDao.getPlaylist(reviewNo, userNo);
 	}
 }
