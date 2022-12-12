@@ -365,8 +365,9 @@
 				
 				// 1> 플리에 서평 저장
 				let playlistno = $(this).data("playlistno")
-	
-				if($(this).hasClass("selected") === false) { // 플리에서 서평 추가
+				
+				// 플리에서 서평 추가
+				if($(this).hasClass("selected") === false) { 
 					addReviewToPly(playlistno, reviewNo).then(result => {
 						/* 성공 후 실행 코드 */
 						console.log("결과: " + result + ", 플리에 저장했습니다.")
@@ -381,15 +382,31 @@
 							$(".msg_modal").one("transitionend", function(){
 								$(".msg_modal").addClass("unstaged")
 							})
-						}, 2000)						
+						}, 2000)	
+						
+						// 2> css 변화
+						$(this).addClass("selected")						
 					})
-					
-					// 2> css 변화
-					$(this).addClass("selected")					
+						
 				}
 				else {	// 플리에서 서평 삭제
 					removeReviewAtPly(playlistno, reviewNo).then(result => {
-						console.log(result)
+						console.log("결과: " + result + ", 플리에서 삭제했습니다.")
+						
+						// 모달 닫기
+						$(".msg_modal").removeClass("unstaged")
+						$(".msg_modal").addClass("opaque")
+						
+						setTimeout(function(){
+							$(".msg_modal").removeClass("opaque")
+							
+							$(".msg_modal").one("transitionend", function(){
+								$(".msg_modal").addClass("unstaged")
+							})
+						}, 2000)	
+						
+						// 2> css 변화
+						$(this).removeClass("selected")						
 					})
 				}
 			})
@@ -464,7 +481,7 @@
 	
 	// 플리에 서평 삭제
 	async function removeReviewAtPly(playlistNo, reviewNo) {
-		const response = await fetch(projectName + "/review/removeReviewToPly?playlistNo=" + playlistNo + "&reviewNo=" + reviewNo)
+		const response = await fetch(projectName + "/review/removeReviewAtPly?playlistNo=" + playlistNo + "&reviewNo=" + reviewNo)
 		
 		return response.json()
 	}

@@ -85,6 +85,8 @@ public class MainDao {
 	public int deleteReviewFromPly(Map<String, Object> map) {
 		int result = sqlSession.delete("emotion.deleteReviewFromPly", map);
 		
+		System.out.println(result + "건 : 리뷰를 플리에서 삭제");
+		
 		return result;
 	}
 	

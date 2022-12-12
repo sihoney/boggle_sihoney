@@ -244,6 +244,10 @@ public class ReviewWriteController {
 		System.out.println("ReviewWriterController > removeReviewAtPly");
 		System.out.println(">> " + playlistNo + "번 플레에서 " + reviewNo + "번 서평 삭제합니다");
 		
-		return 0;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("playlistNo", playlistNo);
+		map.put("reviewNo", reviewNo);
+		
+		return mainDao.deleteReviewFromPly(map);
 	}
 }
