@@ -19,28 +19,27 @@ public class MybookService {
 	private  MybookDao mybookDao;
 	
 
-	public Map<String, Object> list(String sort, int crtPage, int userNo, String emoName) {
+	public Map<String, Object> list(String sort, int crtPage, int userNo, String emoName, int nowuserNo) {
 		
 		System.out.println("MybookService.list");
-
-		// 페이지 당 글 개수
-		int listCnt = 10;
 		
-		// 시작글 번호
-		int startNum = (crtPage - 1) * listCnt + 1;
+		int listCnt = 10;	// 페이지 당 글 개수
+		int startNum = (crtPage - 1) * listCnt + 1;	// 시작글 번호
+		int endNum = startNum + listCnt - 1;	// 마지막글 번호
 		
-		// 마지막글 번호
-		int endNum = startNum + listCnt - 1;
+		System.out.println(">>sort: "+ sort + ", crtPage: " + crtPage + ", startNum: " + startNum + ", endNum: " + endNum);		
 		
 		List<MybookVo> mybookList;
-		if(sort.equals("latest")) {
-			mybookList = mybookDao.getList2(startNum, endNum, userNo);
-		}
-		else if(sort.equals("popular")){
-			mybookList = mybookDao.getPopular2(startNum, endNum, userNo);
-		}
-		else {
-			mybookList = mybookDao.emoList(startNum, endNum, userNo, emoName);
+		switch(sort) {
+		case "latest":
+			mybookList = mybookDao.getList3(startNum, endNum, userNo, nowuserNo);
+			break;
+		case "popular":
+			mybookList = mybookDao.getPopular2(startNum, endNum, userNo, nowuserNo);
+			break;
+		default:
+			mybookList = mybookDao.emoList(startNum, endNum, userNo, emoName, nowuserNo);
+			break;
 		}
 		
 		/////////////////////
@@ -48,12 +47,9 @@ public class MybookService {
 		/////////////////////	
 		int totalCnt = mybookDao.totalCnt(userNo);
 		
-		// 페이지당 버튼 갯수
-		int pageBtnCount = 5;
-		
+		int pageBtnCount = 5;	// 페이지당 버튼 갯수
 		// 마지막 버튼 번호
 		int endPageBtnNo = (int) (Math.ceil(crtPage / (double)pageBtnCount)) * pageBtnCount;
-		
 		// 시작 버튼 번호
 		int startPageBtnNo = endPageBtnNo - (pageBtnCount - 1);
 		

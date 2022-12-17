@@ -152,17 +152,12 @@
 			</ul>
 		</div>
 	</div>
-	
-	<!-- 페이징에서 href로 보내기 때문에 사용(이벤트 리스너를 사용하면 없어도 됨 -->
-	<input id="sort_value" type="hidden" name="sort" value="${sort }"/>
-	<input id="crtPage_value" type="hidden" name="crtPage" value="${crtPage }"/>
-	<input id="emoName_value" type="hidden" name="emoName" value="${emoName }"/>
+
 </body>
 <script type="text/javascript">
 	
 	let projectName
 	let nickname
-	
 	let reviewNo
 	
 	let sort
@@ -187,26 +182,9 @@
     	$('#best-order').attr('class','');
     	
 		//리스트그리기
-		sort = $('#sort_value').val()
-		crtPage = $('#crtPage_value').val()
-		emoName = $('#emoName_value').val()
+		sort = "latest"
+		reviewList(sort, 1)
 
-		if(sort == 'latest' || sort == 'popular') {
-			reviewList(sort, crtPage)
-		} 
-		else {
-			reviewListByEmotion(emoName, crtPage)
-		}
-		
-		// 최신순 / 인기순 마크 색변화
-		if(sort == 'latest') {
-			$('#latest-order').attr('class','txt-b');
-	    	$('#best-order').attr('class','');
-		} 
-		else if(sort == 'popular'){
-			$('#best-order').attr('class','txt-b');
-	    	$('#latest-order').attr('class','');
-		}
 	});
 	
 	// 최신순 인기순 버튼 클릭
@@ -215,11 +193,12 @@
 		console.log('최신순');
 		
 		sort = 'latest'
+		emoName = ""
 		
 		//색깔변화
 		$('#latest-order').attr('class','txt-b');
     	$('#best-order').attr('class','');
-		
+
     	reviewList(sort, 1)
 	});
 
@@ -228,6 +207,7 @@
 		console.log('인기순');
 		
 		sort = 'popular'
+		emoName = ""
 		
 		//색깔변화
 		$('#best-order').attr('class','txt-b');
@@ -239,14 +219,10 @@
 	// 감정태그
 	$(".dropdown-menu").on("click", "li", function() {
 
-		sort = 'emotion'
-		
 		//데이터수집
 		emoName = $(this).text();
+		sort = ""
 						
-		//출력
-		console.log("선택한 감정태그 : "+ emoName);
-
 		reviewListByEmotion(emoName, 1)
 	});
 	
@@ -255,9 +231,7 @@
 	$(".modal_myply_btn").on("click", function(){
 		
 		$(".modal_myply").removeClass("opaque")
-		
 		$(".modal_myply").one("transitionend", function(){
-
 			$(".modal_myply").addClass("unstaged")
 		})
 
@@ -268,7 +242,6 @@
 		
 		//데이터수집
 		var $this = $(this);
-		
 		var no = $this.data("reviewno");
 		var likecnt = $this.next().data("likecnt");
 		
@@ -332,13 +305,74 @@
 		})
 	});	
 	
+	/*********************
+	EVENT HANDLER
+	**********************/	
+	async function showMoreEventHandler(){
+		// 0. 초기화
+		$(".modal_ply_ul").empty()		
+		
+		reviewNo = $(this).data("reviewno")
+		
+		// 내 플리 불러오기
+		fetchMyPli(reviewNo).then(data => {
+			// 1-1. 플리 렌더
+			renderMyPli(data)
+			
+			// 1-2. 이벤트 리스터 (서평 플리에 추가)
+			$(".modal_ply_ul").on("click", ".list", addReviewToPliHandler)			
+		})
+		
+		// 모달 보임 
+		$(".modal_myply").removeClass("unstaged")
+		$(".modal_myply").addClass("opaque")		
+	}
+	
+	function addReviewToPliHandler(){
+		
+		// 1> 플리에 서평 저장
+		let playlistno = $(this).data("playlistno")
+		
+		// 플리에서 서평 추가
+		if($(this).hasClass("selected") === false) { 
+			addReviewToPly(playlistno, reviewNo).then(result => {
+				console.log("결과: " + result + ", 플리에 저장했습니다.")					
+			})
+		}
+		else {	// 플리에서 서평 삭제
+			removeReviewAtPly(playlistno, reviewNo).then(result => {
+				console.log("결과: " + result + ", 플리에서 삭제했습니다.")					
+			})
+		}
+		
+		// 2> css 변화
+		$(this).toggleClass("selected")			
+	}
+
+	function pagingHandler(){
+		crtPage = $(this).text() 
+		
+		if(sort === 'latest' || sort === 'popular') {
+			reviewList(sort, crtPage)
+		}
+		else {
+			reviewListByEmotion(emoName, crtPage)
+		}
+	}
+	
 	/**************** 
 	UTIL 
 	*******************/
 	
 	async function reviewList(sort, crtPage) {
+		console.log("sort: " + sort + ", crtPage: " + crtPage)
 		
 		const data = await fetchReviewList(sort, crtPage)
+		console.log(data)
+		
+		if(data === null) {
+			location.href = projectName + "/main"
+		}
 		
 		/*성공시 처리해야될 코드 작성*/
 		let mbList = data.mybookList
@@ -347,35 +381,26 @@
 		let startPageBtnNo = data.startPageBtnNo
 		let endPageBtnNo = data.endPageBtnNo
 		
-		//초기화 후 그리기
+		//초기화 
 		$("#rvlist").empty();
-		$(".mybook_paging").remove();
+		$("#mybook_paging").remove();
 		
 		//객체 리스트 돌리기(화면 출력)
 		renderList(mbList, "down");
 		
 		// 페이징 렌더
 		renderPaging(prev, next, startPageBtnNo, endPageBtnNo)
+		$("#mybook_paging").on("click", "li", pagingHandler)
 						
 		/* 더보기 플리추가 클릭했을 때 이벤트 */
-		$(".add_pli").on("click", function(){
-			reviewNo = $(this).data("reviewno")
-			let userNo = $(this).data("userno")
-
-			// 내 플리 불러오기 
-			getMyPly(userNo).then(data => {
-				renderMyPly(data)
-			})
-			
-			// 모달 보임 
-			$(".modal_myply").removeClass("unstaged")
-			$(".modal_myply").addClass("opaque")
-		})		
+		$(".add_pli").on("click", showMoreEventHandler)		
 	}
 	
 	async function reviewListByEmotion(emoName, crtPage) {
+		console.log("sort: emotion, emoName: " + emoName + ", crtPage: " + crtPage)
 		
 		const data = await fetchReviewListEmotion(emoName, crtPage)
+		console.log(data)
 		
 		/*성공시 처리해야될 코드 작성*/
 		let emoList = data.mybookList
@@ -386,27 +411,17 @@
 		
 		//초기화
 		$("#rvlist").empty();
-		$(".mybook_paging").remove();
+		$("#mybook_paging").remove();
 		
 		//객체 리스트 돌리기(화면 출력)
 		renderList(emoList, "down")
 		
 		//페이징
 		renderPaging(prev, next, startPageBtnNo, endPageBtnNo)
+		$("#mybook_paging").on("click", "li", pagingHandler)
 		
 		/* 더보기 플리추가 클릭했을 때 이벤트 */
-		$(".add_pli").on("click", function(){
-			reviewNo = $(this).data("reviewno")
-			let userNo = $(this).data("userno")
-
-			// 내 플리 불러오기 
-			getMyPly(userNo).then(data => {
-				renderMyPly(data)
-			})
-			// 모달 보임 
-			$(".modal_myply").removeClass("unstaged")
-			$(".modal_myply").addClass("opaque")
-		})		
+		$(".add_pli").on("click", showMoreEventHandler)		
 	}
 	
 	/**************** 
@@ -482,8 +497,22 @@
 			return "error"
 		}
 	}
-
+	
+	// 플리 목록
+	async function fetchMyPli(reviewNo) {
+		try {
+			const response = await fetch(projectName + "/getplaylist?reviewno=" + reviewNo)
+			
+			return response.json()
+		} catch(error) {
+			console.log("Failed to fetch: "+ error)
+			
+			return "error"
+		}
+	}
+	
 	// 플리 목록 불러오기
+	/*
 	async function getMyPly(userNo) {
 		try {
 			const response = await fetch(projectName + "/review/getMyPlaylist?userNo=" + userNo)
@@ -494,9 +523,23 @@
 			
 			return "error"
 		}
-
+	}*/
+	
+	// 플리에 서평 추가
+	async function addReviewToPly(playlistNo, reviewNo) {
+		const response = await fetch(projectName + "/review/addReviewToPly?playlistNo=" + playlistNo + "&reviewNo=" + reviewNo)
+		
+		return response.json()
 	}
-
+	
+	// 플리에 서평 삭제
+	async function removeReviewAtPly(playlistNo, reviewNo) {
+		const response = await fetch(projectName + "/review/removeReviewAtPly?playlistNo=" + playlistNo + "&reviewNo=" + reviewNo)
+		
+		return response.json()
+	}	
+	
+	/*
 	function addReviewToPly(playlistNo, reviewNo) {
 		$.ajax({
 			url: "${pageContext.request.contextPath}/review/addReviewToPly?playlistNo=" + playlistNo + "&reviewNo=" + reviewNo,
@@ -523,7 +566,7 @@
 			}
 		})
 	}	
-	
+	*/
 	/**************** 
 	RENDER 
 	*******************/	
@@ -531,7 +574,31 @@
 	//페이징 렌더
 	function renderPaging(prev, next, startPageBtnNo, endPageBtnNo) {
 		
-		let str = '<div class="mybook_paging">'
+		let str = '<div id="mybook_paging">'
+			str += '<ul>'
+			
+			if(prev == true) {
+				str += '<li>◀</li>'
+			}
+
+			for(var i = startPageBtnNo; i <= endPageBtnNo; i++) {
+				str += '<li>'+ i +'</li>'
+			}
+						
+			if(next == true) {
+				str += '<li>▶</li>'
+			}
+
+			str += '</ul>'
+			str += '</div>'		 	
+		
+		$("#content").append(str)
+	}	
+	
+	/*
+	function renderPaging(prev, next, startPageBtnNo, endPageBtnNo) {
+		
+		let str = '<div id="mybook_paging">'
 			str += '<ul>'
 			
 			if(prev == true) {
@@ -550,7 +617,7 @@
 			str += '</div>'		 	
 		
 		$("#content").append(str)
-	}	
+	}	*/
 				
 	 
 	function renderList(list, updown) {
@@ -606,6 +673,29 @@
 
 	}
 	
+	function renderMyPli(list) {
+
+		for(let item of list) {
+			str = ""
+
+			if(item.likeuser == 0) {
+				str += '<li class="list" data-playlistNo="'+ item.playlistNo +'">'
+			}
+			else {
+				str += '<li class="list selected" data-playlistNo="'+ item.playlistNo +'">'
+			}
+
+			str += '	<div class="info-container">'
+			str += '		<button class="tagBtn">'+ item.emoName +'</button>'
+			str += '		<div class="playlist-title">' + item.playlistName + '</div>'
+			str += '		<div class="username">' + item.nickname + '</div>'
+			str += '	</div>'
+			str += '</li>'
+			
+			$(".modal_ply_ul").append(str)
+		}
+	}
+	/*
 	function renderMyPly(list) {
 
 		for(let item of list) {
@@ -626,7 +716,8 @@
 
 			addReviewToPly(playlistno, reviewNo)
 		})		
-	}		
+	}	
+	*/
 	
 </script>
 <script src="${pageContext.request.contextPath}/asset/js/more.js"></script>

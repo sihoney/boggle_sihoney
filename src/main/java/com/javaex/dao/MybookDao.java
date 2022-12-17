@@ -19,29 +19,48 @@ public class MybookDao {
 
 
 //	paging이 적용된 리스트 가져오기
-	public List<MybookVo> getList2(int startNum, int endNum, int userNo) {
+	public List<MybookVo> getList3(int startNum, int endNum, int userNo, int nowuserNo) {
 		
-		System.out.println("MybookDao.getList2()");
+		System.out.println("MybookDao.getList");
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		
 		map.put("startNum", startNum);
 		map.put("endNum", endNum);
 		map.put("userNo", userNo);
+		map.put("nowuserNo", nowuserNo);
 		
-		return sqlSession.selectList("mybook.getList2", map);
+		return sqlSession.selectList("mybook.getList3", map);
 	}
 
 //	페이징 기능 + 인기순 리스트
-	public List<MybookVo> getPopular2(int startNum, int endNum, int userNo) {
+	public List<MybookVo> getPopular2(int startNum, int endNum, int userNo, int nowuserNo) {
+		System.out.println("MybookDao.getPopular");
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		
 		map.put("startNum", startNum);
 		map.put("endNum", endNum);
-		map.put("userNo", userNo);		
+		map.put("userNo", userNo);	
+		map.put("nowuserNo", nowuserNo);
 		
-		return sqlSession.selectList("mybook.selectpopular2", map);
+		return sqlSession.selectList("mybook.selectpopular3", map);
+	}
+	
+//해당 유저넘버, 감정태그 받으면 그 리스트만 출력
+	public List<MybookVo> emoList(int startNum, int endNum, int userNo, String emoName, int nowuserNo){
+		System.out.println("mybookDao.emoList");
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
+		map.put("userNo", userNo);
+		map.put("emoName", emoName);
+		map.put("nowuserNo", nowuserNo);
+		
+		List<MybookVo> emoList = sqlSession.selectList("mybook.emoList3", map);
+		
+		return emoList;	
 	}
 	
 	public int totalCnt(int userNo) {
@@ -125,21 +144,6 @@ public class MybookDao {
 		System.out.println("mybookDao.delete()");
 		
 		sqlSession.delete("mybook.delete", reviewNo);
-	}
-	
-	//해당 유저넘버, 감정태그 받으면 그 리스트만 출력
-	public List<MybookVo> emoList(int startNum, int endNum, int userNo, String emoName){
-		System.out.println("mybookDao.emoList");
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("startNum", startNum);
-		map.put("endNum", endNum);
-		map.put("userNo", userNo);
-		map.put("emoName", emoName);
-		
-		List<MybookVo> emoList = sqlSession.selectList("mybook.emoList2", map);
-		
-		return emoList;	
 	}
 	
 	public List<PlaylistVo> getPlaylist(int reviewNo, int userNo) {

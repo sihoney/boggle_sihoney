@@ -34,13 +34,9 @@ public class MybookController {
    @RequestMapping("/{nickname}")
    public String myreview(@PathVariable(value="nickname") String nickname,
                      					HttpSession session, 
-                     					Model model,
-                     					@RequestParam(value="crtPage", required=false, defaultValue="1")Integer crtPage,
-                     					@RequestParam(value="sort", required=false, defaultValue="latest")String sort,
-                     					@RequestParam(value="emoName", required=false, defaultValue="외로운")String emoName) {
+                     					Model model) {
       System.out.println("MybookController > /{nickname}");
-      System.out.println("MybookController > sort: " + sort + ", crtPage: " + crtPage + ", emoName: " + emoName);
-      
+
       if (session == null 
     		  || session.getAttribute("authUser") == null 
     		  || session.getAttribute("authUser").equals("")) {
@@ -68,10 +64,7 @@ public class MybookController {
          UserVo Userinfo = userService.getUser(yours);
          
          model.addAttribute("Userinfo", Userinfo);
-         model.addAttribute("sort", sort);
-         model.addAttribute("crtPage", crtPage);
-         model.addAttribute("emoName", emoName);
-         
+
          return "mybook/mybook_review";
          
       } else { // 다른 유저 페이지 방문
@@ -93,10 +86,7 @@ public class MybookController {
          int userNo = otherUser.getUserNo();
          
          model.addAttribute("Userinfo", otherUser);
-         model.addAttribute("sort", sort);
-         model.addAttribute("crtPage", crtPage);
-         model.addAttribute("emoName", emoName);
-         
+
          return "mybook/otherbook_review";
       }
    }
@@ -111,38 +101,32 @@ public class MybookController {
 						           @RequestParam(value="crtPage", required=false, defaultValue= "1") Integer crtPage,
 						           @RequestParam(value="emoName", required=false) String emoName,
 						           @RequestBody(required=false) MybookVo clicked){
-	   //System.out.println("MybookController.list()");
-
+	   System.out.println("MybookController.list()");
+	   
+	   // 로그아웃 처리하기...
+	   UserVo authUser = (UserVo) session.getAttribute("authUser");
+	   if(authUser == null) {
+		   System.out.println(">>세션 만료");
+		   return null;
+	   }
+	   
 	   String yours = ((UserVo)session.getAttribute("authUser")).getNickname(); //세션의 닉네임
 	   
 	   if(clicked != null && emoName == null) {
 		   emoName = clicked.getEmoName(); 
 	   }
 	   
+	   
 	   if(nickname.equals(yours)) { // 내 홈페이지 방문
-	         //세션아이디의 유저넘버
-	         int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
-	
 	         //서평리스트출력
 	         //유저넘버를 주면 해당 유저가 작성한 리뷰를 불러오는 메소드
-	         System.out.println("내 홈페이지 방문");
+	         System.out.println("내 홈페이지 방문");		   
+		   
+	         //세션아이디의 유저넘버
+	         int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
 	         
-	         Map<String, Object> mybookMap = mybookService.list(sort, crtPage, userNo, emoName);
-	         	         
-	         List<MybookVo> mbList =  (List<MybookVo>) mybookMap.get("mybookList");
-	         
-	         //중복체크 및 값 set해서 List 업데이트, 지금 로그인한 유저
-	         for(int i = 0; i < mbList.size(); i++) {
-	        	 
-	        	 int reviewNo = mbList.get(i).getReviewNo();
-	        	 
-	        	 //0일시 좋아요 안 한 상태, 1일시 좋아요 한 상태 (좋아요 여부)
-	        	 MybookVo checklike = new MybookVo(reviewNo, userNo);
-		         int likecheck = mybookService.likeok(checklike);
-		         
-		         mbList.get(i).setLikecheck(likecheck);
-	         }
-	            
+	         Map<String, Object> mybookMap = mybookService.list(sort, crtPage, userNo, emoName, userNo);
+
 	         return mybookMap;
 	   } 
 	   else { // 다른 유저 홈페이지 방문
@@ -156,27 +140,57 @@ public class MybookController {
 	         //유저넘버를 주면 해당 유저가 작성한 리뷰를 불러오는 메소드
 	         System.out.println("유저 " + userNo + "의 홈페이지 방문");
 	         
-	         Map<String, Object> mybookMap = mybookService.list(sort, crtPage, userNo, emoName);
-	         
-			 List<MybookVo> mbList = (List<MybookVo>) mybookMap.get("mybookList");
-	         
-	         //중복체크 및 값 set해서 List 업데이트
-	         for(int i=0; i<mbList.size(); i++) {
-	        	 
-	        	 int reviewNo = mbList.get(i).getReviewNo();
-	        	 
-	        	 //0일시 좋아요 안 한 상태, 1일시 좋아요 한 상태
-	        	 MybookVo checklike = new MybookVo(reviewNo, nowuserNo);
-		         int likecheck = mybookService.likeok(checklike);
-		         
-		         mbList.get(i).setLikecheck(likecheck);
-	        	 
-	         }
-	         
+	         Map<String, Object> mybookMap = mybookService.list(sort, crtPage, userNo, emoName, nowuserNo);
+
 	         return mybookMap;
 	   }
    }
  
+   //감정 카테고리 선택시 기능
+   @SuppressWarnings("unchecked")
+   @ResponseBody
+   @RequestMapping("/{nickname}/select")
+   public Map<String, Object> select(@PathVariable(value="nickname") String nickname,
+		   						HttpSession session,
+		   						@RequestBody MybookVo clicked,
+		   						@RequestParam(value="crtPage", required=false, defaultValue="1")Integer crtPage) {
+      
+	  //세션의 닉네임
+	  String yours = ((UserVo)session.getAttribute("authUser")).getNickname(); 
+	   
+	  //세션아이디랑 지금 블로그닉네임이 같니?
+      if(nickname.equals(yours)) { // 내 홈페이지 방문
+         
+    	  //세션아이디의 유저넘버, 선택한 감정태그
+          int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
+          String emoName = clicked.getEmoName();
+      
+          System.out.println("지금 서재 유저 넘버 : " + userNo);
+          System.out.println("선택한 감정태그 : " + emoName);
+
+          Map<String, Object> mybookMap = mybookService.list("emotion", crtPage, userNo, emoName, userNo);
+
+          return mybookMap;      
+         
+      } else { // 다른 유저 홈페이지 방문
+             	  
+    	 int nowuserNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
+    	  
+         //지금 서재 닉네임을 주면 유저넘버, 닉네임, 프로필이미지를 주는 메소드 사용
+         UserVo otherUser = userService.getUser(nickname);
+         int userNo = otherUser.getUserNo();
+         String emoName = clicked.getEmoName(); 
+
+         System.out.println("지금 서재 유저 넘버 : " + userNo);
+         System.out.println("선택한 감정태그 : " + clicked.getEmoName());
+
+         //유저넘버, 감정태그 주면 해당유저의 서평 중 그 감정태그를 가진것만 출력해주기
+         Map<String, Object> mybookMap = mybookService.list("emotion", crtPage, userNo, emoName, nowuserNo);
+
+         return mybookMap; 
+      }
+   }   
+   
    //좋아요버튼을 눌렀을때의 기능
    @ResponseBody
    @RequestMapping("/like")
@@ -243,86 +257,6 @@ public class MybookController {
       
       //값이 1일때는 삭제하려는 리뷰의 작성자와 로그인사용자가 같음을 의미 
       return checkuser;
-   }
-   
-   //카테고리 선택시 기능
-   @SuppressWarnings("unchecked")
-   @ResponseBody
-   @RequestMapping("/{nickname}/select")
-   public Map<String, Object> select(@PathVariable(value="nickname") String nickname,
-		   						HttpSession session,
-		   						@RequestBody MybookVo clicked,
-		   						@RequestParam(value="crtPage", required=false, defaultValue="1")Integer crtPage) {
-      
-	  //세션의 닉네임
-	  String yours = ((UserVo)session.getAttribute("authUser")).getNickname(); 
-	   
-	  //세션아이디랑 지금 블로그닉네임이 같니?
-      if(nickname.equals(yours)) { // 내 홈페이지 방문
-         
-    	  //세션아이디의 유저넘버, 선택한 감정태그
-          int userNo = ((UserVo)session.getAttribute("authUser")).getUserNo();
-          String emoName = clicked.getEmoName();
-          //int emoNo = clicked.getEmoNo();
-                
-          System.out.println("지금 서재 유저 넘버 : " + userNo);
-          System.out.println("선택한 감정태그 : " + emoName);
-          
-          //MybookVo emo = new MybookVo(userNo, emoName);
-
-          //유저넘버, 감정태그 주면 해당유저의 서평 중 그 감정태그를 가진것만 출력해주기
-          //List<MybookVo> emoList = mybookService.emoList(emo);
-          
-          Map<String, Object> mybookMap = mybookService.list("emotion", crtPage, userNo, emoName);
-          List<MybookVo> emoList = (List<MybookVo>) mybookMap.get("mybookList");
-          
-          //좋아요 체크된 상태로 내보내주기
-          //중복체크 및 값 set해서 List 업데이트
-          for(int i=0; i<emoList.size(); i++) {
-         	 
-         	 int reviewNo = emoList.get(i).getReviewNo();
-         	 
-         	 //0일시 좋아요 안 한 상태, 1일시 좋아요 한 상태
-         	 MybookVo checklike = new MybookVo(reviewNo, userNo);
-    	         int likecheck = mybookService.likeok(checklike);
-    	         
-    	         emoList.get(i).setLikecheck(likecheck);
-          }
-          
-          return mybookMap;      
-         
-      } else { // 다른 유저 홈페이지 방문
-             	  
-         //지금 서재 닉네임을 주면 유저넘버, 닉네임, 프로필이미지를 주는 메소드 사용
-         UserVo otherUser = userService.getUser(nickname);
-         int userNo = otherUser.getUserNo();
-         String emoName = clicked.getEmoName(); 
-         //int emoNo = clicked.getEmoNo();
-         
-         System.out.println("지금 서재 유저 넘버 : " + userNo);
-         System.out.println("선택한 감정태그 : " + clicked.getEmoName());
-         
-         //MybookVo emo = new MybookVo(userNo, emoName);
-
-         //유저넘버, 감정태그 주면 해당유저의 서평 중 그 감정태그를 가진것만 출력해주기
-         Map<String, Object> mybookMap = mybookService.list("emotion", crtPage, userNo, emoName);
-         List<MybookVo> emoList = (List<MybookVo>) mybookMap.get("mybookList");
-         
-         //좋아요 체크된 상태로 내보내주기
-         //중복체크 및 값 set해서 List 업데이트
-         for(int i=0; i<emoList.size(); i++) {
-        	 
-        	 int reviewNo = emoList.get(i).getReviewNo();
-        	 
-        	 //0일시 좋아요 안 한 상태, 1일시 좋아요 한 상태
-        	 MybookVo checklike = new MybookVo(reviewNo, userNo);
-   	         int likecheck = mybookService.likeok(checklike);
-   	         
-   	         emoList.get(i).setLikecheck(likecheck);
-         }
-         
-         return mybookMap; 
-      }
    }
    
    @ResponseBody
