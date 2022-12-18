@@ -30,22 +30,26 @@ public class MybookService {
 		System.out.println(">>sort: "+ sort + ", crtPage: " + crtPage + ", startNum: " + startNum + ", endNum: " + endNum);		
 		
 		List<MybookVo> mybookList;
+		int totalCnt;
 		switch(sort) {
 		case "latest":
 			mybookList = mybookDao.getList3(startNum, endNum, userNo, nowuserNo);
+			totalCnt = mybookDao.totalCnt(userNo);
 			break;
 		case "popular":
 			mybookList = mybookDao.getPopular2(startNum, endNum, userNo, nowuserNo);
+			totalCnt = mybookDao.totalCnt(userNo);
 			break;
 		default:
 			mybookList = mybookDao.emoList(startNum, endNum, userNo, emoName, nowuserNo);
+			totalCnt = mybookDao.totalCntEmotion(userNo, emoName);
 			break;
 		}
 		
 		/////////////////////
 		//// 페이징 
 		/////////////////////	
-		int totalCnt = mybookDao.totalCnt(userNo);
+		//int totalCnt = mybookDao.totalCnt(userNo);
 		
 		int pageBtnCount = 5;	// 페이지당 버튼 갯수
 		// 마지막 버튼 번호

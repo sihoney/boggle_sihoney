@@ -64,7 +64,15 @@ public class MybookDao {
 	}
 	
 	public int totalCnt(int userNo) {
-		return sqlSession.selectOne("mybook.totalCnt", userNo);
+		return sqlSession.selectOne("mybook.totalCnt2", userNo);
+	}
+	
+	public int totalCntEmotion(int userNo, String emoName) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userNo", userNo);
+		map.put("emoName", emoName);
+		
+		return sqlSession.selectOne("mybook.totalCntEmotion", map);
 	}
 	
 	public int checklike(MybookVo checklike){

@@ -505,31 +505,7 @@
 		
 		$("#content").append(str)
 	}		
-	/*
-	//페이징 렌더
-	function renderPaging(prev, next, startPageBtnNo, endPageBtnNo) {
-		
-		let str = '<div id="mybook_paging">'
-			str += '<ul>'
-			
-			if(prev == true) {
-				str += '<li><a href="/' + projectName + '/' + nickname + '?crtPage=' + (startPageBtnNo - 1) + '&sort=' + sort + '&emoName=' + emoName + '">◀</a></li>'
-			}
-
-			for(var i = startPageBtnNo; i <= endPageBtnNo; i++) {
-				str += '<li><a  href="/'+ projectName + '/' + nickname + '?crtPage=' + i + '&sort=' + sort + '&emoName=' + emoName + '">'+ i +'</a></li>'
-			}
-						
-			if(next == true) {
-				str += '<li><a href="/' + prjectName + '/' + nickname + '?crtPage=' + (endPageBtnNo + 1) + '&sort=' + sort + '&emoName=' + emoName + '">▶</a></li>'
-			}
-
-			str += '</ul>'
-			str += '</div>'		 	
-		
-		$("#content").append(str)
-	}		
-	*/
+	
 	function renderMyPli(list) {
 
 		for(let item of list) {

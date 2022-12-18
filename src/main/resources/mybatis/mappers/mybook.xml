@@ -389,6 +389,61 @@
 		]]>
 	</select>
 	
+	<select id="totalCnt2" parameterType="int" resultType="int">
+		<![CDATA[
+			select count(*)
+			from(select review_no,
+			            style_no,
+			            emo_no,
+			            emo_name,
+			            book_no,
+			            book_title,
+			            user_no,
+			            nickname,
+			            review_content,
+			            review_date
+			    from (select  r.review_no,
+			                s.style_no,
+			                e.emo_no,
+			                e.emo_name,
+			                r.book_no,
+			                b.book_title,
+			                u.user_no,
+			                u.nickname,
+			                r.review_content,
+			                r.review_date
+			        from    review r, style s, emotion e, users u, books b
+			    where   e.emo_no = s.emo_no
+			    and     r.style_no = s.style_no
+			    and     r.user_no = u.user_no
+			    and     r.book_no = b.book_no
+			    and     r.user_no = #{userNo}))
+		]]>
+	</select>
+	
+	<select id="totalCntEmotion" parameterType="map" resultType="int">
+		<![CDATA[
+			select count(*)
+			from(select  r.review_no,
+			            s.style_no,
+			            e.emo_no,
+			            e.emo_name,
+			            r.book_no,
+			            b.book_title,
+			            u.user_no,
+			            u.nickname,
+			            r.review_content,
+			            r.review_date
+			    from    review r, style s, emotion e, users u, books b 
+			    where   e.emo_no = s.emo_no
+			    and     r.style_no = s.style_no
+			    and     r.user_no = u.user_no
+			    and     r.book_no = b.book_no
+			    and     r.user_no = #{userNo}
+			    and		e.emo_name = #{emoName})	
+		]]>
+	</select>
+	
 	<!-- checklike -->
 	<select id="checklike" resultType="MybookVo" parameterType="MybookVo">
 		<![CDATA[
@@ -719,6 +774,7 @@
 		]]>
 	</select>
 	
+	<!-- 페이징, 좋아요 여부 -->
 	<select id="emoList3" parameterType="map" resultType="MybookVo">
 		<![CDATA[
 			select rn,
