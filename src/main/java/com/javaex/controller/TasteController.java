@@ -35,9 +35,11 @@ public class TasteController {
 
 	// 취향저격(main페이지)
 	@RequestMapping("/{nickname}/tastemain")
-	public String tastemain(@PathVariable(value = "nickname") String nickname, HttpSession session, Model model) {
+	public String tastemain(@PathVariable(value = "nickname") String nickname, 
+							HttpSession session, 
+							Model model) {
 
-		System.out.println("tastemain");
+		System.out.println("TasteController.tastemain");
 		
 		if (session == null || session.getAttribute("authUser") == null || session.getAttribute("authUser").equals("")) {
 		   System.out.println("세션만료 혹은 잘못된 접근");
@@ -47,8 +49,8 @@ public class TasteController {
 		
 		// 세션의 닉네임
 		String yours = ((UserVo) session.getAttribute("authUser")).getNickname();
-		System.out.println("로그인사람의 닉네임 : " + yours);
-		System.out.println("지금 서재 닉네임 : " + nickname);
+		System.out.println(">> 로그인사람의 닉네임 : " + yours);
+		System.out.println(">> 지금 서재 닉네임 : " + nickname);
 
 		// 세션아이디랑 지금 블로그닉네임이 같니?
 		if (nickname.equals(yours)) {
@@ -120,7 +122,9 @@ public class TasteController {
 	
 	// 플레이리스트(main페이지)
 	@RequestMapping("/{nickname}/like_playlist")
-	public String playlistmain(@PathVariable(value = "nickname") String nickname, HttpSession session, Model model) {
+	public String playlistmain(@PathVariable(value = "nickname") String nickname, 
+							   HttpSession session, 
+							   Model model) {
 
 		System.out.println("tastemain");
 

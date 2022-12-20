@@ -31,6 +31,7 @@ public class MybookService {
 		
 		List<MybookVo> mybookList;
 		int totalCnt;
+		
 		switch(sort) {
 		case "latest":
 			mybookList = mybookDao.getList3(startNum, endNum, userNo, nowuserNo);
@@ -49,8 +50,7 @@ public class MybookService {
 		/////////////////////
 		//// 페이징 
 		/////////////////////	
-		//int totalCnt = mybookDao.totalCnt(userNo);
-		
+
 		int pageBtnCount = 5;	// 페이지당 버튼 갯수
 		// 마지막 버튼 번호
 		int endPageBtnNo = (int) (Math.ceil(crtPage / (double)pageBtnCount)) * pageBtnCount;
@@ -140,6 +140,8 @@ public class MybookService {
 		
 		List<MybookVo> likelist = mybookDao.likelist(userNo);
 		
+		//총 서평 개수
+		/*
 		for(int i=0; i<likelist.size(); i++) {
 			
 			int No = likelist.get(i).getUserNo();
@@ -149,9 +151,9 @@ public class MybookService {
 			
 			likelist.get(i).setLikecheck(rvcnt);
 		}
-		
+	
 		System.out.println("좋아요한유저서평들"+likelist);
-		
+		*/
 		return likelist;
 	}
 	

@@ -124,7 +124,9 @@ public class MybookDao {
 	public List<MybookVo> likelist(int userNo) {
 		System.out.println("MybookDao.likelist");
 		
-		List<MybookVo> likelist = sqlSession.selectList("mybook.likelist", userNo);
+		List<MybookVo> likelist = sqlSession.selectList("mybook.likelist2", userNo);
+		
+		System.out.println(">>likelist: " + likelist);
 		
 		return likelist;
 	}
