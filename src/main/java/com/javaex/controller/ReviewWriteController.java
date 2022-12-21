@@ -159,7 +159,7 @@ public class ReviewWriteController {
 	@ResponseBody
 	@RequestMapping("/getBookInfo")
 	public List<Map<String, Object>> getBookInfo(@RequestParam(value="bookTitle") String bookTitle) throws JsonParseException, JsonMappingException, IOException {
-		System.out.println("ReviewWriteController > getBookInfo");
+		System.out.println("ReviewWriteController.getBookInfo");
 
 		return reviewWriteService.getBookInfo(bookTitle);
 	}
@@ -168,7 +168,7 @@ public class ReviewWriteController {
 	@ResponseBody
 	@RequestMapping("/getPrevReviewInfo")
 	public Map<String, Object> getPrevReviewInfo(@RequestParam(value="reviewNo") int reviewNo) {
-		System.out.println("ReviewWriteController > getPrevReviewInfo");
+		System.out.println("ReviewWriteController.getPrevReviewInfo");
 		
 		System.out.println("reviewNo: " + reviewNo);
 		
@@ -180,7 +180,7 @@ public class ReviewWriteController {
 	@RequestMapping("/modifyReview")
 	public Map<String, String> modifyReview(@RequestBody Map<String, Object> map,
 											HttpSession session) {
-		System.out.println("ReviewWriteController > modifyReview");
+		System.out.println("ReviewWriteController.modifyReview");
 		
 		System.out.println("요청에서 받은 값: " + map);
 		//{bookNo=9791166686603, bookTitle=다섯 번째 감각, author=김보영, bookURL=https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=287367114, genreNo=1, coverURL=https://image.aladin.co.kr/product/28736/71/cover500/k442836780_1.jpg, userNo=6, styleNo=5, reviewContent=세상은 원래부터 기괴하고 무섭고 아름답고 당황스러웠다. 그동안 우리는 두꺼운 습관의 담요를 뒤집어 쓰고 이를 무시하고 있었을 뿐이다. 그리고 김보영의 단편들을 읽는 것은 그 담요를 은근슬적 떨구는 과정이다. , genreName=소설/시/희곡, reviewNo=3}

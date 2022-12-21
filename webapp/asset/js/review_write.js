@@ -22,7 +22,7 @@ let nickname
 let projectName
 	
 ////////////////////////////
-// event listener
+// EVENT LISTENER
 ////////////////////////////	
 
 /* 화면 로드되기 전, 감정태그 출력 */
@@ -30,26 +30,117 @@ $("document").ready(function(){
 
 	const urlObj = new URL(location.href)
 	const urlParams = urlObj.searchParams
+	projectName = "/" + urlObj.pathname.split("/")[1]
 	
 	const bookTitleQuery = urlParams.get("bookTitle")
 	reviewNoQuery = urlParams.get("reviewNo")
-	
-	projectName = "/" + urlObj.pathname.split("/")[1]
+
+/*	console.log(">>bookTitle: " + bookTitleQuery)
+	console.log(">>reviewNo: " + reviewNoQuery)
+	console.log(bookTitleQuery === null)
+	console.log(reviewNoQuery === null)*/
 
 	// 감정버튼, 스타일 버튼 
-	getEmotion()
+	getEmotion().then(data => {
+		/* 화면 출력 */
+		renderEmotionBtn(data)
 
-	// case 1. bookTitle > 책 상세 페이지 넘어올 때 
-	if(bookTitleQuery !== null) {
-		/* bookNo로 db에서 책 정보불러와서 선택된 책 구역에 렌더 & 진행바*/
-		getBook(bookname)
-	}
-	
-	// case 2. reviewNo > 서평 수정 페이지 넘어올 때 (수정하기)	
-	else if(reviewNoQuery !== null) {
+		/* 이벤트 핸들러 넣기 */
+		var btnlist = $("#btn_mood").children()
+		btnlist.each(function(index, btn) {
+			btn.onclick = clickEmoBtn				
+		})			
+	})
+
+	// case. 서평 수정 페이지 넘어올 때 (수정하기)
+	if(bookTitleQuery === null) {	
+		console.log(">>서평 정보 불러오기")
+			
 		$("#btn_admit").text("수정하기")
+
+		getReview(reviewNoQuery).then(data => {
+			bookNo = data["isbn13"]
+			bookURL = data["link"]
+			coverURL = data["cover"]			
+			author = data["author"]
+			genreNo = data["categoryId"]
+			genreName = data["categoryName"]
+			bookTitle = data["title"]
+			
+			emoNo = data["emoNo"]
+			reviewContent = data["reviewContent"]
+			let styleName = data["styleName"]
+			styleNo = data["styleNo"]
+			let totalCnt = data["totalCnt"]
+			let background = data["imgURL"]
+
+			// 1. 책 렌더
+			renderSelectedBook({bookNo, coverURL, bookTitle, author, totalCnt})
+			
+			// 선택 섹션 화면에서 안보이게 & modal 닫기 
+			$(".jumbotron").css("display", "none")
+			
+			// 2. 감정 버튼 선택 (emoNo)
+			$("#"+emoNo).addClass("active")
+			
+			// 3. 스타일 버튼 나열
+			getStyle(emoNo).then(data => {
+				// 스타일 버튼 > 화면 렌더
+				renderStyleBtn(data)
 		
-		getReview(reviewNoQuery)
+				// 스타일 버튼 > 이벤트 추가
+				var btnList = $(".btn_style")
+				btnList.each(function(index, btn) {
+					btn.onclick = clickStyleBtn					
+				})				
+			})
+		
+			// 4. textarea 글, 스타일 적용 (reviewContent)
+			$("#review_textarea").val(reviewContent)
+			$("#limit-text").text(reviewContent.length + "/200")	
+			
+			let arr = styleName.split(",")
+			let backgroundColor = arr[0]
+			let fontFamily = arr[1]
+			
+			if(background != null) {
+				background = "url(" + projectName + "/asset/img/review_card/" + background + ") no-repeat"
+				$("#review_box").css("background", background)						
+			}
+			$("#review_box").css("background-color", backgroundColor)
+			$("#review_box>textarea").css("font-family", fontFamily)
+			$("#review_box").css("background-size", "cover")
+
+			// 5. 진행바
+			setProgressBar(5)			
+		})
+	}
+	// case. 책 상세 페이지 넘어올 때 
+	else {
+		/* bookNo로 db에서 책 정보불러와서 선택된 책 구역에 렌더 & 진행바*/
+		console.log(">>책 정보 불러오기")
+		
+		getBook(bookTitleQuery).then(data => {
+			let item = data[0]
+
+			console.log(item)
+			
+			// 저장할 때 필요한 정보 저장
+			bookNo = item.isbn13
+			bookTitle = item.title
+			author = item.author
+			bookURL = item.link
+			coverURL = item.cover
+			genreNo = item.categoryId
+			genreName = item.categoryName
+			
+			let totalCnt = item.totalCnt
+			// 화면 렌더 
+			renderSelectedBook({bookNo, coverURL, bookTitle, author, totalCnt})
+
+			// 선택 섹션 화면에서 안보이게 
+			$(".jumbotron").css("display", "none")			
+		})
 	}
 })
 	
@@ -233,7 +324,6 @@ $("#review_textarea").on("propertychange change keyup paste input",function(){
    $(this).height( $(this).prop('scrollHeight'))
 })
 	
-////////////////////////////////
 function setProgressBar(stageNum){
 
 	if(stageNum > 4) {
@@ -268,10 +358,66 @@ function isReadyToPost(){
 	return result
 }
 
+////////////////////////////
+// EVENT HANDLER
+////////////////////////////
+
+function clickEmoBtn(){
+	/* 스타일 옵션 출력 (초기화, 렌더)*/
+	$(".btn-group").children().remove()
+	
+	var emoNo = this.id
+		
+	getStyle(emoNo).then(data => {
+		// 스타일 버튼 > 화면 렌더
+		renderStyleBtn(data)
+
+		// 스타일 버튼 > 이벤트 추가
+		var btnList = $(".btn_style")
+		btnList.each(function(index, btn) {
+			btn.onclick = clickStyleBtn					
+		})		
+	})			
+	
+	/* 하나만 선택 가능 */
+	for(var tag of btnlist) {
+		tag.classList.remove("active")
+	}
+	$(this).addClass("active")
+	
+	/* 진행 바 */
+	setProgressBar(2)	
+}
+
+function clickStyleBtn(){
+	// 진행 바 
+	setProgressBar(3)
+	
+	// 텍스트아리아 스타일 변경
+	var background = $(this).css("background")
+	var backgroundColor = $(this).css("background-color")
+	var fontFamily = $(this).css("font-family")
+	styleNo = $(this).data("styleno")
+
+	$("#review_box").css("background-color", backgroundColor)
+	$("#review_box").css("background", background)
+	$("#review_textarea").css("font-family", fontFamily)	
+}
 		
 ////////////////////////////////
-// fetch
+// FETCH
 ////////////////////////////////
+
+async function getEmotion(){
+	try {
+		let response = await fetch(projectName + "/main/getemotion")
+		
+		return response.json()
+	} catch(error) {
+		console.log("Failed to fetch: " + error)
+	}
+}
+/*
 function getEmotion() {
 	
 	$.ajax({
@@ -281,30 +427,30 @@ function getEmotion() {
 		contentType: "json",
 		success: function(data){
 			
-			/* 화면 출력 */
+			// 화면 출력 
 			renderEmotionBtn(data)
 
-			/* 이벤트 핸들러 넣기 */
+			// 이벤트 핸들러 넣기 
 			var btnlist = $("#btn_mood").children()
 			
 			btnlist.each(function(index, btn) {
 				
 				btn.onclick = function(){
 					
-					/* 스타일 옵션 출력 (초기화, 렌더)*/
+					// 스타일 옵션 출력 (초기화, 렌더)
 					$(".btn-group").children().remove()
 					
 					var emoNo = this.id
 						
 					getStyle(emoNo)				
 					
-					/* 하나만 선택 가능 */
+					// 하나만 선택 가능
 					for(var tag of btnlist) {
 						tag.classList.remove("active")
 					}
 					$(this).addClass("active")
 					
-					/* 진행 바 */
+					// 진행 바
 					setProgressBar(2)
 				}				
 			})			
@@ -312,12 +458,22 @@ function getEmotion() {
 		error:  function(XHR, status, error){
 			console.log(status + " : " + error);
 		}
-		
 	})	
-}
+}*/
 
+async function getStyle(emoNo) {
+	try {
+		let response = await fetch(projectName + "/review/getStyle?emoNo=" + emoNo)
+		
+		return response.json()		
+	} catch(error) {
+		console.log("Failed to fetch: " + error)
+	}
+
+}
+/*
 function getStyle(emoNo) {
-	var url = projectName + "/review/getStyle"
+	var url = 
 	
 	$.ajax({
 		url: url,
@@ -329,19 +485,19 @@ function getStyle(emoNo) {
 		dataType: "json",
 		success: function(data){
 			
-			/* 스타일 버튼 > 화면 렌더 */
+			// 스타일 버튼 > 화면 렌더
 			renderStyleBtn(data)
 
-			/* 스타일 버튼 > 이벤트 추가 */
+			// 스타일 버튼 > 이벤트 추가
 			var btnList = $(".btn_style")
 			btnList.each(function(index, btn) {
 				
 				btn.onclick = function(){
 					
-					/* 진행 바 */
+					// 진행 바 
 					setProgressBar(3)
 					
-					/* 텍스트아리아 스타일 변경 */
+					// 텍스트아리아 스타일 변경
 					var background = $(this).css("background")
 					var backgroundColor = $(this).css("background-color")
 					var fontFamily = $(this).css("font-family")
@@ -357,8 +513,19 @@ function getStyle(emoNo) {
 			console.log(status + " : " + error);
 		}
 	})		
+}*/
+
+async function getBook(bookname) {
+	try {
+		let response = await fetch(projectName + "/review/getBookInfo?bookTitle=" + bookname)
+		
+		return response.json()		
+	} catch(error) {
+		console.log("Failed to fetch: " + error)	
+	}
 }
 
+/*
 function getBook(bookname) {
 
 	$.ajax({
@@ -373,7 +540,7 @@ function getBook(bookname) {
 
 			console.log(item)
 			
-			/* 저장할 때 필요한 정보 저장*/
+			// 저장할 때 필요한 정보 저장
 			bookNo = item.isbn13
 			bookTitle = item.title
 			author = item.author
@@ -383,10 +550,10 @@ function getBook(bookname) {
 			genreName = item.categoryName
 			
 			let totalCnt = item.totalCnt
-			/* 화면 렌더 */
+			// 화면 렌더 
 			renderSelectedBook({bookNo, coverURL, bookTitle, author, totalCnt})
 
-			/* 선택 섹션 화면에서 안보이게 & modal 닫기 */
+			// 선택 섹션 화면에서 안보이게 & modal 닫기 
 			$(".jumbotron").css("display", "none")
 			
 		},
@@ -394,8 +561,18 @@ function getBook(bookname) {
 			console.log(status + " : " + error);
 		}
 	})	
-}
+}*/
 
+async function getReview(reviewNo) {
+	try {
+		let response = await fetch(projectName + "/review/getPrevReviewInfo?reviewNo=" + reviewNo)
+		
+		return response.json()		
+	} catch(error) {
+		console.log("Failed to fetch: " + error)
+	}
+}
+/*
 function getReview(reviewNo) {
 	
 	$.ajax({
@@ -425,7 +602,7 @@ function getReview(reviewNo) {
 			// 1. 책 렌더
 			renderSelectedBook({bookNo, coverURL, bookTitle, author, totalCnt})
 			
-			/* 선택 섹션 화면에서 안보이게 & modal 닫기 */
+			// 선택 섹션 화면에서 안보이게 & modal 닫기 
 			$(".jumbotron").css("display", "none")
 			
 			// 2. 감정 버튼 선택 (emoNo)
@@ -457,7 +634,7 @@ function getReview(reviewNo) {
 			console.log(status + " : " + error);
 		}
 	})	
-}
+}*/
 	
 function getMyPlaylist(userNo) {
 
@@ -597,7 +774,7 @@ function searchBook(obj) {
 }
 	
 ///////////////////////
-// render
+// RENDER
 ///////////////////////
 	
 function renderEmotionBtn(arr) { 
