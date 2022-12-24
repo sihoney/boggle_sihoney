@@ -320,6 +320,12 @@
 		
 		// 내 플리 불러오기
 		fetchMyPli(reviewNo).then(data => {
+			
+			// session 정보가 만료됐을 때
+			if(data === null) {
+				location.href = projectname + "/main"
+			}
+			
 			// 1-1. 플리 렌더
 			renderMyPli(data)
 			

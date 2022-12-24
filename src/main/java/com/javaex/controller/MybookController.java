@@ -263,9 +263,14 @@ public class MybookController {
    @RequestMapping("/getplaylist")
    public List<PlaylistVo> getPlaylist(@RequestParam(value="reviewno")int reviewNo,
 		   				   HttpSession session) {
-	   System.out.println("MybookController.playlist >> reviewNo: " + reviewNo);
-   
+	   System.out.println("MybookController.getPlaylist >> reviewNo: " + reviewNo);
+	   
 	   UserVo authUser = (UserVo) session.getAttribute("authUser");
+	   
+	   if(authUser == null) {
+		   return null;
+	   }
+	   
 	   int userNo = authUser.getUserNo();
 	   
 	   return mybookService.getPlaylist(reviewNo, userNo);

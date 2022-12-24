@@ -139,21 +139,7 @@ public class MybookService {
 		System.out.println("mybookService.likelist");
 		
 		List<MybookVo> likelist = mybookDao.likelist(userNo);
-		
-		//총 서평 개수
-		/*
-		for(int i=0; i<likelist.size(); i++) {
-			
-			int No = likelist.get(i).getUserNo();
-			
-			MybookVo reviewcnt = mybookDao.reviewcnt(No);
-			int rvcnt = reviewcnt.getLikecheck();
-			
-			likelist.get(i).setLikecheck(rvcnt);
-		}
-	
-		System.out.println("좋아요한유저서평들"+likelist);
-		*/
+
 		return likelist;
 	}
 	
