@@ -240,8 +240,7 @@ plySubmitBtn.addEventListener("click", function(e){
 	else {			
 		postNewPlaylist(addPlyInput.value, addPlyInput.dataset.plyemono).then(data => {
 			// 모달 내 플리 업데이트
-			console.log(data)
-			
+
 			if(data == -1) alert("다시 로그인 해주세요")
 			
 			/* 사이드바, 모달 플레이리스트 초기화 */
@@ -674,7 +673,10 @@ function updateBgm() {
 async function getReviewMusicList(sort, no) {
 	try {
 		url = urlPath + "/reviewmusiclist?sort=" + sort
-		if(no !== null) url += "&no=" + no
+		
+		if(no !== null) {
+			url += "&no=" + no
+		}
 		
 		const response = await fetch(url)
 		
@@ -736,22 +738,6 @@ async function postNewPlaylist(playlistName, emoNo){
 	})
 	
 	return response.json()
-	/*
-	.then(data => {	
-		// 모달 내 플리 업데이트
-		
-		//* 사이드바, 모달 플레이리스트 초기화 
-		document.querySelector(".playlist-box").querySelector("ul").innerHTML = ""
-		document.querySelector(".playlist-list").innerHTML = ""
-		
-		//* 새 플레이리스트 불러오기 
-		reviewNo = slides[slideIndex].getAttribute("data-reviewno")
-		getPlaylist(reviewNo).then(data => {
-			renderModalPly(data)
-			renderSidebarPly(data)
-		})
-	})	
-	*/
 }
 
 async function getPlaylist(reviewNo) {
@@ -883,7 +869,7 @@ function renderModalPly(list) {
 				icon: icon
 			}
 			////// DB 변경 ///////
-			toggleReviewToPly({playlistNo, reviewNo, icon}).then(data => {
+			toggleReviewToPly(obj).then(data => {
 				console.log(data + "건 | 서평을 플리에 저장 또는 삭제")
 			})
 			
@@ -901,11 +887,8 @@ function renderModalPly(list) {
 
 
 function renderSidebarPly(list) {	
-	/*
-	<li data-playlistno="${playlistVo.playlistNo }" class="playlistBtn">
-		<p>${playlistVo.playlistName }</p>
-	</li>
-	*/
+	
+	const ul_ply = document.querySelector(".playlist-list")
 	
 	list.forEach(plyVo => {
 		let li = document.createElement("li")
@@ -918,16 +901,15 @@ function renderSidebarPly(list) {
 		
 		li.append(p)
 		
-		document.querySelector(".playlist-list").append(li)
+		ul_ply.append(li)
 	})
 	
 	// 이벤트 추가(클릭 -> 플리 재생)
-	const plylist = document.querySelector(".playlistBtn")
-	console.log(plylist)
+	const plylist = document.getElementsByClassName("playlistBtn")
 	
-/*	plylist.forEach(item => {
+	for(let item of plylist) {
 		item.onclick = playNewPlaylist
-	})*/
+	}
 }
 
 function renderNewList(reviewlist) {
@@ -946,7 +928,7 @@ function renderNewList(reviewlist) {
 	
     slides.forEach((slide, index) => { 			// 새로운 서평 슬라이드 추가하는 방식 바꾸기! 
         slide.style.top = `${index * 100}%`;
-    })
+    });
 }
 
 let heartBtn
@@ -971,7 +953,7 @@ function renderSlide(item) {
 	if(item.videourl != null) {
 		video = document.createElement("video")
 		video.classList.add("video")
-		video.src = urlPath.substring(0, 12) + "/asset/img/review_card/" + item.videourl
+		video.src = "/" + projectName + "/asset/img/review_card/" + item.videourl
 		video.setAttribute("muted", "muted")
 		video.setAttribute("autoplay", "autoplay")		
 		video.setAttribute("loop", "loop")
@@ -1031,13 +1013,13 @@ function renderSlide(item) {
 	}
 	
     btnContainer.append(heartBtn, addBtn);
-	a.append(review)
+	a.append(review);
 	if(item.videourl != null) {
-		contentBox.append(a, username, btnContainer)
-		slide.append(video, contentBox)
+		contentBox.append(a, username, btnContainer);
+		slide.append(video, contentBox);
 	} else {
 		slide.append(a, username, btnContainer);
 	}	
-    slideContainer.append(slide)
+    slideContainer.append(slide);
     container.append(slideContainer);
 }

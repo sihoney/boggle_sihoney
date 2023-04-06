@@ -105,19 +105,36 @@
 		    <groupId>org.json</groupId>
 		    <artifactId>json</artifactId>
 		    <version>20201115</version>
-		</dependency>
-		
+		</dependency>	
 	</dependencies>  
   
   <build>
+  	<finalName>boggle_sihoney</finalName>
+  
     <plugins>
+      <!-- 배포 -->
+      <plugin>
+          <groupId>org.apache.tomcat.maven</groupId>
+          <artifactId>tomcat7-maven-plugin</artifactId>
+          <version>2.2</version>
+          <configuration>
+              <url>http://localhost:8080/manager/text</url>
+              <server>TomcatServer</server>
+              <path>/${project.build.finalName}</path>
+              <username>admin</username>
+              <password>siwon1234</password>
+          </configuration>
+      </plugin>
+      
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <release>16</release>
+          <source>1.6</source>
+       	  <target>1.6</target>
         </configuration>
       </plugin>
+      
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <version>3.2.3</version>
